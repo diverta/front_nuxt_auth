@@ -1,0 +1,9 @@
+{
+    "basic":["kuroco:kuroco"],
+    "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+}
