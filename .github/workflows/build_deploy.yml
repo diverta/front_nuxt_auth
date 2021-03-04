@@ -28,5 +28,6 @@ jobs:
       - name: Webhook
         uses: distributhor/workflow-webhook@v1
         env:
+          webhook_secret: "front_nuxt_auth"
           webhook_url: "https://dev-nuxt-auth.a.kuroco.app/direct/menu/github/"
           data: '{"run_id":"${{ github.run_id }}", "hash":"${{ github.sha }}"}'
