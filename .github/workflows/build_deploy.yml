@@ -10,17 +10,17 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: Ubuntu-20.04
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout Repo
         uses: actions/checkout@master
       - name: Install Dependencies
         run: npm install
       - name: Build
-        run: npm run build-prod
+        run: npm run build
       - name: Export
-        run: npm run export-prod
-      - name: Archive Production Artifact
+        run: npm run export
+      - name: Archive Development Artifact
         uses: actions/upload-artifact@master
         with:
           name: ${{ github.sha }}
