@@ -82,17 +82,6 @@
                 </v-btn>
               </v-card-actions>
             </v-card>
-
-            <v-card v-if="can_upgrade" class="mx-auto" outlined>
-              <v-card-text>
-                <h3>アップグレードのご案内</h3>
-                <p class="body-1 ug-p">
-                  <NuxtLink to="/upgrade">
-                    アップグレードはこちら
-                  </NuxtLink>
-                </p>
-              </v-card-text>
-            </v-card>
           </v-col>
           <v-col cols="12" sm="6">
             <v-card class="mx-auto" outlined>

@@ -81,7 +81,7 @@ export default {
     ignoreNotFoundWarnings: true,
   },
   router: {
-    middleware: ["auth", "upgrade"],
+    middleware: ["auth"],
   },
   axios: {
     baseURL: envSettings.BASE_URL,
@@ -118,6 +118,5 @@ export default {
         autoFetchUser: true,
       },
     },
-    plugins: [ { src: '~/plugins/axios_ssr', ssr: true },]
   },
 }

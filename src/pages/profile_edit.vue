@@ -199,6 +199,7 @@ export default {
     return {
       valid: true,
       e1: 1,
+      text: "text",
       access_token: "",
       password_show: false,
       password: "",
@@ -336,7 +337,7 @@ export default {
           .catch(function (error) {
             self.$store.dispatch(
               "snackbar/setError",
-              error.response.data.errors?.[0]
+              error.response.data.errors?.[0].message
             )
             self.$store.dispatch("snackbar/snackOn")
             self.loading = false

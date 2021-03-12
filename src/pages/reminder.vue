@@ -157,6 +157,7 @@ export default {
       token: "",
       e1: 1,
       valid: true,
+      text: "text",
       email: "",
       password_show: false,
       login_pwd: "",
@@ -204,7 +205,7 @@ export default {
         .catch(function (error) {
           self.$store.dispatch(
             "snackbar/setError",
-            error.response.data.errors?.[0]
+            error.response.data.errors?.[0].message
           )
           self.$store.dispatch("snackbar/snackOn")
           self.loading1 = false
@@ -232,7 +233,7 @@ export default {
           .catch(function (error) {
             self.$store.dispatch(
               "snackbar/setError",
-              error.response.data.errors?.[0]
+              error.response.data.errors?.[0].message
             )
             self.$store.dispatch("snackbar/snackOn")
             self.loading2 = false

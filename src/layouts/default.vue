@@ -33,10 +33,10 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" color="#1414A0" dense dark fixed app>
+    <v-app-bar :clipped-left="clipped" dense dark fixed app>
       <v-toolbar-title>
         <a href="/">
-          Sample Site
+          Sample
         </a>
       </v-toolbar-title>
       <v-spacer />
@@ -59,9 +59,9 @@
       </v-container>
     </v-main>
 
-    <v-footer color="#1414A0" padless app absolute inset>
+    <v-footer padless app absolute inset>
       <v-row justify="center" no-gutters>
-        <v-btn color="white" text rounded class="my-2" to="/inquiry">
+        <v-btn text rounded class="my-2" to="/inquiry">
           お問い合わせ
         </v-btn>
         <v-col class="#1414A0 text-center white--text" cols="12">
