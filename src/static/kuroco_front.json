@@ -1,8 +1,10 @@
 {
     "basic":["kuroco:kuroco"],
+    "ip_restrictions":[],
+    "redirects": [],
     "rewrites": [
         {
-          "source": "**",
+          "source": "*",
           "destination": "/index.html"
         }
       ]

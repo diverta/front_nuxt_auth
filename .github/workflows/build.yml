@@ -1,0 +1,33 @@
+name: Build and Deploy
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    branches: [ main ]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Install Dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Generate
+        run: npm run export
+      - name: Archive Production Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ github.sha }}
+          path: dist
+          retention-days: 7
+      - name: Webhook
+        uses: distributhor/workflow-webhook@v1
+        env:
+          webhook_url: "https://dev-nuxt-auth.a.kuroco.app/direct/menu/github/"
+          webhook_secret: "q0uR5ecr3t"
+          data: '{"domain":"dev-nuxt-auth.g.kuroco-front.app", "repository":"${{ github.repository }}", "run_id":"${{ github.run_id }}", "hash":"${{ github.sha }}"}'
+
