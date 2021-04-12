@@ -54,13 +54,6 @@
             </form>
             </v-card>
           </v-col>
-
-        <script>
-          let myBody = document.getElementsByTagName('body')[0];
-          myBody.classList.add('p-login');
-          myBody.classList.remove('p-dashboard');
-        </script>
-
         </v-row>
       </div>
 
@@ -98,13 +91,6 @@
 
           </a>
         </div>
-
-        <script>
-          let myBody = document.getElementsByTagName('body')[0];
-          myBody.classList.add('p-dashboard');
-          myBody.classList.remove('p-login');
-        </script>
-
       </div>
     </client-only>
 </template>
