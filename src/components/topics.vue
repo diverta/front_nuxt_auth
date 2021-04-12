@@ -1,14 +1,18 @@
 <template>
-  <div>
-    <v-row v-for="item in topics" v-bind:key="item.id">
-      <br />
-      <v-col>
+  <div class="c-table container">
+    <div class="row c-table_title c-table_row">
+      <div class="col-2 c-table_col">Date</div>
+      <div class="col c-table_col">Title</div>
+      <div class="col-5 c-table_col">Links</div>
+    </div>
+    <div class="row c-table_row" v-for="item in topics" v-bind:key="item.id">
+      <div class="col-2 c-table_col">
         {{ item.date }}
-      </v-col>
-      <v-col>
+      </div>
+      <div class="col c-table_col">
         {{ item.label }}
-      </v-col>
-      <v-col>
+      </div>
+      <div class="col-5 c-table_col">
         <div v-if="item.icon == 'pdf'">
           <a :href="item.fileurl">{{ item.link }}</a>
           <v-icon>mdi-pdf-box</v-icon>
@@ -30,7 +34,7 @@
             item.link
           }}</NuxtLink>
         </div>
-      </v-col>
+      </div>
       <v-col v-if="item.edit == true">
         <v-btn
           class="mx-3"
@@ -43,7 +47,7 @@
           <v-icon dark> mdi-pencil </v-icon>
         </v-btn>
       </v-col>
-    </v-row>
+    </div>
   </div>
 </template>
 

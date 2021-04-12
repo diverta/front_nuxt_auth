@@ -1,6 +1,24 @@
 <template>
-  <v-container fluid>
-    <h1>Topics</h1>
+  <section>
+     <div class="l-content_heading">
+      <h1>My page</h1>
+    </div>
+    <v-tabs
+      background-color="transparent"
+      light
+      height="70"
+      class="rounded-xl"
+      centered
+      v-model="active_tab"
+    >
+      <v-tab @click="go_page('/mypage/')"> My page </v-tab>
+      <v-tab @click="go_page('/mypage/favorite_list/')"> Favorite List </v-tab>
+
+      <v-tab @click="go_page('/mypage/profile/edit/')" v-model="selectedTab"> Profile Edit </v-tab>
+      <v-tab @click="go_page('/mypage/posted_list')"> Posted list </v-tab>
+    </v-tabs>
+
+    <h1 class="mt-5 pt-5">My topics</h1>
     <br />
     <v-col cols="12" class="py-2">
       <v-btn-toggle v-model="text" tile color="deep-purple accent-3" group>
@@ -27,7 +45,7 @@
         @input="next"
       ></v-pagination>
     </div>
-  </v-container>
+  </section>
 </template>
 
 <script>
@@ -39,6 +57,7 @@ export default {
   },
   data() {
     return {
+      active_tab: 3,
       text: "",
       group_id: 13,
       categories: [],
@@ -50,6 +69,9 @@ export default {
     };
   },
   methods: {
+    go_page(path) {
+      this.$router.push(path);
+    },
     next(page) {
       this.updateTopics();
     },

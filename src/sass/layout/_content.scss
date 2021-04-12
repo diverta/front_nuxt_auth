@@ -1,0 +1,16 @@
+.l-content {
+    &_wrap {
+        background: inherit !important;
+    }
+    &_inner {
+        height: 100%;
+    }
+    &_heading {
+        text-align: center;
+        margin-bottom: 50px;
+        
+        & .slogan {
+            font-weight: normal;
+        }
+    }
+}

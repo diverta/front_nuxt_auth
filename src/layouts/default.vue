@@ -1,13 +1,22 @@
 <template>
-  <v-app light>
-    <v-navigation-drawer
+  <v-app class="l-content_wrap">
+    <v-navigation-drawer v-if="auth.loggedIn" 
+      id="c-navi_side"
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
       left
       fixed
+      dark
       temporary
+      :permanent="$vuetify.breakpoint.lgAndUp"
+      :hide-overlay="$vuetify.breakpoint.lgAndUp"
     >
+      <div class="text-center py-4">
+        <a href="/">
+          <img src="../assets/images/logo.png" class="c-navi_side-logo">
+        </a>
+      </div>
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
@@ -34,38 +43,39 @@
 
     <v-app-bar :clipped-left="clipped" color="#1414A0" dense dark fixed app>
       <v-app-bar-nav-icon v-if="auth.loggedIn" @click.stop="drawer = !drawer" />
-      <v-toolbar-title>
-        <a href="/">
-          <v-btn disable align> Logo Diverta Inc. </v-btn>
-        </a>
-      </v-toolbar-title>
       <v-spacer />
-      <v-toolbar-title height="30" to="/" v-text="subtitle" />
+
+      <v-toolbar-title height="30" to="/" v-text="subtitle" class="l-header_user"/>
+
+      <v-btn v-if="auth.loggedIn" icon @click="logout" class="l-header_logout">
+        <v-icon>mdi-exit-to-app</v-icon>
+      </v-btn>
+
+      <!--
       <div v-if="!auth.loggedIn">
         <NuxtLink to="/signup"> Sign Up </NuxtLink>
       </div>
-      <v-btn v-if="!auth.loggedIn" icon to="/" nuxt>
-        <v-icon>mdi-account</v-icon>
-      </v-btn>
-
-      <v-btn v-if="auth.loggedIn" icon @click="logout">
-        <v-icon>mdi-exit-to-app</v-icon>
-      </v-btn>
+      -->
+      <div v-if="!auth.loggedIn">
+      New to Kuroco? <button class="c-btn c-btn_sm c-btn_dark ml-2" to="/signup" nuxt>Sign Up</button>
+      </div>
+      
     </v-app-bar>
     <v-main>
-      <br />
+      <!--<br />
       <div align="center" v-if="!auth.loggedIn">
         <v-btn disable align> Logo Diverta Inc. </v-btn>
       </div>
-      <br />
-      <v-container>
+      <br />-->
+      <v-container class="l-content_inner">
         <nuxt />
       </v-container>
     </v-main>
 
     <v-footer color="#1414A0" padless app absolute inset>
       <v-row justify="center" no-gutters>
-        <v-btn color="white" text rounded class="my-2"> Copy right </v-btn>
+        <small class="my-4 l-footer_copyright"> Copyright © 2021 Kuroco All rights reserved. </small>
+        <img src="../assets/images/logo-kuroco.svg" width="120" class="pl-4 ">
         <v-col class="#1414A0 text-center white--text" cols="12"> </v-col>
       </v-row>
     </v-footer>
@@ -88,6 +98,7 @@
 </template>
 
 <script>
+import '../sass/style.scss';
 export default {
   data() {
     return {
@@ -155,8 +166,14 @@ export default {
     },
   },
   methods: {
+    updateDesign() {
+      console.log("You logout!");
+      myBody.classList.remove('p-dashboard');
+      myBody.classList.add('p-login');
+    },
     async logout() {
       await this.$auth.logout().then((response) => {
+        this.updateDesign();
         this.$store.dispatch("snackbar/setMessage", "ログアウトしました");
         this.$store.dispatch("snackbar/snackOn");
         this.$router.push("/");

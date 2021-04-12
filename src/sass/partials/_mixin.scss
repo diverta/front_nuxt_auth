@@ -1,0 +1,26 @@
+ // sm
+ @mixin sm() {
+  @media screen and (max-width: 576px){
+   @content;
+ }
+ }
+ // md
+ @mixin md() {
+  @media screen and (max-width: 768px){
+    @content;
+}
+ }
+ // lg
+ @mixin lg() {
+   @media screen and (max-width: 992px){
+    @content;
+  }
+}
+ // xl
+ @mixin xl() {
+    @media screen and (max-width: 1200px){
+     @content;
+   }
+ }
+
+$color_test: #000;

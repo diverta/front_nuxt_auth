@@ -1,5 +1,24 @@
 <template>
   <div>
+    <div class="l-content_heading">
+      <h1>My page</h1>
+    </div>
+    
+    <v-tabs
+      background-color="transparent"
+      light
+      height="70"
+      class="rounded-xl"
+      centered
+      v-model="active_tab"
+    >
+      <v-tab @click="go_page('/mypage/')"> My page </v-tab>
+      <v-tab @click="go_page('/mypage/favorite_list/')"> Favorite List </v-tab>
+
+      <v-tab @click="go_page('/mypage/profile/edit/')" v-model="selectedTab"> Profile Edit </v-tab>
+      <v-tab @click="go_page('/mypage/posted_list')"> Posted list </v-tab>
+    </v-tabs>
+
     <v-progress-linear
       :active="loading"
       :indeterminate="loading"
@@ -7,18 +26,17 @@
       top
       color="orange white-4"
     ></v-progress-linear>
-    <br />
-    <br />
 
-    <h1>Profile edit</h1>
+    <h1 class="mt-5 pt-5">Profile editing</h1>
     <br />
-    <div class="theme--light v-stepper">
+    <div class="v-stepper c-form_wrap">
       <v-container fluid>
         <vue-form-generator
           ref="form"
           :schema="schema"
           :model="model"
           @model-updated="onInput"
+          class="p-contact_form"
         >
         </vue-form-generator>
 
@@ -27,16 +45,17 @@
             <div>I agree to the terms of Use.</div>
           </template>
         </v-checkbox>
-        <v-btn
+        <div class="text-center mb-5">
+          <button
           type="submit"
           block
           x-large
-          color="success"
-          class="white--text"
           @click="submitF()"
           :disabled="!disabled"
-          >SUBMIT</v-btn
+          class="c-btn c-btn_main"
+          >SUBMIT</button
         >
+        </div>
       </v-container>
     </div>
   </div>
@@ -78,6 +97,9 @@ export default {
     "vue-form-generator": VueFormGenerator.component,
   },
   methods: {
+    go_page(path) {
+      this.$router.push(path);
+    },
     onInput: function (value, fieldName) {
       this.$set(this.model, fieldName, value);
     },
@@ -165,6 +187,7 @@ export default {
   data() {
     return {
       // form default values
+      active_tab: 2,
       email: "",
       name1: "",
       name2: "",

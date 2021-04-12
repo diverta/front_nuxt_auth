@@ -8,4 +8,15 @@ module.exports = {
     },
     extensions: [".ts", ".tsx", ".js", ".jsx"],
   },
+  module: {
+    rules: [
+      {
+        test: /\.scss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+        ]
+      },
+    ],
+  },
 }
