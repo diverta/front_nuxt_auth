@@ -111,9 +111,6 @@
 
 <script>
 import topicList from "../components/topics";
-import Vue from "vue";
-let myBody = document.getElementsByTagName('body')[0];
-myBody.classList.add('p-login');
 
 export default {
   components: {
