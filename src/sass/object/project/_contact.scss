@@ -1,0 +1,25 @@
+.p-contact {
+    
+    &_form {
+
+        &-wrap {
+            background: #fff;
+            border-radius: 15px;
+        }
+        & label {
+            color: $color_main_dark;
+            font-weight: bold;
+        }
+        & .v-input--radio-group {
+            width: 100%;
+        }
+        & .v-form, & .v-input--radio-group__input {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+        & .v-input--checkbox, & .v-radio {
+            flex: 1 1 30%;
+        }
+    }
+}

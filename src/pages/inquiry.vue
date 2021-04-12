@@ -7,22 +7,22 @@
       top
       color="orange white-4"
     ></v-progress-linear>
-    <h1>Inquiry</h1>
-    <br />
-    <br />
 
-    <h3>
-      Please provide your <br />
-      inquiry
-    </h3>
-    <br />
-    <div class="theme--light v-stepper">
+    <div class="l-content_heading">
+      <h1>Inquiry Form</h1>
+      <h3 class="slogan">
+        Please provide us your information, we will be in touch with you shortly. <br />
+      </h3>
+    </div>
+
+    <div class="v-stepper mt-5 p-contact_form-wrap">
       <v-container fluid>
         <vue-form-generator
           ref="form"
           :schema="schema"
           :model="model"
           @model-updated="onInput"
+          class="p-contact_form"
         >
         </vue-form-generator>
 
@@ -31,16 +31,14 @@
             <div>I agree to the terms of Use.</div>
           </template>
         </v-checkbox>
-        <v-btn
-          type="submit"
-          block
-          x-large
-          color="success"
-          class="white--text"
-          @click="submitF()"
-          :disabled="!disabled"
-          >Submit</v-btn
-        >
+        <div class="text-center mb-5">
+          <button
+            type="submit"
+            class="c-btn c-btn_main"
+            @click="submitF()"
+            :disabled="!disabled"
+            >Submit</button>
+        </div>
       </v-container>
     </div>
   </div>
