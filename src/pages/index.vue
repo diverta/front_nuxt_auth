@@ -149,9 +149,9 @@ export default {
       this.$router.push("/topics_list");
     },
     updateDesign() {
-      console.log("You login!");
-      myBody.classList.add('p-dashboard');
-      myBody.classList.remove('p-login');
+      //console.log("You login!");
+      //myBody.classList.add('p-dashboard');
+      //myBody.classList.remove('p-login');
     },
     updateTopics() {
       var url =
