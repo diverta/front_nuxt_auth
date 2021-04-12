@@ -64,9 +64,6 @@ import fieldVuetifySingleChoice from "../components/vuetify_single_choice.vue";
 import fieldVuetifySingleOption from "../components/vuetify_single_option.vue";
 import fieldVuetifyPassword from "../components/vuetify_password.vue";
 
-let myBody = document.getElementsByTagName('body')[0];
-myBody.classList.add('p-login');
-
 Vue.component("fieldUploadFile", fieldUploadFile);
 Vue.component("fieldVuetifyDate", fieldVuetifyDate);
 Vue.component("fieldVuetifyText", fieldVuetifyText);

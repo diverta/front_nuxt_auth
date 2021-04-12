@@ -192,9 +192,6 @@
 </template>
 
 <script>
-let myBody = document.getElementsByTagName('body')[0];
-myBody.classList.add('p-login');
-
 export default {
   auth: false,
   data() {
