@@ -81,7 +81,6 @@
 
 <script>
 import topicList from "../components/topics";
-import Vue from "vue";
 
 export default {
   components: {

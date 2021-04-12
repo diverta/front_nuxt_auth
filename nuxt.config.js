@@ -117,6 +117,5 @@ export default {
         autoFetchUser: true,
       },
     },
-    plugins: [ { src: '~/plugins/axios_ssr', ssr: true },]
   },
 }
