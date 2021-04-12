@@ -17,7 +17,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Generate
-        run: npm run export
+        run: npm run generate
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:

@@ -14,18 +14,13 @@ $ npm run build
 $ npm run start
 
 # generate static project for development
-$ npm run export
+$ npm run generate
 
 # build for production and launch server
 $ npm run build-prod
 
 # generate static project for production
-$ npm run export-prod
+$ npm run generate-prod
 
-# deploy to Firebase hosting
-$ firebase target:apply hosting production nuxt-auth
-$ firebase target:apply hosting development stg-nuxt-auth
-$ firebase deploy
-```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
