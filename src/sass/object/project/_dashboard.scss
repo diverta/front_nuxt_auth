@@ -1,0 +1,12 @@
+.p-dashboard {
+    
+    background: #e7f0f9;
+
+    & .v-main__wrap > .container {
+        margin-left: 256px;
+
+        @include xl {
+            margin-left: auto;
+        }
+    }
+}

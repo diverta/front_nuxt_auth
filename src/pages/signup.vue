@@ -12,7 +12,7 @@
 
     <h1 align="center">Sign up</h1>
     <br />
-    <div class="theme--light v-stepper">
+    <div class="v-stepper c-form_wrap">
       <v-container fluid>
         <br /><br />
         <h4 style="font-weight: normal">
@@ -32,16 +32,17 @@
             <div>I agree to the terms of Use.</div>
           </template>
         </v-checkbox>
-        <v-btn
+        <div class="text-center mb-5">
+        <button
           type="submit"
           block
           x-large
-          color="success"
-          class="white--text"
+          class="c-btn c-btn_dark"
           @click="submitF()"
           :disabled="!disabled"
-          >SUBMIT</v-btn
+          >SUBMIT</button
         >
+        </div>
       </v-container>
     </div>
   </div>
@@ -62,6 +63,9 @@ import fieldVuetifyMultipleChoice from "../components/vuetify_multiple_choice.vu
 import fieldVuetifySingleChoice from "../components/vuetify_single_choice.vue";
 import fieldVuetifySingleOption from "../components/vuetify_single_option.vue";
 import fieldVuetifyPassword from "../components/vuetify_password.vue";
+
+let myBody = document.getElementsByTagName('body')[0];
+myBody.classList.add('p-login');
 
 Vue.component("fieldUploadFile", fieldUploadFile);
 Vue.component("fieldVuetifyDate", fieldVuetifyDate);

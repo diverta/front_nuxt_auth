@@ -1,0 +1,23 @@
+header {
+    background-color: inherit !important;
+    border-bottom: none !important;
+    //border-bottom: 1px solid rgba(255,255,255, 0.1) !important;
+    box-shadow: none !important;
+
+    @at-root .p-dashboard & {
+        background-color: #1777ca !important;
+    }
+}
+
+.l-header {
+    &_logout {
+        background: #0c61ab;
+        border-radius: 0;
+        padding: 10px 30px;
+    }
+    &_user {
+        font-size: 0.9em;
+        margin-right: 20px;
+        color: #fff;
+    }
+}

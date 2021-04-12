@@ -1,10 +1,12 @@
 <template>
   <div fluid>
-    <h1>My page</h1>
-    <br />
+    <div class="l-content_heading">
+      <h1>My page</h1>
+    </div>
+    
     <v-tabs
-      background-color="indigo"
-      dark
+      background-color="transparent"
+      light
       height="70"
       class="rounded-xl"
       centered
@@ -16,22 +18,18 @@
       <v-tab @click="go_page('/mypage/posted_list')"> Posted list </v-tab>
     </v-tabs>
 
-    <br />
-    <h1 class="text-center">Favorite list</h1>
+    <h1 class="mt-5 pt-5">Favorite list</h1>
     <br />
     <v-topics :topics="topics"></v-topics>
     <br />
-    <v-col class="text-right">
-      <v-btn
+    <v-col class="text-center">
+      <button
         type="submit"
-        block
-        x-large
-        color="success"
-        class="white--text"
+        class="c-btn c-btn_main"
         @click="favorite_list()"
       >
         View more
-      </v-btn>
+      </button>
     </v-col>
   </div>
 </template>

@@ -1,9 +1,10 @@
 <template>
-  <v-container fluid>
-    <h1>Topics</h1>
-    <br />
+  <section>
+    <div class="l-content_heading">
+      <h1>Topics</h1>
+    </div>
     <v-col cols="12" class="py-2">
-      <v-btn-toggle v-model="text" tile color="deep-purple accent-3" group>
+      <v-btn-toggle v-model="text" class="c-navi_filter" group>
         <v-btn @change="changeCategoryAll()"> ALL </v-btn>
         <v-btn
           v-for="item in categories"
@@ -25,9 +26,10 @@
         v-model="page"
         :length="Math.ceil(totalCnt / perPage)"
         @input="next"
+        class="c-navi_pagination"
       ></v-pagination>
     </div>
-  </v-container>
+  </section>
 </template>
 
 <script>

@@ -1,9 +1,10 @@
 <template>
   <div>
-    <h1>Member list</h1>
-    <br />
+    <div class="l-content_heading">
+      <h1>Members list</h1>
+    </div>
     <v-row>
-      <v-col cols="6">
+      <v-col cols="5">
         <v-autocomplete
           v-model="member"
           :items="members"
@@ -21,15 +22,15 @@
           label="Deparment"
         ></v-autocomplete>
       </v-col>
-      <v-col>
-        <v-btn @click="filterByMembersDepartment()"> search </v-btn>
+      <v-col cols="2">
+        <button class="c-btn c-btn_dark c-btn_md mt-2" @click="filterByMembersDepartment()"> Search </button>
       </v-col>
     </v-row>
     <v-data-table
       :headers="headers"
       :items="filteredItems"
       :items-per-page="perpage"
-      class="elevation-1"
+      class="elevation-1 mt-5"
     >
       <template v-slot:item.name="{ item }">
         <NuxtLink :to="{ path: '/member/detail/' + item.id }" no-prefetch>{{

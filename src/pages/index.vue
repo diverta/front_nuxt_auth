@@ -1,49 +1,67 @@
 <template>
-  <div class="container">
     <client-only>
-      <div v-if="!auth.loggedIn">
-        <form class="login-page" @submit.prevent="login">
-          <div class="login-screen lgn-left">
-            <h2 align="center">Login</h2>
-            <br />
-            <div class="inner">
-              <form @submit.prevent="login">
-                <p>
-                  <v-text-field
-                    v-model="form.email"
-                    label="Login ID or Email address"
-                    type="email"
-                    outlined
-                  />
-                </p>
-                <p>
-                  <v-text-field
-                    v-model="form.password"
-                    label="Password"
-                    :type="show_pwd1 ? 'text' : 'password'"
-                    :append-icon="show_pwd1 ? 'mdi-eye' : 'mdi-eye-off'"
-                    outlined
-                    @click:append="show_pwd1 = !show_pwd1"
-                  />
-                </p>
-                <p>
-                  If you can not remember your password click
-                  <NuxtLink to="/reminder"> here </NuxtLink>
-                </p>
-                <v-btn
-                  type="submit"
-                  block
-                  x-large
-                  color="success"
-                  dark
-                  :loading="loading"
-                >
-                  Login
-                </v-btn>
-              </form>
+      <div v-if="!auth.loggedIn" class="p-login_content elevation-7">
+        <v-row>
+          <v-col class="pa-0 col-sm-6 col-12">
+            <div class="p-login_intro">
+              <img src="../assets/images/logo.png" class="p-login_logo">
+              <div class="p-login_intro-text">
+                <h1 class="heading">Welcome Back to<br> Kuroco!</h1>
+                <p>Sign in to continue your Kuroco Headless CMS</p>
+              </div>
             </div>
-          </div>
-        </form>
+          </v-col>
+          <v-col class="pa-0 col-sm-6 col-12">
+            <v-card class="p-login_form" outlined>
+            <form @submit.prevent="login">
+              <div class="login-screen lgn-left">
+                <v-card-title>
+                  <h2 align="center" class="pb-4 c-text_blue">Sign In</h2>
+                </v-card-title>
+                <v-card-text class="inner">
+                  <form @submit.prevent="login">
+                    <v-text-field
+                      v-model="form.email"
+                      label="Login ID or Email address"
+                      type="email"
+                      outlined
+                    />
+                    <v-text-field
+                      v-model="form.password"
+                      label="Password"
+                      :type="show_pwd1 ? 'text' : 'password'"
+                      :append-icon="show_pwd1 ? 'mdi-eye' : 'mdi-eye-off'"
+                      outlined
+                      @click:append="show_pwd1 = !show_pwd1"
+                    />
+                    <p>
+                      <NuxtLink to="/reminder">Forgot Password?</NuxtLink>
+                    </p>
+                    <div class="text-center">
+                    <button
+                      type="submit"
+                      block
+                      x-large
+                      :loading="loading"
+                      class="c-btn_dark c-btn submit-btn"
+                    >
+                      Sign In
+                    </button>
+                    </div>
+                  </form>
+                </v-card-text>
+              </div>
+            </form>
+            </v-card>
+          </v-col>
+
+        <script>
+          let myBody = document.getElementsByTagName('body')[0];
+          myBody.classList.add('p-login');
+          myBody.classList.remove('p-dashboard');
+        </script>
+
+        </v-row>
       </div>
 
       <div v-else class="mypage">
@@ -57,26 +75,38 @@
           ></v-carousel-item>
         </v-carousel>
 
-        <br />
-        <h1 class="text-center">Topics</h1>
-        <br />
+        <h1 class="text-left mt-5 pt-4">Latest articles</h1>
+    
         <v-topics :topics="topics"></v-topics>
-        <br />
-        <v-col class="text-right">
-          <v-btn
+        <div class="text-center py-5">
+          <a
             type="submit"
             block
             x-large
             color="success"
-            class="white--text"
+            class="c-btn c-btn_main c-btn_md c-btn_icon"
             @click="back()"
           >
-            View more
-          </v-btn>
-        </v-col>
+            View more articles 
+            <v-icon
+              dark
+              right
+              class="icon"
+            >
+              mdi-arrow-right-drop-circle
+            </v-icon>
+
+          </a>
+        </div>
+
+        <script>
+          let myBody = document.getElementsByTagName('body')[0];
+          myBody.classList.add('p-dashboard');
+          myBody.classList.remove('p-login');
+        </script>
+
       </div>
     </client-only>
-  </div>
 </template>
 
 <script>
@@ -117,6 +147,11 @@ export default {
   methods: {
     back() {
       this.$router.push("/topics_list");
+    },
+    updateDesign() {
+      console.log("You login!");
+      myBody.classList.add('p-dashboard');
+      myBody.classList.remove('p-login');
     },
     updateTopics() {
       var url =
@@ -174,6 +209,7 @@ export default {
         .loginWith("local", { data: this.form })
         .then(() => {
           this.updateTopics();
+          this.updateDesign();
           this.$router.push("/");
           this.$store.dispatch("snackbar/setMessage", "ログインしました");
           this.$store.dispatch("snackbar/snackOn");
