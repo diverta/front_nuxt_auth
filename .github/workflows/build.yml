@@ -25,7 +25,7 @@ jobs:
       - name: Archive Production Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ github.sha }}
+          name: ${{ github.sha }}-${{ github.run_id }}
           path: dist
           retention-days: 7
       - name: Webhook
