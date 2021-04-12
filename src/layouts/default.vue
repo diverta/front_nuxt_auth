@@ -167,9 +167,9 @@ export default {
   },
   methods: {
     updateDesign() {
-      console.log("You logout!");
-      myBody.classList.remove('p-dashboard');
-      myBody.classList.add('p-login');
+      //console.log("You logout!");
+      //myBody.classList.remove('p-dashboard');
+      //myBody.classList.add('p-login');
     },
     async logout() {
       await this.$auth.logout().then((response) => {
