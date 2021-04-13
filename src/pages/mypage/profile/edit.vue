@@ -36,7 +36,7 @@
           :schema="schema"
           :model="model"
           @model-updated="onInput"
-          class="p-contact_form"
+          class="c-form"
         >
         </vue-form-generator>
 
