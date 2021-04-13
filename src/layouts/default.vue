@@ -57,7 +57,7 @@
       </div>
       -->
       <div v-if="!auth.loggedIn">
-      New to Kuroco? <button class="c-btn c-btn_sm c-btn_dark ml-2" to="/signup" nuxt>Sign Up</button>
+          New to Kuroco? <button class="c-btn c-btn_sm c-btn_dark ml-2" @click="go_page('/signup/')" nuxt>Sign Up</button>
       </div>
       
     </v-app-bar>
@@ -90,7 +90,7 @@
 
       <template v-slot:action="{ attrs }">
         <v-btn text v-bind="attrs" @click="snackbarVisible = false">
-          閉じる
+          Close
         </v-btn>
       </template>
     </v-snackbar>
@@ -166,15 +166,19 @@ export default {
     },
   },
   methods: {
+    go_page(path) {
+      this.$router.push(path);
+    },
     updateDesign() {
-      //console.log("You logout!");
-      //myBody.classList.remove('p-dashboard');
-      //myBody.classList.add('p-login');
+      console.log("You logout!");
+      let myBody = document.getElementsByTagName('body')[0];
+      myBody.classList.remove('p-dashboard');
+      myBody.classList.add('p-login');
     },
     async logout() {
       await this.$auth.logout().then((response) => {
         this.updateDesign();
-        this.$store.dispatch("snackbar/setMessage", "ログアウトしました");
+        this.$store.dispatch("snackbar/setMessage", "Logged Out.");
         this.$store.dispatch("snackbar/snackOn");
         this.$router.push("/");
       });

@@ -104,6 +104,16 @@ export default {
   },
   middleware: "auth",
   auth: false,
+  created() {
+    let myBody = document.getElementsByTagName('body')[0];
+    if (this.$auth.loggedIn) {
+      myBody.classList.add('p-dashboard');
+      myBody.classList.remove('p-login');
+    } else {
+      myBody.classList.remove('p-dashboard');
+      myBody.classList.add('p-login');
+    }
+  },
   data: () => ({
     loading: false,
     show_pwd1: false,
@@ -136,8 +146,9 @@ export default {
     },
     updateDesign() {
       //console.log("You login!");
-      //myBody.classList.add('p-dashboard');
-      //myBody.classList.remove('p-login');
+      let myBody = document.getElementsByTagName('body')[0];
+      myBody.classList.add('p-dashboard');
+      myBody.classList.remove('p-login');
     },
     updateTopics() {
       var url =
@@ -197,7 +208,7 @@ export default {
           this.updateTopics();
           this.updateDesign();
           this.$router.push("/");
-          this.$store.dispatch("snackbar/setMessage", "ログインしました");
+          this.$store.dispatch("snackbar/setMessage", "Logged in");
           this.$store.dispatch("snackbar/snackOn");
           this.loading = false;
         })

@@ -15,14 +15,14 @@
       </h3>
     </div>
 
-    <div class="v-stepper mt-5 p-contact_form-wrap">
+    <div class="v-stepper mt-5 c-form_wrap">
       <v-container fluid>
         <vue-form-generator
           ref="form"
           :schema="schema"
           :model="model"
           @model-updated="onInput"
-          class="p-contact_form"
+          class="c-form"
         >
         </vue-form-generator>
 

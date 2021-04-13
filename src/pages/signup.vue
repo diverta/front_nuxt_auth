@@ -10,20 +10,21 @@
     <br />
     <br />
 
-    <h1 align="center">Sign up</h1>
     <br />
     <div class="v-stepper c-form_wrap">
       <v-container fluid>
-        <br /><br />
-        <h4 style="font-weight: normal">
-          Please complete the form below to sign up
-        </h4>
-        <br /><br />
+        <div class="l-content_heading">
+          <h1>Sign up</h1>
+          <h4 class="slogan">
+            Please complete the form below to sign up
+          </h4>
+        </div>
         <vue-form-generator
           ref="form"
           :schema="schema"
           :model="model"
           @model-updated="onInput"
+          class="c-form"
         >
         </vue-form-generator>
 

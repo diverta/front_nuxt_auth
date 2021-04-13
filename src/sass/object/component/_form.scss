@@ -19,4 +19,7 @@
     & .v-input--checkbox, & .v-radio {
         flex: 1 1 30%;
     }
+    & .v-messages__message {
+        color: red;
+    }
 }

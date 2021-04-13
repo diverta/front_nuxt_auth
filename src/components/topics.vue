@@ -2,17 +2,17 @@
   <div class="c-table container">
     <div class="row c-table_title c-table_row">
       <div class="col-2 c-table_col">Date</div>
+      <div class="col-4 c-table_col">Category</div>
       <div class="col c-table_col">Title</div>
-      <div class="col-5 c-table_col">Links</div>
     </div>
     <div class="row c-table_row" v-for="item in topics" v-bind:key="item.id">
       <div class="col-2 c-table_col">
         {{ item.date }}
       </div>
-      <div class="col c-table_col">
+      <div class="col-4 c-table_col">
         {{ item.label }}
       </div>
-      <div class="col-5 c-table_col">
+      <div class="col c-table_col">
         <div v-if="item.icon == 'pdf'">
           <a :href="item.fileurl">{{ item.link }}</a>
           <v-icon>mdi-pdf-box</v-icon>

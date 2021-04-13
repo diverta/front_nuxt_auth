@@ -25,9 +25,14 @@
         }
     }
     &_filter {
+        flex-wrap: wrap;
 
         & .v-btn__content {
             text-transform: none !important;
+        }
+        & .v-size--default {
+            height: auto !important;
+            padding: 5px 15px !important;
         }
         & .v-item--active {
             border-radius: 10px !important;
