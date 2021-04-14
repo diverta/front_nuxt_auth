@@ -6,8 +6,8 @@
             <div class="p-login_intro">
               <img src="../assets/images/logo.png" class="p-login_logo">
               <div class="p-login_intro-text">
-                <h1 class="heading">Welcome Back to<br> Kuroco!</h1>
-                <p>Sign in to continue your Kuroco Headless CMS</p>
+                <h1 class="heading">Welcome Back to<br> Muzica!</h1>
+                <p>Sign in to continue your portal</p>
               </div>
             </div>
           </v-col>

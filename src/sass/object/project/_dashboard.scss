@@ -3,10 +3,11 @@
     background: #e7f0f9;
 
     & .v-main__wrap > .container {
-        margin-left: 256px;
+        padding-left: 280px;
+        margin-left: 0;
 
         @include xl {
-            margin-left: auto;
+            padding-left: 15px;
         }
     }
 }

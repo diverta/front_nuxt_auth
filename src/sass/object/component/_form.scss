@@ -4,6 +4,18 @@
         background: #fff;
         border-radius: 15px;
     }
+    &_tnc {
+        .v-input__slot {
+            justify-content: center;
+            margin-bottom: 15px;    
+        } 
+        & .v-input--selection-controls__input {
+            flex: 0 0 auto !important;
+        }
+        & label {
+            flex: 0 0 auto !important;
+        }
+    }
     & label {
         color: $color_main_dark;
         font-weight: bold;
@@ -17,7 +29,8 @@
         flex-direction: row;
     }
     & .v-input--checkbox, & .v-radio {
-        flex: 1 1 30%;
+        //flex: 1 1 30%;
+        margin: 0 25px 0 0 !important;
     }
     & .v-messages__message {
         color: red;

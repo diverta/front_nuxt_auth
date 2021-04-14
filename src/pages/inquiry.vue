@@ -25,12 +25,13 @@
           class="c-form"
         >
         </vue-form-generator>
-
-        <v-checkbox v-model="disabled">
+        
+        <v-checkbox v-model="disabled" class="c-form_tnc">
           <template v-slot:label>
             <div>I agree to the terms of Use.</div>
           </template>
         </v-checkbox>
+
         <div class="text-center mb-5">
           <button
             type="submit"
