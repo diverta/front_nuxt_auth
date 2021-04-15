@@ -1,7 +1,8 @@
 <template>
   <div>
-    <h1>Member detail</h1>
-    <br />
+    <div class="l-content_heading">
+      <h1>Member details</h1>
+    </div>
     <v-col>
       <v-row>
         <v-col>
@@ -10,7 +11,6 @@
             class="mx-auto"
             :lazy-src="placeholder"
             :aspect-ration="16 / 9"
-            :src="detail.url"
             width="33%"
             max-height="400"
             max-width="400"

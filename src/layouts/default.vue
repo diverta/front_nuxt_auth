@@ -57,7 +57,7 @@
       </div>
       -->
       <div v-if="!auth.loggedIn">
-          New to Kuroco? <button class="c-btn c-btn_sm c-btn_dark ml-2" @click="go_page('/signup/')" nuxt>Sign Up</button>
+          New to Muzica? <button class="c-btn c-btn_sm c-btn_dark ml-2" @click="go_page('/signup/')" nuxt>Sign Up</button>
       </div>
       
     </v-app-bar>
@@ -67,7 +67,7 @@
         <v-btn disable align> Logo Diverta Inc. </v-btn>
       </div>
       <br />-->
-      <v-container class="l-content_inner">
+      <v-container class="l-content_inner" fluid>
         <nuxt />
       </v-container>
     </v-main>
@@ -100,6 +100,16 @@
 <script>
 import '../sass/style.scss';
 export default {
+  created() {
+    let myBody = document.getElementsByTagName('body')[0];
+    if (this.$auth.loggedIn) {
+      myBody.classList.add('p-dashboard');
+      myBody.classList.remove('p-login');
+    } else {
+      myBody.classList.remove('p-dashboard');
+      myBody.classList.add('p-login');
+    }
+  },
   data() {
     return {
       clipped: false,
@@ -108,29 +118,29 @@ export default {
       items: [
         {
           icon: "mdi-home",
-          title: "TOP",
-          title_loggedIn: "TOP",
+          title: "Home",
+          title_loggedIn: "Home",
           to: "/",
         },
         {
-          icon: "mdi-send",
-          title: "inquiry form",
-          to: "/inquiry",
-        },
-        {
           icon: "mdi-newspaper-variant",
-          title: "topics",
+          title: "Articles",
           to: "/topics_list",
         },
         {
           icon: "mdi-account-tie",
-          title: "member",
+          title: "Member",
           to: "/member",
         },
         {
           icon: "mdi-account-box",
-          title: "mypage",
+          title: "My page",
           to: "/mypage",
+        },
+        {
+          icon: "mdi-send",
+          title: "Feedback",
+          to: "/inquiry",
         },
       ],
       miniVariant: false,

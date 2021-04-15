@@ -8,7 +8,7 @@
       :rules="[rules.required, rules.password_min, rules.password]"
       :type="password_show ? 'text' : 'password'"
       :label="schema.label"
-      hint="8文字以上の半角英数字混在でご入力ください。記号を利用する場合は -_&=+%#@$*.!: が利用可能です。"
+      hint="The password must contain both alphabets and numbers at least 8 characters. You can also use these symbols '-_&=+%#@$*.!:'."
       persistent-hint
       counter
       @click:append="password_show = !password_show"
