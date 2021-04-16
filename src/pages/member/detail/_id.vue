@@ -5,15 +5,15 @@
     </div>
     <v-col>
       <v-row>
-        <v-col>
+        <v-col cols="auto">
           <v-img
             fluid
-            class="mx-auto"
-            :lazy-src="placeholder"
+            class="mx-auto mr-5"
+            :lazy-src="detail.url"
             :aspect-ration="16 / 9"
-            width="33%"
-            max-height="400"
-            max-width="400"
+            :src="detail.url"
+            max-height="180"
+            max-width="180"
           ></v-img>
         </v-col>
         <v-col class="mx-auto">
@@ -24,12 +24,12 @@
           <v-row>
             {{ detail.location }}
           </v-row>
-          <v-row>
-            <br />
-            <br />
+          <v-row v-if="detail.department" class="mt-3">
+            <v-icon class="icon c-text_blue pr-2">mdi-office-building</v-icon>
             {{ detail.department }}
           </v-row>
-          <v-row>
+          <v-row v-if="detail.position" class="mt-3">
+            <v-icon class="icon c-text_blue pr-2">mdi-briefcase-account</v-icon>
             {{ detail.position }}
           </v-row>
         </v-col>
@@ -84,7 +84,7 @@ export default {
   },
   data() {
     return {
-      placeholder: require("@/assets/images/avatar-placeholder.png"),
+      //placeholder: require("assets/images/avatar-placeholder.png"),
       member_id: null,
       detail: {
         name: "",
@@ -157,6 +157,9 @@ export default {
           detail["url"] =
             "https://dev-nuxt-auth.a.kuroco-img.app/v=1614168758" +
             details_obj.profileimage.url;
+        } else {
+          detail["url"] =
+            "/_nuxt/src/assets/images/avatar-placeholder.png";
         }
         if (details_obj.hasOwnProperty("role")) {
           detail["position"] = details_obj.role;
@@ -164,7 +167,6 @@ export default {
         if (details_obj.hasOwnProperty("department")) {
           detail["department"] = details_obj.department;
         }
-
         if (details_obj.hasOwnProperty("notes")) {
           detail["text"] = details_obj.notes;
         }
