@@ -38,7 +38,7 @@
             border: 1px solid $color_main;
 
             & .icon {
-                color: $color_main;
+                color: $color_main !important;
             }
         }
     }
@@ -49,6 +49,10 @@
         &:hover {
             background: #fff;
             color: $color_main_dark;
+
+            & .icon {
+                color: $color_main_dark !important;
+            }
         }
     }
     &_icon {
