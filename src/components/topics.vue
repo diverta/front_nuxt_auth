@@ -1,11 +1,13 @@
 <template>
-  <div class="c-table container">
+<section class="c-table">
+  <div class="container">
     <div class="row c-table_title c-table_row">
       <div class="col-2 c-table_col">Date</div>
       <div class="col-4 c-table_col">Category</div>
       <div class="col c-table_col">Title</div>
     </div>
-    <div v-if="topics.length > 0">
+    <div class="row" v-if="topics.length > 0">
+      <div class="col">
       <div class="row c-table_row" v-for="item in topics" v-bind:key="item.id">
         <div class="col-2 c-table_col">
           {{ item.date }}
@@ -49,11 +51,16 @@
           </v-btn>
         </v-col>
       </div>
+      </div>
     </div>
-    <div v-else class="text-center py-4 grey--text">
+    <div v-else class="row">
+      <div class="text-center py-4 grey--text col">
         No data available
+      </div>
+    </div>
     </div>
   </div>
+</section>
 </template>
 
 <script>

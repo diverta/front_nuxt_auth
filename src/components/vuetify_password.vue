@@ -31,11 +31,11 @@ export default {
       rules: {
         required: (value) => !!value || "required password",
         password_min: (v) =>
-          v.length == 0 || v.length >= 8 || "最低8文字以上を入力してください",
+          v.length == 0 || v.length >= 8 || "Your password must be at least 8 characters",
         password: (v) =>
           v.length == 0 ||
           /^[a-zA-Z0-9\-_&=+%#@$*.!:]+$/.test(v) ||
-          "半角英数字と記号(-_&=+%#@$*.!:)でご入力ください",
+          "The password must contain both alphabets. You can also use these symbols '-_&=+%#@$*.!:'.",
       },
     };
   },

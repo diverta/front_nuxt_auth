@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="l-content_maxWidth-sm mb-5 pb-5">
     <v-progress-linear
       :active="loading"
       :indeterminate="loading"
@@ -55,6 +55,7 @@ import Vue from "vue";
 import VueFormGenerator from "vue-form-generator";
 import KurocoParser from "../plugins/parser.js";
 import fieldUploadFile from "../components/vuetify_file_upload.vue";
+import fieldUploadImage from "../components/vuetify_image_upload.vue";
 import fieldVuetifyText from "../components/vuetify_text.vue";
 import fieldVuetifyTextArea from "../components/vuetify_textarea.vue";
 import fieldVuetifyDate from "../components/vuetify_date.vue";
@@ -66,6 +67,7 @@ import fieldVuetifySingleOption from "../components/vuetify_single_option.vue";
 import fieldVuetifyPassword from "../components/vuetify_password.vue";
 
 Vue.component("fieldUploadFile", fieldUploadFile);
+Vue.component("fieldUploadImage", fieldUploadImage);
 Vue.component("fieldVuetifyDate", fieldVuetifyDate);
 Vue.component("fieldVuetifyText", fieldVuetifyText);
 Vue.component("fieldVuetifyTextArea", fieldVuetifyTextArea);
@@ -159,6 +161,64 @@ export default {
             label: "Last Name",
             text: "",
             model: "name2",
+            required: true,
+          },
+          {
+            model: "sex",
+            label: "Sex",
+            contents: [
+              {
+                key: 1,
+                value: "Male",
+                default: false,
+                attribute: { group: "1" },
+              },
+              {
+                key: 2,
+                value: "Female",
+                default: false,
+                attribute: { group: "1" },
+              },
+            ],
+            required: true,
+            type: "vuetifySingleChoice",
+          },
+          {
+            type: "vuetifyDate",
+            inputType: "picker",
+            label: "Birthday",
+            model: "birth",
+            required: true,
+          },
+          {
+            type: "vuetifyText",
+            inputType: "text",
+            text: "",
+            min: 0,
+            max: 100,
+            label: "Department",
+            model: "department",
+            required: false,
+          },
+          {
+            type: "vuetifyText",
+            inputType: "text",
+            text: "",
+            min: 0,
+            max: 100,
+            label: "Position",
+            model: "position",
+            required: false,
+          },
+          {
+            type: "vuetifyText",
+            inputType: "text",
+            text: "",
+            min: 0,
+            max: 100,
+            label: "Phone",
+            model: "tel",
+            texttype: "tel",
             required: true,
           },
           {
@@ -258,45 +318,56 @@ export default {
             required: true,
           },
           {
-            type: "vuetifyText",
-            inputType: "text",
-            text: "",
-            min: 0,
-            max: 100,
-            label: "Phone",
-            model: "tel",
-            texttype: "tel",
-            required: true,
-          },
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            text: "",
-            min: 0,
-            max: 100,
-            label: "Department",
-            model: "department",
+            type: "UploadFile",
+            label: "Avatar",
+            model: "profileimage",
             required: false,
           },
           {
-            model: "ext_01",
-            label: "Label",
+            model: "pull_down",
+            label: "Pull-down",
             contents: [
               {
                 key: 1,
-                value: "Radio1",
+                value: "Pulldown 1",
+                default: false,
+                attribute: { group: "2" },
+              },
+              {
+                key: 2,
+                value: "Pulldown 2",
+                default: false,
+                attribute: { group: "2" },
+              },
+              {
+                key: 3,
+                value: "Pulldown 3",
+                default: false,
+                attribute: { group: "2" },
+              },
+            ],
+            required: false,
+            type: "VuetifySingleOption",
+          },
+          {
+            model: "radio_button_2",
+            label: "Radio button",
+            contents: [
+              {
+                key: 1,
+                value: "Radio 1",
                 default: false,
                 attribute: { group: "1" },
               },
               {
                 key: 2,
-                value: "Radio2",
+                value: "Radio 2",
                 default: false,
                 attribute: { group: "1" },
               },
               {
                 key: 3,
-                value: "Radio3",
+                value: "Radio 3",
                 default: false,
                 attribute: { group: "1" },
               },
@@ -305,26 +376,26 @@ export default {
             type: "vuetifySingleChoice",
           },
           {
-            model: "ext_02",
-            label: "Label",
+            model: "multiple_check",
+            label: "Multiple",
             contents: [
               {
                 key: 1,
-                value: "Check1",
+                value: "Check 1",
                 default: false,
-                attribute: { group: "1" },
+                attribute: { group: "2" },
               },
               {
                 key: 2,
-                value: "Check2",
+                value: "Check 2",
                 default: false,
-                attribute: { group: "1" },
+                attribute: { group: "2" },
               },
               {
                 key: 3,
-                value: "Check3",
+                value: "Check 3",
                 default: false,
-                attribute: { group: "1" },
+                attribute: { group: "2" },
               },
             ],
             required: false,

@@ -142,39 +142,43 @@ export default {
       this.$auth.ctx.$axios
         .get("/rcms-api/1/members/" + this.$auth.user.member_id)
         .then(function (response) {
-          if (response.data.details.hasOwnProperty("email")) {
-            self.schema.fields[2].text = response.data.details.email;
-          }
           if (response.data.details.hasOwnProperty("name1")) {
             self.schema.fields[0].text = response.data.details.name1;
           }
           if (response.data.details.hasOwnProperty("name2")) {
             self.schema.fields[1].text = response.data.details.name2;
           }
-          if (response.data.details.hasOwnProperty("zip_code")) {
-            self.schema.fields[4].text = response.data.details.zip_code;
-          }
-          if (response.data.details.hasOwnProperty("tel")) {
-            self.schema.fields[7].text = response.data.details.tel;
+          if (response.data.details.hasOwnProperty("birth")) {
+            self.schema.fields[3].text = response.data.details.birth;
           }
           if (response.data.details.hasOwnProperty("department")) {
-            self.schema.fields[8].text = response.data.details.department;
+            self.schema.fields[4].text = response.data.details.department;
+          }
+          if (response.data.details.hasOwnProperty("position")) {
+            self.schema.fields[5].text = response.data.details.position;
+          }
+          if (response.data.details.hasOwnProperty("tel")) {
+            self.schema.fields[6].text = response.data.details.tel;
+          }
+          if (response.data.details.hasOwnProperty("email")) {
+            self.schema.fields[7].text = response.data.details.email;
+          }
+          if (response.data.details.hasOwnProperty("zip_code")) {
+            self.schema.fields[9].text = response.data.details.zip_code;
           }
           if (response.data.details.hasOwnProperty("notes")) {
-            self.schema.fields[11].text = response.data.details.notes;
+            self.schema.fields[16].text = response.data.details.notes;
           }
-
-          for (var i = 0; i < self.schema.fields[5].options.length; ++i) {
+          for (var i = 0; i < self.schema.fields[10].options.length; ++i) {
             if (
-              self.schema.fields[5].options[i].value ==
+              self.schema.fields[10].options[i].value ==
               response.data.details.tdfk_cd
             ) {
-              self.schema.fields[5].option = self.schema.fields[5].options[i];
+              self.schema.fields[10].option = self.schema.fields[10].options[i];
             }
           }
-
-          self.schema.fields[6].text = response.data.details.address1;
-          self.schema.fields[5].option.value = response.data.details.tdfk_cd;
+          self.schema.fields[11].text = response.data.details.address1;
+          self.schema.fields[10].option.value = response.data.details.tdfk_cd;
           self.loading = false;
         })
         .catch(function (error) {
@@ -220,6 +224,64 @@ export default {
             label: "Last Name",
             text: "",
             model: "name2",
+            required: true,
+          },
+          {
+            model: "sex",
+            label: "Sex",
+            contents: [
+              {
+                key: 1,
+                value: "Male",
+                default: false,
+                attribute: { group: "1" },
+              },
+              {
+                key: 2,
+                value: "Female",
+                default: false,
+                attribute: { group: "1" },
+              },
+            ],
+            required: true,
+            type: "vuetifySingleChoice",
+          },
+          {
+            type: "vuetifyDate",
+            inputType: "picker",
+            label: "Birthday",
+            model: "birth",
+            required: true,
+          },
+          {
+            type: "vuetifyText",
+            inputType: "text",
+            text: "",
+            min: 0,
+            max: 100,
+            label: "Department",
+            model: "department",
+            required: true,
+          },
+          {
+            type: "vuetifyText",
+            inputType: "text",
+            text: "",
+            min: 0,
+            max: 100,
+            label: "Position",
+            model: "position",
+            required: false,
+          },
+          {
+            type: "vuetifyText",
+            inputType: "text",
+            text: "",
+            min: 0,
+            max: 100,
+            label: "Phone",
+            model: "tel",
+            texttype: "tel",
             required: true,
           },
           {
@@ -323,45 +385,56 @@ export default {
             required: true,
           },
           {
-            type: "vuetifyText",
-            inputType: "text",
-            text: "",
-            min: 0,
-            max: 100,
-            label: "Phone",
-            model: "tel",
-            texttype: "tel",
-            required: true,
+            type: "UploadFile",
+            label: "Avatar",
+            model: "profileimage",
+            required: false,
           },
           {
-            type: "vuetifyText",
-            inputType: "text",
-            text: "",
-            min: 0,
-            max: 100,
-            label: "Department",
-            model: "department",
-            required: true,
-          },
-          {
-            model: "ext_01",
-            label: "Label",
+            model: "pull_down",
+            label: "Pull-down",
             contents: [
               {
                 key: 1,
-                value: "Radio1",
+                value: "Pulldown 1",
+                default: false,
+                attribute: { group: "2" },
+              },
+              {
+                key: 2,
+                value: "Pulldown 2",
+                default: false,
+                attribute: { group: "2" },
+              },
+              {
+                key: 3,
+                value: "Pulldown 3",
+                default: false,
+                attribute: { group: "2" },
+              },
+            ],
+            required: false,
+            type: "VuetifySingleOption",
+          },
+          {
+            model: "radio_button_2",
+            label: "Radio button",
+            contents: [
+              {
+                key: 1,
+                value: "Radio 1",
                 default: false,
                 attribute: { group: "1" },
               },
               {
                 key: 2,
-                value: "Radio2",
+                value: "Radio 2",
                 default: false,
                 attribute: { group: "1" },
               },
               {
                 key: 3,
-                value: "Radio3",
+                value: "Radio 3",
                 default: false,
                 attribute: { group: "1" },
               },
@@ -370,24 +443,24 @@ export default {
             type: "vuetifySingleChoice",
           },
           {
-            model: "ext_02",
-            label: "Label",
+            model: "multiple_check",
+            label: "Multiple",
             contents: [
               {
                 key: 1,
-                value: "Check1",
+                value: "Check 1",
                 default: false,
                 attribute: { group: "1" },
               },
               {
                 key: 2,
-                value: "Check2",
+                value: "Check 2",
                 default: false,
                 attribute: { group: "1" },
               },
               {
                 key: 3,
-                value: "Check3",
+                value: "Check 3",
                 default: false,
                 attribute: { group: "1" },
               },

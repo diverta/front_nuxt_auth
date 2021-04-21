@@ -161,7 +161,7 @@ export default {
                 "Thanks! Your inquiry submitted."
               );
               self.$store.dispatch("snackbar/snackOn");
-              self.$router.push("/");
+              //self.$router.push("/");
             }
           })
           .catch(function (error) {
