@@ -10,6 +10,7 @@
       height="70"
       class="rounded-xl"
       centered
+      show-arrows
     >
       <v-tab @click="go_page('/mypage/')"> My page </v-tab>
       <v-tab @click="go_page('/mypage/favorite_list/')"> Favorite List </v-tab>

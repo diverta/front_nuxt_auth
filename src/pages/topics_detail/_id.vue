@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-4">
     <v-progress-linear
       :active="loading"
       :indeterminate="loading"
@@ -12,22 +12,25 @@
         <v-card flat>
           <v-row>
             <v-col>
-              <v-btn disable>
-                {{ label }}
-              </v-btn>
-            </v-col>
-            <v-col>
-              <h3>
+              <h1 class="mb-3 mt-0">
                 {{ title }}
-              </h3>
+              </h1>
+              <span class="c-btn c-btn_main c-btn_sm c-btn_disable">
+                {{ label }}
+              </span>
             </v-col>
           </v-row>
         </v-card>
         <v-card flat>
           {{ date }}
+          <div class="text-right mt-2">
+            <v-btn icon :color="color" @click="onClick()">
+              <v-icon x-large left>mdi-heart</v-icon>
+            </v-btn>
+          </div>
         </v-card>
       </v-card>
-      <v-row v-for="item in items" v-bind:key="item.id">
+      <v-row v-for="item in items" v-bind:key="item.id" class="p-article_content">
         <v-item
           :text="item.text"
           :image_url="item.image_url"
@@ -38,23 +41,16 @@
         </v-item>
       </v-row>
     </v-col>
-    <v-row class="text-right">
-      <v-col>
-        <v-btn icon :color="color" @click="onClick()">
-          <v-icon x-large left>mdi-heart</v-icon>
-        </v-btn>
-      </v-col>
-    </v-row>
-    <v-btn
-      type="submit"
-      block
-      x-large
-      color="success"
-      class="white--text"
-      @click="back()"
-    >
-      Back to List
-    </v-btn>
+    <div class="text-center col">
+      <button
+        type="submit"
+        class="c-btn c-btn_dark c-btn_icon"
+        @click="back()"
+      >
+        Back to listing
+        <v-icon class="icon c-text_white pr-2">mdi-undo-variant</v-icon>
+      </button>
+    </div>
   </div>
 </template>
 

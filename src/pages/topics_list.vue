@@ -22,7 +22,7 @@
     <br />
     <br />
     <div class="text-center">
-      <v-pagination
+      <v-pagination v-if="Math.ceil(totalCnt / perPage) > 1"
         v-model="page"
         :length="Math.ceil(totalCnt / perPage)"
         @input="next"
