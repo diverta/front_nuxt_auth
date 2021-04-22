@@ -10,6 +10,7 @@
       class="rounded-xl"
       centered
       v-model="active_tab"
+      show-arrows
     >
       <v-tab @click="go_page('/mypage/')"> My page </v-tab>
       <v-tab @click="go_page('/mypage/favorite_list/')"> Favorite List </v-tab>
@@ -21,7 +22,7 @@
     <h1 class="mt-5 pt-5">My topics</h1>
     <br />
     <v-col cols="12" class="py-2">
-      <v-btn-toggle v-model="text" tile color="deep-purple accent-3" group>
+      <v-btn-toggle v-model="text" class="c-navi_filter" tile color="deep-purple accent-3" group>
         <v-btn @change="changeCategoryAll()"> ALL </v-btn>
         <v-btn
           v-for="item in categories"
@@ -39,7 +40,7 @@
     <br />
     <br />
     <div class="text-center">
-      <v-pagination
+      <v-pagination v-if="Math.ceil(totalCnt / perPage) > 1"
         v-model="page"
         :length="Math.ceil(totalCnt / perPage)"
         @input="next"

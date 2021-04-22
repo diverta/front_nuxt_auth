@@ -4,7 +4,7 @@
       <h1>Members list</h1>
     </div>
     <v-row>
-      <v-col cols="5">
+      <v-col class="col-sm-5 col-12 py-0">
         <v-autocomplete
           v-model="member"
           :items="members"
@@ -13,7 +13,7 @@
           label="Search member"
         ></v-autocomplete>
       </v-col>
-      <v-col cols="5">
+      <v-col class="col-sm-5 col-12 py-0">
         <v-autocomplete
           v-model="department"
           :items="departments"
@@ -22,15 +22,23 @@
           label="Deparment"
         ></v-autocomplete>
       </v-col>
-      <v-col cols="2">
-        <button class="c-btn c-btn_dark c-btn_md mt-2" @click="filterByMembersDepartment()"> Search </button>
+      <v-col class="col-md-2 col-12 py-0 mb-5">
+        <button class="c-btn c-btn_main c-btn_icon c-btn_md mt-2" @click="filterByMembersDepartment()"> 
+          Search 
+        <v-icon
+        dark
+        class="icon"
+        >
+          mdi-magnify 
+        </v-icon>
+        </button>
       </v-col>
     </v-row>
     <v-data-table
       :headers="headers"
       :items="filteredItems"
       :items-per-page="perpage"
-      class="elevation-1 mt-5"
+      class="elevation-1 mt-5 c-table"
     >
       <template v-slot:item.name="{ item }">
         <NuxtLink :to="{ path: '/member/detail/' + item.id }" no-prefetch>{{

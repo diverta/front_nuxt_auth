@@ -19,6 +19,7 @@
     & label {
         color: $color_main_dark;
         font-weight: bold;
+        text-transform: capitalize;
     }
     & .v-input--radio-group {
         width: 100%;

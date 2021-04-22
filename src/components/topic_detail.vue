@@ -1,7 +1,7 @@
 <template>
   <v-container fluid v-if="pattern == 1">
     <v-card class="mx-auto" max-width="7000">
-      <v-card-title class="text-h2" v-text="subtitle"></v-card-title>
+      <v-card-title class="c-heading_h2" v-text="subtitle"></v-card-title>
       <v-card-text>
         <div class="text--primary">
           {{ text }}

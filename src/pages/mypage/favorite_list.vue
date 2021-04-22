@@ -11,6 +11,7 @@
       class="rounded-xl"
       centered
       v-model="active_tab"
+      show-arrows
     >
       <v-tab @click="go_page('/mypage/')"> My page </v-tab>
       <v-tab @click="go_page('/mypage/favorite_list/')"> Favorite List </v-tab>
@@ -24,7 +25,7 @@
     <v-topics :topics="topics"></v-topics>
     <br />
     <div class="text-center">
-      <v-pagination
+      <v-pagination v-if="Math.ceil(totalCnt / perPage) > 1"
         v-model="page"
         :length="Math.ceil(totalCnt / perPage)"
         @input="next"
