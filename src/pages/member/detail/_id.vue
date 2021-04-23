@@ -85,7 +85,7 @@ export default {
   },
   data() {
     return {
-      //placeholder: require("assets/images/avatar-placeholder.png"),
+      placeholder: require("assets/images/avatar-placeholder.png"),
       member_id: null,
       detail: {
         name: "",
@@ -181,15 +181,20 @@ export default {
         if (details_obj.hasOwnProperty("radio_button_2")) {
           detail["radio_button_2"] = details_obj.radio_button_2.label;
         }
-        if (details_obj.hasOwnProperty("multiple_check")) {
-          detail["multiple_check"] = details_obj.multiple_check;
-        }
         if (details_obj.hasOwnProperty("pull_down")) {
           detail["pull_down"] = details_obj.pull_down.label;
         }
         if (details_obj.hasOwnProperty("notes")) {
           detail["text"] = details_obj.notes;
         }
+        if (details_obj.hasOwnProperty("multiple_check")) {
+        var multipleInput = "";
+          for (var i = 0; i < details_obj.multiple_check.length; ++i) {
+            multipleInput += details_obj.multiple_check[i].label + ", ";
+            detail["multiple_check"] = multipleInput;
+          }
+        }
+
         self.detail = detail;
         self.profile[0]["value"] = detail["location"];
         self.profile[1]["value"] = detail["zip"];

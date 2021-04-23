@@ -14,8 +14,7 @@
     >
       <v-tab @click="go_page('/mypage/')"> My page </v-tab>
       <v-tab @click="go_page('/mypage/favorite_list/')"> Favorite List </v-tab>
-
-      <v-tab @click="go_page('/mypage/profile/edit/')" v-model="selectedTab"> Profile Edit </v-tab>
+      <v-tab @click="go_page('/mypage/profile/edit/')"> Profile Edit </v-tab>
       <v-tab @click="go_page('/mypage/posted_list')"> Posted list </v-tab>
     </v-tabs>
 
@@ -177,8 +176,19 @@ export default {
               self.schema.fields[10].option = self.schema.fields[10].options[i];
             }
           }
+          for (var i = 0; i < self.schema.fields[13].contents.length; ++i) {
+            
+            if (
+              self.schema.fields[13].contents[i].key ==
+              response.data.details.pull_down.key
+            ) {
+              //self.schema.fields[13].contents.value = self.schema.fields[13].cotnent[i];
+              console.log(self.schema.fields[13].contents.value);
+            }
+          }
           self.schema.fields[11].text = response.data.details.address1;
           self.schema.fields[10].option.value = response.data.details.tdfk_cd;
+          self.schema.fields[13].contents[2].default = true;
           self.loading = false;
         })
         .catch(function (error) {
@@ -197,13 +207,18 @@ export default {
       name2: "",
       zip_code: "",
       tel: "",
+      multiple_check: "",
       inquirySubmitUrl: "/rcms-api/1/inquiry/9",
       inquirySchemaUrl: "/rcms-api/1/inquiry/get/9",
       auth: false,
       validForm: true,
       loading: true,
       disabled: false,
-      model: {},
+      model: {
+        sex: "Male",
+        pull_down: ["Pulldown 1"],
+        multiple_check: ["Check 1"]
+      },
       schema: {
         fields: [
           {
@@ -229,18 +244,28 @@ export default {
           {
             model: "sex",
             label: "Sex",
+            /*
+            values: [
+                "James",
+                "Nadia",
+                "Paul",
+                "Christelle",
+                "Marc",
+                "Marie"
+            ],
+            radiosOptions: {
+                value:"Male",
+                name:"Male"
+            }
+            */
             contents: [
               {
                 key: 1,
                 value: "Male",
-                default: false,
-                attribute: { group: "1" },
               },
               {
                 key: 2,
                 value: "Female",
-                default: false,
-                attribute: { group: "1" },
               },
             ],
             required: true,
@@ -251,7 +276,8 @@ export default {
             inputType: "picker",
             label: "Birthday",
             model: "birth",
-            required: true,
+            required: false,
+            visible: (model, field, form) => model.choice === 'Check a boolean value',
           },
           {
             type: "vuetifyText",
@@ -389,6 +415,7 @@ export default {
             label: "Avatar",
             model: "profileimage",
             required: false,
+            visible: (model, field, form) => model.choice === 'Check a boolean value',
           },
           {
             model: "pull_down",

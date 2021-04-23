@@ -3,9 +3,10 @@
     <div class="l-content_heading">
       <h1>Topics</h1>
     </div>
-    <v-col cols="12" class="py-2">
+    <div>
       <v-btn-toggle v-model="text" class="c-navi_filter" group>
-        <v-btn @change="changeCategoryAll()"> ALL </v-btn>
+        <!--<v-btn @change="changeCategoryAll()" class="v-item--active js-allBtn"> ALL </v-btn>-->
+        <v-btn @change="changeCategoryAll()" value="0"> ALL </v-btn>
         <v-btn
           v-for="item in categories"
           :value="item.key"
@@ -15,13 +16,11 @@
           {{ item.value }}
         </v-btn>
       </v-btn-toggle>
-    </v-col>
-    <v-col>
+    </div>
+    <div class="mt-4">
       <v-topics :topics="topics"></v-topics>
-    </v-col>
-    <br />
-    <br />
-    <div class="text-center">
+    </div>
+    <div class="text-center mt-5 pt-5">
       <v-pagination v-if="Math.ceil(totalCnt / perPage) > 1"
         v-model="page"
         :length="Math.ceil(totalCnt / perPage)"
@@ -41,7 +40,7 @@ export default {
   },
   data() {
     return {
-      text: "",
+      text: "0",
       group_id: 13,
       categories: [],
       topics: [],

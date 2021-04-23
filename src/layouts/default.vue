@@ -41,7 +41,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar :clipped-left="clipped" color="#1414A0" dense dark fixed app>
+    <v-app-bar :clipped-left="clipped" color="#1414A0" dense dark app :hide-on-scroll="!auth.loggedIn">
       <v-app-bar-nav-icon v-if="auth.loggedIn" @click.stop="drawer = !drawer" />
       <v-spacer />
 
@@ -56,8 +56,11 @@
         <NuxtLink to="/signup"> Sign Up </NuxtLink>
       </div>
       -->
-      <div v-if="!auth.loggedIn">
+      <div v-if="!auth.loggedIn && !signUpPage">
           New to Muzica? <button class="c-btn c-btn_sm c-btn_dark ml-2" @click="go_page('/signup/')" nuxt>Sign Up</button>
+      </div>
+      <div v-else-if="!auth.loggedIn">
+          Already have an account? <button class="c-btn c-btn_sm c-btn_dark ml-2" @click="go_page('/')" nuxt>Sign In</button>
       </div>
       
     </v-app-bar>
@@ -155,9 +158,12 @@ export default {
     auth() {
       return this.$store.$auth;
     },
+    signUpPage() {
+      return this.$route.name === 'signup'
+    },
     subtitle() {
       if (this.$store.$auth.loggedIn) {
-        return this.$auth.user.name1 + "さん、こんにちは";
+        return "Hi, " + this.$auth.user.name1;
       } else {
         return "";
       }

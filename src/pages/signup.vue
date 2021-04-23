@@ -189,6 +189,7 @@ export default {
             label: "Birthday",
             model: "birth",
             required: true,
+            visible: (model, field, form) => model.choice === 'Check a boolean value',
           },
           {
             type: "vuetifyText",
@@ -322,6 +323,7 @@ export default {
             label: "Avatar",
             model: "profileimage",
             required: false,
+            visible: (model, field, form) => model.choice === 'Check a boolean value',
           },
           {
             model: "pull_down",

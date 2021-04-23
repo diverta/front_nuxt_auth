@@ -14,16 +14,15 @@
     >
       <v-tab @click="go_page('/mypage/')"> My page </v-tab>
       <v-tab @click="go_page('/mypage/favorite_list/')"> Favorite List </v-tab>
-
       <v-tab @click="go_page('/mypage/profile/edit/')" v-model="selectedTab"> Profile Edit </v-tab>
       <v-tab @click="go_page('/mypage/posted_list')"> Posted list </v-tab>
     </v-tabs>
 
     <h1 class="mt-5 pt-5">My topics</h1>
     <br />
-    <v-col cols="12" class="py-2">
+    <div>
       <v-btn-toggle v-model="text" class="c-navi_filter" tile color="deep-purple accent-3" group>
-        <v-btn @change="changeCategoryAll()"> ALL </v-btn>
+        <v-btn @change="changeCategoryAll()" value="0"> ALL </v-btn>
         <v-btn
           v-for="item in categories"
           :value="item.key"
@@ -33,13 +32,11 @@
           {{ item.value }}
         </v-btn>
       </v-btn-toggle>
-    </v-col>
-    <v-col>
+    </div>
+    <div class="mt-4">
       <v-topics :topics="topics"></v-topics>
-    </v-col>
-    <br />
-    <br />
-    <div class="text-center">
+    </div>
+    <div class="text-center mt-5 pt-5">
       <v-pagination v-if="Math.ceil(totalCnt / perPage) > 1"
         v-model="page"
         :length="Math.ceil(totalCnt / perPage)"
@@ -59,7 +56,7 @@ export default {
   data() {
     return {
       active_tab: 3,
-      text: "",
+      text: "0",
       group_id: 13,
       categories: [],
       topics: [],
