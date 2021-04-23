@@ -21,19 +21,40 @@
         font-weight: bold;
         text-transform: capitalize;
     }
-    & .v-input--radio-group {
-        width: 100%;
+    & .v-form {
+        margin-top: 10px;
     }
     & .v-form, & .v-input--radio-group__input {
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
     }
-    & .v-input--checkbox, & .v-radio {
+    & .form-group {
+        margin-bottom: 10px;
+    }
+    & .v-input--checkbox, 
+    & .v-radio {
         //flex: 1 1 30%;
         margin: 0 25px 0 0 !important;
     }
+    & .v-input--radio-group {
+        width: 100%;
+    }
+    & .v-input--selection-controls {
+        margin-top: 0;
+    }
     & .v-messages__message {
         color: red;
+    }
+    & .v-radio {
+        @include sm {
+            width: 100%;
+            padding-bottom: 15px;
+        }
+    }
+    & .v-input {
+        @include sm {
+            width: 100%;
+        }
     }
 }

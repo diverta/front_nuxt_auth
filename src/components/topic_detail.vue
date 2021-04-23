@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid v-if="pattern == 1">
+  <v-container fluid v-if="pattern == 'no image'">
     <v-card class="mx-auto" max-width="7000">
       <v-card-title class="c-heading_h2" v-text="subtitle"></v-card-title>
       <v-card-text>
@@ -10,17 +10,16 @@
     </v-card>
   </v-container>
 
-  <v-container fluid v-else-if="pattern == 2">
+  <v-container fluid v-else-if="pattern == 'top'">
     <v-card class="mx-auto" max-width="7000">
-      <v-card-title class="text-h3" v-text="subtitle"></v-card-title>
+      <v-card-title class="c-heading_h2" v-text="subtitle"></v-card-title>
       <v-img
         class="mx-auto"
-        :aspect-ration="16 / 9"
         :src="image_url"
-        width="33%"
-        max-height="900"
-        max-width="900"
+        max-width="1060"
+        max-height="800"
         position="center"
+        :aspect-ratio="1"
       ></v-img>
 
       <v-card-text>
@@ -31,7 +30,7 @@
     </v-card>
   </v-container>
 
-  <v-container fluid v-else-if="pattern == 3">
+  <v-container fluid v-else-if="pattern == 'bottom'">
     <v-card class="mx-auto" max-width="7000">
       <v-card-text>
         <div class="text--primary">
@@ -41,9 +40,8 @@
           class="mx-auto"
           :aspect-ration="16 / 9"
           :src="image_url"
-          width="33%"
           max-height="900"
-          max-width="900"
+          max-width="1000"
           position="center"
         >
         </v-img>
@@ -51,7 +49,7 @@
     </v-card>
   </v-container>
 
-  <v-container fluid v-else-if="pattern == 4">
+  <v-container fluid v-else-if="pattern == 'left'">
     <v-card class="mx-auto" max-width="7000">
       <v-card-title class="text-h4" v-text="subtitle"></v-card-title>
       <v-card-text>
@@ -59,12 +57,11 @@
           <v-col>
             <v-img
               fluid
-              class="mr-auto"
+              class="mr-auto img-responsive"
               :aspect-ration="16 / 9"
               :src="image_url"
-              width="33%"
               max-height="900"
-              max-width="900"
+              max-width="500"
             >
             </v-img>
           </v-col>
@@ -78,7 +75,7 @@
     </v-card>
   </v-container>
 
-  <v-container fluid v-else-if="pattern == 5">
+  <v-container fluid v-else-if="pattern == 'right'">
     <v-card class="mx-auto" max-width="7000">
       <v-card-title class="text-h5" v-text="subtitle"></v-card-title>
       <v-container key="start">
@@ -91,12 +88,11 @@
           <v-col>
             <v-img
               fluid
-              class="ml-auto"
+              class="ml-auto img-responsive"
               :aspect-ration="16 / 9"
               :src="image_url"
-              width="33%"
               max-height="900"
-              max-width="900"
+              max-width="500"
             >
             </v-img>
           </v-col>
@@ -105,22 +101,6 @@
     </v-card>
   </v-container>
 
-  <v-container fluid v-else-if="pattern == 6">
-    <v-card class="mx-auto" max-width="7000">
-      <v-card-text>
-        <v-img
-          fluid
-          class="mx-auto"
-          :aspect-ration="16 / 9"
-          :src="image_url"
-          width="33%"
-          max-height="900"
-          max-width="900"
-        >
-        </v-img>
-      </v-card-text>
-    </v-card>
-  </v-container>
 </template>
 
 <script>
@@ -129,7 +109,7 @@ export default {
     pattern: null,
     subtitle: "",
     image_url: null,
-    text_size: null,
+    //text_size: null,
     text: "",
   },
 };

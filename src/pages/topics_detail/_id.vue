@@ -36,12 +36,11 @@
           :image_url="item.image_url"
           :subtitle="item.subtitle"
           :pattern="item.pattern"
-          :text_size="item.text_size"
         >
         </v-item>
       </v-row>
     </v-col>
-    <div class="text-center col">
+    <div class="text-center col mt-5">
       <button
         type="submit"
         class="c-btn c-btn_dark c-btn_icon"
@@ -106,7 +105,7 @@ export default {
           text: "",
           pattern: 1,
           image_url: "",
-          text_size: "H2",
+          //text_size: "H2",
           subtitle: "type 1",
         },
       ],
@@ -132,44 +131,44 @@ export default {
           .replaceAll("-", "/");
         var positions = response.data.details.ext_col_04;
         var image_urls = response.data.details.ext_col_05;
-        var text_size = response.data.details.ext_col_06;
+        //var text_size = response.data.details.ext_col_06;
         var texts = response.data.details.ext_col_07;
         var subtitle = response.data.details.ext_col_09;
 
-        for (var i = 0; i < text_size.length; i++) {
+        for (var i = 0; i < positions.length; i++) {
           var textSize = null;
           var imageUrl = null;
+          /*
           if (
             text_size[i] != undefined &&
             text_size[i].hasOwnProperty("label")
           ) {
             textSize = text_size[i]["label"];
           }
+          */
           if (
             image_urls[i] != undefined &&
             image_urls[i].hasOwnProperty("url")
           ) {
-            imageUrl = image_urls[i]["url"] + "?width=400&height=400";
+            imageUrl = image_urls[i]["url"] + "?width=800";
           }
           var pattern = 1;
-          if (textSize == "H2") {
-            pattern = 1;
-          } else if (positions[i].label == "Top" && textSize == "H3") {
-            pattern = 2;
-          } else if (positions[i].label == "Bottom" && textSize == "No level") {
-            pattern = 3;
-          } else if (positions[i].label == "Left" && textSize == "H4") {
-            pattern = 4;
-          } else if (positions[i].label == "Right" && textSize == "H5") {
-            pattern = 5;
-          } else if (positions[i].label == "Top" && textSize == "No level") {
-            pattern = 6;
+          if (positions[i].key == "0") {
+            pattern = "no image";
+          } else if (positions[i].key == "1") {
+            pattern = "top";
+          } else if (positions[i].key == "2") {
+            pattern = "left";
+          } else if (positions[i].key == "3") {
+            pattern = "bottom";
+          } else if (positions[i].key == "4") {
+            pattern = "right";
           }
           items.push({
             text: texts[i],
             pattern: pattern,
             image_url: imageUrl,
-            text_size: textSize,
+            //text_size: textSize,
             subtitle: subtitle[i],
           });
         }
