@@ -213,7 +213,7 @@ export default {
               "Thanks! Your topic is updated."
             );
             self.$store.dispatch("snackbar/snackOn");
-            self.$router.push("/mypage/posted_list");
+            self.$router.push("/profile/posted_list");
           }
         })
         .catch(function (error) {

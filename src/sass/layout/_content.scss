@@ -21,3 +21,11 @@
         }
     }
 }
+
+.v-main__wrap {
+    padding-top: 50px;
+
+    @at-root .p-home & {
+        padding-top: 25px;
+    }
+}

@@ -1,8 +1,10 @@
 <template>
   <div>
+    <!--
     <div class="l-content_heading">
       <h1>Members list</h1>
     </div>
+    -->
     <v-row>
       <v-col class="col-sm-5 col-12 py-0">
         <v-autocomplete

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!--
     <div class="l-content_heading">
       <h1>My page</h1>
     </div>
@@ -17,6 +18,7 @@
       <v-tab @click="go_page('/mypage/profile/edit/')"> Profile Edit </v-tab>
       <v-tab @click="go_page('/mypage/posted_list')"> Posted list </v-tab>
     </v-tabs>
+    -->
 
     <v-progress-linear
       :active="loading"
@@ -26,8 +28,7 @@
       color="orange white-4"
     ></v-progress-linear>
 
-    <h1 class="mt-5 pt-5">Profile editing</h1>
-    <br />
+    <!--<h1 class="mt-5 pt-5">Profile editing</h1>-->
     <div class="v-stepper c-form_wrap">
       <v-container fluid>
         <vue-form-generator
@@ -168,7 +169,7 @@ export default {
           }
           */
           if (response.data.details.hasOwnProperty("notes")) {
-            self.schema.fields[13].text = response.data.details.notes;
+            self.schema.fields[14].text = response.data.details.notes;
           }
           /*
           for (var i = 0; i < self.schema.fields[10].options.length; ++i) {
@@ -192,7 +193,7 @@ export default {
           */
           self.schema.fields[9].text = response.data.details.address1;
           //self.schema.fields[10].option.value = response.data.details.tdfk_cd;
-          self.schema.fields[13].contents[2].default = true;
+          //self.schema.fields[13].contents[2].default = true;
           self.loading = false;
         })
         .catch(function (error) {

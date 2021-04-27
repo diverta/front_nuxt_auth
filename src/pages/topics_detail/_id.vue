@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-4">
+  <div>
     <v-progress-linear
       :active="loading"
       :indeterminate="loading"
@@ -11,7 +11,7 @@
       <v-card class="d-flex justify-space-between mb-6" flat tile>
         <v-card flat>
           <v-row>
-            <v-col>
+            <v-col class="pt-0">
               <h1 class="mb-3 mt-0">
                 {{ title }}
               </h1>

@@ -92,7 +92,7 @@ export default {
         department: "",
         position: "",
         url: "",
-        zip: "",
+        //zip: "",
         location: "",
         phone: "",
         email: "",
@@ -101,10 +101,6 @@ export default {
       profile: [
         {
           name: "Address",
-          value: "N/A",
-        },
-        {
-          name: "Zip Code",
           value: "N/A",
         },
         {
@@ -197,13 +193,12 @@ export default {
 
         self.detail = detail;
         self.profile[0]["value"] = detail["location"];
-        self.profile[1]["value"] = detail["zip"];
-        self.profile[2]["value"] = detail["phone"];
-        self.profile[3]["value"] = detail["email"];
-        self.profile[4]["value"] = detail["pull_down"];
-        self.profile[5]["value"] = detail["radio_button_2"];
-        self.profile[6]["value"] = detail["multiple_check"];
-        self.profile[7]["value"] = detail["text"];
+        self.profile[1]["value"] = detail["phone"];
+        self.profile[2]["value"] = detail["email"];
+        self.profile[3]["value"] = detail["pull_down"];
+        self.profile[4]["value"] = detail["radio_button_2"];
+        self.profile[5]["value"] = detail["multiple_check"];
+        self.profile[6]["value"] = detail["text"];
       })
       .catch(function (error) {
         self.$store.dispatch("snackbar/setError", error.response.data.errors?.[0].message);

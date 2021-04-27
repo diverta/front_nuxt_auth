@@ -241,6 +241,7 @@ export default {
             model: "login_pwd",
             required: true,
           },
+          /*
           {
             type: "vuetifyText",
             inputType: "text",
@@ -308,6 +309,7 @@ export default {
             ],
             required: true,
           },
+          */
           {
             type: "vuetifyText",
             inputType: "text",

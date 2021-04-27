@@ -1,0 +1,18 @@
+.c-icon {
+
+    &_sm {
+        height: 30px !important;
+        width: 30px !important;
+
+        & .v-icon {
+            font-size: 18px !important;
+        }
+    }
+    &_dark {
+        background-color: $color_main_dark !important;
+    }
+    &_main {
+        background-color: $color_main !important;
+    }
+
+}
