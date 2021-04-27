@@ -38,13 +38,12 @@
             }}</NuxtLink>
           </div>
         </div>
-        <v-col v-if="item.edit == true">
+        <v-col v-if="item.edit == true" class="py-2">
           <v-btn
-            class="mx-3"
+            class="mx-3 c-icon_main c-icon_sm"
             fab
             dark
             small
-            color="cyan"
             @click="edit_topic(item.id)"
           >
             <v-icon dark> mdi-pencil </v-icon>
@@ -67,7 +66,7 @@
 export default {
   methods: {
     edit_topic(topic_id) {
-      this.$router.push("/mypage/topic_edit/" + topic_id);
+      this.$router.push("/profile/topic_edit/" + topic_id);
     },
   },
   props: {

@@ -1,8 +1,10 @@
 <template>
-  <section>
+  <section class="">
+    <!--
     <div class="l-content_heading">
       <h1>Topics</h1>
     </div>
+    -->
     <div>
       <v-btn-toggle v-model="text" class="c-navi_filter" group>
         <!--<v-btn @change="changeCategoryAll()" class="v-item--active js-allBtn"> ALL </v-btn>-->

@@ -131,14 +131,19 @@ export default {
           to: "/topics_list",
         },
         {
+          icon: "mdi-heart",
+          title: "Favourite",
+          to: "/favourite",
+        },
+        {
           icon: "mdi-account-tie",
           title: "Member",
           to: "/member",
         },
         {
           icon: "mdi-account-box",
-          title: "My page",
-          to: "/mypage",
+          title: "Profile",
+          to: "/profile",
         },
         {
           icon: "mdi-send",

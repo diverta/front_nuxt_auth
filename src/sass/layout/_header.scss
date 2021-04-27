@@ -5,7 +5,7 @@ header {
     box-shadow: none !important;
 
     @at-root .p-dashboard & {
-        background-color: #1777ca !important;
+        background-color: $color_main !important;
     }
 }
 

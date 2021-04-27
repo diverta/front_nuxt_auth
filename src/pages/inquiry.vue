@@ -9,8 +9,8 @@
     ></v-progress-linear>
 
     <div class="l-content_heading">
-      <h1>Inquiry Form</h1>
-      <h3 class="slogan">
+      <!--<h1>Inquiry Form</h1>-->
+      <h3 class="slogan text-left">
         Please provide us your information, we will be in touch with you shortly. <br />
       </h3>
     </div>
