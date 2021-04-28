@@ -58,7 +58,7 @@
       </div>
 
       <div v-else class="mypage">
-        <v-carousel>
+        <v-carousel class="p-dashboard_banner">
           <v-carousel-item
             v-for="(item, i) in items"
             :key="i"
@@ -153,7 +153,7 @@ export default {
     topics: [],
     favourite: [],
     group_id: 13,
-    maxFavPerPage: 10,
+    maxFavPerPage: 5,
   }),
   computed: {
     user() {
