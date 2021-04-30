@@ -50,8 +50,12 @@
         <v-icon class="icon c-text_white pr-2">mdi-undo-variant</v-icon>
       </button>
     </div>
+    <div v-for="n in response.list" :key="n.slug">
+      <nuxt-link :to="'/topics_detail/'+ n.slug">{{n.ymd}} {{n.subject}}</nuxt-link>
+    </div>
   </div>
 </template>
+
 
 <script>
 import item from "../../components/topic_detail";
@@ -59,6 +63,23 @@ export default {
   auth: true,
   components: {
     "v-item": item,
+  },
+  async asyncData ({ route, $axios }) {
+      // URLのクエリに、
+      // preview_tokenが存在する場合は、previewエンドポイントへ、
+      // preview_tokenが存在しない場合は、newsエンドポイントへ、
+      // リクエストします。
+      const previewToken = route.query.preview_token;
+      let request = () => previewToken !== undefined ?
+          $axios.$get(process.env.BASE_URL + '/rcms-api/1/topics_detail/preview' + '?preview_token=' + previewToken) :
+          $axios.$get(process.env.BASE_URL + '/rcms-api/1/topics_detail');
+
+      try {
+          const response = await request()
+          return { response }
+      }catch (e) {
+          console.log(e.message)
+      }
   },
   methods: {
     back() {
@@ -93,7 +114,6 @@ export default {
       }
     },
   },
-
   data() {
     return {
       label: "",
