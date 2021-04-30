@@ -6,7 +6,7 @@
       absolute
       top
       color="orange white-4"
-    ></v-progress-linear>
+    ></v-progress-linear> 
     <br />
     <br />
 
