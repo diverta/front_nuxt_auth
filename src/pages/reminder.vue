@@ -73,7 +73,7 @@
               lazy-validation
               @submit.prevent="set_password"
             >
-              <v-container fluid>
+              <v-container fluid class="p-login_content-inner">
                 <v-row>
                   <v-col cols="12">
                     <p>Temporary password</p>
@@ -144,7 +144,7 @@
               lazy-validation
               @submit.prevent="reminder"
             >
-              <v-container fluid>
+              <v-container fluid class="p-login_content-inner">
                 <v-row>
                   <v-col cols="12">
                     <p align="center">Your password has been updated</p>
@@ -175,8 +175,8 @@
               @submit.prevent="reminder"
             >
               <v-container fluid>
-                <v-row>
-                  <v-col cols="12">
+                <v-row class="p-login_content-inner">
+                  <v-col cols="12" class="align-self-center">
                     <p align="center">
                       A password reset URL has been sent to <br />
                       the email address you provided.
@@ -240,7 +240,7 @@ export default {
           if (response.data.errors.length == 0) {
             self.$store.dispatch(
               "snackbar/setMessage",
-              "パスワード再設定メールを送信しました。メールのリンクから新しいパスワードを設定してください。"
+              "A password reset email has been sent. Please set a new password from the link in the email."
             );
             self.$store.dispatch("snackbar/snackOn");
           }
