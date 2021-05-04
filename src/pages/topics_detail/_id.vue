@@ -50,9 +50,11 @@
         <v-icon class="icon c-text_white pr-2">mdi-undo-variant</v-icon>
       </button>
     </div>
+    <!--
     <div v-for="n in response.list" :key="n.slug">
       <nuxt-link :to="'/topics_detail/'+ n.slug">{{n.ymd}} {{n.subject}}</nuxt-link>
     </div>
+    -->
   </div>
 </template>
 
@@ -64,6 +66,7 @@ export default {
   components: {
     "v-item": item,
   },
+  /*
   async asyncData ({ route, $axios }) {
       // URLのクエリに、
       // preview_tokenが存在する場合は、previewエンドポイントへ、
@@ -81,6 +84,7 @@ export default {
           console.log(e.message)
       }
   },
+  */
   methods: {
     back() {
       this.$router.go(-1);

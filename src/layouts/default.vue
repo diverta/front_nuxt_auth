@@ -47,6 +47,13 @@
 
       <v-toolbar-title height="30" to="/" v-text="subtitle" class="l-header_user"/>
 
+      <div class="l-header_lang">
+        <v-select
+          :items="lang"
+          v-model="langDefault"
+        ></v-select>
+      </div>
+
       <v-btn v-if="auth.loggedIn" icon @click="logout" class="l-header_logout">
         <v-icon>mdi-exit-to-app</v-icon>
       </v-btn>
@@ -115,6 +122,8 @@ export default {
   },
   data() {
     return {
+      lang: ['English', 'Japanese', 'Mandarin'],
+      langDefault: 'English',
       clipped: false,
       drawer: false,
       fixed: false,

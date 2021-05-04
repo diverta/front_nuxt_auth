@@ -1,24 +1,36 @@
 <template>
-  <div class="l-content_maxWidth-sm mb-5 pb-5">
+  <div>
+    <!--
+    <div class="l-content_heading">
+      <h1>My page</h1>
+    </div>
+    
+    <v-tabs
+      background-color="transparent"
+      light
+      height="70"
+      class="rounded-xl"
+      centered
+      v-model="active_tab"
+    >
+      <v-tab @click="go_page('/mypage/')"> My page </v-tab>
+      <v-tab @click="go_page('/mypage/favorite_list/')"> Favorite List </v-tab>
+      <v-tab @click="go_page('/mypage/profile/edit/')"> Profile Edit </v-tab>
+      <v-tab @click="go_page('/mypage/posted_list')"> Posted list </v-tab>
+    </v-tabs>
+    -->
+
     <v-progress-linear
       :active="loading"
       :indeterminate="loading"
       absolute
       top
       color="orange white-4"
-    ></v-progress-linear> 
-    <br />
-    <br />
+    ></v-progress-linear>
 
-    <br />
+    <!--<h1 class="mt-5 pt-5">Profile editing</h1>-->
     <div class="v-stepper c-form_wrap">
       <v-container fluid>
-        <div class="l-content_heading">
-          <h1>Sign up</h1>
-          <h4 class="slogan">
-            Please complete the form below to sign up
-          </h4>
-        </div>
         <vue-form-generator
           ref="form"
           :schema="schema"
@@ -34,13 +46,13 @@
           </template>
         </v-checkbox>
         <div class="text-center mb-5">
-        <button
+          <button
           type="submit"
           block
           x-large
-          class="c-btn c-btn_dark"
           @click="submitF()"
           :disabled="!disabled"
+          class="c-btn c-btn_main"
           >SUBMIT</button
         >
         </div>
@@ -50,24 +62,22 @@
 </template>
 
 <script>
-import "../assets/form.css";
+import "~/assets/form.css";
 import Vue from "vue";
 import VueFormGenerator from "vue-form-generator";
-import KurocoParser from "../plugins/parser.js";
-import fieldUploadFile from "../components/vuetify_file_upload.vue";
-import fieldUploadImage from "../components/vuetify_image_upload.vue";
-import fieldVuetifyText from "../components/vuetify_text.vue";
-import fieldVuetifyTextArea from "../components/vuetify_textarea.vue";
-import fieldVuetifyDate from "../components/vuetify_date.vue";
-import fieldVuetifyJson from "../components/vuetify_json.vue";
-import fieldVuetifyPrefecture from "../components/vuetify_prefecture.vue";
-import fieldVuetifyMultipleChoice from "../components/vuetify_multiple_choice.vue";
-import fieldVuetifySingleChoice from "../components/vuetify_single_choice.vue";
-import fieldVuetifySingleOption from "../components/vuetify_single_option.vue";
-import fieldVuetifyPassword from "../components/vuetify_password.vue";
+import KurocoParser from "~/plugins/parser.js";
+import fieldUploadFile from "~/components/vuetify_file_upload.vue";
+import fieldVuetifyText from "~/components/vuetify_text.vue";
+import fieldVuetifyTextArea from "~/components/vuetify_textarea.vue";
+import fieldVuetifyDate from "~/components/vuetify_date.vue";
+import fieldVuetifyJson from "~/components/vuetify_json.vue";
+import fieldVuetifyPrefecture from "~/components/vuetify_prefecture.vue";
+import fieldVuetifyMultipleChoice from "~/components/vuetify_multiple_choice.vue";
+import fieldVuetifySingleChoice from "~/components/vuetify_single_choice.vue";
+import fieldVuetifySingleOption from "~/components/vuetify_single_option.vue";
+import fieldVuetifyPassword from "~/components/vuetify_password.vue";
 
 Vue.component("fieldUploadFile", fieldUploadFile);
-Vue.component("fieldUploadImage", fieldUploadImage);
 Vue.component("fieldVuetifyDate", fieldVuetifyDate);
 Vue.component("fieldVuetifyText", fieldVuetifyText);
 Vue.component("fieldVuetifyTextArea", fieldVuetifyTextArea);
@@ -82,16 +92,19 @@ Vue.use(VueFormGenerator);
 Vue.use(KurocoParser);
 
 export default {
+  auth: true,
   components: {
     "vue-form-generator": VueFormGenerator.component,
   },
   methods: {
+    go_page(path) {
+      this.$router.push(path);
+    },
     onInput: function (value, fieldName) {
       this.$set(this.model, fieldName, value);
     },
     submitF: function () {
       let self = this;
-
       this.validForm = true;
       for (var key in self.$children[1].$children) {
         self.$children[1].$children[key].$children[0].$refs.myForm.validate();
@@ -102,45 +115,111 @@ export default {
 
       if (this.validForm) {
         var send_model = JSON.parse(JSON.stringify(self.model));
-        this.loading = true;
-        this.$auth.ctx.$axios
-          .post("/rcms-api/1/member/regist", send_model)
+        self.$store.$auth.ctx.$axios
+          .post("/rcms-api/1/member/update", send_model)
           .then(function (response) {
-            if (response.data.errors.length === 0) {
-              self.$store.dispatch("snackbar/setMessage", "会員登録しました");
+            if (response.data.errors.length == 0) {
+              self.$store.dispatch(
+                "snackbar/setMessage",
+                "Your profile is changed."
+              );
               self.$store.dispatch("snackbar/snackOn");
+              self.$router.push("/");
             }
-            self.loading = false;
-            self.$router.push("/");
-          })
-          .catch(function (error) {
+          }).catch(function (error) {
             self.$store.dispatch("snackbar/setError", error.response.data.errors?.[0].message);
             self.$store.dispatch("snackbar/snackOn");
-            self.loading = false;
-          });
+          });;
       } else {
         self.$store.dispatch("snackbar/setError", "Fill fields properly.");
         self.$store.dispatch("snackbar/snackOn");
-        self.loading = false;
       }
     },
   },
-  mounted() {},
-  auth: false,
+  mounted() {
+    if (this.$auth.loggedIn) {
+      let self = this;
+      this.$auth.ctx.$axios
+        .get("/rcms-api/1/members/" + this.$auth.user.member_id)
+        .then(function (response) {
+
+          for (var i=0; i < self.schema.fields.length; i++) {
+            if (self.schema.fields[i].model === 'name1' && response.data.details.name1) {
+              self.schema.fields[i].text = response.data.details.name1;
+            } 
+            else if (self.schema.fields[i].model === 'name2' && response.data.details.name2) {
+              self.schema.fields[i].text = response.data.details.name2;
+            } 
+            else if (self.schema.fields[i].model === 'sex' && response.data.details.sex.value) {
+              self.schema.fields[i].radiosOptions = response.data.details.sex.value;
+            } 
+            else if (self.schema.fields[i].model === 'hire_date' && response.data.details.hire_date) {
+              self.schema.fields[i].picker = response.data.details.hire_date;
+            } 
+            else if (self.schema.fields[i].model === 'department' && response.data.details.department) {
+              self.schema.fields[i].text = response.data.details.department;
+            } 
+            else if (self.schema.fields[i].model === 'position' && response.data.details.position) {
+              self.schema.fields[i].text = response.data.details.position;
+            }
+            else if (self.schema.fields[i].model === 'tel' && response.data.details.tel) {
+              self.schema.fields[i].text = response.data.details.tel;
+            } 
+            else if (self.schema.fields[i].model === 'email' && response.data.details.email) {
+              self.schema.fields[i].text = response.data.details.email;
+            } 
+            else if (self.schema.fields[i].model === 'notes' && response.data.details.notes) {
+              self.schema.fields[i].text = response.data.details.notes;
+            } 
+          }
+          /*
+          for (var i = 0; i < self.schema.fields[10].options.length; ++i) {
+            if (
+              self.schema.fields[10].options[i].value ==
+              response.data.details.tdfk_cd
+            ) {
+              self.schema.fields[10].option = self.schema.fields[10].options[i];
+            }
+          }
+          for (var i = 0; i < self.schema.fields[10].contents.length; ++i) {
+            d
+            if (
+              self.schema.fields[10].contents[i].key ==
+              response.data.details.pull_down.key
+            ) {
+              //self.schema.fields[13].contents.value = self.schema.fields[13].cotnent[i];
+              console.log(self.schema.fields[10].contents.value);
+            }
+          }
+          */
+          self.loading = false;
+        })
+        .catch(function (error) {
+          self.$store.dispatch("snackbar/setError", error.response.data.errors?.[0].message);
+          self.$store.dispatch("snackbar/snackOn");
+          self.loading = false;
+        });
+    }
+  },
   data() {
     return {
       // form default values
+      active_tab: 2,
       email: "",
       name1: "",
       name2: "",
       zip_code: "",
       tel: "",
+      multiple_check: "",
       inquirySubmitUrl: "/rcms-api/1/inquiry/9",
       inquirySchemaUrl: "/rcms-api/1/inquiry/get/9",
+      auth: false,
       validForm: true,
-      loading: false,
+      loading: true,
       disabled: false,
-      model: {},
+      model: {
+        sex: "Male",
+      },
       schema: {
         fields: [
           {
@@ -166,37 +245,48 @@ export default {
           {
             model: "sex",
             label: "Sex",
+            /*
+            values: [
+                "James",
+                "Nadia",
+                "Paul",
+                "Christelle",
+                "Marc",
+                "Marie"
+            ],
+            radiosOptions: {
+                value:"Male",
+                name:"Male"
+            }
+            */
             contents: [
               {
                 key: 1,
                 value: "Male",
-                default: false,
-                attribute: { group: "1" },
               },
               {
                 key: 2,
                 value: "Female",
-                default: false,
-                attribute: { group: "1" },
               },
             ],
             required: true,
             type: "vuetifySingleChoice",
-          },
-          {
-            type: "vuetifyDate",
-            inputType: "picker",
-            label: "Hire Date",
-            model: "hire_date",
-            required: true,
+            value: "Male",
           },
           {
             type: "vuetifyDate",
             inputType: "picker",
             label: "Birthday",
             model: "birth",
-            required: true,
+            required: false,
             visible: (model, field, form) => model.choice === 'Check a boolean value',
+          },
+          {
+            type: "vuetifyDate",
+            inputType: "picker",
+            label: "Hire Date",
+            model: "hite_date",
+            required: true,
           },
           {
             type: "vuetifyText",
@@ -206,7 +296,7 @@ export default {
             max: 100,
             label: "Department",
             model: "department",
-            required: false,
+            required: true,
           },
           {
             type: "vuetifyText",
@@ -240,7 +330,6 @@ export default {
             texttype: "email",
             required: true,
           },
-          /*
           {
             type: "vuetifyPassword",
             inputType: "text",
@@ -249,24 +338,16 @@ export default {
             model: "login_pwd",
             required: true,
           },
-          */
           /*
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            label: "Zip Code",
-            texttype: "zip",
-            text: "",
-            min: 0,
-            max: 100,
-            model: "zip_code",
-            required: true,
-          },
           {
             type: "vuetifyPrefecture",
             inputType: "text",
             label: "Prefecture",
             model: "tdfk_cd",
+            option: {
+              value: "01",
+              text: "北海道",
+            },
             options: [
               { value: "01", text: "北海道" },
               { value: "02", text: "青森県" },
@@ -318,16 +399,6 @@ export default {
             ],
             required: true,
           },
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            text: "",
-            min: 0,
-            max: 100,
-            label: "Address",
-            model: "address1",
-            required: true,
-          },
           */
           {
             type: "UploadFile",
@@ -340,6 +411,12 @@ export default {
             model: "pull_down",
             label: "Office",
             contents: [
+              {
+                key: 0,
+                value: " ",
+                default: false,
+                attribute: { group: "2" },
+              },
               {
                 key: 1,
                 value: "Tokyo",

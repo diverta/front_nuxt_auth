@@ -1,517 +1,204 @@
 <template>
-  <div>
-    <!--
-    <div class="l-content_heading">
-      <h1>My page</h1>
-    </div>
-    
-    <v-tabs
-      background-color="transparent"
-      light
-      height="70"
-      class="rounded-xl"
-      centered
-      v-model="active_tab"
-    >
-      <v-tab @click="go_page('/mypage/')"> My page </v-tab>
-      <v-tab @click="go_page('/mypage/favorite_list/')"> Favorite List </v-tab>
-      <v-tab @click="go_page('/mypage/profile/edit/')"> Profile Edit </v-tab>
-      <v-tab @click="go_page('/mypage/posted_list')"> Posted list </v-tab>
-    </v-tabs>
-    -->
-
-    <v-progress-linear
-      :active="loading"
-      :indeterminate="loading"
-      absolute
-      top
-      color="orange white-4"
-    ></v-progress-linear>
-
-    <!--<h1 class="mt-5 pt-5">Profile editing</h1>-->
-    <div class="v-stepper c-form_wrap">
-      <v-container fluid>
-        <vue-form-generator
-          ref="form"
-          :schema="schema"
-          :model="model"
-          @model-updated="onInput"
-          class="c-form"
-        >
-        </vue-form-generator>
-
-        <v-checkbox v-model="disabled" class="c-form_tnc">
-          <template v-slot:label>
-            <div>I agree to the terms of Use.</div>
-          </template>
-        </v-checkbox>
-        <div class="text-center mb-5">
-          <button
-          type="submit"
-          block
-          x-large
-          @click="submitF()"
-          :disabled="!disabled"
-          class="c-btn c-btn_main"
-          >SUBMIT</button
-        >
-        </div>
+  <div class='c-form_wrap v-stepper'>
+    <div class='c-form pa-3'>
+      <v-container>
+        <v-row v-for="item in profile" :key="item.id">
+          <v-col class='col-12'>
+            <label>{{ item.name }}</label>
+            <div class='field-wrap pt-2'>
+              {{ item.value }}
+            </div>
+          </v-col>
+        </v-row>
       </v-container>
+    </div>
+    <div class="text-center col">
+      <button
+        type="submit"
+        class="c-btn c-btn_dark c-btn_icon"
+        @click="edit()"
+      >
+        Edit
+        <v-icon class="icon c-text_white pl-2">mdi-pencil</v-icon>
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-import "~/assets/form.css";
-import Vue from "vue";
-import VueFormGenerator from "vue-form-generator";
-import KurocoParser from "~/plugins/parser.js";
-import fieldUploadFile from "~/components/vuetify_file_upload.vue";
-import fieldVuetifyText from "~/components/vuetify_text.vue";
-import fieldVuetifyTextArea from "~/components/vuetify_textarea.vue";
-import fieldVuetifyDate from "~/components/vuetify_date.vue";
-import fieldVuetifyJson from "~/components/vuetify_json.vue";
-import fieldVuetifyPrefecture from "~/components/vuetify_prefecture.vue";
-import fieldVuetifyMultipleChoice from "~/components/vuetify_multiple_choice.vue";
-import fieldVuetifySingleChoice from "~/components/vuetify_single_choice.vue";
-import fieldVuetifySingleOption from "~/components/vuetify_single_option.vue";
-import fieldVuetifyPassword from "~/components/vuetify_password.vue";
-
-Vue.component("fieldUploadFile", fieldUploadFile);
-Vue.component("fieldVuetifyDate", fieldVuetifyDate);
-Vue.component("fieldVuetifyText", fieldVuetifyText);
-Vue.component("fieldVuetifyTextArea", fieldVuetifyTextArea);
-Vue.component("fieldVuetifyJson", fieldVuetifyJson);
-Vue.component("fieldVuetifyPrefecture", fieldVuetifyPrefecture);
-Vue.component("fieldVuetifySingleOption", fieldVuetifySingleOption);
-Vue.component("fieldVuetifySingleChoice", fieldVuetifySingleChoice);
-Vue.component("fieldVuetifyMultipleChoice", fieldVuetifyMultipleChoice);
-Vue.component("fieldVuetifyPassword", fieldVuetifyPassword);
-
-Vue.use(VueFormGenerator);
-Vue.use(KurocoParser);
-
 export default {
   auth: true,
-  components: {
-    "vue-form-generator": VueFormGenerator.component,
-  },
   methods: {
-    go_page(path) {
-      this.$router.push(path);
+    edit() {
+      this.$router.push('/profile/edit');
     },
-    onInput: function (value, fieldName) {
-      this.$set(this.model, fieldName, value);
-    },
-    submitF: function () {
-      let self = this;
-      this.validForm = true;
-      for (var key in self.$children[1].$children) {
-        self.$children[1].$children[key].$children[0].$refs.myForm.validate();
-        if (self.$children[1].$children[key].$children[0].formValid == false) {
-          this.validForm = false;
-        }
-      }
-
-      if (this.validForm) {
-        var send_model = JSON.parse(JSON.stringify(self.model));
-        self.$store.$auth.ctx.$axios
-          .post("/rcms-api/1/member/update", send_model)
-          .then(function (response) {
-            if (response.data.errors.length == 0) {
-              self.$store.dispatch(
-                "snackbar/setMessage",
-                "Your profile is changed."
-              );
-              self.$store.dispatch("snackbar/snackOn");
-              self.$router.push("/");
-            }
-          }).catch(function (error) {
-            self.$store.dispatch("snackbar/setError", error.response.data.errors?.[0].message);
-            self.$store.dispatch("snackbar/snackOn");
-          });;
-      } else {
-        self.$store.dispatch("snackbar/setError", "Fill fields properly.");
-        self.$store.dispatch("snackbar/snackOn");
-      }
-    },
-  },
-  mounted() {
-    if (this.$auth.loggedIn) {
-      let self = this;
-      this.$auth.ctx.$axios
-        .get("/rcms-api/1/members/" + this.$auth.user.member_id)
-        .then(function (response) {
-          if (response.data.details.hasOwnProperty("name1")) {
-            self.schema.fields[0].text = response.data.details.name1;
-          }
-          if (response.data.details.hasOwnProperty("name2")) {
-            self.schema.fields[1].text = response.data.details.name2;
-          }
-          if (response.data.details.hasOwnProperty("birth")) {
-            self.schema.fields[3].text = response.data.details.birth;
-          }
-          if (response.data.details.hasOwnProperty("department")) {
-            self.schema.fields[4].text = response.data.details.department;
-          }
-          if (response.data.details.hasOwnProperty("position")) {
-            self.schema.fields[5].text = response.data.details.position;
-          }
-          if (response.data.details.hasOwnProperty("tel")) {
-            self.schema.fields[6].text = response.data.details.tel;
-          }
-          if (response.data.details.hasOwnProperty("email")) {
-            self.schema.fields[7].text = response.data.details.email;
-          }
-          /*
-          if (response.data.details.hasOwnProperty("zip_code")) {
-            self.schema.fields[9].text = response.data.details.zip_code;
-          }
-          */
-          if (response.data.details.hasOwnProperty("notes")) {
-            self.schema.fields[14].text = response.data.details.notes;
-          }
-          /*
-          for (var i = 0; i < self.schema.fields[10].options.length; ++i) {
-            if (
-              self.schema.fields[10].options[i].value ==
-              response.data.details.tdfk_cd
-            ) {
-              self.schema.fields[10].option = self.schema.fields[10].options[i];
-            }
-          }
-          for (var i = 0; i < self.schema.fields[10].contents.length; ++i) {
-            d
-            if (
-              self.schema.fields[10].contents[i].key ==
-              response.data.details.pull_down.key
-            ) {
-              //self.schema.fields[13].contents.value = self.schema.fields[13].cotnent[i];
-              console.log(self.schema.fields[10].contents.value);
-            }
-          }
-          */
-          self.schema.fields[9].text = response.data.details.address1;
-          //self.schema.fields[10].option.value = response.data.details.tdfk_cd;
-          //self.schema.fields[13].contents[2].default = true;
-          self.loading = false;
-        })
-        .catch(function (error) {
-          self.$store.dispatch("snackbar/setError", error.response.data.errors?.[0].message);
-          self.$store.dispatch("snackbar/snackOn");
-          self.loading = false;
-        });
-    }
   },
   data() {
     return {
-      // form default values
-      active_tab: 2,
-      email: "",
-      name1: "",
-      name2: "",
-      zip_code: "",
-      tel: "",
-      multiple_check: "",
-      inquirySubmitUrl: "/rcms-api/1/inquiry/9",
-      inquirySchemaUrl: "/rcms-api/1/inquiry/get/9",
-      auth: false,
-      validForm: true,
-      loading: true,
-      disabled: false,
-      model: {
-        sex: "Male",
-        pull_down: ["Pulldown 1"],
-        multiple_check: ["Check 1"]
+      placeholder: require("assets/images/avatar-placeholder.png"),
+      member_id: null,
+      detail: {
+        name: "",
+        department: "",
+        position: "",
+        url: "",
+        location: "",
+        phone: "",
+        email: "",
+        text: "",
       },
-      schema: {
-        fields: [
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            min: 0,
-            max: 100,
-            label: "First Name",
-            model: "name1",
-            text: "",
-            required: true,
-          },
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            min: 0,
-            max: 100,
-            label: "Last Name",
-            text: "",
-            model: "name2",
-            required: true,
-          },
-          {
-            model: "sex",
-            label: "Sex",
-            /*
-            values: [
-                "James",
-                "Nadia",
-                "Paul",
-                "Christelle",
-                "Marc",
-                "Marie"
-            ],
-            radiosOptions: {
-                value:"Male",
-                name:"Male"
-            }
-            */
-            contents: [
-              {
-                key: 1,
-                value: "Male",
-              },
-              {
-                key: 2,
-                value: "Female",
-              },
-            ],
-            required: true,
-            type: "vuetifySingleChoice",
-          },
-          {
-            type: "vuetifyDate",
-            inputType: "picker",
-            label: "Birthday",
-            model: "birth",
-            required: false,
-            visible: (model, field, form) => model.choice === 'Check a boolean value',
-          },
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            text: "",
-            min: 0,
-            max: 100,
-            label: "Department",
-            model: "department",
-            required: true,
-          },
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            text: "",
-            min: 0,
-            max: 100,
-            label: "Position",
-            model: "position",
-            required: false,
-          },
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            text: "",
-            min: 0,
-            max: 100,
-            label: "Phone",
-            model: "tel",
-            texttype: "tel",
-            required: true,
-          },
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            min: 0,
-            max: 100,
-            label: "Email address",
-            model: "email",
-            text: "",
-            texttype: "email",
-            required: true,
-          },
-          {
-            type: "vuetifyPassword",
-            inputType: "text",
-            label: "Password",
-            text: "",
-            model: "login_pwd",
-            required: true,
-          },
-          /*
-          {
-            type: "vuetifyPrefecture",
-            inputType: "text",
-            label: "Prefecture",
-            model: "tdfk_cd",
-            option: {
-              value: "01",
-              text: "北海道",
-            },
-            options: [
-              { value: "01", text: "北海道" },
-              { value: "02", text: "青森県" },
-              { value: "03", text: "岩手県" },
-              { value: "04", text: "宮城県" },
-              { value: "05", text: "秋田県" },
-              { value: "06", text: "山形県" },
-              { value: "07", text: "福島県" },
-              { value: "08", text: "茨城県" },
-              { value: "09", text: "栃木県" },
-              { value: "10", text: "群馬県" },
-              { value: "11", text: "埼玉県" },
-              { value: "12", text: "千葉県" },
-              { value: "13", text: "東京都" },
-              { value: "14", text: "神奈川県" },
-              { value: "15", text: "新潟県" },
-              { value: "16", text: "富山県" },
-              { value: "17", text: "石川県" },
-              { value: "18", text: "福井県" },
-              { value: "19", text: "山梨県" },
-              { value: "20", text: "長野県" },
-              { value: "21", text: "岐阜県" },
-              { value: "22", text: "静岡県" },
-              { value: "23", text: "愛知県" },
-              { value: "24", text: "三重県" },
-              { value: "25", text: "滋賀県" },
-              { value: "26", text: "京都府" },
-              { value: "27", text: "大阪府" },
-              { value: "28", text: "兵庫県" },
-              { value: "29", text: "奈良県" },
-              { value: "30", text: "和歌山県" },
-              { value: "31", text: "鳥取県" },
-              { value: "32", text: "島根県" },
-              { value: "33", text: "岡山県" },
-              { value: "34", text: "広島県" },
-              { value: "35", text: "山口県" },
-              { value: "36", text: "徳島県" },
-              { value: "37", text: "香川県" },
-              { value: "38", text: "愛媛県" },
-              { value: "39", text: "高知県" },
-              { value: "40", text: "福岡県" },
-              { value: "41", text: "佐賀県" },
-              { value: "42", text: "長崎県" },
-              { value: "43", text: "熊本県" },
-              { value: "44", text: "大分県" },
-              { value: "45", text: "宮崎県" },
-              { value: "46", text: "鹿児島県" },
-              { value: "47", text: "沖縄県" },
-            ],
-            required: true,
-          },
-          */
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            text: "",
-            min: 0,
-            max: 100,
-            label: "Address",
-            model: "address1",
-            required: true,
-          },
-          {
-            type: "UploadFile",
-            label: "Avatar",
-            model: "profileimage",
-            required: false,
-            visible: (model, field, form) => model.choice === 'Check a boolean value',
-          },
-          {
-            model: "pull_down",
-            label: "Pull-down",
-            contents: [
-              {
-                key: 0,
-                value: " ",
-                default: false,
-                attribute: { group: "2" },
-              },
-              {
-                key: 1,
-                value: "Pulldown 1",
-                default: false,
-                attribute: { group: "2" },
-              },
-              {
-                key: 2,
-                value: "Pulldown 2",
-                default: false,
-                attribute: { group: "2" },
-              },
-              {
-                key: 3,
-                value: "Pulldown 3",
-                default: false,
-                attribute: { group: "2" },
-              },
-            ],
-            required: false,
-            type: "VuetifySingleOption",
-          },
-          {
-            model: "radio_button_2",
-            label: "Radio button",
-            contents: [
-              {
-                key: 1,
-                value: "Radio 1",
-                default: false,
-                attribute: { group: "1" },
-              },
-              {
-                key: 2,
-                value: "Radio 2",
-                default: false,
-                attribute: { group: "1" },
-              },
-              {
-                key: 3,
-                value: "Radio 3",
-                default: false,
-                attribute: { group: "1" },
-              },
-            ],
-            required: false,
-            type: "vuetifySingleChoice",
-          },
-          {
-            model: "multiple_check",
-            label: "Multiple",
-            contents: [
-              {
-                key: 1,
-                value: "Check 1",
-                default: false,
-                attribute: { group: "1" },
-              },
-              {
-                key: 2,
-                value: "Check 2",
-                default: false,
-                attribute: { group: "1" },
-              },
-              {
-                key: 3,
-                value: "Check 3",
-                default: false,
-                attribute: { group: "1" },
-              },
-            ],
-            required: false,
-            type: "vuetifyMultipleChoice",
-          },
-          {
-            model: "notes",
-            type: "vuetifyTextArea",
-            inputType: "text",
-            label: "Notes",
-            placeholder: "",
-            text: "",
-            required: false,
-            counter: 400,
-            max: 400,
-            min: 0,
-          },
-        ],
-      },
+      profile: [
+        {
+          name: "First Name",
+          value: "N/A",
+        },
+        {
+          name: "Last Name",
+          value: "N/A",
+        },
+        {
+          name: "Sex",
+          value: "N/A",
+        },
+        {
+          name: "Hire Date",
+          value: "N/A",
+        },
+        {
+          name: "Department",
+          value: "N/A",
+        },
+        {
+          name: "Position",
+          value: "N/A",
+        },
+        {
+          name: "Phone",
+          value: "N/A",
+        },
+        {
+          name: "Email",
+          value: "N/A",
+        },
+        {
+          name: "Office",
+          value: "N/A",
+        },
+        {
+          name: "Hobby",
+          value: "N/A",
+        },
+        {
+          name: "Notes",
+          value: "N/A",
+        },
+      ],
     };
+  },
+  mounted() {
+    this.member_id = this.$auth.user.member_id;
+    var url = "/rcms-api/1/members?id=" + this.member_id;
+    let self = this;
+    this.$auth.ctx.$axios
+      .get("/rcms-api/1/members/" + this.$auth.user.member_id)
+      .then(function (response) {
+        //console.log('testing');
+        var detail = {};
+        var profile = [];
+        var details_obj = response.data.details;
+        detail["name"] = details_obj.name1 + " " + details_obj.name2;
+        detail["zip"] = details_obj.zip_code;
+        if (details_obj.address1 == null) {
+          detail["location"] = "";
+        } else {
+          detail["location"] =
+            details_obj.address1 +
+            ", " +
+            details_obj.address2 +
+            " " +
+            details_obj.address3;
+        }
+        detail["phone"] = details_obj.tel;
+        detail["email"] = details_obj.email;
+        if (details_obj.profileimage.url != undefined) {
+          detail["url"] =
+            "https://dev-nuxt-auth.a.kuroco-img.app/v=1614168758" +
+            details_obj.profileimage.url;
+        } else {
+          detail["url"] =
+            "/_nuxt/src/assets/images/avatar-placeholder.png";
+        }
+        if (details_obj.hasOwnProperty("sex")) {
+          detail["sex"] = details_obj.sex.label;
+        }
+         if (details_obj.hasOwnProperty("birth")) {
+          detail["birth"] = details_obj.birth;
+        }
+        if (details_obj.hasOwnProperty("role")) {
+          detail["position"] = details_obj.role;
+        }
+        if (details_obj.hasOwnProperty("department")) {
+          detail["department"] = details_obj.department;
+        }
+        if (details_obj.hasOwnProperty("radio_button_2")) {
+          detail["radio_button_2"] = details_obj.radio_button_2.label;
+        }
+        if (details_obj.hasOwnProperty("pull_down")) {
+          detail["pull_down"] = details_obj.pull_down.label;
+        }
+        if (details_obj.hasOwnProperty("notes")) {
+          detail["text"] = details_obj.notes;
+        }
+        if (details_obj.hasOwnProperty("multiple_check")) {
+        var multipleInput = "";
+          for (var i = 0; i < details_obj.multiple_check.length; ++i) {
+            multipleInput += details_obj.multiple_check[i].label + ", ";
+            detail["multiple_check"] = multipleInput;
+          }
+        }
+        
+        self.detail = detail;
+        for (var i=0; i < self.profile.length; i++) {
+          if (self.profile[i].name === 'First Name' && details_obj.name1) {
+            self.profile[i].value = details_obj.name1;
+          } 
+          else if (self.profile[i].name === 'Last Name' && details_obj.name2) {
+            self.profile[i].value = details_obj.name2;
+          } 
+          else if (self.profile[i].name === 'Sex' && details_obj.sex.label) {
+            self.profile[i].value = details_obj.sex.label;
+          }
+          else if (self.profile[i].name === 'Hire Date' && details_obj.hire_date) {
+            self.profile[i].value = details_obj.hire_date;
+          }
+          else if (self.profile[i].name === 'Department' && details_obj.department) {
+            self.profile[i].value = details_obj.department;
+          }
+          else if (self.profile[i].name === 'Position' && details_obj.role) {
+            self.profile[i].value = details_obj.role;
+          }
+          else if (self.profile[i].name === 'Phone' && detail["phone"]) {
+            self.profile[i].value = detail["phone"];
+          }
+          else if (self.profile[i].name === 'Email' && detail["email"]) {
+            self.profile[i].value = detail["email"];
+          }
+          else if (self.profile[i].name === 'Office' && detail["pull_down"]) {
+            self.profile[i].value = detail["pull_down"];
+          }
+          else if (self.profile[i].name === 'Hobby' && detail["multiple_check"]) {
+            self.profile[i].value = detail["multiple_check"];
+          }
+          else if (self.profile[i].name === 'Notes' && detail["text"]) {
+            self.profile[i].value = detail["text"];
+          }
+        }
+
+      })
+      .catch(function (error) {
+        self.$store.dispatch("snackbar/setError", error.response.data.errors?.[0].message);
+        self.$store.dispatch("snackbar/snackOn");
+      });
   },
 };
 </script>
