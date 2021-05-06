@@ -20,9 +20,6 @@
           </div>
         </v-col>
         <v-col class="pa-0 col-sm-6 col-12">
-          <h3 v-if="e1 == 2" align="center" style="font-weight: normal">
-            Input your password
-          </h3>
           <v-card v-if="e1 == 1" class="p-login_form" outlined>
             <v-form
               ref="form1"
@@ -40,7 +37,6 @@
                       A password reset URL will be sent to the email address you
                       provided.
                     </p>
-                    <p>
                       <v-text-field
                         v-model="email"
                         label="Email address"
@@ -48,7 +44,6 @@
                         autocomplete="off"
                         outlined
                       />
-                    </p>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -65,59 +60,57 @@
               </v-container>
             </v-form>
           </v-card>
-          <v-card v-else-if="e1 == 2">
-            <br />
+          <v-card v-else-if="e1 == 2" class="p-login_form">
             <v-form
               ref="form2"
               v-model="valid"
               lazy-validation
               @submit.prevent="set_password"
             >
+            <v-card-title>
+              <h2 align="center" class="pb-4 c-text_blue">Set New Password</h2>
+            </v-card-title>
               <v-container fluid class="p-login_content-inner">
                 <v-row>
-                  <v-col cols="12">
+                  <v-col cols="12 py-0">
                     <p>Temporary password</p>
-                    <p>
-                      <v-text-field v-model="temp_pwd" :type="text" label="" />
-                    </p>
+                    <v-text-field v-model="temp_pwd" :type="text" label="" outlined/>
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col cols="12">
+                  <v-col cols="12 py-0">
                     <p>New password</p>
-                    <p>
-                      <v-text-field
-                        v-model="login_pwd"
-                        :append-icon="password_show ? 'mdi-eye' : 'mdi-eye-off'"
-                        :rules="[rules.required, rules.password_min]"
-                        :type="password_show ? 'text' : 'password'"
-                        label=""
-                        hint="最低8文字以上の英数混合のパスワードを設定ください。"
-                        counter
-                        @click:append="password_show = !password_show"
-                      />
-                    </p>
+                    <v-text-field
+                      v-model="login_pwd"
+                      :append-icon="password_show ? 'mdi-eye' : 'mdi-eye-off'"
+                      :rules="[rules.required, rules.password_min]"
+                      :type="password_show ? 'text' : 'password'"
+                      label=""
+                      hint="最低8文字以上の英数混合のパスワードを設定ください。"
+                      counter
+                      @click:append="password_show = !password_show"
+                      outlined
+                    />
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col cols="12">
+                  <v-col cols="12 pt-0">
                     <p>Confirmation password</p>
-                    <p>
-                      <v-text-field
-                        v-model="login_pwd2"
-                        :append-icon="password_show2 ? 'mdi-eye' : 'mdi-eye-off'"
-                        :rules="[
-                          rules.required,
-                          rules.password_min,
-                          rules.password2,
-                        ]"
-                        :type="password_show2 ? 'text' : 'password'"
-                        label=""
-                        hint="最低8文字以上の英数混合のパスワードを設定ください。"
-                        counter
-                        @click:append="password_show2 = !password_show2"
+                    <v-text-field
+                      v-model="login_pwd2"
+                      :append-icon="password_show2 ? 'mdi-eye' : 'mdi-eye-off'"
+                      :rules="[
+                        rules.required,
+                        rules.password_min,
+                        rules.password2,
+                      ]"
+                      :type="password_show2 ? 'text' : 'password'"
+                      label=""
+                      hint="最低8文字以上の英数混合のパスワードを設定ください。"
+                      counter
+                      @click:append="password_show2 = !password_show2"
+                      outlined
                       />
-                    </p>
                   </v-col>
                 </v-row>
                 <v-row>
@@ -255,6 +248,7 @@ export default {
     },
     async set_password() {
       if (this.$refs.form2.validate() && this.token) {
+        console.log('reset');
         this.loading2 = true;
         let self = this;
         self.$auth.ctx.$axios

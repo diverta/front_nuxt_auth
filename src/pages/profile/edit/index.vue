@@ -151,10 +151,10 @@ export default {
               self.schema.fields[i].text = response.data.details.name2;
             } 
             else if (self.schema.fields[i].model === 'sex' && response.data.details.sex.value) {
-              self.schema.fields[i].radiosOptions = response.data.details.sex.value;
+              self.schema.fields[i].contents = response.data.details.sex.value;
             } 
             else if (self.schema.fields[i].model === 'hire_date' && response.data.details.hire_date) {
-              self.schema.fields[i].picker = response.data.details.hire_date;
+              self.schema.fields[i].time = response.data.details.hire_date;
             } 
             else if (self.schema.fields[i].model === 'department' && response.data.details.department) {
               self.schema.fields[i].text = response.data.details.department;
@@ -219,9 +219,21 @@ export default {
       disabled: false,
       model: {
         sex: "Male",
+        hire_date: "1988-10-09",
       },
       schema: {
         fields: [
+          /*
+          {
+            type: "radios",
+            label: "Sex",
+            model: "sex",
+            values: [
+                "Male",
+                "Female",
+            ]
+          },
+          */
           {
             type: "vuetifyText",
             inputType: "text",
@@ -245,20 +257,6 @@ export default {
           {
             model: "sex",
             label: "Sex",
-            /*
-            values: [
-                "James",
-                "Nadia",
-                "Paul",
-                "Christelle",
-                "Marc",
-                "Marie"
-            ],
-            radiosOptions: {
-                value:"Male",
-                name:"Male"
-            }
-            */
             contents: [
               {
                 key: 1,
@@ -271,7 +269,6 @@ export default {
             ],
             required: true,
             type: "vuetifySingleChoice",
-            value: "Male",
           },
           {
             type: "vuetifyDate",
@@ -283,10 +280,11 @@ export default {
           },
           {
             type: "vuetifyDate",
-            inputType: "picker",
+            //inputType: "picker",
             label: "Hire Date",
-            model: "hite_date",
+            model: "hire_date",
             required: true,
+            time: '1988-10-09',
           },
           {
             type: "vuetifyText",
@@ -336,7 +334,7 @@ export default {
             label: "Password",
             text: "",
             model: "login_pwd",
-            required: true,
+            required: false,
           },
           /*
           {

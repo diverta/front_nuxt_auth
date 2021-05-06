@@ -45,6 +45,9 @@
                 opacity: 1 !important;
             }
         }
+        & .v-btn:before {
+            border-radius: 10px;
+        }
     }
     &_pagination {
         & .v-pagination__item--active {

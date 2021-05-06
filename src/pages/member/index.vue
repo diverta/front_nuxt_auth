@@ -34,12 +34,15 @@
           mdi-magnify 
         </v-icon>
         </button>
-      </v-col>
+      </v-col> 
     </v-row>
     <v-data-table
       :headers="headers"
       :items="filteredItems"
       :items-per-page="perpage"
+      :page.sync="page"
+      hide-default-footer
+      @page-count="pageCount = $event"
       class="elevation-1 mt-5 c-table"
     >
       <template v-slot:item.name="{ item }">
@@ -51,6 +54,12 @@
         <a :href="'tel:' + item.phone">{{ item.phone }}</a>
       </template>
     </v-data-table>
+    <v-pagination
+      v-model="page"
+      :length="pageCount"
+      class="c-navi_pagination mt-5 pt-5"
+    ></v-pagination>
+
   </div>
 </template>
 <script>
@@ -73,11 +82,27 @@ export default {
       members: [],
       departments: [],
       perpage: 10,
+      page: 1,
+      pageCount: 0,
+      //totalCnt: 50,
       member: "",
       department: "",
     };
   },
   methods: {
+    next(page) {
+      this.updateTopics();
+    },
+    changeCategoryAll() {
+      this.category_key = null;
+      this.page = 1;
+      this.updateTopics();
+    },
+    changeCategory(item) {
+      this.category_key = item.key;
+      this.page = 1;
+      this.updateTopics();
+    },
     filterByMembersDepartment() {
       if (this.department == undefined) {
         this.department = "";

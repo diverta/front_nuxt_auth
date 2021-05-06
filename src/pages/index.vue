@@ -216,7 +216,7 @@ export default {
               self.items.push({ src: item["ext_col_08"]["url"] });
             }
             topics.push({
-              date: item["inst_ymdhi"].substring(0, 10).replaceAll("-", "/"),
+              date: item["ymd"].substring(0, 10).replaceAll("-", "/"),
               label: item["contents_type_nm"],
               link: item["subject"],
               icon: "",
