@@ -21,7 +21,6 @@
         position="center"
         :aspect-ratio="1"
       ></v-img>
-
       <v-card-text>
         <div class="text--primary">
           {{ text }}
@@ -32,8 +31,9 @@
 
   <v-container fluid v-else-if="pattern == 'bottom'">
     <v-card class="mx-auto" max-width="7000">
+      <v-card-title class="c-heading_h2" v-text="subtitle"></v-card-title>
       <v-card-text>
-        <div class="text--primary">
+        <div class="text--primary pb-5">
           {{ text }}
         </div>
         <v-img

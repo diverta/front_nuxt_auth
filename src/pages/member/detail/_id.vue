@@ -100,7 +100,7 @@ export default {
       },
       profile: [
         {
-          name: "Address",
+          name: "Hire Date",
           value: "N/A",
         },
         {
@@ -112,15 +112,11 @@ export default {
           value: "N/A",
         },
         {
-          name: "Pull-down",
+          name: "Office",
           value: "N/A",
         },
         {
-          name: "Radio button",
-          value: "N/A",
-        },
-        {
-          name: "Multiple",
+          name: "Hobby",
           value: "N/A",
         },
         {
@@ -165,7 +161,7 @@ export default {
         if (details_obj.hasOwnProperty("sex")) {
           detail["sex"] = details_obj.sex.label;
         }
-         if (details_obj.hasOwnProperty("birth")) {
+        if (details_obj.hasOwnProperty("birth")) {
           detail["birth"] = details_obj.birth;
         }
         if (details_obj.hasOwnProperty("role")) {
@@ -177,12 +173,6 @@ export default {
         if (details_obj.hasOwnProperty("radio_button_2")) {
           detail["radio_button_2"] = details_obj.radio_button_2.label;
         }
-        if (details_obj.hasOwnProperty("pull_down")) {
-          detail["pull_down"] = details_obj.pull_down.label;
-        }
-        if (details_obj.hasOwnProperty("notes")) {
-          detail["text"] = details_obj.notes;
-        }
         if (details_obj.hasOwnProperty("multiple_check")) {
         var multipleInput = "";
           for (var i = 0; i < details_obj.multiple_check.length; ++i) {
@@ -192,13 +182,26 @@ export default {
         }
 
         self.detail = detail;
-        self.profile[0]["value"] = detail["location"];
-        self.profile[1]["value"] = detail["phone"];
-        self.profile[2]["value"] = detail["email"];
-        self.profile[3]["value"] = detail["pull_down"];
-        self.profile[4]["value"] = detail["radio_button_2"];
-        self.profile[5]["value"] = detail["multiple_check"];
-        self.profile[6]["value"] = detail["text"];
+        for (var i=0; i < self.profile.length; i++) {
+          if (self.profile[i].name === 'Hire Date' && details_obj.hire_date) {
+            self.profile[i].value = details_obj.hire_date;
+          }
+          else if (self.profile[i].name === 'Phone' && detail["phone"]) {
+            self.profile[i].value = detail["phone"];
+          }
+          else if (self.profile[i].name === 'Email' && detail["email"]) {
+            self.profile[i].value = detail["email"];
+          }
+          else if (self.profile[i].name === 'Office' && details_obj.pull_down.label) {
+            self.profile[i].value = details_obj.pull_down.label;
+          }
+          else if (self.profile[i].name === 'Hobby' && detail["multiple_check"]) {
+            self.profile[i].value = detail["multiple_check"];
+          }
+          else if (self.profile[i].name === 'Notes' && detail["text"]) {
+            self.profile[i].value = details_obj.notes;
+          }
+        }
       })
       .catch(function (error) {
         self.$store.dispatch("snackbar/setError", error.response.data.errors?.[0].message);
