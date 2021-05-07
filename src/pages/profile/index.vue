@@ -57,7 +57,7 @@ export default {
           value: "N/A",
         },
         {
-          name: "Sex",
+          name: "Gender",
           value: "N/A",
         },
         {
@@ -165,7 +165,7 @@ export default {
           else if (self.profile[i].name === 'Last Name' && details_obj.name2) {
             self.profile[i].value = details_obj.name2;
           } 
-          else if (self.profile[i].name === 'Sex' && details_obj.sex.label) {
+          else if (self.profile[i].name === 'Gender' && details_obj.sex.label) {
             self.profile[i].value = details_obj.sex.label;
           }
           else if (self.profile[i].name === 'Hire Date' && details_obj.hire_date) {

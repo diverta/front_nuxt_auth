@@ -165,7 +165,7 @@ export default {
           },
           {
             model: "sex",
-            label: "Sex",
+            label: "Gender",
             contents: [
               {
                 key: 1,
@@ -176,6 +176,12 @@ export default {
               {
                 key: 2,
                 value: "Female",
+                default: false,
+                attribute: { group: "1" },
+              },
+              {
+                key: 3,
+                value: "Other",
                 default: false,
                 attribute: { group: "1" },
               },

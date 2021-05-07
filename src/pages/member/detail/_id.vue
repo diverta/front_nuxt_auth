@@ -52,7 +52,7 @@
                   <td v-else-if="item.name == 'Email'" width="1000">
                     <a :href="'mailto:' + item.value">{{ item.value }}</a>
                   </td>
-                  <td v-else width="1000">
+                  <td v-else width="1000" class="py-3">
                     {{ item.value }}
                   </td>
                 </tr>
@@ -164,8 +164,8 @@ export default {
         if (details_obj.hasOwnProperty("birth")) {
           detail["birth"] = details_obj.birth;
         }
-        if (details_obj.hasOwnProperty("role")) {
-          detail["position"] = details_obj.role;
+        if (details_obj.hasOwnProperty("position")) {
+          detail["position"] = details_obj.position;
         }
         if (details_obj.hasOwnProperty("department")) {
           detail["department"] = details_obj.department;
@@ -198,7 +198,7 @@ export default {
           else if (self.profile[i].name === 'Hobby' && detail["multiple_check"]) {
             self.profile[i].value = detail["multiple_check"];
           }
-          else if (self.profile[i].name === 'Notes' && detail["text"]) {
+          else if (self.profile[i].name === 'Notes' && details_obj.notes) {
             self.profile[i].value = details_obj.notes;
           }
         }
