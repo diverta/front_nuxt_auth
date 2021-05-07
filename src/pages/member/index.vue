@@ -145,17 +145,17 @@ export default {
         for (var key in response.data.list) {
           var item = response.data.list[key];
           var department = "";
-          var role = "";
+          var position = "";
           if (item.hasOwnProperty("department")) {
             department = item.department;
           }
-          if (item.hasOwnProperty("role")) {
-            role = item.role;
+          if (item.hasOwnProperty("position")) {
+            position = item.position;
           }
           items.push({
             name: item["name1"] + " " + item["name2"],
             department: department,
-            position: role,
+            position: position,
             phone: item["tel"],
             id: item["member_id"],
           });
