@@ -3,7 +3,7 @@
         <v-row>
             <v-col class="pa-0 col-sm-6 col-12">
                 <div class="p-login_intro">
-                    <img src="../assets/images/logo.png" class="p-login_logo">
+                    <img src="~/assets/images/logo.png?width=150px" class="p-login_logo">
                     <div class="p-login_intro-text">
                         <h1 class="heading">
                             Back to <a href="/">login</a>

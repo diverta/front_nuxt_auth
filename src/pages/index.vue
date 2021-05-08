@@ -39,7 +39,7 @@
                                             @click:append="show_pwd1 = !show_pwd1"
                                         />
                                         <p>
-                                            <NuxtLink to="/reminder">
+                                            <NuxtLink to="/reminder/">
                                                 Forgot Password?
                                             </NuxtLink>
                                         </p>
@@ -182,10 +182,10 @@ export default {
     },
     methods: {
         back() {
-            this.$router.push('/topics_list');
+            this.$router.push('/topics_list/');
         },
         linkFav() {
-            this.$router.push('/favourite');
+            this.$router.push('/favourite/');
         },
         updateDesign() {
             const myBody = document.getElementsByTagName('body')[0];
