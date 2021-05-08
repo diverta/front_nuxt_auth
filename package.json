@@ -29,6 +29,7 @@
     "firebase-admin": "^8.10.0",
     "firebase-functions": "^3.6.1",
     "nuxt": "^2.14.3",
+    "nuxt-i18n": "^6.27.0",
     "validator": "^13.5.2",
     "vee-validate": "^4.1.17",
     "vue-class-component": "^7.2.5",
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^1.0.3",
+    "@nuxtjs/eslint-config-typescript": "^6.0.0",
     "@nuxtjs/vuetify": "^1.11.3",
     "@vue/test-utils": "^1.0.3",
     "babel-core": "7.0.0-bridge.0",
@@ -48,6 +50,7 @@
     "eslint": "^7.6.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-loader": "^4.0.2",
+    "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue": "^6.2.2",
     "jest": "^26.0.1",

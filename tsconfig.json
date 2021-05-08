@@ -27,7 +27,6 @@
       "@types/node",
       "@nuxt/types"
     ],
-    "experimentalDecorators": true
   },
   "exclude": [
     "node_modules",
