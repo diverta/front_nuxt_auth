@@ -4,7 +4,7 @@
             <v-row>
                 <v-col class="pa-0 col-sm-6 col-12">
                     <div class="p-login_intro">
-                        <img src="../assets/images/logo.png" class="p-login_logo">
+                        <img src="~/assets/images/logo.png?width=150px" class="p-login_logo">
                         <div class="p-login_intro-text">
                             <h1 class="heading">
                                 Welcome Back to<br> Muzica!
@@ -221,7 +221,7 @@ export default {
                             item.hasOwnProperty('ext_col_08') &&
               item.ext_col_08.hasOwnProperty('url')
                         ) {
-                            self.items.push({ src: item.ext_col_08.url });
+                            self.items.push({ src: item.ext_col_08.url + '?height=500px' });
                         }
                         topics.push({
                             date: item.ymd.substring(0, 10).replaceAll('-', '/'),
