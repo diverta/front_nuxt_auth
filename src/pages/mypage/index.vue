@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <!--
+    <div>
+        <!--
     <div class="l-content_heading">
       <h1>My page</h1>
     </div>
-    
+
     <v-tabs
       background-color="transparent"
       light
@@ -20,158 +20,159 @@
     </v-tabs>
     -->
 
-    <v-progress-linear
-      :active="loading"
-      :indeterminate="loading"
-      absolute
-      top
-      color="orange white-4"
-    ></v-progress-linear>
+        <v-progress-linear
+            :active="loading"
+            :indeterminate="loading"
+            absolute
+            top
+            color="orange white-4"
+        />
 
-    <!--<h1 class="mt-5 pt-5">Profile editing</h1>-->
-    <div class="v-stepper c-form_wrap">
-      <v-container fluid>
-        <vue-form-generator
-          ref="form"
-          :schema="schema"
-          :model="model"
-          @model-updated="onInput"
-          class="c-form"
-        >
-        </vue-form-generator>
+        <!--<h1 class="mt-5 pt-5">Profile editing</h1>-->
+        <div class="v-stepper c-form_wrap">
+            <v-container fluid>
+                <vue-form-generator
+                    ref="form"
+                    :schema="schema"
+                    :model="model"
+                    class="c-form"
+                    @model-updated="onInput"
+                />
 
-        <v-checkbox v-model="disabled" class="c-form_tnc">
-          <template v-slot:label>
-            <div>I agree to the terms of Use.</div>
-          </template>
-        </v-checkbox>
-        <div class="text-center mb-5">
-          <button
-          type="submit"
-          block
-          x-large
-          @click="submitF()"
-          :disabled="!disabled"
-          class="c-btn c-btn_main"
-          >SUBMIT</button
-        >
+                <v-checkbox v-model="disabled" class="c-form_tnc">
+                    <template v-slot:label>
+                        <div>I agree to the terms of Use.</div>
+                    </template>
+                </v-checkbox>
+                <div class="text-center mb-5">
+                    <button
+                        type="submit"
+                        block
+                        x-large
+                        :disabled="!disabled"
+                        class="c-btn c-btn_main"
+                        @click="submitF()"
+                    >
+                        SUBMIT
+                    </button
+                    >
+                </div>
+            </v-container>
         </div>
-      </v-container>
     </div>
-  </div>
 </template>
 
 <script>
-import "~/assets/form.css";
-import Vue from "vue";
-import VueFormGenerator from "vue-form-generator";
-import KurocoParser from "~/plugins/parser.js";
-import fieldUploadFile from "~/components/vuetify_file_upload.vue";
-import fieldVuetifyText from "~/components/vuetify_text.vue";
-import fieldVuetifyTextArea from "~/components/vuetify_textarea.vue";
-import fieldVuetifyDate from "~/components/vuetify_date.vue";
-import fieldVuetifyJson from "~/components/vuetify_json.vue";
-import fieldVuetifyPrefecture from "~/components/vuetify_prefecture.vue";
-import fieldVuetifyMultipleChoice from "~/components/vuetify_multiple_choice.vue";
-import fieldVuetifySingleChoice from "~/components/vuetify_single_choice.vue";
-import fieldVuetifySingleOption from "~/components/vuetify_single_option.vue";
-import fieldVuetifyPassword from "~/components/vuetify_password.vue";
+import '~/assets/form.css';
+import Vue from 'vue';
+import VueFormGenerator from 'vue-form-generator';
+import KurocoParser from '~/plugins/parser.js';
+import fieldUploadFile from '~/components/vuetify_file_upload.vue';
+import fieldVuetifyText from '~/components/vuetify_text.vue';
+import fieldVuetifyTextArea from '~/components/vuetify_textarea.vue';
+import fieldVuetifyDate from '~/components/vuetify_date.vue';
+import fieldVuetifyJson from '~/components/vuetify_json.vue';
+import fieldVuetifyPrefecture from '~/components/vuetify_prefecture.vue';
+import fieldVuetifyMultipleChoice from '~/components/vuetify_multiple_choice.vue';
+import fieldVuetifySingleChoice from '~/components/vuetify_single_choice.vue';
+import fieldVuetifySingleOption from '~/components/vuetify_single_option.vue';
+import fieldVuetifyPassword from '~/components/vuetify_password.vue';
 
-Vue.component("fieldUploadFile", fieldUploadFile);
-Vue.component("fieldVuetifyDate", fieldVuetifyDate);
-Vue.component("fieldVuetifyText", fieldVuetifyText);
-Vue.component("fieldVuetifyTextArea", fieldVuetifyTextArea);
-Vue.component("fieldVuetifyJson", fieldVuetifyJson);
-Vue.component("fieldVuetifyPrefecture", fieldVuetifyPrefecture);
-Vue.component("fieldVuetifySingleOption", fieldVuetifySingleOption);
-Vue.component("fieldVuetifySingleChoice", fieldVuetifySingleChoice);
-Vue.component("fieldVuetifyMultipleChoice", fieldVuetifyMultipleChoice);
-Vue.component("fieldVuetifyPassword", fieldVuetifyPassword);
+Vue.component('fieldUploadFile', fieldUploadFile);
+Vue.component('fieldVuetifyDate', fieldVuetifyDate);
+Vue.component('fieldVuetifyText', fieldVuetifyText);
+Vue.component('fieldVuetifyTextArea', fieldVuetifyTextArea);
+Vue.component('fieldVuetifyJson', fieldVuetifyJson);
+Vue.component('fieldVuetifyPrefecture', fieldVuetifyPrefecture);
+Vue.component('fieldVuetifySingleOption', fieldVuetifySingleOption);
+Vue.component('fieldVuetifySingleChoice', fieldVuetifySingleChoice);
+Vue.component('fieldVuetifyMultipleChoice', fieldVuetifyMultipleChoice);
+Vue.component('fieldVuetifyPassword', fieldVuetifyPassword);
 
 Vue.use(VueFormGenerator);
 Vue.use(KurocoParser);
 
 export default {
-  auth: true,
-  components: {
-    "vue-form-generator": VueFormGenerator.component,
-  },
-  methods: {
-    go_page(path) {
-      this.$router.push(path);
+    auth: true,
+    components: {
+        'vue-form-generator': VueFormGenerator.component
     },
-    onInput: function (value, fieldName) {
-      this.$set(this.model, fieldName, value);
-    },
-    submitF: function () {
-      let self = this;
-      this.validForm = true;
-      for (var key in self.$children[1].$children) {
-        self.$children[1].$children[key].$children[0].$refs.myForm.validate();
-        if (self.$children[1].$children[key].$children[0].formValid == false) {
-          this.validForm = false;
-        }
-      }
-
-      if (this.validForm) {
-        var send_model = JSON.parse(JSON.stringify(self.model));
-        self.$store.$auth.ctx.$axios
-          .post("/rcms-api/1/member/update", send_model)
-          .then(function (response) {
-            if (response.data.errors.length == 0) {
-              self.$store.dispatch(
-                "snackbar/setMessage",
-                "Your profile is changed."
-              );
-              self.$store.dispatch("snackbar/snackOn");
-              self.$router.push("/");
+    methods: {
+        go_page(path) {
+            this.$router.push(path);
+        },
+        onInput (value, fieldName) {
+            this.$set(this.model, fieldName, value);
+        },
+        submitF () {
+            const self = this;
+            this.validForm = true;
+            for (const key in self.$children[1].$children) {
+                self.$children[1].$children[key].$children[0].$refs.myForm.validate();
+                if (self.$children[1].$children[key].$children[0].formValid == false) {
+                    this.validForm = false;
+                }
             }
-          }).catch(function (error) {
-            self.$store.dispatch("snackbar/setError", error.response.data.errors?.[0].message);
-            self.$store.dispatch("snackbar/snackOn");
-          });;
-      } else {
-        self.$store.dispatch("snackbar/setError", "Fill fields properly.");
-        self.$store.dispatch("snackbar/snackOn");
-      }
+
+            if (this.validForm) {
+                const send_model = JSON.parse(JSON.stringify(self.model));
+                self.$store.$auth.ctx.$axios
+                    .post('/rcms-api/1/member/update', send_model)
+                    .then(function (response) {
+                        if (response.data.errors.length == 0) {
+                            self.$store.dispatch(
+                                'snackbar/setMessage',
+                                'Your profile is changed.'
+                            );
+                            self.$store.dispatch('snackbar/snackOn');
+                            self.$router.push('/');
+                        }
+                    }).catch(function (error) {
+                        self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
+                        self.$store.dispatch('snackbar/snackOn');
+                    }); ;
+            } else {
+                self.$store.dispatch('snackbar/setError', 'Fill fields properly.');
+                self.$store.dispatch('snackbar/snackOn');
+            }
+        }
     },
-  },
-  mounted() {
-    if (this.$auth.loggedIn) {
-      let self = this;
-      this.$auth.ctx.$axios
-        .get("/rcms-api/1/members/" + this.$auth.user.member_id)
-        .then(function (response) {
-          if (response.data.details.hasOwnProperty("name1")) {
-            self.schema.fields[0].text = response.data.details.name1;
-          }
-          if (response.data.details.hasOwnProperty("name2")) {
-            self.schema.fields[1].text = response.data.details.name2;
-          }
-          if (response.data.details.hasOwnProperty("birth")) {
-            self.schema.fields[3].text = response.data.details.birth;
-          }
-          if (response.data.details.hasOwnProperty("department")) {
-            self.schema.fields[4].text = response.data.details.department;
-          }
-          if (response.data.details.hasOwnProperty("position")) {
-            self.schema.fields[5].text = response.data.details.position;
-          }
-          if (response.data.details.hasOwnProperty("tel")) {
-            self.schema.fields[6].text = response.data.details.tel;
-          }
-          if (response.data.details.hasOwnProperty("email")) {
-            self.schema.fields[7].text = response.data.details.email;
-          }
-          /*
+    mounted() {
+        if (this.$auth.loggedIn) {
+            const self = this;
+            this.$auth.ctx.$axios
+                .get('/rcms-api/1/members/' + this.$auth.user.member_id)
+                .then(function (response) {
+                    if (response.data.details.hasOwnProperty('name1')) {
+                        self.schema.fields[0].text = response.data.details.name1;
+                    }
+                    if (response.data.details.hasOwnProperty('name2')) {
+                        self.schema.fields[1].text = response.data.details.name2;
+                    }
+                    if (response.data.details.hasOwnProperty('birth')) {
+                        self.schema.fields[3].text = response.data.details.birth;
+                    }
+                    if (response.data.details.hasOwnProperty('department')) {
+                        self.schema.fields[4].text = response.data.details.department;
+                    }
+                    if (response.data.details.hasOwnProperty('position')) {
+                        self.schema.fields[5].text = response.data.details.position;
+                    }
+                    if (response.data.details.hasOwnProperty('tel')) {
+                        self.schema.fields[6].text = response.data.details.tel;
+                    }
+                    if (response.data.details.hasOwnProperty('email')) {
+                        self.schema.fields[7].text = response.data.details.email;
+                    }
+                    /*
           if (response.data.details.hasOwnProperty("zip_code")) {
             self.schema.fields[9].text = response.data.details.zip_code;
           }
           */
-          if (response.data.details.hasOwnProperty("notes")) {
-            self.schema.fields[13].text = response.data.details.notes;
-          }
-          /*
+                    if (response.data.details.hasOwnProperty('notes')) {
+                        self.schema.fields[13].text = response.data.details.notes;
+                    }
+                    /*
           for (var i = 0; i < self.schema.fields[10].options.length; ++i) {
             if (
               self.schema.fields[10].options[i].value ==
@@ -191,65 +192,65 @@ export default {
             }
           }
           */
-          self.schema.fields[9].text = response.data.details.address1;
-          //self.schema.fields[10].option.value = response.data.details.tdfk_cd;
-          self.schema.fields[13].contents[2].default = true;
-          self.loading = false;
-        })
-        .catch(function (error) {
-          self.$store.dispatch("snackbar/setError", error.response.data.errors?.[0].message);
-          self.$store.dispatch("snackbar/snackOn");
-          self.loading = false;
-        });
-    }
-  },
-  data() {
-    return {
-      // form default values
-      active_tab: 2,
-      email: "",
-      name1: "",
-      name2: "",
-      zip_code: "",
-      tel: "",
-      multiple_check: "",
-      inquirySubmitUrl: "/rcms-api/1/inquiry/9",
-      inquirySchemaUrl: "/rcms-api/1/inquiry/get/9",
-      auth: false,
-      validForm: true,
-      loading: true,
-      disabled: false,
-      model: {
-        sex: "Male",
-        pull_down: ["Pulldown 1"],
-        multiple_check: ["Check 1"]
-      },
-      schema: {
-        fields: [
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            min: 0,
-            max: 100,
-            label: "First Name",
-            model: "name1",
-            text: "",
-            required: true,
-          },
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            min: 0,
-            max: 100,
-            label: "Last Name",
-            text: "",
-            model: "name2",
-            required: true,
-          },
-          {
-            model: "sex",
-            label: "Sex",
-            /*
+                    self.schema.fields[9].text = response.data.details.address1;
+                    // self.schema.fields[10].option.value = response.data.details.tdfk_cd;
+                    self.schema.fields[13].contents[2].default = true;
+                    self.loading = false;
+                })
+                .catch(function (error) {
+                    self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
+                    self.$store.dispatch('snackbar/snackOn');
+                    self.loading = false;
+                });
+        }
+    },
+    data() {
+        return {
+            // form default values
+            active_tab: 2,
+            email: '',
+            name1: '',
+            name2: '',
+            zip_code: '',
+            tel: '',
+            multiple_check: '',
+            inquirySubmitUrl: '/rcms-api/1/inquiry/9',
+            inquirySchemaUrl: '/rcms-api/1/inquiry/get/9',
+            auth: false,
+            validForm: true,
+            loading: true,
+            disabled: false,
+            model: {
+                sex: 'Male',
+                pull_down: ['Pulldown 1'],
+                multiple_check: ['Check 1']
+            },
+            schema: {
+                fields: [
+                    {
+                        type: 'vuetifyText',
+                        inputType: 'text',
+                        min: 0,
+                        max: 100,
+                        label: 'First Name',
+                        model: 'name1',
+                        text: '',
+                        required: true
+                    },
+                    {
+                        type: 'vuetifyText',
+                        inputType: 'text',
+                        min: 0,
+                        max: 100,
+                        label: 'Last Name',
+                        text: '',
+                        model: 'name2',
+                        required: true
+                    },
+                    {
+                        model: 'sex',
+                        label: 'Sex',
+                        /*
             values: [
                 "James",
                 "Nadia",
@@ -263,78 +264,78 @@ export default {
                 name:"Male"
             }
             */
-            contents: [
-              {
-                key: 1,
-                value: "Male",
-              },
-              {
-                key: 2,
-                value: "Female",
-              },
-            ],
-            required: true,
-            type: "vuetifySingleChoice",
-          },
-          {
-            type: "vuetifyDate",
-            inputType: "picker",
-            label: "Birthday",
-            model: "birth",
-            required: false,
-            visible: (model, field, form) => model.choice === 'Check a boolean value',
-          },
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            text: "",
-            min: 0,
-            max: 100,
-            label: "Department",
-            model: "department",
-            required: true,
-          },
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            text: "",
-            min: 0,
-            max: 100,
-            label: "Position",
-            model: "position",
-            required: false,
-          },
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            text: "",
-            min: 0,
-            max: 100,
-            label: "Phone",
-            model: "tel",
-            texttype: "tel",
-            required: true,
-          },
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            min: 0,
-            max: 100,
-            label: "Email address",
-            model: "email",
-            text: "",
-            texttype: "email",
-            required: true,
-          },
-          {
-            type: "vuetifyPassword",
-            inputType: "text",
-            label: "Password",
-            text: "",
-            model: "login_pwd",
-            required: true,
-          },
-          /*
+                        contents: [
+                            {
+                                key: 1,
+                                value: 'Male'
+                            },
+                            {
+                                key: 2,
+                                value: 'Female'
+                            }
+                        ],
+                        required: true,
+                        type: 'vuetifySingleChoice'
+                    },
+                    {
+                        type: 'vuetifyDate',
+                        inputType: 'picker',
+                        label: 'Birthday',
+                        model: 'birth',
+                        required: false,
+                        visible: (model, field, form) => model.choice === 'Check a boolean value'
+                    },
+                    {
+                        type: 'vuetifyText',
+                        inputType: 'text',
+                        text: '',
+                        min: 0,
+                        max: 100,
+                        label: 'Department',
+                        model: 'department',
+                        required: true
+                    },
+                    {
+                        type: 'vuetifyText',
+                        inputType: 'text',
+                        text: '',
+                        min: 0,
+                        max: 100,
+                        label: 'Position',
+                        model: 'position',
+                        required: false
+                    },
+                    {
+                        type: 'vuetifyText',
+                        inputType: 'text',
+                        text: '',
+                        min: 0,
+                        max: 100,
+                        label: 'Phone',
+                        model: 'tel',
+                        texttype: 'tel',
+                        required: true
+                    },
+                    {
+                        type: 'vuetifyText',
+                        inputType: 'text',
+                        min: 0,
+                        max: 100,
+                        label: 'Email address',
+                        model: 'email',
+                        text: '',
+                        texttype: 'email',
+                        required: true
+                    },
+                    {
+                        type: 'vuetifyPassword',
+                        inputType: 'text',
+                        label: 'Password',
+                        text: '',
+                        model: 'login_pwd',
+                        required: true
+                    },
+                    /*
           {
             type: "vuetifyPrefecture",
             inputType: "text",
@@ -396,122 +397,122 @@ export default {
             required: true,
           },
           */
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            text: "",
-            min: 0,
-            max: 100,
-            label: "Address",
-            model: "address1",
-            required: true,
-          },
-          {
-            type: "UploadFile",
-            label: "Avatar",
-            model: "profileimage",
-            required: false,
-            visible: (model, field, form) => model.choice === 'Check a boolean value',
-          },
-          {
-            model: "pull_down",
-            label: "Pull-down",
-            contents: [
-              {
-                key: 0,
-                value: " ",
-                default: false,
-                attribute: { group: "2" },
-              },
-              {
-                key: 1,
-                value: "Pulldown 1",
-                default: false,
-                attribute: { group: "2" },
-              },
-              {
-                key: 2,
-                value: "Pulldown 2",
-                default: false,
-                attribute: { group: "2" },
-              },
-              {
-                key: 3,
-                value: "Pulldown 3",
-                default: false,
-                attribute: { group: "2" },
-              },
-            ],
-            required: false,
-            type: "VuetifySingleOption",
-          },
-          {
-            model: "radio_button_2",
-            label: "Radio button",
-            contents: [
-              {
-                key: 1,
-                value: "Radio 1",
-                default: false,
-                attribute: { group: "1" },
-              },
-              {
-                key: 2,
-                value: "Radio 2",
-                default: false,
-                attribute: { group: "1" },
-              },
-              {
-                key: 3,
-                value: "Radio 3",
-                default: false,
-                attribute: { group: "1" },
-              },
-            ],
-            required: false,
-            type: "vuetifySingleChoice",
-          },
-          {
-            model: "multiple_check",
-            label: "Multiple",
-            contents: [
-              {
-                key: 1,
-                value: "Check 1",
-                default: false,
-                attribute: { group: "1" },
-              },
-              {
-                key: 2,
-                value: "Check 2",
-                default: false,
-                attribute: { group: "1" },
-              },
-              {
-                key: 3,
-                value: "Check 3",
-                default: false,
-                attribute: { group: "1" },
-              },
-            ],
-            required: false,
-            type: "vuetifyMultipleChoice",
-          },
-          {
-            model: "notes",
-            type: "vuetifyTextArea",
-            inputType: "text",
-            label: "Notes",
-            placeholder: "",
-            text: "",
-            required: false,
-            counter: 400,
-            max: 400,
-            min: 0,
-          },
-        ],
-      },
-    };
-  },
+                    {
+                        type: 'vuetifyText',
+                        inputType: 'text',
+                        text: '',
+                        min: 0,
+                        max: 100,
+                        label: 'Address',
+                        model: 'address1',
+                        required: true
+                    },
+                    {
+                        type: 'UploadFile',
+                        label: 'Avatar',
+                        model: 'profileimage',
+                        required: false,
+                        visible: (model, field, form) => model.choice === 'Check a boolean value'
+                    },
+                    {
+                        model: 'pull_down',
+                        label: 'Pull-down',
+                        contents: [
+                            {
+                                key: 0,
+                                value: ' ',
+                                default: false,
+                                attribute: { group: '2' }
+                            },
+                            {
+                                key: 1,
+                                value: 'Pulldown 1',
+                                default: false,
+                                attribute: { group: '2' }
+                            },
+                            {
+                                key: 2,
+                                value: 'Pulldown 2',
+                                default: false,
+                                attribute: { group: '2' }
+                            },
+                            {
+                                key: 3,
+                                value: 'Pulldown 3',
+                                default: false,
+                                attribute: { group: '2' }
+                            }
+                        ],
+                        required: false,
+                        type: 'VuetifySingleOption'
+                    },
+                    {
+                        model: 'radio_button_2',
+                        label: 'Radio button',
+                        contents: [
+                            {
+                                key: 1,
+                                value: 'Radio 1',
+                                default: false,
+                                attribute: { group: '1' }
+                            },
+                            {
+                                key: 2,
+                                value: 'Radio 2',
+                                default: false,
+                                attribute: { group: '1' }
+                            },
+                            {
+                                key: 3,
+                                value: 'Radio 3',
+                                default: false,
+                                attribute: { group: '1' }
+                            }
+                        ],
+                        required: false,
+                        type: 'vuetifySingleChoice'
+                    },
+                    {
+                        model: 'multiple_check',
+                        label: 'Multiple',
+                        contents: [
+                            {
+                                key: 1,
+                                value: 'Check 1',
+                                default: false,
+                                attribute: { group: '1' }
+                            },
+                            {
+                                key: 2,
+                                value: 'Check 2',
+                                default: false,
+                                attribute: { group: '1' }
+                            },
+                            {
+                                key: 3,
+                                value: 'Check 3',
+                                default: false,
+                                attribute: { group: '1' }
+                            }
+                        ],
+                        required: false,
+                        type: 'vuetifyMultipleChoice'
+                    },
+                    {
+                        model: 'notes',
+                        type: 'vuetifyTextArea',
+                        inputType: 'text',
+                        label: 'Notes',
+                        placeholder: '',
+                        text: '',
+                        required: false,
+                        counter: 400,
+                        max: 400,
+                        min: 0
+                    }
+                ]
+            }
+        };
+    }
 };
 </script>

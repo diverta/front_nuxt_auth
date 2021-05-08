@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <!--
+    <div>
+        <!--
     <div class="l-content_heading">
       <h1>My page</h1>
     </div>
-    
+
     <v-tabs
       background-color="transparent"
       light
@@ -20,159 +20,151 @@
     </v-tabs>
     -->
 
-    <v-progress-linear
-      :active="loading"
-      :indeterminate="loading"
-      absolute
-      top
-      color="orange white-4"
-    ></v-progress-linear>
+        <v-progress-linear
+            :active="loading"
+            :indeterminate="loading"
+            absolute
+            top
+            color="orange white-4"
+        />
 
-    <!--<h1 class="mt-5 pt-5">Profile editing</h1>-->
-    <div class="v-stepper c-form_wrap">
-      <v-container fluid>
-        <vue-form-generator
-          ref="form"
-          :schema="schema"
-          :model="model"
-          @model-updated="onInput"
-          class="c-form"
-        >
-        </vue-form-generator>
+        <!--<h1 class="mt-5 pt-5">Profile editing</h1>-->
+        <div class="v-stepper c-form_wrap">
+            <v-container fluid>
+                <vue-form-generator
+                    ref="form"
+                    :schema="schema"
+                    :model="model"
+                    class="c-form"
+                    @model-updated="onInput"
+                />
 
-        <v-checkbox v-model="disabled" class="c-form_tnc">
-          <template v-slot:label>
-            <div>I agree to the terms of Use.</div>
-          </template>
-        </v-checkbox>
-        <div class="text-center mb-5">
-          <button
-          type="submit"
-          block
-          x-large
-          @click="submitF()"
-          :disabled="!disabled"
-          class="c-btn c-btn_main"
-          >SUBMIT</button
-        >
+                <v-checkbox v-model="disabled" class="c-form_tnc">
+                    <template v-slot:label>
+                        <div>I agree to the terms of Use.</div>
+                    </template>
+                </v-checkbox>
+                <div class="text-center mb-5">
+                    <button
+                        type="submit"
+                        block
+                        x-large
+                        :disabled="!disabled"
+                        class="c-btn c-btn_main"
+                        @click="submitF()"
+                    >
+                        SUBMIT
+                    </button
+                    >
+                </div>
+            </v-container>
         </div>
-      </v-container>
     </div>
-  </div>
 </template>
 
 <script>
-import "~/assets/form.css";
-import Vue from "vue";
-import VueFormGenerator from "vue-form-generator";
-import KurocoParser from "~/plugins/parser.js";
-import fieldUploadFile from "~/components/vuetify_file_upload.vue";
-import fieldVuetifyText from "~/components/vuetify_text.vue";
-import fieldVuetifyTextArea from "~/components/vuetify_textarea.vue";
-import fieldVuetifyDate from "~/components/vuetify_date.vue";
-import fieldVuetifyJson from "~/components/vuetify_json.vue";
-import fieldVuetifyPrefecture from "~/components/vuetify_prefecture.vue";
-import fieldVuetifyMultipleChoice from "~/components/vuetify_multiple_choice.vue";
-import fieldVuetifySingleChoice from "~/components/vuetify_single_choice.vue";
-import fieldVuetifySingleOption from "~/components/vuetify_single_option.vue";
-import fieldVuetifyPassword from "~/components/vuetify_password.vue";
+import '~/assets/form.css';
+import Vue from 'vue';
+import VueFormGenerator from 'vue-form-generator';
+import KurocoParser from '~/plugins/parser.js';
+import fieldUploadFile from '~/components/vuetify_file_upload.vue';
+import fieldVuetifyText from '~/components/vuetify_text.vue';
+import fieldVuetifyTextArea from '~/components/vuetify_textarea.vue';
+import fieldVuetifyDate from '~/components/vuetify_date.vue';
+import fieldVuetifyJson from '~/components/vuetify_json.vue';
+import fieldVuetifyPrefecture from '~/components/vuetify_prefecture.vue';
+import fieldVuetifyMultipleChoice from '~/components/vuetify_multiple_choice.vue';
+import fieldVuetifySingleChoice from '~/components/vuetify_single_choice.vue';
+import fieldVuetifySingleOption from '~/components/vuetify_single_option.vue';
+import fieldVuetifyPassword from '~/components/vuetify_password.vue';
 
-Vue.component("fieldUploadFile", fieldUploadFile);
-Vue.component("fieldVuetifyDate", fieldVuetifyDate);
-Vue.component("fieldVuetifyText", fieldVuetifyText);
-Vue.component("fieldVuetifyTextArea", fieldVuetifyTextArea);
-Vue.component("fieldVuetifyJson", fieldVuetifyJson);
-Vue.component("fieldVuetifyPrefecture", fieldVuetifyPrefecture);
-Vue.component("fieldVuetifySingleOption", fieldVuetifySingleOption);
-Vue.component("fieldVuetifySingleChoice", fieldVuetifySingleChoice);
-Vue.component("fieldVuetifyMultipleChoice", fieldVuetifyMultipleChoice);
-Vue.component("fieldVuetifyPassword", fieldVuetifyPassword);
+Vue.component('fieldUploadFile', fieldUploadFile);
+Vue.component('fieldVuetifyDate', fieldVuetifyDate);
+Vue.component('fieldVuetifyText', fieldVuetifyText);
+Vue.component('fieldVuetifyTextArea', fieldVuetifyTextArea);
+Vue.component('fieldVuetifyJson', fieldVuetifyJson);
+Vue.component('fieldVuetifyPrefecture', fieldVuetifyPrefecture);
+Vue.component('fieldVuetifySingleOption', fieldVuetifySingleOption);
+Vue.component('fieldVuetifySingleChoice', fieldVuetifySingleChoice);
+Vue.component('fieldVuetifyMultipleChoice', fieldVuetifyMultipleChoice);
+Vue.component('fieldVuetifyPassword', fieldVuetifyPassword);
 
 Vue.use(VueFormGenerator);
 Vue.use(KurocoParser);
 
 export default {
-  auth: true,
-  components: {
-    "vue-form-generator": VueFormGenerator.component,
-  },
-  methods: {
-    go_page(path) {
-      this.$router.push(path);
+    auth: true,
+    components: {
+        'vue-form-generator': VueFormGenerator.component
     },
-    onInput: function (value, fieldName) {
-      this.$set(this.model, fieldName, value);
-    },
-    submitF: function () {
-      let self = this;
-      this.validForm = true;
-      for (var key in self.$children[1].$children) {
-        self.$children[1].$children[key].$children[0].$refs.myForm.validate();
-        if (self.$children[1].$children[key].$children[0].formValid == false) {
-          this.validForm = false;
+    methods: {
+        go_page(path) {
+            this.$router.push(path);
+        },
+        onInput (value, fieldName) {
+            this.$set(this.model, fieldName, value);
+        },
+        submitF () {
+            const self = this;
+            this.validForm = true;
+            for (const key in self.$children[1].$children) {
+                self.$children[1].$children[key].$children[0].$refs.myForm.validate();
+                if (self.$children[1].$children[key].$children[0].formValid == false) {
+                    this.validForm = false;
+                }
+            }
+
+            if (this.validForm) {
+                const send_model = JSON.parse(JSON.stringify(self.model));
+                self.$store.$auth.ctx.$axios
+                    .post('/rcms-api/1/member/update', send_model)
+                    .then(function (response) {
+                        if (response.data.errors.length == 0) {
+                            self.$store.dispatch(
+                                'snackbar/setMessage',
+                                'Your profile is changed.'
+                            );
+                            self.$store.dispatch('snackbar/snackOn');
+                            self.$router.push('/');
+                        }
+                    }).catch(function (error) {
+                        self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
+                        self.$store.dispatch('snackbar/snackOn');
+                    }); ;
+            } else {
+                self.$store.dispatch('snackbar/setError', 'Fill fields properly.');
+                self.$store.dispatch('snackbar/snackOn');
+            }
         }
-      }
-
-      if (this.validForm) {
-        var send_model = JSON.parse(JSON.stringify(self.model));
-        self.$store.$auth.ctx.$axios
-          .post("/rcms-api/1/member/update", send_model)
-          .then(function (response) {
-            if (response.data.errors.length == 0) {
-              self.$store.dispatch(
-                "snackbar/setMessage",
-                "Your profile is changed."
-              );
-              self.$store.dispatch("snackbar/snackOn");
-              self.$router.push("/");
-            }
-          }).catch(function (error) {
-            self.$store.dispatch("snackbar/setError", error.response.data.errors?.[0].message);
-            self.$store.dispatch("snackbar/snackOn");
-          });;
-      } else {
-        self.$store.dispatch("snackbar/setError", "Fill fields properly.");
-        self.$store.dispatch("snackbar/snackOn");
-      }
     },
-  },
-  mounted() {
-    if (this.$auth.loggedIn) {
-      let self = this;
-      this.$auth.ctx.$axios
-        .get("/rcms-api/1/members/" + this.$auth.user.member_id)
-        .then(function (response) {
-
-          for (var i=0; i < self.schema.fields.length; i++) {
-            if (self.schema.fields[i].model === 'name1' && response.data.details.name1) {
-              self.schema.fields[i].text = response.data.details.name1;
-            } 
-            else if (self.schema.fields[i].model === 'name2' && response.data.details.name2) {
-              self.schema.fields[i].text = response.data.details.name2;
-            } 
-            else if (self.schema.fields[i].model === 'sex' && response.data.details.sex.value) {
-              self.schema.fields[i].contents = response.data.details.sex.value;
-            } 
-            else if (self.schema.fields[i].model === 'hire_date' && response.data.details.hire_date) {
-              self.schema.fields[i].time = response.data.details.hire_date;
-            } 
-            else if (self.schema.fields[i].model === 'department' && response.data.details.department) {
-              self.schema.fields[i].text = response.data.details.department;
-            } 
-            else if (self.schema.fields[i].model === 'position' && response.data.details.position) {
-              self.schema.fields[i].text = response.data.details.position;
-            }
-            else if (self.schema.fields[i].model === 'tel' && response.data.details.tel) {
-              self.schema.fields[i].text = response.data.details.tel;
-            } 
-            else if (self.schema.fields[i].model === 'email' && response.data.details.email) {
-              self.schema.fields[i].text = response.data.details.email;
-            } 
-            else if (self.schema.fields[i].model === 'notes' && response.data.details.notes) {
-              self.schema.fields[i].text = response.data.details.notes;
-            } 
-          }
-          /*
+    mounted() {
+        if (this.$auth.loggedIn) {
+            const self = this;
+            this.$auth.ctx.$axios
+                .get('/rcms-api/1/members/' + this.$auth.user.member_id)
+                .then(function (response) {
+                    for (let i = 0; i < self.schema.fields.length; i++) {
+                        if (self.schema.fields[i].model === 'name1' && response.data.details.name1) {
+                            self.schema.fields[i].text = response.data.details.name1;
+                        } else if (self.schema.fields[i].model === 'name2' && response.data.details.name2) {
+                            self.schema.fields[i].text = response.data.details.name2;
+                        } else if (self.schema.fields[i].model === 'sex' && response.data.details.sex.value) {
+                            self.schema.fields[i].contents = response.data.details.sex.value;
+                        } else if (self.schema.fields[i].model === 'hire_date' && response.data.details.hire_date) {
+                            self.schema.fields[i].time = response.data.details.hire_date;
+                        } else if (self.schema.fields[i].model === 'department' && response.data.details.department) {
+                            self.schema.fields[i].text = response.data.details.department;
+                        } else if (self.schema.fields[i].model === 'position' && response.data.details.position) {
+                            self.schema.fields[i].text = response.data.details.position;
+                        } else if (self.schema.fields[i].model === 'tel' && response.data.details.tel) {
+                            self.schema.fields[i].text = response.data.details.tel;
+                        } else if (self.schema.fields[i].model === 'email' && response.data.details.email) {
+                            self.schema.fields[i].text = response.data.details.email;
+                        } else if (self.schema.fields[i].model === 'notes' && response.data.details.notes) {
+                            self.schema.fields[i].text = response.data.details.notes;
+                        }
+                    }
+                    /*
           for (var i = 0; i < self.schema.fields[10].options.length; ++i) {
             if (
               self.schema.fields[10].options[i].value ==
@@ -192,38 +184,38 @@ export default {
             }
           }
           */
-          self.loading = false;
-        })
-        .catch(function (error) {
-          self.$store.dispatch("snackbar/setError", error.response.data.errors?.[0].message);
-          self.$store.dispatch("snackbar/snackOn");
-          self.loading = false;
-        });
-    }
-  },
-  data() {
-    return {
-      // form default values
-      active_tab: 2,
-      email: "",
-      name1: "",
-      name2: "",
-      zip_code: "",
-      tel: "",
-      multiple_check: "",
-      inquirySubmitUrl: "/rcms-api/1/inquiry/9",
-      inquirySchemaUrl: "/rcms-api/1/inquiry/get/9",
-      auth: false,
-      validForm: true,
-      loading: true,
-      disabled: false,
-      model: {
-        sex: "Male",
-        hire_date: "1988-10-09",
-      },
-      schema: {
-        fields: [
-          /*
+                    self.loading = false;
+                })
+                .catch(function (error) {
+                    self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
+                    self.$store.dispatch('snackbar/snackOn');
+                    self.loading = false;
+                });
+        }
+    },
+    data() {
+        return {
+            // form default values
+            active_tab: 2,
+            email: '',
+            name1: '',
+            name2: '',
+            zip_code: '',
+            tel: '',
+            multiple_check: '',
+            inquirySubmitUrl: '/rcms-api/1/inquiry/9',
+            inquirySchemaUrl: '/rcms-api/1/inquiry/get/9',
+            auth: false,
+            validForm: true,
+            loading: true,
+            disabled: false,
+            model: {
+                sex: 'Male',
+                hire_date: '1988-10-09'
+            },
+            schema: {
+                fields: [
+                    /*
           {
             type: "radios",
             label: "Sex",
@@ -234,113 +226,113 @@ export default {
             ]
           },
           */
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            min: 0,
-            max: 100,
-            label: "First Name",
-            model: "name1",
-            text: "",
-            required: true,
-          },
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            min: 0,
-            max: 100,
-            label: "Last Name",
-            text: "",
-            model: "name2",
-            required: true,
-          },
-          {
-            model: "sex",
-            label: "Gender",
-            contents: [
-              {
-                key: 1,
-                value: "Male",
-              },
-              {
-                key: 2,
-                value: "Female",
-              },
-              {
-                key: 3,
-                value: "Other",
-              },
-            ],
-            required: true,
-            type: "vuetifySingleChoice",
-          },
-          {
-            type: "vuetifyDate",
-            inputType: "picker",
-            label: "Birthday",
-            model: "birth",
-            required: false,
-            visible: (model, field, form) => model.choice === 'Check a boolean value',
-          },
-          {
-            type: "vuetifyDate",
-            //inputType: "picker",
-            label: "Hire Date",
-            model: "hire_date",
-            required: true,
-            time: '1988-10-09',
-          },
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            text: "",
-            min: 0,
-            max: 100,
-            label: "Department",
-            model: "department",
-            required: true,
-          },
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            text: "",
-            min: 0,
-            max: 100,
-            label: "Position",
-            model: "position",
-            required: false,
-          },
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            text: "",
-            min: 0,
-            max: 100,
-            label: "Phone",
-            model: "tel",
-            texttype: "tel",
-            required: true,
-          },
-          {
-            type: "vuetifyText",
-            inputType: "text",
-            min: 0,
-            max: 100,
-            label: "Email address",
-            model: "email",
-            text: "",
-            texttype: "email",
-            required: true,
-          },
-          {
-            type: "vuetifyPassword",
-            inputType: "text",
-            label: "Password",
-            text: "",
-            model: "login_pwd",
-            required: false,
-          },
-          /*
+                    {
+                        type: 'vuetifyText',
+                        inputType: 'text',
+                        min: 0,
+                        max: 100,
+                        label: 'First Name',
+                        model: 'name1',
+                        text: '',
+                        required: true
+                    },
+                    {
+                        type: 'vuetifyText',
+                        inputType: 'text',
+                        min: 0,
+                        max: 100,
+                        label: 'Last Name',
+                        text: '',
+                        model: 'name2',
+                        required: true
+                    },
+                    {
+                        model: 'sex',
+                        label: 'Gender',
+                        contents: [
+                            {
+                                key: 1,
+                                value: 'Male'
+                            },
+                            {
+                                key: 2,
+                                value: 'Female'
+                            },
+                            {
+                                key: 3,
+                                value: 'Other'
+                            }
+                        ],
+                        required: true,
+                        type: 'vuetifySingleChoice'
+                    },
+                    {
+                        type: 'vuetifyDate',
+                        inputType: 'picker',
+                        label: 'Birthday',
+                        model: 'birth',
+                        required: false,
+                        visible: (model, field, form) => model.choice === 'Check a boolean value'
+                    },
+                    {
+                        type: 'vuetifyDate',
+                        // inputType: "picker",
+                        label: 'Hire Date',
+                        model: 'hire_date',
+                        required: true,
+                        time: '1988-10-09'
+                    },
+                    {
+                        type: 'vuetifyText',
+                        inputType: 'text',
+                        text: '',
+                        min: 0,
+                        max: 100,
+                        label: 'Department',
+                        model: 'department',
+                        required: true
+                    },
+                    {
+                        type: 'vuetifyText',
+                        inputType: 'text',
+                        text: '',
+                        min: 0,
+                        max: 100,
+                        label: 'Position',
+                        model: 'position',
+                        required: false
+                    },
+                    {
+                        type: 'vuetifyText',
+                        inputType: 'text',
+                        text: '',
+                        min: 0,
+                        max: 100,
+                        label: 'Phone',
+                        model: 'tel',
+                        texttype: 'tel',
+                        required: true
+                    },
+                    {
+                        type: 'vuetifyText',
+                        inputType: 'text',
+                        min: 0,
+                        max: 100,
+                        label: 'Email address',
+                        model: 'email',
+                        text: '',
+                        texttype: 'email',
+                        required: true
+                    },
+                    {
+                        type: 'vuetifyPassword',
+                        inputType: 'text',
+                        label: 'Password',
+                        text: '',
+                        model: 'login_pwd',
+                        required: false
+                    },
+                    /*
           {
             type: "vuetifyPrefecture",
             inputType: "text",
@@ -402,128 +394,128 @@ export default {
             required: true,
           },
           */
-          {
-            type: "UploadFile",
-            label: "Avatar",
-            model: "profileimage",
-            required: false,
-            visible: (model, field, form) => model.choice === 'Check a boolean value',
-          },
-          {
-            model: "pull_down",
-            label: "Office",
-            contents: [
-              {
-                key: 0,
-                value: " ",
-                default: false,
-                attribute: { group: "2" },
-              },
-              {
-                key: 1,
-                value: "Tokyo",
-                default: false,
-                attribute: { group: "2" },
-              },
-              {
-                key: 2,
-                value: "Osaka",
-                default: false,
-                attribute: { group: "2" },
-              },
-              {
-                key: 3,
-                value: "Malaysia",
-                default: false,
-                attribute: { group: "2" },
-              },
-            ],
-            required: false,
-            type: "VuetifySingleOption",
-          },
-          {
-            model: "multiple_check",
-            label: "Hobby",
-            contents: [
-              {
-                key: 1,
-                value: "Reading",
-                default: false,
-                attribute: { group: "2" },
-              },
-              {
-                key: 2,
-                value: "Watching TV",
-                default: false,
-                attribute: { group: "2" },
-              },
-              {
-                key: 3,
-                value: "Family Time",
-                default: false,
-                attribute: { group: "2" },
-              },
-              {
-                key: 4,
-                value: "Going to Movies",
-                default: false,
-                attribute: { group: "2" },
-              },
-              {
-                key: 5,
-                value: "Fishing",
-                default: false,
-                attribute: { group: "2" },
-              },
-              {
-                key: 6,
-                value: "Computer",
-                default: false,
-                attribute: { group: "2" },
-              },
-              {
-                key: 7,
-                value: "Gardening",
-                default: false,
-                attribute: { group: "2" },
-              },
-              {
-                key: 8,
-                value: "Renting Movies",
-                default: false,
-                attribute: { group: "2" },
-              },
-              {
-                key: 9,
-                value: "Walking",
-                default: false,
-                attribute: { group: "2" },
-              },
-              {
-                key: 10,
-                value: "Exercise",
-                default: false,
-                attribute: { group: "2" },
-              },
-            ],
-            required: false,
-            type: "vuetifyMultipleChoice",
-          },
-          {
-            model: "notes",
-            type: "vuetifyTextArea",
-            inputType: "text",
-            label: "Notes",
-            placeholder: "",
-            text: "",
-            required: false,
-            counter: 400,
-            max: 400,
-            min: 0,
-          },
-        ],
-      },
-    };
-  },
+                    {
+                        type: 'UploadFile',
+                        label: 'Avatar',
+                        model: 'profileimage',
+                        required: false,
+                        visible: (model, field, form) => model.choice === 'Check a boolean value'
+                    },
+                    {
+                        model: 'pull_down',
+                        label: 'Office',
+                        contents: [
+                            {
+                                key: 0,
+                                value: ' ',
+                                default: false,
+                                attribute: { group: '2' }
+                            },
+                            {
+                                key: 1,
+                                value: 'Tokyo',
+                                default: false,
+                                attribute: { group: '2' }
+                            },
+                            {
+                                key: 2,
+                                value: 'Osaka',
+                                default: false,
+                                attribute: { group: '2' }
+                            },
+                            {
+                                key: 3,
+                                value: 'Malaysia',
+                                default: false,
+                                attribute: { group: '2' }
+                            }
+                        ],
+                        required: false,
+                        type: 'VuetifySingleOption'
+                    },
+                    {
+                        model: 'multiple_check',
+                        label: 'Hobby',
+                        contents: [
+                            {
+                                key: 1,
+                                value: 'Reading',
+                                default: false,
+                                attribute: { group: '2' }
+                            },
+                            {
+                                key: 2,
+                                value: 'Watching TV',
+                                default: false,
+                                attribute: { group: '2' }
+                            },
+                            {
+                                key: 3,
+                                value: 'Family Time',
+                                default: false,
+                                attribute: { group: '2' }
+                            },
+                            {
+                                key: 4,
+                                value: 'Going to Movies',
+                                default: false,
+                                attribute: { group: '2' }
+                            },
+                            {
+                                key: 5,
+                                value: 'Fishing',
+                                default: false,
+                                attribute: { group: '2' }
+                            },
+                            {
+                                key: 6,
+                                value: 'Computer',
+                                default: false,
+                                attribute: { group: '2' }
+                            },
+                            {
+                                key: 7,
+                                value: 'Gardening',
+                                default: false,
+                                attribute: { group: '2' }
+                            },
+                            {
+                                key: 8,
+                                value: 'Renting Movies',
+                                default: false,
+                                attribute: { group: '2' }
+                            },
+                            {
+                                key: 9,
+                                value: 'Walking',
+                                default: false,
+                                attribute: { group: '2' }
+                            },
+                            {
+                                key: 10,
+                                value: 'Exercise',
+                                default: false,
+                                attribute: { group: '2' }
+                            }
+                        ],
+                        required: false,
+                        type: 'vuetifyMultipleChoice'
+                    },
+                    {
+                        model: 'notes',
+                        type: 'vuetifyTextArea',
+                        inputType: 'text',
+                        label: 'Notes',
+                        placeholder: '',
+                        text: '',
+                        required: false,
+                        counter: 400,
+                        max: 400,
+                        min: 0
+                    }
+                ]
+            }
+        };
+    }
 };
 </script>
