@@ -39,9 +39,7 @@ export default {
                 })
                 .then(function (response) {
                     self.formValid = true;
-                    self.schema.url =
-            'https://dev-nuxt-auth.a.kuroco-img.app/v=1614168758/' +
-            response.data.file_id +
+                    self.schema.url = response.data.file_id +
             '?width=300px';
                     self.$emit(
                         'model-updated',

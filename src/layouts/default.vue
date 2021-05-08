@@ -14,7 +14,7 @@
         >
             <div class="text-center py-4">
                 <a href="/">
-                    <img src="../assets/images/logo.png" class="c-navi_side-logo">
+                    <img src="~/assets/images/logo.png" class="c-navi_side-logo">
                 </a>
             </div>
             <v-list>
@@ -87,8 +87,8 @@
 
         <v-footer color="#1414A0" padless app absolute inset>
             <v-row justify="center" no-gutters>
-                <small class="my-4 l-footer_copyright"> Copyright © 2021 Kuroco All rights reserved. </small>
-                <img src="../assets/images/logo-kuroco.svg" width="120" class="pl-4 ">
+                <small class="my-4 l-footer_copyright"> This site is sample site of Kuroco.</small>
+                <a href="https://kuroco.app/"><img src="~/assets/images/logo-kuroco.svg" width="120" class="pl-4 "></a>
                 <v-col class="#1414A0 text-center white--text" cols="12" />
             </v-row>
         </v-footer>
