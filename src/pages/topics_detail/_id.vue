@@ -93,7 +93,7 @@ export default {
         },
         onClick() {
             const self = this;
-            if (this.color == 'gray') {
+            if (this.color === 'gray') {
                 this.$store.$auth.ctx.$axios
                     .post('/rcms-api/1/favorites', {
                         module_type: 'topics',
@@ -102,8 +102,7 @@ export default {
                     .then(function (response) {
                         self.color = 'red';
                     })
-                    .catch(function (error) {
-                    });
+                    .catch(function () {});
             } else {
                 this.$store.$auth.ctx.$axios
                     .post('/rcms-api/1/favorites/delete', {
@@ -143,7 +142,7 @@ export default {
         this.topic_id = this.$route.params.id;
         this.loading = true;
         const url =
-      'https://dev-nuxt-auth.a.kuroco.app/rcms-api/1/topic/detail/' +
+      '/rcms-api/1/topic/detail/' +
       this.topic_id;
         const self = this;
         this.$store.$auth.ctx.$axios
@@ -156,38 +155,28 @@ export default {
                     .substring(0, 10)
                     .replaceAll('-', '/');
                 const positions = response.data.details.ext_col_04;
-                const image_urls = response.data.details.ext_col_05;
+                const imageUrls = response.data.details.ext_col_05;
                 // var text_size = response.data.details.ext_col_06;
                 const texts = response.data.details.ext_col_07;
                 const subtitle = response.data.details.ext_col_09;
 
                 for (let i = 0; i < positions.length; i++) {
-                    const textSize = null;
                     let imageUrl = null;
-                    /*
-          if (
-            text_size[i] != undefined &&
-            text_size[i].hasOwnProperty("label")
-          ) {
-            textSize = text_size[i]["label"];
-          }
-          */
                     if (
-                        image_urls[i] != undefined &&
-            image_urls[i].hasOwnProperty('url')
+                        imageUrls[i] !== undefined && imageUrls[i].hasOwnProperty('url')
                     ) {
-                        imageUrl = image_urls[i].url + '?width=800';
+                        imageUrl = imageUrls[i].url + '?width=800';
                     }
                     let pattern = 1;
-                    if (positions[i].key == '0') {
+                    if (positions[i].key === '0') {
                         pattern = 'no image';
-                    } else if (positions[i].key == '1') {
+                    } else if (positions[i].key === '1') {
                         pattern = 'top';
-                    } else if (positions[i].key == '2') {
+                    } else if (positions[i].key === '2') {
                         pattern = 'left';
-                    } else if (positions[i].key == '3') {
+                    } else if (positions[i].key === '3') {
                         pattern = 'bottom';
-                    } else if (positions[i].key == '4') {
+                    } else if (positions[i].key === '4') {
                         pattern = 'right';
                     }
                     items.push({

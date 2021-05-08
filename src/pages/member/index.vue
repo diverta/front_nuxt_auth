@@ -105,20 +105,20 @@ export default {
             this.updateTopics();
         },
         filterByMembersDepartment() {
-            if (this.department == undefined) {
+            if (this.department === undefined) {
                 this.department = '';
             }
-            if (this.member == undefined) {
+            if (this.member === undefined) {
                 this.member = '';
             }
-            if (this.department == '' && this.member == '') {
+            if (this.department === '' && this.member === '') {
                 this.filteredItems = this.items;
-            } else if (this.department == '') {
+            } else if (this.department === '') {
                 const self = this;
                 this.filteredItems = this.items.filter(function (obj) {
                     return obj.name.includes(self.member);
                 });
-            } else if (this.member == '') {
+            } else if (this.member === '') {
                 const self = this;
                 this.filteredItems = this.items.filter(function (obj) {
                     return obj.department.includes(self.department);
@@ -161,7 +161,7 @@ export default {
                         id: item.member_id
                     });
                     members.push(item.name1 + ' ' + item.name2);
-                    if (department != '') {
+                    if (department !== '') {
                         departments.push(department);
                     }
                 }

@@ -9,7 +9,6 @@
         />
 
         <div class="l-content_heading">
-            <!--<h1>Inquiry Form</h1>-->
             <h3 class="slogan text-left">
                 Please provide us your information, we will be in touch with you shortly. <br>
             </h3>
@@ -120,7 +119,7 @@ export default {
                             result = self.$parse(columns[key], key);
                             if (
                                 typeof result !== 'undefined' &&
-                Object.keys(result).length != 0
+                Object.keys(result).length !== 0
                             ) {
                                 schema.fields.push(result);
                             }
@@ -145,18 +144,18 @@ export default {
             this.validForm = true;
             for (const key in self.$children[1].$children) {
                 self.$children[1].$children[key].$children[0].$refs.myForm.validate();
-                if (self.$children[1].$children[key].$children[0].formValid == false) {
+                if (self.$children[1].$children[key].$children[0].formValid === false) {
                     this.validForm = false;
                 }
             }
 
             if (this.validForm) {
-                const send_model = JSON.parse(JSON.stringify(self.model));
-                send_model.body = 'example message';
+                const sendModel = JSON.parse(JSON.stringify(self.model));
+                sendModel.body = 'example message';
                 self.$store.$auth.ctx.$axios
-                    .post(this.inquirySubmitUrl, send_model)
+                    .post(this.inquirySubmitUrl, sendModel)
                     .then(function (response) {
-                        if (response.data.errors.length == 0) {
+                        if (response.data.errors.length === 0) {
                             self.$store.dispatch(
                                 'snackbar/setMessage',
                                 'Thanks! Your inquiry submitted.'

@@ -188,7 +188,6 @@ export default {
             this.$router.push('/favourite');
         },
         updateDesign() {
-            // console.log("You login!");
             const myBody = document.getElementsByTagName('body')[0];
             myBody.classList.add('p-dashboard');
             myBody.classList.remove('p-login');
@@ -228,7 +227,6 @@ export default {
                             date: item.ymd.substring(0, 10).replaceAll('-', '/'),
                             label: item.contents_type_nm,
                             link: item.subject,
-                            icon: '',
                             id: item.topics_id,
                             icon: item.ext_col_01.key,
                             fileurl,
@@ -244,56 +242,6 @@ export default {
                 });
         },
         updateFavourite() {
-            /*
-      var url =
-        "/rcms-api/1/topics?topics_group_id=" + this.group_id + "&cnt=5";
-      let self = this;
-      this.$store.$auth.ctx.$axios
-        .get(url)
-        .then(function (response) {
-          var topics = [];
-          self.items = [];
-          for (var key in response.data.list) {
-            var item = response.data.list[key];
-            var fileurl = "";
-            var linkurl = "";
-            if (
-              item.hasOwnProperty("ext_col_02") &&
-              item["ext_col_02"].hasOwnProperty("url")
-            ) {
-              fileurl = item["ext_col_02"]["url"];
-            }
-            if (
-              item.hasOwnProperty("ext_col_03") &&
-              item["ext_col_03"].hasOwnProperty("url")
-            ) {
-              linkurl = item["ext_col_03"]["url"];
-            }
-            if (
-              item.hasOwnProperty("ext_col_08") &&
-              item["ext_col_08"].hasOwnProperty("url")
-            ) {
-              self.items.push({ src: item["ext_col_08"]["url"] });
-            }
-            topics.push({
-              date: item["inst_ymdhi"].substring(0, 10).replaceAll("-", "/"),
-              label: item["contents_type_nm"],
-              link: item["subject"],
-              icon: "",
-              id: item["topics_id"],
-              icon: item["ext_col_01"]["key"],
-              fileurl: fileurl,
-              linkurl: linkurl,
-              edit: false,
-            });
-          }
-          self.favourite = topics;
-        })
-        .catch(function (error) {
-          self.$store.dispatch("snackbar/setError", error.response.data.errors?.[0].message);
-          self.$store.dispatch("snackbar/snackOn");
-        });
-        */
             const self = this;
             const favoritesUrl =
           '/rcms-api/1/favorites?member_id=' +
@@ -302,11 +250,11 @@ export default {
             this.$store.$auth.ctx.$axios
                 .get(favoritesUrl)
                 .then(function (response) {
-                    const topic_ids = [];
+                    const topicIds = [];
                     for (const key in response.data.list) {
                         const item = response.data.list[key];
                         if (item.hasOwnProperty('module_id')) {
-                            topic_ids.push(item.module_id);
+                            topicIds.push(item.module_id);
                         }
                     }
                     let url =
@@ -317,9 +265,9 @@ export default {
             '&cnt=' +
             self.maxFavPerPage;
 
-                    if (topic_ids.length > 0) {
-                        for (let i = 0; i < topic_ids.length; ++i) {
-                            url += '&id[]=' + topic_ids[i];
+                    if (topicIds.length > 0) {
+                        for (let i = 0; i < topicIds.length; ++i) {
+                            url += '&id[]=' + topicIds[i];
                         }
 
                         self.$store.$auth.ctx.$axios

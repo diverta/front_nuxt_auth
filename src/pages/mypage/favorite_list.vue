@@ -76,11 +76,11 @@ export default {
             this.$store.$auth.ctx.$axios
                 .get(favoritesUrl)
                 .then(function (response) {
-                    const topic_ids = [];
+                    const topicIds = [];
                     for (const key in response.data.list) {
                         const item = response.data.list[key];
                         if (item.hasOwnProperty('module_id')) {
-                            topic_ids.push(item.module_id);
+                            topicIds.push(item.module_id);
                         }
                     }
 
@@ -92,9 +92,9 @@ export default {
             '&cnt=' +
             self.perPage;
 
-                    if (topic_ids.length > 0) {
-                        for (let i = 0; i < topic_ids.length; ++i) {
-                            url += '&id[]=' + topic_ids[i];
+                    if (topicIds.length > 0) {
+                        for (let i = 0; i < topicIds.length; ++i) {
+                            url += '&id[]=' + topicIds[i];
                         }
 
                         self.$store.$auth.ctx.$axios

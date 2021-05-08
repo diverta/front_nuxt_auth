@@ -118,17 +118,17 @@ export default {
             this.validForm = true;
             for (const key in self.$children[1].$children) {
                 self.$children[1].$children[key].$children[0].$refs.myForm.validate();
-                if (self.$children[1].$children[key].$children[0].formValid == false) {
+                if (self.$children[1].$children[key].$children[0].formValid === false) {
                     this.validForm = false;
                 }
             }
 
             if (this.validForm) {
-                const send_model = JSON.parse(JSON.stringify(self.model));
+                const sendModel = JSON.parse(JSON.stringify(self.model));
                 self.$store.$auth.ctx.$axios
-                    .post('/rcms-api/1/member/update', send_model)
+                    .post('/rcms-api/1/member/update', sendModel)
                     .then(function (response) {
-                        if (response.data.errors.length == 0) {
+                        if (response.data.errors.length === 0) {
                             self.$store.dispatch(
                                 'snackbar/setMessage',
                                 'Your profile is changed.'

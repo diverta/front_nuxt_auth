@@ -75,12 +75,16 @@
 <script>
 export default {
     methods: {
-        edit_topic(topic_id) {
-            this.$router.push('/profile/topic_edit/' + topic_id);
+        edit_topic(topicId) {
+            this.$router.push('/profile/topic_edit/' + topicId);
         }
     },
     props: {
-        topics: null
+        topics: {
+            type: Array,
+            required: false,
+            default: () => []
+        }
     }
 };
 </script>

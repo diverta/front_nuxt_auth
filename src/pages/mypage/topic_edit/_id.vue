@@ -127,68 +127,68 @@ export default {
         },
         submit() {
             const self = this;
-            let send_model = {};
-            if (this.tab_id == 0) {
-                const file_type = this.schemaFile.fields[0].radioGroup;
+            let sendModel = {};
+            if (this.tab_id === 0) {
+                const fileType = this.schemaFile.fields[0].radioGroup;
                 const file = this.model.file;
-                send_model = {
+                sendModel = {
                     ext_col_01: {
-                        key: file_type.key,
-                        value: file_type.value
+                        key: fileType.key,
+                        value: fileType.value
                     },
                     ext_col_02: file
                 };
-                if (file_type == null || file == null) {
+                if (fileType === null || file === null) {
                     this.$store.dispatch(
                         'snackbar/setError',
                         'Choose file type/ upload file.'
                     );
                     this.$store.dispatch('snackbar/snackOn');
                 } else {
-                    send_model = {
+                    sendModel = {
                         ext_col_01: {
-                            key: file_type.key,
-                            label: file_type.value
+                            key: fileType.key,
+                            label: fileType.value
                         },
                         ext_col_02: file
                     };
                 }
-            } else if (this.tab_id == 1) {
+            } else if (this.tab_id === 1) {
                 let url = this.model.url;
-                let to_display = this.model.to_display;
+                let toDisplay = this.model.toDisplay;
 
-                if (typeof url === 'string' || typeof to_display === 'string') {
+                if (typeof url === 'string' || typeof toDisplay === 'string') {
                     if (typeof url !== 'string') {
                         url = this.schemaUrl.fields[0].text;
                     }
-                    if (typeof to_display !== 'string') {
-                        to_display = this.schemaUrl.fields[1].text;
+                    if (typeof toDisplay !== 'string') {
+                        toDisplay = this.schemaUrl.fields[1].text;
                     }
-                    send_model = {
+                    sendModel = {
                         ext_col_01: {
                             key: 'url',
                             label: 'url'
                         },
                         ext_col_03: {
-                            title: to_display,
+                            title: toDisplay,
                             url
                         }
                     };
                 }
-            } else if (this.tab_id == 2) {
-                send_model = {
+            } else if (this.tab_id === 2) {
+                sendModel = {
                     ext_col_01: {
                         key: 'data',
                         label: 'data'
                     }
                 };
-                send_model.ext_col_04 = this.json.ext_col_04;
-                send_model.ext_col_06 = this.json.ext_col_06;
-                send_model.ext_col_07 = this.json.ext_col_07;
-                send_model.ext_col_09 = this.json.ext_col_09;
-                send_model.ext_col_05 = new Array(30).fill({});
+                sendModel.ext_col_04 = this.json.ext_col_04;
+                sendModel.ext_col_06 = this.json.ext_col_06;
+                sendModel.ext_col_07 = this.json.ext_col_07;
+                sendModel.ext_col_09 = this.json.ext_col_09;
+                sendModel.ext_col_05 = new Array(30).fill({});
                 for (let i = 0; i < this.json.ext_col_05.length; ++i) {
-                    send_model.ext_col_05[i] = {
+                    sendModel.ext_col_05[i] = {
                         id: this.json.ext_col_05[i].id
                     };
                 }
@@ -202,24 +202,24 @@ export default {
               key.startsWith('ext_col_09')
                         ) {
                             const arr = key.split('_');
-                            const index_json = arr[0] + '_' + arr[1] + '_' + arr[2];
-                            const index_arr = parseInt(arr[3]);
-                            send_model[index_json][index_arr] = this.model[key];
+                            const indexJson = arr[0] + '_' + arr[1] + '_' + arr[2];
+                            const indexArr = parseInt(arr[3]);
+                            sendModel[indexJson][indexArr] = this.model[key];
                         }
                     }
                 }
             }
 
             self.$store.$auth.ctx.$axios
-                .post(this.update_url, send_model)
+                .post(this.update_url, sendModel)
                 .then(function (response) {
-                    if (response.data.errors.length == 0) {
+                    if (response.data.errors.length === 0) {
                         self.$store.dispatch(
                             'snackbar/setMessage',
                             'Thanks! Your topic is updated.'
                         );
                         self.$store.dispatch('snackbar/snackOn');
-                        self.$router.push('/profile/posted_list');
+                        self.$router.push('/mypage/posted_list');
                     }
                 })
                 .catch(function (error) {
@@ -298,7 +298,7 @@ export default {
                         min: 0,
                         max: 100,
                         label: 'Text to display',
-                        model: 'to_display',
+                        model: 'toDisplay',
                         required: true
                     }
                 ]
@@ -318,60 +318,60 @@ export default {
                 const json = response.data.details;
                 self.json = json;
 
-                if (json.ext_col_01.key == 'url') {
+                if (json.ext_col_01.key === 'url') {
                     self.schemaUrl.fields[0].text = json.ext_col_03.url;
                     self.schemaUrl.fields[1].text = json.ext_col_03.title;
                     self.tab_id = 1;
                 } else if (
-                    json.ext_col_01.key == 'pdf' ||
-          json.ext_col_01.key == 'word' ||
-          json.ext_col_01.key == 'excel'
+                    json.ext_col_01.key === 'pdf' ||
+          json.ext_col_01.key === 'word' ||
+          json.ext_col_01.key === 'excel'
                 ) {
-                    let file_format = {};
-                    for (var i = 0; i < 3; ++i) {
+                    let fileFormat = {};
+                    for (let i = 0; i < 3; ++i) {
                         if (
-                            self.schemaFile.fields[0].contents[i].key == json.ext_col_01.key
+                            self.schemaFile.fields[0].contents[i].key === json.ext_col_01.key
                         ) {
-                            file_format = self.schemaFile.fields[0].contents[i];
+                            fileFormat = self.schemaFile.fields[0].contents[i];
                         }
                     }
-                    self.schemaFile.fields[0].radioGroup = file_format;
+                    self.schemaFile.fields[0].radioGroup = fileFormat;
                     self.schemaFile.fields[1].file = new File([''], json.ext_col_02.url);
                     self.tab_id = 0;
                 } else {
                     self.tab_id = 2;
                 }
 
-                for (var i = 0; i < 30; ++i) {
+                for (let i = 0; i < 30; ++i) {
                     const schemaDetail = {
                         fields: []
                     };
-                    let label_text = '';
+                    let labelText = '';
                     let textarea = '';
                     let url = null;
-                    let image_pos = {};
-                    let text_size = {};
+                    let imagePos = {};
+                    let textSize = {};
 
-                    if (json.ext_col_01.key == 'data') {
+                    if (json.ext_col_01.key === 'data') {
                         if (typeof json.ext_col_09[i] === 'string') {
-                            label_text = json.ext_col_09[i];
+                            labelText = json.ext_col_09[i];
                         }
                         if (typeof json.ext_col_07[i] === 'string') {
                             textarea = json.ext_col_07[i];
                         }
                         if (
-                            json.ext_col_05[i] != undefined &&
+                            json.ext_col_05[i] !== undefined &&
               typeof json.ext_col_05[i].url === 'string'
                         ) {
                             url = json.ext_col_05[i].url;
                         }
-                        image_pos = json.ext_col_04[i];
-                        text_size = json.ext_col_06[i];
+                        imagePos = json.ext_col_04[i];
+                        textSize = json.ext_col_06[i];
                     }
                     schemaDetail.fields.push({
                         type: 'vuetifyText',
                         inputType: 'text',
-                        text: label_text,
+                        text: labelText,
                         min: 0,
                         max: 100,
                         label: 'subtitle_' + i.toString(),
@@ -394,7 +394,7 @@ export default {
                         model: 'ext_col_06_' + i.toString(),
                         type: 'vuetifySingleOption',
                         label: 'text_size_' + i.toString(),
-                        option: text_size,
+                        option: textSize,
                         contents: [
                             { key: '1', value: 'H2' },
                             { key: '2', value: 'H3' },
@@ -408,8 +408,8 @@ export default {
                     schemaDetail.fields.push({
                         model: 'ext_col_04_' + i.toString(),
                         type: 'vuetifySingleOption',
-                        label: 'image_position_' + i.toString(),
-                        option: image_pos,
+                        label: 'imagePosition_' + i.toString(),
+                        option: imagePos,
                         contents: [
                             { key: '1', value: 'Top' },
                             { key: '2', value: 'Left' },

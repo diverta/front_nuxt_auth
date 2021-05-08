@@ -99,80 +99,75 @@ export default {
     },
     mounted() {
         this.member_id = this.$auth.user.member_id;
-        const url = '/rcms-api/1/members?id=' + this.member_id;
         const self = this;
         this.$auth.ctx.$axios
             .get('/rcms-api/1/members/' + this.$auth.user.member_id)
             .then(function (response) {
                 // console.log('testing');
                 const detail = {};
-                const profile = [];
-                const details_obj = response.data.details;
-                detail.name = details_obj.name1 + ' ' + details_obj.name2;
-                detail.zip = details_obj.zip_code;
-                if (details_obj.address1 == null) {
+                const detailsObj = response.data.details;
+                detail.name = detailsObj.name1 + ' ' + detailsObj.name2;
+                detail.zip = detailsObj.zip_code;
+                if (detailsObj.address1 == null) {
                     detail.location = '';
                 } else {
                     detail.location =
-            details_obj.address1 +
+            detailsObj.address1 +
             ', ' +
-            details_obj.address2 +
+            detailsObj.address2 +
             ' ' +
-            details_obj.address3;
+            detailsObj.address3;
                 }
-                detail.phone = details_obj.tel;
-                detail.email = details_obj.email;
-                if (details_obj.profileimage.url != undefined) {
-                    detail.url =
-            'https://dev-nuxt-auth.a.kuroco-img.app/v=1614168758' +
-            details_obj.profileimage.url;
+                detail.phone = detailsObj.tel;
+                detail.email = detailsObj.email;
+                if (detailsObj.profileimage.url !== undefined) {
+                    detail.url = detailsObj.profileimage.url;
                 } else {
-                    detail.url =
-            '/_nuxt/src/assets/images/avatar-placeholder.png';
+                    detail.url = self.placeholder;
                 }
-                if (details_obj.hasOwnProperty('sex')) {
-                    detail.sex = details_obj.sex.label;
+                if (detailsObj.hasOwnProperty('sex')) {
+                    detail.sex = detailsObj.sex.label;
                 }
-                if (details_obj.hasOwnProperty('birth')) {
-                    detail.birth = details_obj.birth;
+                if (detailsObj.hasOwnProperty('birth')) {
+                    detail.birth = detailsObj.birth;
                 }
-                if (details_obj.hasOwnProperty('role')) {
-                    detail.position = details_obj.role;
+                if (detailsObj.hasOwnProperty('role')) {
+                    detail.position = detailsObj.role;
                 }
-                if (details_obj.hasOwnProperty('department')) {
-                    detail.department = details_obj.department;
+                if (detailsObj.hasOwnProperty('department')) {
+                    detail.department = detailsObj.department;
                 }
-                if (details_obj.hasOwnProperty('radio_button_2')) {
-                    detail.radio_button_2 = details_obj.radio_button_2.label;
+                if (detailsObj.hasOwnProperty('radio_button_2')) {
+                    detail.radio_button_2 = detailsObj.radio_button_2.label;
                 }
-                if (details_obj.hasOwnProperty('pull_down')) {
-                    detail.pull_down = details_obj.pull_down.label;
+                if (detailsObj.hasOwnProperty('pull_down')) {
+                    detail.pull_down = detailsObj.pull_down.label;
                 }
-                if (details_obj.hasOwnProperty('notes')) {
-                    detail.text = details_obj.notes;
+                if (detailsObj.hasOwnProperty('notes')) {
+                    detail.text = detailsObj.notes;
                 }
-                if (details_obj.hasOwnProperty('multiple_check')) {
+                if (detailsObj.hasOwnProperty('multiple_check')) {
                     let multipleInput = '';
-                    for (var i = 0; i < details_obj.multiple_check.length; ++i) {
-                        multipleInput += details_obj.multiple_check[i].label + ', ';
+                    for (let i = 0; i < detailsObj.multiple_check.length; ++i) {
+                        multipleInput += detailsObj.multiple_check[i].label + ', ';
                         detail.multiple_check = multipleInput;
                     }
                 }
 
                 self.detail = detail;
-                for (var i = 0; i < self.profile.length; i++) {
-                    if (self.profile[i].name === 'First Name' && details_obj.name1) {
-                        self.profile[i].value = details_obj.name1;
-                    } else if (self.profile[i].name === 'Last Name' && details_obj.name2) {
-                        self.profile[i].value = details_obj.name2;
-                    } else if (self.profile[i].name === 'Gender' && details_obj.sex.label) {
-                        self.profile[i].value = details_obj.sex.label;
-                    } else if (self.profile[i].name === 'Hire Date' && details_obj.hire_date) {
-                        self.profile[i].value = details_obj.hire_date;
-                    } else if (self.profile[i].name === 'Department' && details_obj.department) {
-                        self.profile[i].value = details_obj.department;
-                    } else if (self.profile[i].name === 'Position' && details_obj.role) {
-                        self.profile[i].value = details_obj.role;
+                for (let i = 0; i < self.profile.length; i++) {
+                    if (self.profile[i].name === 'First Name' && detailsObj.name1) {
+                        self.profile[i].value = detailsObj.name1;
+                    } else if (self.profile[i].name === 'Last Name' && detailsObj.name2) {
+                        self.profile[i].value = detailsObj.name2;
+                    } else if (self.profile[i].name === 'Gender' && detailsObj.sex.label) {
+                        self.profile[i].value = detailsObj.sex.label;
+                    } else if (self.profile[i].name === 'Hire Date' && detailsObj.hire_date) {
+                        self.profile[i].value = detailsObj.hire_date;
+                    } else if (self.profile[i].name === 'Department' && detailsObj.department) {
+                        self.profile[i].value = detailsObj.department;
+                    } else if (self.profile[i].name === 'Position' && detailsObj.role) {
+                        self.profile[i].value = detailsObj.role;
                     } else if (self.profile[i].name === 'Phone' && detail.phone) {
                         self.profile[i].value = detail.phone;
                     } else if (self.profile[i].name === 'Email' && detail.email) {

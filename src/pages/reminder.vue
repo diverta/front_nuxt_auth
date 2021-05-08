@@ -210,7 +210,7 @@ export default {
             rules: {
                 required: (value) => !!value || 'この項目は必須入力です',
                 password_min: (v) => v.length >= 8 || '最低8文字以上を入力してください',
-                password2: (v) => v == this.login_pwd || '確認用パスワードが違います'
+                password2: (v) => v === this.login_pwd || '確認用パスワードが違います'
             }
         };
     },
@@ -229,7 +229,7 @@ export default {
         login() {
             this.$router.push('/');
         },
-        async reminder() {
+        reminder() {
             this.loading1 = true;
             const self = this;
             this.$store.$auth.ctx.$axios
@@ -237,7 +237,7 @@ export default {
                     email: this.email
                 })
                 .then(function (response) {
-                    if (response.data.errors.length == 0) {
+                    if (response.data.errors.length === 0) {
                         self.$store.dispatch(
                             'snackbar/setMessage',
                             'A password reset email has been sent. Please set a new password from the link in the email.'
@@ -247,13 +247,13 @@ export default {
                     self.e1 = 3;
                     self.loading1 = false;
                 })
-                .catch(function (error) {
+                .catch(function () {
                     self.$store.dispatch('snackbar/setError', 'Invalid email address.');
                     self.$store.dispatch('snackbar/snackOn');
                     self.loading1 = false;
                 });
         },
-        async set_password() {
+        set_password() {
             if (this.$refs.form2.validate() && this.token) {
                 console.log('reset');
                 this.loading2 = true;
