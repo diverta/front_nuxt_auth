@@ -14,7 +14,7 @@
         >
             <div class="text-center py-4">
                 <a href="/">
-                    <img src="~/assets/images/logo.png" class="c-navi_side-logo">
+                    <img src="~/assets/images/logo.png?width=250" width="250px" class="c-navi_side-logo">
                 </a>
             </div>
             <v-list>
@@ -88,7 +88,7 @@
         <v-footer color="#1414A0" padless app absolute inset>
             <v-row justify="center" no-gutters>
                 <a href="https://github.com/diverta/front_nuxt_auth"><small class="my-4 l-footer_copyright">This front-end source is free.</small></a>
-                <a href="https://kuroco.app/"><img src="~/assets/images/logo-kuroco.svg" width="120" class="pl-4 "></a>
+                <a href="https://kuroco.app/"><img src="~/assets/images/logo-kuroco.svg" width="120px" class="pl-4 "></a>
                 <v-col class="#1414A0 text-center white--text" cols="12" />
             </v-row>
         </v-footer>
