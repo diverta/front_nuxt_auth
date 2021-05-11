@@ -36,9 +36,9 @@ export default {
         ],
         link: [
             { rel: 'icon', type: 'image/svg+xml', href: '/icon_kuroco.svg' },
-            { rel: 'dns-prefetch', href: 'https://fonts.googleapis.com' },
-            { rel: 'dns-prefetch', href: 'https://cdn.jsdelivr.net' },
-            { rel: 'dns-prefetch', href: 'https://dev-nuxt-auth.a.kuroco.app' }
+            { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+            { rel: 'preconnect', href: 'https://cdn.jsdelivr.net' },
+            { rel: 'preconnect', href: 'https://dev-nuxt-auth.a.kuroco.app' }
         ]
     },
     /*
