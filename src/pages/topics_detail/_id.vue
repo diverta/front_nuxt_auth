@@ -26,7 +26,7 @@
                     <div class="text-right mt-2">
                         <v-btn icon :color="color" @click="onClick()">
                             <v-icon x-large left>
-                                mdi-heart
+                                mdi-star
                             </v-icon>
                         </v-btn>
                     </div>

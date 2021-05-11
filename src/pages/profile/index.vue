@@ -1,17 +1,73 @@
 <template>
-    <div class="c-form_wrap v-stepper">
-        <div class="c-form pa-3">
-            <v-container>
-                <v-row v-for="item in profile" :key="item.id">
-                    <v-col class="col-12">
-                        <label>{{ item.name }}</label>
-                        <div class="field-wrap pt-2">
-                            {{ item.value }}
-                        </div>
-                    </v-col>
-                </v-row>
-            </v-container>
-        </div>
+    <section>
+
+        <v-col>
+            <v-row>
+                <v-col cols="auto">
+                    <v-img
+                        fluid
+                        class="mx-auto mr-5"
+                        :lazy-src="detail.url"
+                        :aspect-ration="16 / 9"
+                        :src="detail.url"
+                        max-height="180"
+                        max-width="180"
+                    /> 
+                </v-col>
+                <v-col class="mx-auto">
+                    <v-row class="headline mb-3">
+                        <br>
+                        {{ detail.name }}
+                    </v-row>
+                    <v-row v-if="detail.sex" class="mb-3">
+                        <v-icon class="icon c-text_blue pr-2">
+                            mdi-gender-male-female
+                        </v-icon>{{ detail.sex }}
+                    </v-row>
+                    <v-row v-if="detail.birth" class="mb-3">
+                        <v-icon class="icon c-text_blue pr-2">
+                            mdi-card-account-details
+                        </v-icon>{{ detail.birth }}
+                    </v-row>
+                    <v-row v-if="detail.department" class="mb-3">
+                        <v-icon class="icon c-text_blue pr-2">
+                            mdi-office-building
+                        </v-icon>
+                        {{ detail.department }}
+                    </v-row>
+                    <v-row v-if="detail.position">
+                        <v-icon class="icon c-text_blue pr-2">
+                            mdi-briefcase-account
+                        </v-icon>
+                        {{ detail.position }}
+                    </v-row>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col>
+                    <v-simple-table class="elevation-1">
+                        <template v-slot:default>
+                            <tbody>
+                                <tr v-for="item in profile" :key="item.id">
+                                    <td width="200">
+                                        {{ item.name }}
+                                    </td>
+                                    <td v-if="item.name == 'Phone'" width="1000">
+                                        <a :href="'tel:' + item.value">{{ item.value }}</a>
+                                    </td>
+                                    <td v-else-if="item.name == 'Email'" width="1000">
+                                        <a :href="'mailto:' + item.value">{{ item.value }}</a>
+                                    </td>
+                                    <td v-else width="1000" class="py-3">
+                                        {{ item.value }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </template>
+                    </v-simple-table>
+                </v-col>
+            </v-row>
+        </v-col>
         <div class="text-center col">
             <button
                 type="submit"
@@ -24,7 +80,8 @@
                 </v-icon>
             </button>
         </div>
-    </div>
+
+    </section>
 </template>
 
 <script>
@@ -50,6 +107,7 @@ export default {
                 text: ''
             },
             profile: [
+                /*
                 {
                     name: 'First Name',
                     value: 'N/A'
@@ -62,10 +120,12 @@ export default {
                     name: 'Gender',
                     value: 'N/A'
                 },
+                */
                 {
                     name: 'Hire Date',
                     value: 'N/A'
                 },
+                /*
                 {
                     name: 'Department',
                     value: 'N/A'
@@ -74,6 +134,7 @@ export default {
                     name: 'Position',
                     value: 'N/A'
                 },
+                */
                 {
                     name: 'Phone',
                     value: 'N/A'
@@ -121,7 +182,7 @@ export default {
                 detail.phone = detailsObj.tel;
                 detail.email = detailsObj.email;
                 if (detailsObj.profileimage.url !== undefined) {
-                    detail.url = detailsObj.profileimage.url;
+                    detail.url = "https://dev-nuxt-auth-mng.r-cms.jp" + detailsObj.profileimage.url;
                 } else {
                     detail.url = self.placeholder;
                 }

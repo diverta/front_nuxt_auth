@@ -39,7 +39,7 @@
                 <v-img
                     class="mx-auto"
                     :aspect-ration="16 / 9"
-                    :src="imageUrl"
+                    :src="image_url"
                     max-height="900"
                     max-width="1000"
                     position="center"
@@ -58,7 +58,7 @@
                             fluid
                             class="mr-auto img-responsive"
                             :aspect-ration="16 / 9"
-                            :src="imageUrl"
+                            :src="image_url"
                             max-height="900"
                             max-width="500"
                         />
@@ -88,7 +88,7 @@
                             fluid
                             class="ml-auto img-responsive"
                             :aspect-ration="16 / 9"
-                            :src="imageUrl"
+                            :src="image_url"
                             max-height="900"
                             max-width="500"
                         />
@@ -107,7 +107,7 @@ export default {
             required: false,
             default: ''
         },
-        imageUrl: {
+        image_url: {
             type: String,
             required: false,
             default: ''
