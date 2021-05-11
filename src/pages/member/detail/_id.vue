@@ -14,7 +14,7 @@
                         :src="detail.url"
                         max-height="180"
                         max-width="180"
-                    />
+                    /> 
                 </v-col>
                 <v-col class="mx-auto">
                     <v-row class="headline mb-3">
@@ -162,7 +162,8 @@ export default {
                 detail.phone = detailsObj.tel;
                 detail.email = detailsObj.email;
                 if (detailsObj.profileimage.url !== undefined) {
-                    detail.url = detailsObj.profileimage.url;
+                    detail.url = "https://dev-nuxt-auth-mng.r-cms.jp" + detailsObj.profileimage.url;
+                    console.log(detail.url);
                 } else {
                     detail.url = self.placeholder;
                 }

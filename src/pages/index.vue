@@ -78,7 +78,8 @@
                 Latest articles
             </h1>
             <v-topics :topics="topics" />
-            <div class="text-center py-5">
+
+            <div class="text-center py-5 mt-4">
                 <a
                     type="submit"
                     block
@@ -100,7 +101,7 @@
             </div>
 
             <h1 class="text-left mt-5 pt-4">
-                Favourite list
+                Starred
             </h1>
             <v-favourite :topics="favourite" />
             <div class="text-center py-5">
@@ -112,7 +113,7 @@
                     class="c-btn c-btn_main c-btn_md c-btn_icon"
                     @click="linkFav()"
                 >
-                    More favourite
+                    More starred post
                     <v-icon
                         dark
                         right
@@ -129,10 +130,11 @@
 
 <script>
 import topicList from '../components/topics';
+import topicGrid from '../components/topics_grid';
 
 export default {
     components: {
-        'v-topics': topicList,
+        'v-topics': topicGrid,
         'v-favourite': topicList
     },
     middleware: 'auth',
@@ -159,6 +161,7 @@ export default {
             password: ''
         },
         items: [],
+        thumbnail: [],
         topics: [],
         favourite: [],
         group_id: 13,
@@ -205,6 +208,7 @@ export default {
                         const item = response.data.list[key];
                         let fileurl = '';
                         let linkurl = '';
+                        let thumbnail = '';
                         if (
                             item.hasOwnProperty('ext_col_02') &&
               item.ext_col_02.hasOwnProperty('url')
@@ -216,6 +220,11 @@ export default {
               item.ext_col_03.hasOwnProperty('url')
                         ) {
                             linkurl = item.ext_col_03.url;
+                        }
+                        if (
+                            item.hasOwnProperty('ext_col_08')
+                        ) {
+                            thumbnail = item.ext_col_08.url;
                         }
                         if (
                             item.hasOwnProperty('ext_col_08') &&
@@ -231,6 +240,7 @@ export default {
                             icon: item.ext_col_01.key,
                             fileurl,
                             linkurl,
+                            thumbnail,
                             edit: false
                         });
                     }

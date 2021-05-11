@@ -64,7 +64,7 @@
       </div>
       -->
             <div v-if="!auth.loggedIn && !signUpPage">
-                New to Muzica? <button class="c-btn c-btn_sm c-btn_dark ml-2" nuxt @click="go_page('/signup/')">
+                <span class="d-none d-sm-inline">New to Muzica?</span><button class="c-btn c-btn_sm c-btn_dark ml-2" nuxt @click="go_page('/signup/')">
                     Sign Up
                 </button>
             </div>
@@ -85,8 +85,8 @@
             </v-container>
         </v-main>
 
-        <v-footer color="#1414A0" padless app absolute inset>
-            <v-row justify="center" no-gutters>
+        <v-footer color="#1414A0" padless>
+            <v-row justify="center" no-gutters class="pt-3">
                 <a href="https://github.com/diverta/front_nuxt_auth"><small class="my-4 l-footer_copyright">This front-end source is free.</small></a>
                 <a href="https://kuroco.app/"><img src="~/assets/images/logo-kuroco.svg" class="pl-4 "></a>
                 <v-col class="#1414A0 text-center white--text" cols="12" />
@@ -143,8 +143,8 @@ export default {
                     to: '/topics_list'
                 },
                 {
-                    icon: 'mdi-heart',
-                    title: 'Favourite',
+                    icon: 'mdi-star',
+                    title: 'Starred',
                     to: '/favourite'
                 },
                 {
@@ -154,7 +154,7 @@ export default {
                 },
                 {
                     icon: 'mdi-account-box',
-                    title: 'Profile',
+                    title: 'My Profile',
                     to: '/profile'
                 },
                 {
