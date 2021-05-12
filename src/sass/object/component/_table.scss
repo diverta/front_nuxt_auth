@@ -35,4 +35,25 @@
     &_col {
         padding: 10px 15px;
     }
+    &_responsive {
+        & tr {
+            @include sm {
+                display: flex;
+                flex-wrap: wrap;
+            }
+        }
+        & td {
+            @include sm {
+                width: 100%;
+                padding: 10px !important;
+                height: auto !important;
+            }
+            &:first-child {
+                @include sm {
+                    border: none !important;
+                    padding-bottom: 0 !important;
+                }
+            }
+        }
+    }
 }

@@ -3,10 +3,10 @@
 
         <v-col>
             <v-row>
-                <v-col cols="auto">
+                <v-col cols="sm-auto col-12">
                     <v-img
                         fluid
-                        class="mx-auto mr-5"
+                        class="mx-auto mr-sm-5"
                         :lazy-src="detail.url"
                         :aspect-ration="16 / 9"
                         :src="detail.url"
@@ -15,6 +15,7 @@
                     /> 
                 </v-col>
                 <v-col class="mx-auto">
+                <v-container fluid>
                     <v-row class="headline mb-3">
                         <br>
                         {{ detail.name }}
@@ -23,11 +24,6 @@
                         <v-icon class="icon c-text_blue pr-2">
                             mdi-gender-male-female
                         </v-icon>{{ detail.sex }}
-                    </v-row>
-                    <v-row v-if="detail.birth" class="mb-3">
-                        <v-icon class="icon c-text_blue pr-2">
-                            mdi-card-account-details
-                        </v-icon>{{ detail.birth }}
                     </v-row>
                     <v-row v-if="detail.department" class="mb-3">
                         <v-icon class="icon c-text_blue pr-2">
@@ -41,11 +37,12 @@
                         </v-icon>
                         {{ detail.position }}
                     </v-row>
+                </v-container>
                 </v-col>
             </v-row>
             <v-row>
                 <v-col>
-                    <v-simple-table class="elevation-1">
+                    <v-simple-table class="elevation-1 mt-5 c-table_responsive">
                         <template v-slot:default>
                             <tbody>
                                 <tr v-for="item in profile" :key="item.id">
@@ -58,7 +55,7 @@
                                     <td v-else-if="item.name == 'Email'" width="1000">
                                         <a :href="'mailto:' + item.value">{{ item.value }}</a>
                                     </td>
-                                    <td v-else width="1000" class="py-3">
+                                    <td v-else width="1000" class="py-sm-3">
                                         {{ item.value }}
                                     </td>
                                 </tr>

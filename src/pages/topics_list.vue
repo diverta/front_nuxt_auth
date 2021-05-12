@@ -49,7 +49,7 @@ export default {
             categories: [],
             topics: [],
             page: 1,
-            perPage: 10,
+            perPage: 12,
             category_key: null,
             totalCnt: 0
         };

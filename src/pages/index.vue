@@ -165,7 +165,7 @@ export default {
         topics: [],
         favourite: [],
         group_id: 13,
-        maxFavPerPage: 5
+        maxFavPerPage: 5   //This is fav list, for latest topic, go to below updateTopics() section, search for cnt=6
     }),
     computed: {
         user() {
@@ -197,7 +197,7 @@ export default {
         },
         updateTopics() {
             const url =
-        '/rcms-api/1/topics?topics_group_id=' + this.group_id + '&cnt=5';
+        '/rcms-api/1/topics?topics_group_id=' + this.group_id + '&cnt=6';
             const self = this;
             this.$store.$auth.ctx.$axios
                 .get(url)
