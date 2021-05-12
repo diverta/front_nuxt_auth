@@ -41,6 +41,35 @@
                 />
             </v-row>
         </v-col>
+        <v-col>
+            <div v-if="file_url || file_download" class="p-article_footer-content">
+                <h3 class="heading">Files:</h3>
+                <a v-if="file_url" :href="file_url" target="_blank" class="c-btn c-btn_dark p-article_file">
+                    View
+                    <v-icon v-if="file_type == 'pdf'">mdi-pdf-box</v-icon>
+                    <v-icon v-else-if="file_type == 'excel'">mdi-microsoft-excel</v-icon>
+                    <v-icon v-else-if="file_type == 'word'">mdi-file-word</v-icon>
+                    <v-icon v-else-if="file_type == 'url'">mdi-launch</v-icon>
+                    <v-icon v-else-if="file_type == 'data'">mdi-file-document</v-icon>
+                </a>
+                <a v-if="file_download" :href="file_download" target="_blank" class="c-btn c-btn_main p-article_file">
+                    Download
+                    <v-icon v-if="file_type == 'pdf'">mdi-pdf-box</v-icon>
+                    <v-icon v-else-if="file_type == 'excel'">mdi-microsoft-excel</v-icon>
+                    <v-icon v-else-if="file_type == 'word'">mdi-file-word</v-icon>
+                    <v-icon v-else-if="file_type == 'url'">mdi-launch</v-icon>
+                    <v-icon v-else-if="file_type == 'data'">mdi-file-document</v-icon>
+                </a>
+            </div>
+            <div v-if="link_url" class="p-article_footer-content">
+                <h3 class="heading">Links:</h3> 
+                <a v-if="link_url" :href="link_url" target="_blank" class="c-link">
+                    <v-icon v-if="file_type == 'pdf'">mdi-open-in-new</v-icon> 
+                    <span v-if="link_title">{{ link_title }}</span>
+                    <span v-else>{{ link_url }}</span>
+                </a>
+            </div>
+        </v-col>
         <div class="text-center col mt-5">
             <button
                 type="submit"
@@ -128,14 +157,18 @@ export default {
             items: [
                 {
                     text: '',
-                    pattern: 1,
+                    pattern: '1',
                     image_url: '',
                     // text_size: "H2",
                     subtitle: 'type 1'
                 }
             ],
             loading: true,
-            topic_id: 957
+            topic_id: 957,
+            file_type: '',
+            file_url: '',
+            link_url: '',
+            link_title: '',
         };
     },
     mounted() {
@@ -159,6 +192,11 @@ export default {
                 // var text_size = response.data.details.ext_col_06;
                 const texts = response.data.details.ext_col_07;
                 const subtitle = response.data.details.ext_col_09;
+                self.file_type = response.data.details.ext_col_01.key;
+                self.file_url = response.data.details.ext_col_02.url;
+                self.file_download = response.data.details.ext_col_02.dl_link;
+                self.link_url = response.data.details.ext_col_03.url;
+                self.link_title = response.data.details.ext_col_03.title;
 
                 for (let i = 0; i < positions.length; i++) {
                     let imageUrl = null;
@@ -167,7 +205,7 @@ export default {
                     ) {
                         imageUrl = imageUrls[i].url + '?width=800';
                     }
-                    let pattern = 1;
+                    let pattern = '1';
                     if (positions[i].key === '0') {
                         pattern = 'no image';
                     } else if (positions[i].key === '1') {
@@ -195,7 +233,7 @@ export default {
                 self.$store.dispatch('snackbar/snackOn');
             });
 
-        const favoritesUrl =
+      const favoritesUrl =
       '/rcms-api/1/favorites?member_id=' +
       this.$auth.user.member_id +
       '&module_type=topics&module_id=' +

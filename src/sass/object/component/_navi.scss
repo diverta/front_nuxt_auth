@@ -26,13 +26,20 @@
     }
     &_filter {
         flex-wrap: wrap;
-
+        
         & .v-btn__content {
             text-transform: none !important;
+            @include md {
+                font-size: 0.85em;
+            }
         }
         & .v-size--default {
             height: auto !important;
             padding: 5px 15px !important;
+
+            @include md {
+                padding: 5px 8px !important;
+            }
         }
         & .v-item--active {
             border-radius: 10px !important;
