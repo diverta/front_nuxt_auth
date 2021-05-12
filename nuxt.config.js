@@ -34,7 +34,12 @@ export default {
             },
             { hid: 'robots', name: 'robots', content: envSettings.ROBOTS }
         ],
-        link: [{ rel: 'icon', type: 'image/svg+xml', href: '/icon_kuroco.svg' }]
+        link: [
+            { rel: 'icon', type: 'image/svg+xml', href: '/icon_kuroco.svg' },
+            { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+            { rel: 'preconnect', href: 'https://cdn.jsdelivr.net' },
+            { rel: 'preconnect', href: 'https://dev-nuxt-auth.a.kuroco.app' }
+        ]
     },
     /*
    ** Global CSS

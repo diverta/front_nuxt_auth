@@ -14,7 +14,7 @@
         >
             <div class="text-center py-4">
                 <a href="/">
-                    <img src="~/assets/images/logo.png" class="c-navi_side-logo">
+                    <img src="~/assets/images/logo.png?width=150" class="c-navi_side-logo">
                 </a>
             </div>
             <v-list>
