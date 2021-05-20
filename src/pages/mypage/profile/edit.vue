@@ -141,7 +141,7 @@ export default {
                         self.$store.dispatch('snackbar/snackOn');
                     }); ;
             } else {
-                self.$store.dispatch('snackbar/setError', 'Fill fields properly.');
+                self.$store.dispatch('snackbar/setError', 'Please fill the fields properly.');
                 self.$store.dispatch('snackbar/snackOn');
             }
         }

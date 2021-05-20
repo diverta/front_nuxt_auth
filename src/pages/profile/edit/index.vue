@@ -1,25 +1,5 @@
 <template>
     <div>
-        <!--
-    <div class="l-content_heading">
-      <h1>My page</h1>
-    </div>
-
-    <v-tabs
-      background-color="transparent"
-      light
-      height="70"
-      class="rounded-xl"
-      centered
-      v-model="active_tab"
-    >
-      <v-tab @click="go_page('/mypage/')"> My page </v-tab>
-      <v-tab @click="go_page('/mypage/favorite_list/')"> Favorite List </v-tab>
-      <v-tab @click="go_page('/mypage/profile/edit/')"> Profile Edit </v-tab>
-      <v-tab @click="go_page('/mypage/posted_list')"> Posted list </v-tab>
-    </v-tabs>
-    -->
-
         <v-progress-linear
             :active="loading"
             :indeterminate="loading"
@@ -28,7 +8,6 @@
             color="orange white-4"
         />
 
-        <!--<h1 class="mt-5 pt-5">Profile editing</h1>-->
         <div class="v-stepper c-form_wrap">
             <v-container fluid>
                 <vue-form-generator
@@ -132,7 +111,7 @@ export default {
                         self.$store.dispatch('snackbar/snackOn');
                     }); ;
             } else {
-                self.$store.dispatch('snackbar/setError', 'Fill fields properly.');
+                self.$store.dispatch('snackbar/setError', 'Please fill the fields properly.');
                 self.$store.dispatch('snackbar/snackOn');
             }
         }

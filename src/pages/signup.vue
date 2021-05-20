@@ -108,7 +108,7 @@ export default {
                     .post('/rcms-api/1/member/regist', sendModel)
                     .then(function (response) {
                         if (response.data.errors.length === 0) {
-                            self.$store.dispatch('snackbar/setMessage', '会員登録しました');
+                            self.$store.dispatch('snackbar/setMessage', 'Your registration is successful.');
                             self.$store.dispatch('snackbar/snackOn');
                         }
                         self.loading = false;
@@ -120,7 +120,7 @@ export default {
                         self.loading = false;
                     });
             } else {
-                self.$store.dispatch('snackbar/setError', 'Fill fields properly.');
+                self.$store.dispatch('snackbar/setError', 'Please fill the fields properly.');
                 self.$store.dispatch('snackbar/snackOn');
                 self.loading = false;
             }

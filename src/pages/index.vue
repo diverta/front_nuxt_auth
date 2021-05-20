@@ -10,6 +10,11 @@
                                 Welcome Back to<br> Muzica!
                             </h1>
                             <p>Sign in to continue your portal</p>
+                            <p>
+                                Demo account<br>
+                                ID：demo@kuroco-mail.app<br>
+                                PWD：demo0512<br>
+                            </p>
                         </div>
                     </div>
                 </v-col>
@@ -309,12 +314,12 @@ export default {
                     this.updateTopics();
                     this.updateDesign();
                     this.$router.push('/');
-                    this.$store.dispatch('snackbar/setMessage', 'Logged in');
+                    this.$store.dispatch('snackbar/setMessage', 'Logged in.');
                     this.$store.dispatch('snackbar/snackOn');
                     this.loading = false;
                 })
                 .catch(() => {
-                    this.$store.dispatch('snackbar/setError', 'ログインに失敗しました');
+                    this.$store.dispatch('snackbar/setError', 'Login failed.');
                     this.$store.dispatch('snackbar/snackOn');
                     this.loading = false;
                 });

@@ -91,7 +91,7 @@
                                         :rules="[rules.required, rules.password_min]"
                                         :type="password_show ? 'text' : 'password'"
                                         label=""
-                                        hint="最低8文字以上の英数混合のパスワードを設定ください。"
+                                        hint="Please set a mixture of alphanumeric characters and at least 8 characters."
                                         counter
                                         outlined
                                         @click:append="password_show = !password_show"
@@ -111,7 +111,7 @@
                                         ]"
                                         :type="password_show2 ? 'text' : 'password'"
                                         label=""
-                                        hint="最低8文字以上の英数混合のパスワードを設定ください。"
+                                        hint="Please set a mixture of alphanumeric characters and at least 8 characters."
                                         counter
                                         outlined
                                         @click:append="password_show2 = !password_show2"
@@ -208,9 +208,9 @@ export default {
             loading1: false,
             loading2: false,
             rules: {
-                required: (value) => !!value || 'この項目は必須入力です',
-                password_min: (v) => v.length >= 8 || '最低8文字以上を入力してください',
-                password2: (v) => v === this.login_pwd || '確認用パスワードが違います'
+                required: (value) => !!value || 'This filed is required.',
+                password_min: (v) => v.length >= 8 || 'Please input at least 8 characters.',
+                password2: (v) => v === this.login_pwd || 'The confirmation password is incorrect.'
             }
         };
     },
@@ -219,7 +219,7 @@ export default {
         if (this.token) {
             this.$store.dispatch(
                 'snackbar/setMessage',
-                '新しいパスワードを入力してください。'
+                'please input a new password.'
             );
             this.$store.dispatch('snackbar/snackOn');
             this.e1 = 2;
@@ -267,7 +267,7 @@ export default {
                     .then(() => {
                         self.$store.dispatch(
                             'snackbar/setMessage',
-                            'パスワードを更新しました。'
+                            'Your password has been updated.'
                         );
                         self.$store.dispatch('snackbar/snackOn');
                         self.$router.push('/');
