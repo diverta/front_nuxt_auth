@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import topicList from '../components/topics';
+import topicList from '../components/topics_grid';
 export default {
     auth: true,
     components: {
@@ -49,7 +49,7 @@ export default {
             categories: [],
             topics: [],
             page: 1,
-            perPage: 10,
+            perPage: 12,
             category_key: null,
             totalCnt: 0
         };
@@ -89,6 +89,7 @@ export default {
                         const item = response.data.list[key];
                         let fileurl = '';
                         let linkurl = '';
+                        let thumbnail = '';
                         if (
                             item.hasOwnProperty('ext_col_02') &&
               item.ext_col_02.hasOwnProperty('url')
@@ -101,6 +102,11 @@ export default {
                         ) {
                             linkurl = item.ext_col_03.url;
                         }
+                        if (
+                            item.hasOwnProperty('ext_col_08')
+                        ) {
+                            thumbnail = item.ext_col_08.url;
+                        }
 
                         topics.push({
                             date: item.ymd.substring(0, 10).replaceAll('-', '/'),
@@ -109,6 +115,7 @@ export default {
                             id: item.topics_id,
                             icon: item.ext_col_01.key,
                             fileurl,
+                            thumbnail,
                             linkurl,
                             edit: false
                         });

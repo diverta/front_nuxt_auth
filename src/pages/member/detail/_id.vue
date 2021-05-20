@@ -5,44 +5,46 @@
         </div>
         <v-col>
             <v-row>
-                <v-col cols="auto">
+                <v-col cols="sm-auto col-12">
                     <v-img
                         fluid
-                        class="mx-auto mr-5"
+                        class="mx-auto mr-md-5"
                         :lazy-src="detail.url"
                         :aspect-ration="16 / 9"
                         :src="detail.url"
                         max-height="180"
                         max-width="180"
-                    />
+                    /> 
                 </v-col>
                 <v-col class="mx-auto">
-                    <v-row class="headline mb-3">
-                        <br>
-                        {{ detail.name }}
-                    </v-row>
-                    <v-row v-if="detail.sex" class="mb-3">
-                        <v-icon class="icon c-text_blue pr-2">
-                            mdi-gender-male-female
-                        </v-icon>{{ detail.sex }}
-                    </v-row>
-                    <v-row v-if="detail.birth" class="mb-3">
-                        <v-icon class="icon c-text_blue pr-2">
-                            mdi-card-account-details
-                        </v-icon>{{ detail.birth }}
-                    </v-row>
-                    <v-row v-if="detail.department" class="mb-3">
-                        <v-icon class="icon c-text_blue pr-2">
-                            mdi-office-building
-                        </v-icon>
-                        {{ detail.department }}
-                    </v-row>
-                    <v-row v-if="detail.position">
-                        <v-icon class="icon c-text_blue pr-2">
-                            mdi-briefcase-account
-                        </v-icon>
-                        {{ detail.position }}
-                    </v-row>
+                    <v-container fluid>
+                        <v-row class="headline mb-3">
+                            <br>
+                            {{ detail.name }}
+                        </v-row>
+                        <v-row v-if="detail.sex" class="mb-3">
+                            <v-icon class="icon c-text_blue pr-2">
+                                mdi-gender-male-female
+                            </v-icon>{{ detail.sex }}
+                        </v-row>
+                        <v-row v-if="detail.birth" class="mb-3">
+                            <v-icon class="icon c-text_blue pr-2">
+                                mdi-card-account-details
+                            </v-icon>{{ detail.birth }}
+                        </v-row>
+                        <v-row v-if="detail.department" class="mb-3">
+                            <v-icon class="icon c-text_blue pr-2">
+                                mdi-office-building
+                            </v-icon>
+                            {{ detail.department }}
+                        </v-row>
+                        <v-row v-if="detail.position">
+                            <v-icon class="icon c-text_blue pr-2">
+                                mdi-briefcase-account
+                            </v-icon>
+                            {{ detail.position }}
+                        </v-row>
+                    </v-container>
                 </v-col>
             </v-row>
             <br>
@@ -162,7 +164,8 @@ export default {
                 detail.phone = detailsObj.tel;
                 detail.email = detailsObj.email;
                 if (detailsObj.profileimage.url !== undefined) {
-                    detail.url = detailsObj.profileimage.url;
+                    detail.url = "https://dev-nuxt-auth-mng.r-cms.jp" + detailsObj.profileimage.url;
+                    console.log(detail.url);
                 } else {
                     detail.url = self.placeholder;
                 }

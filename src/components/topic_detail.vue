@@ -1,5 +1,6 @@
 <template>
-    <v-container v-if="pattern == 'no image'" fluid>
+
+    <v-container v-if="pattern == 'no image' && text" fluid>
         <v-card class="mx-auto" max-width="7000">
             <v-card-title class="c-heading_h2" v-text="subtitle" />
             <v-card-text>
@@ -39,7 +40,7 @@
                 <v-img
                     class="mx-auto"
                     :aspect-ration="16 / 9"
-                    :src="imageUrl"
+                    :src="image_url"
                     max-height="900"
                     max-width="1000"
                     position="center"
@@ -58,7 +59,7 @@
                             fluid
                             class="mr-auto img-responsive"
                             :aspect-ration="16 / 9"
-                            :src="imageUrl"
+                            :src="image_url"
                             max-height="900"
                             max-width="500"
                         />
@@ -88,7 +89,7 @@
                             fluid
                             class="ml-auto img-responsive"
                             :aspect-ration="16 / 9"
-                            :src="imageUrl"
+                            :src="image_url"
                             max-height="900"
                             max-width="500"
                         />
@@ -97,6 +98,7 @@
             </v-container>
         </v-card>
     </v-container>
+
 </template>
 
 <script>
@@ -107,7 +109,7 @@ export default {
             required: false,
             default: ''
         },
-        imageUrl: {
+        image_url: {
             type: String,
             required: false,
             default: ''
@@ -121,7 +123,7 @@ export default {
             type: String,
             required: false,
             default: ''
-        }
+        },
     }
 };
 </script>

@@ -15,13 +15,13 @@
             <div v-if="topics.length > 0" class="row">
                 <div class="col">
                     <div v-for="item in topics" :key="item.id" class="row c-table_row">
-                        <div class="col-sm-2 col-auto c-table_col">
+                        <div class="col-2 c-table_col">
                             {{ item.date }}
                         </div>
-                        <div class="col-sm-4 col c-table_col">
+                        <div class="col-4 c-table_col">
                             {{ item.label }}
                         </div>
-                        <div class="col-sm col-12 c-table_col">
+                        <div class="col c-table_col">
                             <div v-if="item.icon == 'pdf'">
                                 <a :href="item.fileurl">{{ item.link }}</a>
                                 <v-icon>mdi-pdf-box</v-icon>
