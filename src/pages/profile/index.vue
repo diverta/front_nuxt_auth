@@ -1,6 +1,5 @@
 <template>
     <section>
-
         <v-col>
             <v-row>
                 <v-col cols="sm-auto col-12">
@@ -12,32 +11,27 @@
                         :src="detail.url"
                         max-height="180"
                         max-width="180"
-                    /> 
+                    />
                 </v-col>
                 <v-col class="mx-auto">
-                <v-container fluid>
-                    <v-row class="headline mb-3">
-                        <br>
-                        {{ detail.name }}
-                    </v-row>
-                    <v-row v-if="detail.sex" class="mb-3">
-                        <v-icon class="icon c-text_blue pr-2">
-                            mdi-gender-male-female
-                        </v-icon>{{ detail.sex }}
-                    </v-row>
-                    <v-row v-if="detail.department" class="mb-3">
-                        <v-icon class="icon c-text_blue pr-2">
-                            mdi-office-building
-                        </v-icon>
-                        {{ detail.department }}
-                    </v-row>
-                    <v-row v-if="detail.position">
-                        <v-icon class="icon c-text_blue pr-2">
-                            mdi-briefcase-account
-                        </v-icon>
-                        {{ detail.position }}
-                    </v-row>
-                </v-container>
+                    <v-container fluid>
+                        <v-row class="headline mb-3">
+                            <br>
+                            {{ detail.name }}
+                        </v-row>
+                        <v-row v-if="detail.department" class="mb-3">
+                            <v-icon class="icon c-text_blue pr-2">
+                                mdi-office-building
+                            </v-icon>
+                            {{ detail.department }}
+                        </v-row>
+                        <v-row v-if="detail.position">
+                            <v-icon class="icon c-text_blue pr-2">
+                                mdi-briefcase-account
+                            </v-icon>
+                            {{ detail.position }}
+                        </v-row>
+                    </v-container>
                 </v-col>
             </v-row>
             <v-row>
@@ -77,7 +71,6 @@
                 </v-icon>
             </button>
         </div>
-
     </section>
 </template>
 
@@ -179,12 +172,9 @@ export default {
                 detail.phone = detailsObj.tel;
                 detail.email = detailsObj.email;
                 if (detailsObj.profileimage.url !== undefined) {
-                    detail.url = "https://dev-nuxt-auth-mng.r-cms.jp" + detailsObj.profileimage.url;
+                    detail.url = 'https://dev-nuxt-auth-mng.r-cms.jp' + detailsObj.profileimage.url;
                 } else {
                     detail.url = self.placeholder;
-                }
-                if (detailsObj.hasOwnProperty('sex')) {
-                    detail.sex = detailsObj.sex.label;
                 }
                 if (detailsObj.hasOwnProperty('birth')) {
                     detail.birth = detailsObj.birth;
@@ -218,8 +208,6 @@ export default {
                         self.profile[i].value = detailsObj.name1;
                     } else if (self.profile[i].name === 'Last Name' && detailsObj.name2) {
                         self.profile[i].value = detailsObj.name2;
-                    } else if (self.profile[i].name === 'Gender' && detailsObj.sex.label) {
-                        self.profile[i].value = detailsObj.sex.label;
                     } else if (self.profile[i].name === 'Hire Date' && detailsObj.hire_date) {
                         self.profile[i].value = detailsObj.hire_date;
                     } else if (self.profile[i].name === 'Department' && detailsObj.department) {

@@ -230,7 +230,6 @@ export default {
             loading: true,
             disabled: false,
             model: {
-                sex: 'Male',
                 pull_down: ['Pulldown 1'],
                 multiple_check: ['Check 1']
             },
@@ -257,22 +256,6 @@ export default {
                         required: true
                     },
                     {
-                        model: 'sex',
-                        label: 'Sex',
-                        /*
-            values: [
-                "James",
-                "Nadia",
-                "Paul",
-                "Christelle",
-                "Marc",
-                "Marie"
-            ],
-            radiosOptions: {
-                value:"Male",
-                name:"Male"
-            }
-            */
                         contents: [
                             {
                                 key: 1,

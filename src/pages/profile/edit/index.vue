@@ -127,8 +127,6 @@ export default {
                             self.schema.fields[i].text = response.data.details.name1;
                         } else if (self.schema.fields[i].model === 'name2' && response.data.details.name2) {
                             self.schema.fields[i].text = response.data.details.name2;
-                        } else if (self.schema.fields[i].model === 'sex' && response.data.details.sex.value) {
-                            self.schema.fields[i].contents = response.data.details.sex.value;
                         } else if (self.schema.fields[i].model === 'hire_date' && response.data.details.hire_date) {
                             self.schema.fields[i].time = response.data.details.hire_date;
                         } else if (self.schema.fields[i].model === 'department' && response.data.details.department) {
@@ -188,23 +186,8 @@ export default {
             validForm: true,
             loading: true,
             disabled: false,
-            model: {
-                sex: 'Male',
-                hire_date: '1988-10-09'
-            },
             schema: {
                 fields: [
-                    /*
-          {
-            type: "radios",
-            label: "Sex",
-            model: "sex",
-            values: [
-                "Male",
-                "Female",
-            ]
-          },
-          */
                     {
                         type: 'vuetifyText',
                         inputType: 'text',
@@ -224,26 +207,6 @@ export default {
                         text: '',
                         model: 'name2',
                         required: true
-                    },
-                    {
-                        model: 'sex',
-                        label: 'Gender',
-                        contents: [
-                            {
-                                key: 1,
-                                value: 'Male'
-                            },
-                            {
-                                key: 2,
-                                value: 'Female'
-                            },
-                            {
-                                key: 3,
-                                value: 'Other'
-                            }
-                        ],
-                        required: true,
-                        type: 'vuetifySingleChoice'
                     },
                     {
                         type: 'vuetifyDate',
