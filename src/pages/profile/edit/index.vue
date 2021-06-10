@@ -210,14 +210,6 @@ export default {
                     },
                     {
                         type: 'vuetifyDate',
-                        inputType: 'picker',
-                        label: 'Birthday',
-                        model: 'birth',
-                        required: false,
-                        visible: (model, field, form) => model.choice === 'Check a boolean value'
-                    },
-                    {
-                        type: 'vuetifyDate',
                         // inputType: "picker",
                         label: 'Hire Date',
                         model: 'hire_date',
