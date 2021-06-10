@@ -256,28 +256,6 @@ export default {
                         required: true
                     },
                     {
-                        contents: [
-                            {
-                                key: 1,
-                                value: 'Male'
-                            },
-                            {
-                                key: 2,
-                                value: 'Female'
-                            }
-                        ],
-                        required: true,
-                        type: 'vuetifySingleChoice'
-                    },
-                    {
-                        type: 'vuetifyDate',
-                        inputType: 'picker',
-                        label: 'Birthday',
-                        model: 'birth',
-                        required: false,
-                        visible: (model, field, form) => model.choice === 'Check a boolean value'
-                    },
-                    {
                         type: 'vuetifyText',
                         inputType: 'text',
                         text: '',
