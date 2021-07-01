@@ -32,6 +32,18 @@ export default {
                 name: 'description',
                 content: process.env.npm_package_description || ''
             },
+            {
+                hid: 'og:title',
+                'data-kuroco-replace': 'og_title',
+                property: 'og:title',
+                content: 'Kuroco sample'
+            },
+            {
+                hid: 'og:description',
+                'data-kuroco-replace': 'og_description',
+                property: 'og:description',
+                content: 'Kuroco sample page'
+            },
             { hid: 'robots', name: 'robots', content: envSettings.ROBOTS }
         ],
         link: [
