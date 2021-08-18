@@ -30,6 +30,12 @@
                                 <v-card-text class="inner">
                                     <form @submit.prevent="login">
                                         <v-text-field
+                                            v-model="sitekey"
+                                            label="Your sitekey"
+                                            type="text"
+                                            outlined
+                                        />
+                                        <v-text-field
                                             v-model="form.email"
                                             label="Login ID or Email address"
                                             type="email"
@@ -158,6 +164,7 @@ export default {
         }
     },
     data: () => ({
+        sitekey: '',
         loading: false,
         show_pwd1: false,
         show_pwd2: false,
@@ -178,7 +185,7 @@ export default {
         },
         auth() {
             return this.$store.$auth;
-        }
+        },
     },
     mounted() {
         this.topics = [];
@@ -186,6 +193,12 @@ export default {
         if (this.$auth.loggedIn) {
             this.updateTopics();
             this.updateFavourite();
+        }
+        let sitekey = localStorage.getItem("sitekey");
+        if(sitekey != ''){
+            this.sitekey = sitekey;
+        } else {
+            this.sitekey = 'dev-nuxt-auth';
         }
     },
     methods: {
@@ -318,6 +331,9 @@ export default {
         },
         async login() {
             this.loading = true;
+            console.log(this.sitekey);
+            localStorage.setItem("sitekey", this.sitekey); //save sitekey
+            this.$store.$auth.ctx.$axios.defaults.baseURL = "https://" + this.sitekey + ".g.kuroco.app";
             await this.$auth
                 .loginWith('local', { data: this.form })
                 .then(() => {
