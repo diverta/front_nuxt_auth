@@ -24,7 +24,6 @@ export default {
         return {
             active_tab: 1,
             topics: [],
-            group_id: 1,
             page: 1,
             perPage: 20,
             totalCnt: 0
@@ -55,9 +54,7 @@ export default {
                     }
 
                     let url =
-            '/rcms-api/1/topics?topics_group_id=' +
-            self.group_id +
-            '&pageID=' +
+            '/rcms-api/1/topics?pageID=' +
             self.page +
             '&cnt=' +
             self.perPage;

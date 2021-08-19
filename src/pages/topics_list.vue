@@ -45,7 +45,6 @@ export default {
     data() {
         return {
             text: '0',
-            group_id: 1,
             categories: [],
             topics: [],
             page: 1,
@@ -70,9 +69,7 @@ export default {
         },
         updateTopics() {
             let url =
-        '/rcms-api/1/topics?topics_group_id=' +
-        this.group_id +
-        '&pageID=' +
+        '/rcms-api/1/topics?pageID=' +
         this.page +
         '&cnt=' +
         this.perPage;
@@ -132,7 +129,7 @@ export default {
         const self = this;
         this.category_key = null;
         this.$store.$auth.ctx.$axios
-            .get('/rcms-api/1/topic/category?topics_group_id=' + this.group_id)
+            .get('/rcms-api/1/topic/category')
             .then(function (response) {
                 const categories = [];
                 for (const key in response.data.list) {
