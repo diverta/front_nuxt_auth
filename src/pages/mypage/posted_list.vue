@@ -69,7 +69,7 @@ export default {
         return {
             active_tab: 3,
             text: '0',
-            group_id: 13,
+            group_id: 1,
             categories: [],
             topics: [],
             page: 1,

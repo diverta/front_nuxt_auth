@@ -45,7 +45,7 @@ export default {
     data() {
         return {
             text: '0',
-            group_id: 13,
+            group_id: 1,
             categories: [],
             topics: [],
             page: 1,

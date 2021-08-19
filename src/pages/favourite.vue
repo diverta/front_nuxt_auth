@@ -24,7 +24,7 @@ export default {
         return {
             active_tab: 1,
             topics: [],
-            group_id: 13,
+            group_id: 1,
             page: 1,
             perPage: 20,
             totalCnt: 0

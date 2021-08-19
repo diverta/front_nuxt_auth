@@ -176,7 +176,7 @@ export default {
         thumbnail: [],
         topics: [],
         favourite: [],
-        group_id: 13,
+        group_id: 1,
         maxFavPerPage: 5   //This is fav list, for latest topic, go to below updateTopics() section, search for cnt=6
     }),
     computed: {
