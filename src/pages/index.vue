@@ -177,7 +177,7 @@ export default {
         topics: [],
         favourite: [],
         group_id: 1,
-        maxFavPerPage: 5   //This is fav list, for latest topic, go to below updateTopics() section, search for cnt=6
+        maxFavPerPage: 5 // This is fav list, for latest topic, go to below updateTopics() section, search for cnt=6
     }),
     computed: {
         user() {
@@ -185,7 +185,7 @@ export default {
         },
         auth() {
             return this.$store.$auth;
-        },
+        }
     },
     mounted() {
         this.topics = [];
@@ -194,8 +194,8 @@ export default {
             this.updateTopics();
             this.updateFavourite();
         }
-        let sitekey = localStorage.getItem("sitekey");
-        if(sitekey != ''){
+        const sitekey = localStorage.getItem('sitekey');
+        if (sitekey != '') {
             this.sitekey = sitekey;
         } else {
             this.sitekey = 'dev-nuxt-auth';
@@ -331,9 +331,12 @@ export default {
         },
         async login() {
             this.loading = true;
-            console.log(this.sitekey);
-            localStorage.setItem("sitekey", this.sitekey); //save sitekey
-            this.$store.$auth.ctx.$axios.defaults.baseURL = "https://" + this.sitekey + ".g.kuroco.app";
+            localStorage.setItem('sitekey', this.sitekey); // save sitekey
+            if (this.sitekey === 'dev-nuxt-auth') {
+                this.$store.$auth.ctx.$axios.defaults.baseURL = 'https://dev-nuxt-auth.a.kuroco.app';
+            } else {
+                this.$store.$auth.ctx.$axios.defaults.baseURL = 'https://' + this.sitekey + '.g.kuroco.app';
+            }
             await this.$auth
                 .loginWith('local', { data: this.form })
                 .then(() => {
