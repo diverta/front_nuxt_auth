@@ -79,17 +79,19 @@ export default {
         '@nuxtjs/auth',
         ['@nuxtjs/pwa', { workbox: false, autoRegister: false, manifest: { publicPath: '/_nuxt/', crossorigin: 'use-credentials' } }],
         'nuxt-i18n',
-        '@nuxtjs/google-gtag'
+        // ['@nuxtjs/google-gtag', {
+        //     id: 'G-XXXXXXXX',
+        //     config: {
+        //         anonymize_ip: true, // anonymize IP
+        //         send_page_view: false // might be necessary to avoid duplicated page track on page reload
+        //     },
+        //     debug: false, // enable to track in dev mode
+        //     disableAutoPageTrack: false, // disable if you don't want to track each page route with router.afterEach(...).
+        //     additionalAccounts: [{
+        //         id: 'UA-XXXXXXXXX-X' // required if you are adding additional accounts
+        //     }]
+        // }],
     ],
-    /*
-    ** google-gtag module configuration for GoogleAnalytics
-    ** https://github.com/nuxt-community/google-gtag-module
-    */
-    // 'google-gtag': {
-    //     id: 'UA-XXXXXXXXX-X',
-    //     debug: true,
-    // },
-    /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
    */
