@@ -78,7 +78,17 @@ export default {
         '@nuxtjs/axios',
         '@nuxtjs/auth',
         ['@nuxtjs/pwa', { workbox: false, autoRegister: false, manifest: { publicPath: '/_nuxt/', crossorigin: 'use-credentials' } }],
-        'nuxt-i18n'],
+        'nuxt-i18n',
+        '@nuxtjs/google-gtag'
+    ],
+    /*
+    ** google-gtag module configuration for GoogleAnalytics
+    ** https://github.com/nuxt-community/google-gtag-module
+    */
+    // 'google-gtag': {
+    //     id: 'UA-XXXXXXXXX-X',
+    //     debug: true,
+    // },
     /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
