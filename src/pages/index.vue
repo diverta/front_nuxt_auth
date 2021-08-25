@@ -12,6 +12,7 @@
                             <p>Sign in to continue your portal</p>
                             <p>
                                 Demo account<br>
+                                SiteKey: dev-nuxt-auth<br>
                                 ID：demo@kuroco-mail.app<br>
                                 PWD：demo0512<br>
                             </p>
