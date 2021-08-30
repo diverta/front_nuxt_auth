@@ -1,13 +1,13 @@
 export default function createTextAreaSchema(json, key) {
     const result = {};
-    if (json.hasOwnProperty('type') && json.type === '2') {
+    if (json.hasOwnProperty('type') && json.type === 2) {
         result.model = key;
         result.type = 'vuetifyTextArea';
         result.inputType = 'text';
         result.label = json.title;
         result.placeholder = '';
         result.text = '';
-        if (json.required === '2') {
+        if (json.required === 2) {
             result.required = true;
         } else {
             result.required = false;

@@ -1,8 +1,8 @@
 export default function createPrefectureSchema(json, key) {
     const result = {};
-    if (json.hasOwnProperty('type') && json.type === '9') {
+    if (json.hasOwnProperty('type') && json.type === 9) {
         result.model = key;
-        if (json.required === '2') {
+        if (json.required === 2) {
             result.required = true;
         } else {
             result.required = false;

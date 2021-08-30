@@ -1,7 +1,7 @@
 export default function createJsonSchema(json, key) {
     const result = {};
-    if (json.hasOwnProperty('type') && json.type === '8') {
-        if (json.required === '2') {
+    if (json.hasOwnProperty('type') && json.type === 8) {
+        if (json.required === 2) {
             result.required = true;
         } else {
             result.required = false;
@@ -11,6 +11,5 @@ export default function createJsonSchema(json, key) {
         result.inputType = 'text';
     }
 
-    console.log(result);
     return result;
 }

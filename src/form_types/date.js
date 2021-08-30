@@ -1,10 +1,10 @@
 export default function createDateSchema(json, key) {
     const result = {};
-    if (json.hasOwnProperty('type') && json.type === '6') {
+    if (json.hasOwnProperty('type') && json.type === 6) {
         result.model = key;
         result.type = 'vuetifyDate';
         result.time = '0';
-        if (json.required === '2') {
+        if (json.required === 2) {
             result.required = true;
         } else {
             result.required = true;

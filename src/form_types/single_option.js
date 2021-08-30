@@ -1,6 +1,6 @@
 export default function createSingleOptionSchema(json, key) {
     const result = {};
-    if (json.hasOwnProperty('type') && json.type === '4') {
+    if (json.hasOwnProperty('type') && json.type === 4) {
         result.model = key;
         result.label = json.title;
         result.contents = json.contents;
@@ -9,7 +9,7 @@ export default function createSingleOptionSchema(json, key) {
         } else {
             result.option = {};
         }
-        if (json.required === '2') {
+        if (json.required === 2) {
             result.required = true;
         } else {
             result.required = false;

@@ -1,10 +1,10 @@
 export default function createMultipleChoiceSchema(json, key) {
     const result = {};
-    if (json.hasOwnProperty('type') && json.type === '5') {
+    if (json.hasOwnProperty('type') && json.type === 5) {
         result.model = key;
         result.label = json.title;
         result.contents = json.contents;
-        if (json.required === '2') {
+        if (json.required === 2) {
             result.required = true;
         } else {
             result.required = false;

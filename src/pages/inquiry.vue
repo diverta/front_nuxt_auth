@@ -110,10 +110,12 @@ export default {
             this.$store.$auth.ctx.$axios
                 .get(this.inquirySchemaUrl)
                 .then(function (response) {
+                    console.log(response);
                     const schema = {};
                     schema.fields = [];
                     const columns = response.data.details.cols;
                     for (const key in columns) {
+                            
                         let result = {};
                         if (columns.hasOwnProperty(key)) {
                             result = self.$parse(columns[key], key);
