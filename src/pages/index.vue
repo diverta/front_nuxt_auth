@@ -12,9 +12,9 @@
                             <p>Sign in to continue your portal</p>
                             <p>
                                 Demo account<br>
-                                SiteKey: dev-nuxt-auth<br>
-                                ID：demo@kuroco-mail.app<br>
-                                PWD：demo0512<br>
+                                <strong>SiteKey:</strong> dev-nuxt-auth<br>
+                                <strong>ID：</strong>demo@kuroco-mail.app<br>
+                                <strong>PWD：</strong>demo0512<br>
                             </p>
                         </div>
                     </div>
@@ -65,6 +65,8 @@
                                             >
                                                 Sign In
                                             </button>
+                                            ※This site don't work on iOS because of ITP. <br>But you can build this with your domain, it will work fine.<br>
+                                            This site is just for demonstration.
                                         </div>
                                     </form>
                                 </v-card-text>
