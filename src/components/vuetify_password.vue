@@ -12,6 +12,7 @@
             persistent-hint
             counter
             @click:append="password_show = !password_show"
+            @change="check($event)"
         />
     </v-form>
 </template>
@@ -42,7 +43,7 @@ export default {
         check (e) {
             this.formValid = this.$refs.myForm.validate();
             if (this.formValid) {
-                this.$emit('model-updated', this.text, this.schema.model);
+                this.$emit('model-updated', this.login_pwd, this.schema.model);
             }
         }
     },
