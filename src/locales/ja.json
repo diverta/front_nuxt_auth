@@ -1,3 +1,17 @@
 {
-    "sign_in": "ログイン"
+    "common": {
+        "sign_in": "ログイン",
+        "password" : "パスワード",
+        "sitekey": "サイトキー",
+        "id": "ID"
+    },
+    "login" : {
+        "welcomeback": "ようこそ Muzica へ！",
+        "message" : "ここから先はログインしないと遷移できません。",
+        "demoaccount": "デモサイト用アカウント",
+        "site_key": "サイトキー",
+        "id_or_email": "Eメールアドレス(ログインID)",
+        "forget_password" : "パスワードを忘れた場合はこちら",
+        "note": "＊このサイトはITP機能のためiOSでは動作しません。<br>ドメインを作成して動作させることはできます。<br>このサイトはデモンストレーションサイトです。"
+    }
 }

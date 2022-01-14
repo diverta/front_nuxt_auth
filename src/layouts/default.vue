@@ -71,7 +71,7 @@
             </div>
             <div v-else-if="!auth.loggedIn">
                 Already have an account? <button class="c-btn c-btn_sm c-btn_dark ml-2" nuxt @click="go_page('/')">
-                    Sign In
+                    {{ $t('common.sign_in') }}
                 </button>
             </div>
         </v-app-bar>

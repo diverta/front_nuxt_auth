@@ -1,3 +1,18 @@
 {
-    "sign_in": "Sign In"
+    "common": {
+        "sign_in": "Sign In",
+        "password" : "Password",
+        "sitekey": "SiteKey",
+        "id": "ID"
+    },
+    "login" : {
+        "welcomeback": "Welcome Back to <br> Muzica!",
+        "message" : "Sign in to continue your portal",
+        "demoaccount": "Demo account",
+        "site_key": "Your sitekey",
+        "id_or_email": "Login ID or Email address",
+        "forget_password" : "Forgot Password?",
+        "note": "※This site don't work on iOS because of ITP. <br>But you can build this with your domain, it will work fine.<br>This site is just for demonstration."
+    }
+
 }
