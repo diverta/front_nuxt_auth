@@ -7,7 +7,7 @@
                         <img src="~/assets/images/logo.png?width=150" class="p-login_logo">
                         <div class="p-login_intro-text">
                             <h1 class="heading">
-                                Welcome Back to<br> Muzica!
+                                {{ $t('welcomeback') }}<br> Muzica!
                             </h1>
                             <p>Sign in to continue your portal</p>
                             <p>
@@ -63,7 +63,7 @@
                                                 :loading="loading"
                                                 class="c-btn_dark c-btn submit-btn"
                                             >
-                                                Sign In
+                                                {{ $t('sign_in') }}
                                             </button>
                                             ※This site don't work on iOS because of ITP. <br>But you can build this with your domain, it will work fine.<br>
                                             This site is just for demonstration.
@@ -356,3 +356,14 @@ export default {
     }
 };
 </script>
+
+<i18n>
+{
+  "en": {
+    "welcomeback": "Welcome Back to"
+  },
+  "ja": {
+    "welcomeback": "おかえりなさい"
+  }
+}
+</i18n>
