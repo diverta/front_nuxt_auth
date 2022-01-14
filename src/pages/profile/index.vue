@@ -79,7 +79,7 @@ export default {
     auth: true,
     methods: {
         edit() {
-            this.$router.push('/profile/edit');
+            this.$router.push(this.localePath('/profile/edit'));;
         }
     },
     data() {

@@ -62,7 +62,7 @@ export default {
     },
     methods: {
         go_page(path) {
-            this.$router.push(path);
+            this.$router.push(this.localePath(path));;
         },
         next(page) {
             this.updateTopics();

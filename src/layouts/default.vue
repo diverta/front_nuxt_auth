@@ -200,7 +200,7 @@ export default {
     },
     methods: {
         go_page(path) {
-            this.$router.push(path);
+            this.$router.push(this.localePath(path));;
         },
         updateDesign() {
             console.log('You logout!');
@@ -213,7 +213,7 @@ export default {
                 this.updateDesign();
                 this.$store.dispatch('snackbar/setMessage', 'Logged Out.');
                 this.$store.dispatch('snackbar/snackOn');
-                this.$router.push('/');
+                this.$router.push(this.localePath('/'));;
             });
         }
     }

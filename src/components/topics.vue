@@ -76,7 +76,7 @@
 export default {
     methods: {
         edit_topic(topicId) {
-            this.$router.push('/profile/topic_edit/' + topicId);
+            this.$router.push(this.localePath('/profile/topic_edit/' + topicId));;
         }
     },
     props: {

@@ -227,7 +227,7 @@ export default {
     },
     methods: {
         login() {
-            this.$router.push('/');
+            this.$router.push(this.localePath('/'));;
         },
         reminder() {
             this.loading1 = true;

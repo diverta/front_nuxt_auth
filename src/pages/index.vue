@@ -205,10 +205,10 @@ export default {
     },
     methods: {
         back() {
-            this.$router.push('/topics_list/');
+            this.$router.push(this.localePath('/topics_list/'));;
         },
         linkFav() {
-            this.$router.push('/favourite/');
+            this.$router.push(this.localePath('/favourite/'));;
         },
         updateDesign() {
             const myBody = document.getElementsByTagName('body')[0];
@@ -342,7 +342,7 @@ export default {
                 .then(() => {
                     this.updateTopics();
                     this.updateDesign();
-                    this.$router.push('/');
+                    this.$router.push(this.localePath('/'));;
                     this.$store.dispatch('snackbar/setMessage', 'Logged in.');
                     this.$store.dispatch('snackbar/snackOn');
                     this.loading = false;
