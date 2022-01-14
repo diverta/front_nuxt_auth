@@ -104,23 +104,16 @@ export default {
     },
     i18n: {
         locales: [
-            { code: 'en', iso: 'en-US' },
-            { code: 'ja', iso: 'ja-JP' }
+            { code: 'en', iso: 'en-US', file: 'en.json', name: 'English' },
+            { code: 'ja', iso: 'ja-JP', file: 'ja.json', name: '日本語' }
         ],
         defaultLocale: 'en',
         strategy: 'prefix_except_default',
         vueI18n: {
             fallbackLocale: 'en',
-            messages: {
-                en: {
-                    welcome: 'Welcome'
-                },
-                ja: {
-                    welcome: 'ようこそ'
-                }
-            }
         },
-        vueI18nLoader: true
+        vueI18nLoader: true,
+        langDir: '@/locales/'
     },
     /*
    ** Build configuration

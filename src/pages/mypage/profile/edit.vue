@@ -108,7 +108,7 @@ export default {
     },
     methods: {
         go_page(path) {
-            this.$router.push(path);
+            this.$router.push(this.localePath(path));;
         },
         onInput (value, fieldName) {
             this.$set(this.model, fieldName, value);

@@ -49,8 +49,9 @@
 
             <div class="l-header_lang">
                 <v-select
-                    v-model="langDefault"
-                    :items="lang"
+                    :value="$i18n.localeProperties.name"
+                    :items="$i18n.locales.map((locale) => locale.name)"
+                    @input="(n) => $i18n.setLocale($i18n.locales.find(({ name }) => name === n).code)"
                 />
             </div>
 
@@ -125,7 +126,6 @@ export default {
     },
     data() {
         return {
-            lang: ['English', 'Japanese', 'Mandarin'],
             langDefault: 'English',
             clipped: false,
             drawer: false,
@@ -200,7 +200,7 @@ export default {
     },
     methods: {
         go_page(path) {
-            this.$router.push(path);
+            this.$router.push(this.localePath(path));;
         },
         updateDesign() {
             console.log('You logout!');
@@ -213,7 +213,7 @@ export default {
                 this.updateDesign();
                 this.$store.dispatch('snackbar/setMessage', 'Logged Out.');
                 this.$store.dispatch('snackbar/snackOn');
-                this.$router.push('/');
+                this.$router.push(this.localePath('/'));;
             });
         }
     }
