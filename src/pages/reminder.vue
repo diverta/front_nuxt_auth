@@ -6,7 +6,7 @@
                     <img src="~/assets/images/logo.png?width=150px" class="p-login_logo">
                     <div class="p-login_intro-text">
                         <h1 class="heading">
-                            Back to <a href="/">login</a>
+                            <span v-html="$t('reminder.back_to_login')"></span>
                             <v-icon
                                 dark
                                 right
@@ -16,7 +16,7 @@
                                 mdi-undo-variant
                             </v-icon>
                         </h1>
-                        <p>Don't have an account? <a href="/signup/">Sign up here</a></p>
+                        <p v-html="$t('reminder.sign_up')"></p>
                     </div>
                 </div>
             </v-col>
@@ -30,16 +30,13 @@
                     >
                         <v-card-title>
                             <h2 align="center" class="pb-4 c-text_blue">
-                                Password reset
+                                {{$t('reminder.password_reset')}}
                             </h2>
                         </v-card-title>
                         <v-container fluid>
                             <v-row>
                                 <v-col cols="12">
-                                    <p>
-                                        A password reset URL will be sent to the email address you
-                                        provided.
-                                    </p>
+                                    <p>{{$t('reminder.send_email')}}</p>
                                     <v-text-field
                                         v-model="email"
                                         label="Email address"
@@ -56,7 +53,7 @@
                                         :loading="loading1"
                                         class="c-btn c-btn_dark"
                                     >
-                                        Reset my password
+                                        {{$t('reminder.reset')}}
                                     </button>
                                 </v-col>
                             </v-row>
@@ -72,26 +69,26 @@
                     >
                         <v-card-title>
                             <h2 align="center" class="pb-4 c-text_blue">
-                                Set New Password
+                                <p>{{$t('reminder.set_password')}}</p>
                             </h2>
                         </v-card-title>
                         <v-container fluid class="p-login_content-inner">
                             <v-row>
                                 <v-col cols="12 py-0">
-                                    <p>Temporary password</p>
+                                    <p>{{$t('reminder.temp_password')}}</p>
                                     <v-text-field v-model="temp_pwd" :type="text" label="" outlined />
                                 </v-col>
                             </v-row>
                             <v-row>
                                 <v-col cols="12 py-0">
-                                    <p>New password</p>
+                                    <p>{{$t('reminder.new_password')}}</p>
                                     <v-text-field
                                         v-model="login_pwd"
                                         :append-icon="password_show ? 'mdi-eye' : 'mdi-eye-off'"
                                         :rules="[rules.required, rules.password_min]"
                                         :type="password_show ? 'text' : 'password'"
                                         label=""
-                                        hint="Please set a mixture of alphanumeric characters and at least 8 characters."
+                                        :hint="$t('reminder.rule')"
                                         counter
                                         outlined
                                         @click:append="password_show = !password_show"
@@ -100,7 +97,7 @@
                             </v-row>
                             <v-row>
                                 <v-col cols="12 pt-0">
-                                    <p>Confirmation password</p>
+                                    <p>{{$t('reminder.conf_password')}}</p>
                                     <v-text-field
                                         v-model="login_pwd2"
                                         :append-icon="password_show2 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -111,7 +108,7 @@
                                         ]"
                                         :type="password_show2 ? 'text' : 'password'"
                                         label=""
-                                        hint="Please set a mixture of alphanumeric characters and at least 8 characters."
+                                        :hint="$t('reminder.rule')"
                                         counter
                                         outlined
                                         @click:append="password_show2 = !password_show2"
@@ -128,7 +125,7 @@
                                         dark
                                         :loading="loading2"
                                     >
-                                        Submit
+                                        {{$t('reminder.submit')}}
                                     </v-btn>
                                 </v-col>
                             </v-row>
@@ -146,7 +143,7 @@
                             <v-row>
                                 <v-col cols="12">
                                     <p align="center">
-                                        Your password has been updated
+                                        {{$t('reminder.update_ok')}}
                                     </p>
                                 </v-col>
                             </v-row>
@@ -160,7 +157,7 @@
                                         class="white--text"
                                         @click="login()"
                                     >
-                                        Login
+                                        {{$t('reminder.login')}}
                                     </v-btn>
                                 </v-col>
                             </v-row>
@@ -177,10 +174,7 @@
                         <v-container fluid>
                             <v-row class="p-login_content-inner">
                                 <v-col cols="12" class="align-self-center">
-                                    <p align="center">
-                                        A password reset URL has been sent to <br>
-                                        the email address you provided.
-                                    </p>
+                                    <p align="center" v-html="$t('reminder.send_emailed')"></p>
                                 </v-col>
                             </v-row>
                         </v-container>
@@ -208,9 +202,9 @@ export default {
             loading1: false,
             loading2: false,
             rules: {
-                required: (value) => !!value || 'This filed is required.',
-                password_min: (v) => v.length >= 8 || 'Please input at least 8 characters.',
-                password2: (v) => v === this.login_pwd || 'The confirmation password is incorrect.'
+                required: (value) => !!value || this.$i18n.t('reminder.required'),
+                password_min: (v) => v.length >= 8 || this.$i18n.t('reminder.word_count'),
+                password2: (v) => v === this.login_pwd || this.$i18n.t('reminder.conf_error')
             }
         };
     },
@@ -219,7 +213,7 @@ export default {
         if (this.token) {
             this.$store.dispatch(
                 'snackbar/setMessage',
-                'please input a new password.'
+                this.$i18n.t('reminder.not_entered')
             );
             this.$store.dispatch('snackbar/snackOn');
             this.e1 = 2;
@@ -227,7 +221,7 @@ export default {
     },
     methods: {
         login() {
-            this.$router.push(this.localePath('/'));;
+            this.$router.push(this.localePath('/'));
         },
         reminder() {
             this.loading1 = true;
@@ -240,7 +234,7 @@ export default {
                     if (response.data.errors.length === 0) {
                         self.$store.dispatch(
                             'snackbar/setMessage',
-                            'A password reset email has been sent. Please set a new password from the link in the email.'
+                            this.$i18n.t('reminder.password_sent')
                         );
                         self.$store.dispatch('snackbar/snackOn');
                     }
@@ -248,7 +242,7 @@ export default {
                     self.loading1 = false;
                 })
                 .catch(function () {
-                    self.$store.dispatch('snackbar/setError', 'Invalid email address.');
+                    self.$store.dispatch('snackbar/setError', this.$i18n.t('reminder.invalid_email'));
                     self.$store.dispatch('snackbar/snackOn');
                     self.loading1 = false;
                 });
@@ -267,7 +261,7 @@ export default {
                     .then(() => {
                         self.$store.dispatch(
                             'snackbar/setMessage',
-                            'Your password has been updated.'
+                            this.$i18n.t('reminder.already_updated')
                         );
                         self.$store.dispatch('snackbar/snackOn');
                         self.$router.push('/');

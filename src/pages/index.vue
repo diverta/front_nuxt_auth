@@ -88,7 +88,7 @@
             </v-carousel>
 
             <h1 class="text-left mt-5 pt-4">
-                Latest articles
+                {{ $t('top.latest_articles') }}
             </h1>
             <v-topics :topics="topics" />
 
@@ -101,7 +101,7 @@
                     class="c-btn c-btn_main c-btn_md c-btn_icon"
                     @click="back()"
                 >
-                    More articles
+                    {{ $t('top.more_articles') }}
                     <v-icon
                         dark
                         right
@@ -114,7 +114,7 @@
             </div>
 
             <h1 class="text-left mt-5 pt-4">
-                Starred
+                {{ $t('top.starred') }}
             </h1>
             <v-favourite :topics="favourite" />
             <div class="text-center py-5">
@@ -126,7 +126,7 @@
                     class="c-btn c-btn_main c-btn_md c-btn_icon"
                     @click="linkFav()"
                 >
-                    More starred post
+                    {{ $t('top.more_starred') }}
                     <v-icon
                         dark
                         right
@@ -341,13 +341,13 @@ export default {
                 .then(() => {
                     this.updateTopics();
                     this.updateDesign();
-                    this.$router.push(this.localePath('/'));;
-                    this.$store.dispatch('snackbar/setMessage', 'Logged in.');
+                    this.$router.push(this.localePath('/'));
+                    this.$store.dispatch('snackbar/setMessage', this.$i18n.t('slackbar.logged_in'));
                     this.$store.dispatch('snackbar/snackOn');
                     this.loading = false;
                 })
                 .catch(() => {
-                    this.$store.dispatch('snackbar/setError', 'Login failed.');
+                    this.$store.dispatch('snackbar/setError', this.$i18n.t('slackbar.login_fail'));
                     this.$store.dispatch('snackbar/snackOn');
                     this.loading = false;
                 });

@@ -3,7 +3,15 @@
         "sign_in": "ログイン",
         "password" : "パスワード",
         "sitekey": "サイトキー",
-        "id": "ID"
+        "id": "ID",
+        "close": "閉じる",
+        "hi": "こんにちは、",
+        "back_to_listing": "一覧へ戻る"
+    },
+    "slackbar": {
+        "logged_in" : "ログインしました",
+        "login_fail": "ログインに失敗しました",
+        "logged_out": "ログアウトしました"
     },
     "login" : {
         "welcomeback": "ようこそ Muzica へ！",
@@ -13,5 +21,40 @@
         "id_or_email": "Eメールアドレス(ログインID)",
         "forget_password" : "パスワードを忘れた場合はこちら",
         "note": "＊このサイトはITP機能のためiOSでは動作しません。<br>ドメインを作成して動作させることはできます。<br>このサイトはデモンストレーションサイトです。"
+    },
+    "top" : {
+        "latest_articles": "最新記事",
+        "starred": "お気に入り",
+        "more_articles": "記事をもっと見る",
+        "more_starred": "お気に入り記事をもっと見る"
+    },
+    "detail" : {
+        "files" : "ファイル:",
+        "view": "ファイルを見る",
+        "download" : "ダウンロード",
+        "links": "リンク:"
+    },
+    "reminder": {
+        "back_to_login": "<a href='/'>ログイン</a> へ戻る",
+        "sign_up": "アカウントをお持ちでない方は <a href='/signup/'>こちら</a>",
+        "password_reset" : "パスワードリセット",
+        "send_email" : "登録いただいているメールアドレスにパスワード再設定用URLを送信いたします。",
+        "send_emailed": "パスワード変更のURLが記載されたメールを送信しました。",
+        "reset" : "送信",
+        "set_password": "パスワード変更",
+        "temp_password": "仮パスワードを入力する",
+        "new_password" : "新しいパスワード",
+        "conf_password": "確認用パスワード",
+        "submit" : "送信",
+        "update_ok" : "パスワードが更新されました。",
+        "login": "ログイン",
+        "rule" : "英数字と8文字以上を組み合わせて設定してください。",
+        "required": "ファイルは必須です。",
+        "word_count": "8文字以上入力してください。",
+        "conf_error": "確認用パスワードが正しくありません。",
+        "not_entered": "新しいパスワードを入力してください。",
+        "password_sent": "パスワード変更のメールを送信しました。メールにあるパスワード変更のURLから新しいパスワードを入力してください。",
+        "invalid_email": "メールアドレスが正しくありません。",
+        "already_updated": "パスワードは更新されています。"
     }
 }

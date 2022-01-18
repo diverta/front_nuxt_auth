@@ -43,9 +43,9 @@
         </v-col>
         <v-col>
             <div v-if="file_url || file_download" class="p-article_footer-content">
-                <h3 class="heading">Files:</h3>
+                <h3 class="heading">{{ $t('detail.files') }}</h3>
                 <a v-if="file_url" :href="file_url" target="_blank" class="c-btn c-btn_dark p-article_file">
-                    View
+                    {{ $t('detail.view') }}
                     <v-icon v-if="file_type == 'pdf'">mdi-pdf-box</v-icon>
                     <v-icon v-else-if="file_type == 'excel'">mdi-microsoft-excel</v-icon>
                     <v-icon v-else-if="file_type == 'word'">mdi-file-word</v-icon>
@@ -53,7 +53,7 @@
                     <v-icon v-else-if="file_type == 'data'">mdi-file-document</v-icon>
                 </a>
                 <a v-if="file_download" :href="file_download" target="_blank" class="c-btn c-btn_main p-article_file">
-                    Download
+                    {{ $t('detail.download') }}
                     <v-icon v-if="file_type == 'pdf'">mdi-pdf-box</v-icon>
                     <v-icon v-else-if="file_type == 'excel'">mdi-microsoft-excel</v-icon>
                     <v-icon v-else-if="file_type == 'word'">mdi-file-word</v-icon>
@@ -62,7 +62,7 @@
                 </a>
             </div>
             <div v-if="link_url" class="p-article_footer-content">
-                <h3 class="heading">Links:</h3> 
+                <h3 class="heading">{{ $t('detail.links') }}</h3> 
                 <a v-if="link_url" :href="link_url" target="_blank" class="c-link">
                     <v-icon v-if="file_type == 'pdf'">mdi-open-in-new</v-icon> 
                     <span v-if="link_title">{{ link_title }}</span>
@@ -76,7 +76,7 @@
                 class="c-btn c-btn_dark c-btn_icon"
                 @click="back()"
             >
-                Back to listing
+                {{ $t('common.back_to_listing') }}
                 <v-icon class="icon c-text_white pr-2">
                     mdi-undo-variant
                 </v-icon>
