@@ -6,7 +6,9 @@
         "id": "ID",
         "close": "閉じる",
         "hi": "こんにちは、",
-        "back_to_listing": "一覧へ戻る"
+        "back_to_listing": "一覧へ戻る",
+        "back" : "戻る",
+        "submit" : "送信"
     },
     "slackbar": {
         "logged_in" : "ログインしました",
@@ -33,6 +35,23 @@
         "view": "ファイルを見る",
         "download" : "ダウンロード",
         "links": "リンク:"
+    },
+    "member" : {
+        "search" : "検索",
+        "search_member": "氏名",
+        "department" : "部署",
+        "detail_title" : "メンバー一覧"
+    },
+    "mypage" : {
+        "title": "マイページ",
+        "my_page": "マイページ",
+        "favoire_list": "お気に入り一覧",
+        "profile_edit": "プロフィール編集",
+        "posted_list": "投稿一覧",
+        "profile_editing" : "プロフィール編集",
+        "my_topics": "マイトピックス",
+        "all": "全て",
+        "agree": "利用規約に同意します。"
     },
     "reminder": {
         "back_to_login": "<a href='/'>ログイン</a> へ戻る",

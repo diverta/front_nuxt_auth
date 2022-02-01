@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="l-content_heading">
-            <h1>My page</h1>
+            <h1>{{$t('mypage.title')}}</h1>
         </div>
 
         <v-tabs
@@ -13,16 +13,16 @@
             centered
         >
             <v-tab @click="go_page('/mypage/')">
-                My page
+                {{$t('mypage.my_page')}}
             </v-tab>
             <v-tab @click="go_page('/mypage/favorite_list/')">
-                Favorite List
+                {{$t('mypage.favoire_list')}}
             </v-tab>
             <v-tab @click="go_page('/mypage/profile/edit/')">
-                Profile Edit
+                {{$t('mypage.profile_edit')}}
             </v-tab>
             <v-tab @click="go_page('/mypage/posted_list')">
-                Posted list
+                {{$t('mypage.posted_list')}}
             </v-tab>
         </v-tabs>
 
@@ -35,7 +35,7 @@
         />
 
         <h1 class="mt-5 pt-5">
-            Profile editing
+            {{$t('mypage.profile_editing')}}
         </h1>
         <br>
         <div class="v-stepper c-form_wrap">
@@ -50,7 +50,7 @@
 
                 <v-checkbox v-model="disabled" class="c-form_tnc">
                     <template v-slot:label>
-                        <div>I agree to the terms of Use.</div>
+                        <div>{{$t('mypage.agree')}}</div>
                     </template>
                 </v-checkbox>
                 <div class="text-center mb-5">
@@ -62,7 +62,7 @@
                         class="c-btn c-btn_main"
                         @click="submitF()"
                     >
-                        SUBMIT
+                        {{$t('common.submit')}}
                     </button
                     >
                 </div>
@@ -131,7 +131,7 @@ export default {
                         if (response.data.errors.length === 0) {
                             self.$store.dispatch(
                                 'snackbar/setMessage',
-                                'Your profile is changed.'
+                                this.$i18n.t('mypage.profile_changed')
                             );
                             self.$store.dispatch('snackbar/snackOn');
                             self.$router.push('/');
@@ -141,7 +141,7 @@ export default {
                         self.$store.dispatch('snackbar/snackOn');
                     }); ;
             } else {
-                self.$store.dispatch('snackbar/setError', 'Please fill the fields properly.');
+                self.$store.dispatch('snackbar/setError', this.$i18n.t('mypage.fille_property'));
                 self.$store.dispatch('snackbar/snackOn');
             }
         }
@@ -240,7 +240,7 @@ export default {
                         inputType: 'text',
                         min: 0,
                         max: 100,
-                        label: 'First Name',
+                        label: 'ttFirst Name',
                         model: 'name1',
                         text: '',
                         required: true

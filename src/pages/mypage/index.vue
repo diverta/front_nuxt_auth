@@ -41,7 +41,7 @@
 
                 <v-checkbox v-model="disabled" class="c-form_tnc">
                     <template v-slot:label>
-                        <div>I agree to the terms of Use.</div>
+                        <div>{{$t('mypage.agree')}}</div>
                     </template>
                 </v-checkbox>
                 <div class="text-center mb-5">
@@ -53,7 +53,7 @@
                         class="c-btn c-btn_main"
                         @click="submitF()"
                     >
-                        SUBMIT
+                        {{$t('common.submit')}}
                     </button
                     >
                 </div>
@@ -122,7 +122,7 @@ export default {
                         if (response.data.errors.length === 0) {
                             self.$store.dispatch(
                                 'snackbar/setMessage',
-                                'Your profile is changed.'
+                                this.$i18n.t('mypage.profile_changed')
                             );
                             self.$store.dispatch('snackbar/snackOn');
                             self.$router.push('/');
@@ -132,7 +132,7 @@ export default {
                         self.$store.dispatch('snackbar/snackOn');
                     }); ;
             } else {
-                self.$store.dispatch('snackbar/setError', 'Fill fields properly.');
+                self.$store.dispatch('snackbar/setError', this.$i18n.t('mypage.fille_property'));
                 self.$store.dispatch('snackbar/snackOn');
             }
         }

@@ -1,7 +1,7 @@
 <template>
     <section>
         <div class="l-content_heading">
-            <h1>My page</h1>
+            <h1>{{$t('mypage.title')}}</h1>
         </div>
         <v-tabs
             v-model="active_tab"
@@ -13,27 +13,27 @@
             show-arrows
         >
             <v-tab @click="go_page('/mypage/')">
-                My page
+                {{$t('mypage.my_page')}}
             </v-tab>
             <v-tab @click="go_page('/mypage/favorite_list/')">
-                Favorite List
+                {{$t('mypage.favoire_list')}}
             </v-tab>
             <v-tab v-model="selectedTab" @click="go_page('/mypage/profile/edit/')">
-                Profile Edit
+                {{$t('mypage.profile_edit')}}
             </v-tab>
             <v-tab @click="go_page('/mypage/posted_list')">
-                Posted list
+                {{$t('mypage.posted_list')}}
             </v-tab>
         </v-tabs>
 
         <h1 class="mt-5 pt-5">
-            My topics
+            {{$t('mypage.my_topics')}}
         </h1>
         <br>
         <div>
             <v-btn-toggle v-model="text" class="c-navi_filter" tile color="deep-purple accent-3" group>
                 <v-btn value="0" @change="changeCategoryAll()">
-                    ALL
+                    {{$t('mypage.all')}}
                 </v-btn>
                 <v-btn
                     v-for="item in categories"

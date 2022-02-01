@@ -12,7 +12,7 @@
                     :items="members"
                     dense
                     filled
-                    label="Search member"
+                    :label="$t('member.search_member')"
                 />
             </v-col>
             <v-col class="col-sm-5 col-12 py-0">
@@ -21,12 +21,12 @@
                     :items="departments"
                     dense
                     filled
-                    label="Deparment"
+                    :label="$t('member.department')"
                 />
             </v-col>
             <v-col class="col-md-2 col-12 py-0 mb-5">
                 <button class="c-btn c-btn_main c-btn_icon c-btn_md mt-2" @click="filterByMembersDepartment()">
-                    Search
+                    {{$t('member.search')}}
                     <v-icon
                         dark
                         class="icon"

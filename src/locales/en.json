@@ -6,7 +6,9 @@
         "id": "ID",
         "close": "CLOSE",
         "hi": "Hi,",
-        "back_to_listing": "Back to listing"
+        "back_to_listing": "Back to listing",
+        "back" : "Back",
+        "submit" : "SUBMIT"
     },
     "slackbar": {
         "logged_in" : "Logged in.",
@@ -33,6 +35,26 @@
         "view": "View",
         "download" : "Download",
         "links": "Links:"
+    },
+    "member" : {
+        "search" : "Seach",
+        "search_member": "Search member",
+        "department" : "Deparment",
+        "detail_title" : "Member details"
+    },
+    "mypage" : {
+        "title": "My page",
+        "my_page": "My page",
+        "favoire_list": "Favorite List",
+        "profile_edit": "Profile Edit",
+        "posted_list": "Posted list",
+        "profile_editing" : "Profile editing",
+        "my_topics": "My topics",
+        "all": "ALL",
+        "agree": "I agree to the terms of Use.",
+        "profile_changed":"Your profile is changed.",
+        "fille_property":"Please fill the fields properly."
+
     },
     "reminder": {
         "back_to_login": "Back to <a href='/'>login</a>",
