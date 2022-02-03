@@ -11,14 +11,14 @@
                 <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                         v-model="date"
-                        label="Date picker."
+                        :label="$t('label.date_picker')"
                         prepend-icon="mdi-calendar"
                         readonly
                         :rules="[
                             (v) =>
                                 schema.required == false ||
                                 (schema.required == true && !!v) ||
-                                'required field',
+                                $t('verify.required_field'),,
                         ]"
                         v-bind="attrs"
                         v-on="on"
@@ -52,12 +52,12 @@
                 <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                         v-model="time"
-                        label="Time picker."
+                        :label="$t('label.time_picker')"
                         :rules="[
                             (v) =>
                                 schema.required == false ||
                                 (schema.required == true && !!v) ||
-                                'required field',
+                                $t('verify.required_field'),,
                         ]"
                         prepend-icon="mdi-clock-time-four-outline"
                         readonly
@@ -92,12 +92,12 @@
                 <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                         v-model="date"
-                        label="Date picker."
+                        :label="$t('label.date_picker')"
                         :rules="[
                             (v) =>
                                 schema.required == false ||
                                 (schema.required == true && !!v) ||
-                                'required field',
+                                $t('verify.required_field'),
                         ]"
                         prepend-icon="mdi-calendar"
                         readonly

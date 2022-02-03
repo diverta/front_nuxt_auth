@@ -8,7 +8,9 @@
         "hi": "こんにちは、",
         "back_to_listing": "一覧へ戻る",
         "back" : "戻る",
-        "submit" : "送信"
+        "submit" : "送信",
+        "edit": "編集",
+        "agree": "利用規約に同意します。"
     },
     "slackbar": {
         "logged_in" : "ログインしました",
@@ -51,7 +53,12 @@
         "profile_editing" : "プロフィール編集",
         "my_topics": "マイトピックス",
         "all": "全て",
-        "agree": "利用規約に同意します。"
+        "profile_changed":"プロフィールを変更しました。",
+        "fille_property":"項目に入力してください。"
+    },
+    "signup": {
+        "title": "サインアップ",
+        "text": "下の項目に入力してください。"
     },
     "reminder": {
         "back_to_login": "<a href='/'>ログイン</a> へ戻る",
@@ -75,5 +82,45 @@
         "password_sent": "パスワード変更のメールを送信しました。メールにあるパスワード変更のURLから新しいパスワードを入力してください。",
         "invalid_email": "メールアドレスが正しくありません。",
         "already_updated": "パスワードは更新されています。"
+    },
+    "verify": {
+        "required_field": "入力必須項目です",
+        "password_format": "8文字以上の半角英数字混在でご入力ください。記号を利用する場合は -_&=+%#@$*.!: が利用可能です。",
+        "password_format_char_count": "最低8文字以上を入力してください",
+        "password_format_char_type": "半角英数字と記号(-_&=+%#@$*.!:)でご入力ください",
+        "text_minimum": "最小 ",
+        "text_maximum": "最大 ",
+        "text_character": " 文字",
+        "text_format_email": "メールアドレスのフォーマットが正しくありません。 例： ******@example.jp",
+        "text_format_telephone":"電話番号は半角英数字、ハイフン無しでご入力ください。例：0312345678",
+        "text_format_zip":"郵便番号のフォーマットが正しくありません。 例：0212141",
+        "text_format_numeric":"数字のフォーマットが正しくありません。",
+        "text_format_url":"URLのフォーマットが正しくありません。",
+        "text_format_regex":"正規表現のフォーマットが正しくありません。 ",
+        "multiple_required":"一つ選択してください。"
+    },
+    "label": {
+        "date_picker":"日付選択",
+        "time_picker":"時間選択",
+        "first_name":"姓",
+        "last_name":"名",
+        "department":"部署",
+        "position":"役職",
+        "phone":"電話番号",
+        "email":"Emailアドレス",
+        "password":"パスワード",
+        "address":"住所",
+        "avatar":"アバター",
+        "pull_down":"選択",
+        "radio":"ラジオボタン",
+        "multiple":"チェックボックス",
+        "notes":"メモ",
+        "gender":"性別",
+        "sex":"性別",
+        "hire_date":"入社日",
+        "birthday":"誕生日",
+        "office":"会社住所",
+        "hobby":"趣味"
     }
+
 }

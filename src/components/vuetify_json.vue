@@ -11,7 +11,7 @@
                 (v) =>
                     schema.required == false ||
                     (schema.required == true && !!v) ||
-                    'required field',
+                    $t('verify.required_field'),,
                 (v) => v.length == 0 || !jsonerror || 'invalid JSON',
             ]"
             placeholder="paste or type JSON here..."

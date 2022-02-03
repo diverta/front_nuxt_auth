@@ -29,7 +29,7 @@ export default {
             return [
                 this.schema.required === false ||
           (this.schema.required === true && this.checkedCategories.length > 0) ||
-          'At least one item should be selected'
+          this.$i18n.t('verify.multiple_required')
             ];
         }
     },

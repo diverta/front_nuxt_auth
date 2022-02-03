@@ -14,9 +14,9 @@
         <div class="v-stepper c-form_wrap">
             <v-container fluid>
                 <div class="l-content_heading">
-                    <h1>Sign up</h1>
+                    <h1>{{$t('signup.title')}}</h1>
                     <h4 class="slogan">
-                        Please complete the form below to sign up
+                        {{$t('signup.text')}}
                     </h4>
                 </div>
                 <vue-form-generator
@@ -29,7 +29,7 @@
 
                 <v-checkbox v-model="disabled" class="c-form_tnc">
                     <template v-slot:label>
-                        <div>I agree to the terms of Use.</div>
+                        <div>{{$t('common.agree')}}</div>
                     </template>
                 </v-checkbox>
                 <div class="text-center mb-5">
@@ -41,7 +41,7 @@
                         :disabled="!disabled"
                         @click="submitF()"
                     >
-                        SUBMIT
+                        {{$t('common.submit')}}
                     </button
                     >
                 </div>
@@ -149,7 +149,7 @@ export default {
                         inputType: 'text',
                         min: 0,
                         max: 100,
-                        label: 'First Name',
+                        label: this.$i18n.t('label.first_name'),
                         model: 'name1',
                         text: '',
                         required: true
@@ -159,14 +159,14 @@ export default {
                         inputType: 'text',
                         min: 0,
                         max: 100,
-                        label: 'Last Name',
+                        label: this.$i18n.t('label.last_name'),
                         text: '',
                         model: 'name2',
                         required: true
                     },
                     {
                         model: 'sex',
-                        label: 'Gender',
+                        label: this.$i18n.t('label.gender'),
                         contents: [
                             {
                                 key: 1,
@@ -193,14 +193,14 @@ export default {
                     {
                         type: 'vuetifyDate',
                         inputType: 'picker',
-                        label: 'Hire Date',
+                        label: this.$i18n.t('label.hire_date'),
                         model: 'hire_date',
                         required: true
                     },
                     {
                         type: 'vuetifyDate',
                         inputType: 'picker',
-                        label: 'Birthday',
+                        label: this.$i18n.t('label.birthday'),
                         model: 'birth',
                         required: true,
                         visible: (model, field, form) => model.choice === 'Check a boolean value'
@@ -211,7 +211,7 @@ export default {
                         text: '',
                         min: 0,
                         max: 100,
-                        label: 'Department',
+                        label: this.$i18n.t('label.department'),
                         model: 'department',
                         required: false
                     },
@@ -221,7 +221,7 @@ export default {
                         text: '',
                         min: 0,
                         max: 100,
-                        label: 'Position',
+                        label: this.$i18n.t('label.position'),
                         model: 'position',
                         required: false
                     },
@@ -231,7 +231,7 @@ export default {
                         text: '',
                         min: 0,
                         max: 100,
-                        label: 'Phone',
+                        label: this.$i18n.t('label.phone'),
                         model: 'tel',
                         texttype: 'tel',
                         required: true
@@ -241,7 +241,7 @@ export default {
                         inputType: 'text',
                         min: 0,
                         max: 100,
-                        label: 'Email address',
+                        label: this.$i18n.t('label.email'),
                         model: 'email',
                         text: '',
                         texttype: 'email',
@@ -249,14 +249,14 @@ export default {
                     },
                     {
                         type: 'UploadFile',
-                        label: 'Avatar',
+                        label: this.$i18n.t('label.avatar'),
                         model: 'profileimage',
                         required: false,
                         visible: (model, field, form) => model.choice === 'Check a boolean value'
                     },
                     {
                         model: 'pull_down',
-                        label: 'Office',
+                        label: this.$i18n.t('label.office'),
                         contents: [
                             {
                                 key: 1,
@@ -282,7 +282,7 @@ export default {
                     },
                     {
                         model: 'multiple_check',
-                        label: 'Hobby',
+                        label: this.$i18n.t('label.hobby'),
                         contents: [
                             {
                                 key: 1,
@@ -352,7 +352,7 @@ export default {
                         model: 'notes',
                         type: 'vuetifyTextArea',
                         inputType: 'text',
-                        label: 'Notes',
+                        label: this.$i18n.t('label.notes'),
                         placeholder: '',
                         text: '',
                         required: false,

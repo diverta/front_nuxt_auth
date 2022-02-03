@@ -8,7 +8,9 @@
         "hi": "Hi,",
         "back_to_listing": "Back to listing",
         "back" : "Back",
-        "submit" : "SUBMIT"
+        "submit" : "SUBMIT",
+        "edit": "Edit",
+        "agree": "I agree to the terms of Use."
     },
     "slackbar": {
         "logged_in" : "Logged in.",
@@ -51,10 +53,13 @@
         "profile_editing" : "Profile editing",
         "my_topics": "My topics",
         "all": "ALL",
-        "agree": "I agree to the terms of Use.",
         "profile_changed":"Your profile is changed.",
         "fille_property":"Please fill the fields properly."
 
+    },
+    "signup": {
+        "title": "Sign up",
+        "text": "Please complete the form below to sign up"
     },
     "reminder": {
         "back_to_login": "Back to <a href='/'>login</a>",
@@ -78,6 +83,45 @@
         "password_sent": "A password reset email has been sent. Please set a new password from the link in the email.",
         "invalid_email": "Invalid email address.",
         "already_updated": "Your password has been updated."
+    },
+    "verify": {
+        "required_field": "required field",
+        "password_format": "Please enter 8 or more single-byte alphanumerical characters.If you want to use the symbol, you can use -_&=+%#@$*.!:.",
+        "password_format_char_count": "Please enter 8 or more single-byte alphanumerical characters.",
+        "password_format_char_type": "Please enter alphanumerical characters and you can use -_&=+%#@$*.!:.",
+        "text_minimum": "minimum ",
+        "text_maximum": "maximum ",
+        "text_character": " characters",
+        "text_format_email": "Wrong email format. Example ******@example.jp",
+        "text_format_telephone":"Wrong telephone format. Example 0312345678",
+        "text_format_zip":"Wrong zip format for Japan. Example 0212141",
+        "text_format_numeric":"Wrong numeric format.",
+        "text_format_url":"Wrong url format.",
+        "text_format_regex":"Wrong regex format. ",
+        "multiple_required":"At least one item should be selected"
+    },
+    "label": {
+        "date_picker":"Date picker.",
+        "time_picker":"Time picker.",
+        "first_name":"First Name",
+        "last_name":"Last Name",
+        "department":"Department",
+        "position":"Position",
+        "phone":"Phone",
+        "email":"Email address",
+        "password":"Password",
+        "address":"Address",
+        "avatar":"Avatar",
+        "pull_down":"Pull-down",
+        "radio":"Radio button",
+        "multiple":"Multiple",
+        "notes":"Notes",
+        "gender":"Gender",
+        "sex":"Sex",
+        "hire_date":"Hire Date",
+        "birthday":"Birthday",
+        "office":"Office",
+        "hobby":"Hobby"
     }
 
 }

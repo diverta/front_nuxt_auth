@@ -8,7 +8,7 @@
             :rules="[rules.required, rules.password_min, rules.password]"
             :type="password_show ? 'text' : 'password'"
             :label="schema.label"
-            hint="8文字以上の半角英数字混在でご入力ください。記号を利用する場合は -_&=+%#@$*.!: が利用可能です。"
+            :hint="$t('verify.password_format')"
             persistent-hint
             counter
             @click:append="password_show = !password_show"
@@ -31,11 +31,11 @@ export default {
             rules: {
                 required: (value) => !!value || 'required password',
                 password_min: (v) =>
-                    v.length === 0 || v.length >= 8 || '最低8文字以上を入力してください',
+                    v.length === 0 || v.length >= 8 || this.$i18n.t('verify.password_format_char_count'),
                 password: (v) =>
                     v.length === 0 ||
           /^[a-zA-Z0-9\-_&=+%#@$*.!:]+$/.test(v) ||
-          '半角英数字と記号(-_&=+%#@$*.!:)でご入力ください'
+          this.$i18n.t('verify.password_format_char_type')
             }
         };
     },

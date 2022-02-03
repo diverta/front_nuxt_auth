@@ -20,7 +20,7 @@
 
                 <v-checkbox v-model="disabled" class="c-form_tnc">
                     <template v-slot:label>
-                        <div>I agree to the terms of Use.</div>
+                        <div>{{$t('common.agree')}}</div>
                     </template>
                 </v-checkbox>
                 <div class="text-center mb-5">
@@ -32,7 +32,7 @@
                         class="c-btn c-btn_main"
                         @click="submitF()"
                     >
-                        SUBMIT
+                        {{$t('common.submit')}}
                     </button
                     >
                 </div>
@@ -78,7 +78,7 @@ export default {
     },
     methods: {
         go_page(path) {
-            this.$router.push(this.localePath(path));;
+            this.$router.push(this.localePath(path));
         },
         onInput (value, fieldName) {
             this.$set(this.model, fieldName, value);
@@ -192,7 +192,7 @@ export default {
                         inputType: 'text',
                         min: 0,
                         max: 100,
-                        label: 'First Name',
+                        label: this.$i18n.t('label.first_name'),
                         model: 'name1',
                         text: '',
                         required: true
@@ -202,7 +202,7 @@ export default {
                         inputType: 'text',
                         min: 0,
                         max: 100,
-                        label: 'Last Name',
+                        label: this.$i18n.t('label.last_name'),
                         text: '',
                         model: 'name2',
                         required: true
@@ -210,7 +210,7 @@ export default {
                     {
                         type: 'vuetifyDate',
                         // inputType: "picker",
-                        label: 'Hire Date',
+                        label: this.$i18n.t('label.hire_date'),
                         model: 'hire_date',
                         required: true,
                         time: '1988-10-09'
@@ -221,7 +221,7 @@ export default {
                         text: '',
                         min: 0,
                         max: 100,
-                        label: 'Department',
+                        label: this.$i18n.t('label.department'),
                         model: 'department',
                         required: true
                     },
@@ -231,7 +231,7 @@ export default {
                         text: '',
                         min: 0,
                         max: 100,
-                        label: 'Position',
+                        label: this.$i18n.t('label.position'),
                         model: 'position',
                         required: false
                     },
@@ -241,7 +241,7 @@ export default {
                         text: '',
                         min: 0,
                         max: 100,
-                        label: 'Phone',
+                        label: this.$i18n.t('label.phone'),
                         model: 'tel',
                         texttype: 'tel',
                         required: true
@@ -251,7 +251,7 @@ export default {
                         inputType: 'text',
                         min: 0,
                         max: 100,
-                        label: 'Email address',
+                        label: this.$i18n.t('label.email'),
                         model: 'email',
                         text: '',
                         texttype: 'email',
@@ -260,20 +260,20 @@ export default {
                     {
                         type: 'vuetifyPassword',
                         inputType: 'text',
-                        label: 'Password',
+                        label: this.$i18n.t('label.password'),
                         text: '',
                         model: 'login_pwd',
                         required: false
                     },
                     {
                         type: 'UploadFile',
-                        label: 'Avatar',
+                        label: this.$i18n.t('label.avatar'),
                         model: 'profileimage',
                         required: false
                     },
                     {
                         model: 'pull_down',
-                        label: 'Office',
+                        label: this.$i18n.t('label.office'),
                         contents: [
                             {
                                 key: 0,
@@ -305,7 +305,7 @@ export default {
                     },
                     {
                         model: 'multiple_check',
-                        label: 'Hobby',
+                        label: this.$i18n.t('label.hobby'),
                         contents: [
                             {
                                 key: 1,
@@ -375,7 +375,7 @@ export default {
                         model: 'notes',
                         type: 'vuetifyTextArea',
                         inputType: 'text',
-                        label: 'Notes',
+                        label: this.$i18n.t('label.notes'),
                         placeholder: '',
                         text: '',
                         required: false,

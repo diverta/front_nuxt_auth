@@ -50,7 +50,7 @@
 
                 <v-checkbox v-model="disabled" class="c-form_tnc">
                     <template v-slot:label>
-                        <div>{{$t('mypage.agree')}}</div>
+                        <div>{{$t('common.agree')}}</div>
                     </template>
                 </v-checkbox>
                 <div class="text-center mb-5">
@@ -240,7 +240,7 @@ export default {
                         inputType: 'text',
                         min: 0,
                         max: 100,
-                        label: 'ttFirst Name',
+                        label: this.$i18n.t('label.first_name'),
                         model: 'name1',
                         text: '',
                         required: true
@@ -250,7 +250,7 @@ export default {
                         inputType: 'text',
                         min: 0,
                         max: 100,
-                        label: 'Last Name',
+                        label: this.$i18n.t('label.last_name'),
                         text: '',
                         model: 'name2',
                         required: true
@@ -261,7 +261,7 @@ export default {
                         text: '',
                         min: 0,
                         max: 100,
-                        label: 'Department',
+                        label: this.$i18n.t('label.department'),
                         model: 'department',
                         required: true
                     },
@@ -271,7 +271,7 @@ export default {
                         text: '',
                         min: 0,
                         max: 100,
-                        label: 'Position',
+                        label: this.$i18n.t('label.position'),
                         model: 'position',
                         required: false
                     },
@@ -281,7 +281,7 @@ export default {
                         text: '',
                         min: 0,
                         max: 100,
-                        label: 'Phone',
+                        label: this.$i18n.t('label.phone'),
                         model: 'tel',
                         texttype: 'tel',
                         required: true
@@ -291,7 +291,7 @@ export default {
                         inputType: 'text',
                         min: 0,
                         max: 100,
-                        label: 'Email address',
+                        label: this.$i18n.t('label.email'),
                         model: 'email',
                         text: '',
                         texttype: 'email',
@@ -300,7 +300,7 @@ export default {
                     {
                         type: 'vuetifyPassword',
                         inputType: 'text',
-                        label: 'Password',
+                        label: this.$i18n.t('label.password'),
                         text: '',
                         model: 'login_pwd',
                         required: true
@@ -373,20 +373,20 @@ export default {
                         text: '',
                         min: 0,
                         max: 100,
-                        label: 'Address',
+                        label: this.$i18n.t('label.address'),
                         model: 'address1',
                         required: true
                     },
                     {
                         type: 'UploadFile',
-                        label: 'Avatar',
+                        label: this.$i18n.t('label.avatar'),
                         model: 'profileimage',
                         required: false,
                         visible: (model, field, form) => model.choice === 'Check a boolean value'
                     },
                     {
                         model: 'pull_down',
-                        label: 'Pull-down',
+                        label: this.$i18n.t('label.pull_down'),
                         contents: [
                             {
                                 key: 0,
@@ -418,7 +418,7 @@ export default {
                     },
                     {
                         model: 'radio_button_2',
-                        label: 'Radio button',
+                        label: this.$i18n.t('label.radio'),
                         contents: [
                             {
                                 key: 1,
@@ -444,7 +444,7 @@ export default {
                     },
                     {
                         model: 'multiple_check',
-                        label: 'Multiple',
+                        label: this.$i18n.t('label.multiple'),
                         contents: [
                             {
                                 key: 1,
@@ -472,7 +472,7 @@ export default {
                         model: 'notes',
                         type: 'vuetifyTextArea',
                         inputType: 'text',
-                        label: 'Notes',
+                        label: this.$i18n.t('label.notes'),
                         placeholder: '',
                         text: '',
                         required: false,

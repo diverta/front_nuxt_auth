@@ -11,11 +11,11 @@
                 (v) =>
                     schema.required == false ||
                     (schema.required == true && !!v) ||
-                    'required field',
+                    $t('verify.required_field'),,
                 (v) =>
-                    v.length >= schema.min || 'minimum ' + schema.min + ' characters',
+                    v.length >= schema.min || $t('verify.text_minimum') + schema.min + $t('verify.text_character'),
                 (v) =>
-                    v.length <= schema.max || 'maximum ' + schema.max + ' characters',
+                    v.length <= schema.max || $t('verify.text_maximum') + schema.max + $t('verify.text_character'),
                 (v) => isValid(schema, v),
             ]"
             :placeholder="schema.placeholder"
@@ -41,28 +41,28 @@ export default {
         isValid (schema, value) {
             if (schema.texttype === 'email') {
                 if (!validator.isEmail(value)) {
-                    return 'Wrong email format. Example ******@example.jp';
+                    return this.$i18n.t('verify.text_format_email');
                 }
             } else if (schema.texttype === 'tel') {
                 if (!validator.isMobilePhone(value)) {
-                    return 'Wrong telephone format. Example 0312345678';
+                    return this.$i18n.t('verify.text_format_telephone');
                 }
             } else if (schema.texttype === 'zip') {
                 if (value.length !== 7) {
-                    return 'Wrong zip format for Japan. Example 0212141';
+                    return this.$i18n.t('verify.text_format_zip');
                 }
             } else if (schema.texttype === 'number') {
                 if (!validator.isNumeric(value)) {
-                    return 'Wrong numeric format.';
+                    return this.$i18n.t('verify.text_format_numeric');
                 }
             } else if (schema.texttype === 'url') {
                 if (!validator.isURL(value)) {
-                    return 'Wrong url format.';
+                    return this.$i18n.t('verify.text_format_url');
                 }
             } else if (schema.texttype === 'regex') {
                 const regex = new RegExp(schema.regex);
                 if (!regex.test(value)) {
-                    return 'Wrong regex format. ' + regex;
+                    return this.$i18n.t('verify.text_format_regex') + regex;
                 }
             }
 

@@ -65,7 +65,7 @@
                 class="c-btn c-btn_dark c-btn_icon"
                 @click="edit()"
             >
-                Edit
+                {{$t('common.edit')}}
                 <v-icon class="icon c-text_white pl-2">
                     mdi-pencil
                 </v-icon>
@@ -79,7 +79,7 @@ export default {
     auth: true,
     methods: {
         edit() {
-            this.$router.push(this.localePath('/profile/edit'));;
+            this.$router.push(this.localePath('/profile/edit'));
         }
     },
     data() {
