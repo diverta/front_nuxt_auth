@@ -10,6 +10,7 @@
         "back" : "戻る",
         "submit" : "送信",
         "edit": "編集",
+        "save": "保存",
         "agree": "利用規約に同意します。"
     },
     "slackbar": {
@@ -54,11 +55,21 @@
         "my_topics": "マイトピックス",
         "all": "全て",
         "profile_changed":"プロフィールを変更しました。",
-        "fille_property":"項目に入力してください。"
+        "select_type": "トピックのタイプを選択してください。 #",
+        "tab_file":"ファイル",
+        "tab_url":"URL",
+        "tab_detal":"詳細",
+        "file_type":"ファイルタイプ",
+        "link_url":"リンク",
+        "text_display":"本文"
     },
     "signup": {
         "title": "サインアップ",
-        "text": "下の項目に入力してください。"
+        "text": "下の項目に入力してください。",
+        "success":"登録しました。"
+    },
+    "inquiry": {
+        "message": "以下の項目を入力してください。こちらからご連絡させていただきます。"
     },
     "reminder": {
         "back_to_login": "<a href='/'>ログイン</a> へ戻る",
@@ -97,7 +108,9 @@
         "text_format_numeric":"数字のフォーマットが正しくありません。",
         "text_format_url":"URLのフォーマットが正しくありません。",
         "text_format_regex":"正規表現のフォーマットが正しくありません。 ",
-        "multiple_required":"一つ選択してください。"
+        "multiple_required":"一つ選択してください。",
+        "fille_property":"項目に入力してください。",
+        "required_file":"ファイルをアップロードしてください。"
     },
     "label": {
         "date_picker":"日付選択",

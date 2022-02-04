@@ -10,7 +10,7 @@
 
         <div class="l-content_heading">
             <h3 class="slogan text-left">
-                Please provide us your information, we will be in touch with you shortly. <br>
+                {{$t('inquiry.message')}}<br>
             </h3>
         </div>
 
@@ -26,7 +26,7 @@
 
                 <v-checkbox v-model="disabled" class="c-form_tnc">
                     <template v-slot:label>
-                        <div>I agree to the terms of Use.</div>
+                        <div>{{$t('common.agree')}}</div>
                     </template>
                 </v-checkbox>
 
@@ -37,7 +37,7 @@
                         :disabled="!disabled"
                         @click="submitF()"
                     >
-                        Submit
+                        {{$t('common.submit')}}
                     </button>
                 </div>
             </v-container>
@@ -171,7 +171,7 @@ export default {
                         self.$store.dispatch('snackbar/snackOn');
                     });
             } else {
-                self.$store.dispatch('snackbar/setError', 'Fill fields properly.');
+                self.$store.dispatch('snackbar/setError', this.$i18n.t('verify.fille_property'));
                 self.$store.dispatch('snackbar/snackOn');
             }
         }

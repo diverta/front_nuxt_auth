@@ -10,6 +10,7 @@
         "back" : "Back",
         "submit" : "SUBMIT",
         "edit": "Edit",
+        "save": "Save",
         "agree": "I agree to the terms of Use."
     },
     "slackbar": {
@@ -54,12 +55,22 @@
         "my_topics": "My topics",
         "all": "ALL",
         "profile_changed":"Your profile is changed.",
-        "fille_property":"Please fill the fields properly."
-
+        "select_type": "Select type of the Topic #",
+        "tab_file":"File document",
+        "tab_url":"Url link",
+        "tab_detal":"Detail page",
+        "file_type":"File type",
+        "link_url":"Link URL",
+        "text_display":"Text to display",
+        "choose_file":"Choose file type/ upload file."
     },
     "signup": {
         "title": "Sign up",
-        "text": "Please complete the form below to sign up"
+        "text": "Please complete the form below to sign up",
+        "success":"Your registration is successful."
+    },
+    "inquiry": {
+        "message": "Please provide us your information, we will be in touch with you shortly. "
     },
     "reminder": {
         "back_to_login": "Back to <a href='/'>login</a>",
@@ -98,7 +109,9 @@
         "text_format_numeric":"Wrong numeric format.",
         "text_format_url":"Wrong url format.",
         "text_format_regex":"Wrong regex format. ",
-        "multiple_required":"At least one item should be selected"
+        "multiple_required":"At least one item should be selected",
+        "fille_property":"Please fill the fields properly.",
+        "required_file":"need to upload file"
     },
     "label": {
         "date_picker":"Date picker.",
