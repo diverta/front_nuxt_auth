@@ -11,7 +11,7 @@
                 (v) =>
                     schema.required == false ||
                     (schema.required == true && !!v) ||
-                    $t('verify.required_field'),,
+                    $t('verify.required_field'),
                 (v) =>
                     v.length >= schema.min || $t('verify.text_minimum') + schema.min + $t('verify.text_character'),
                 (v) =>
