@@ -37,7 +37,8 @@
         "files" : "Files:",
         "view": "View",
         "download" : "Download",
-        "links": "Links:"
+        "links": "Links:",
+        "thanks": "Thanks! Your topic is updated."
     },
     "member" : {
         "search" : "Seach",
@@ -70,7 +71,8 @@
         "success":"Your registration is successful."
     },
     "inquiry": {
-        "message": "Please provide us your information, we will be in touch with you shortly. "
+        "message": "Please provide us your information, we will be in touch with you shortly. ",
+        "thanks":"Thanks! Your inquiry submitted."
     },
     "reminder": {
         "back_to_login": "Back to <a href='/'>login</a>",
@@ -135,6 +137,7 @@
         "birthday":"Birthday",
         "office":"Office",
         "hobby":"Hobby"
-    }
+    }  
+    
 
 }

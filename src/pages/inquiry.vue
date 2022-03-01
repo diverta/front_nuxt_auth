@@ -159,8 +159,7 @@ export default {
                     .then(function (response) {
                         if (response.data.errors.length === 0) {
                             self.$store.dispatch(
-                                'snackbar/setMessage',
-                                'Thanks! Your inquiry submitted.'
+                                'snackbar/setMessage', this.$i18n.t('inquiry.thanks')
                             );
                             self.$store.dispatch('snackbar/snackOn');
                             // self.$router.push("/");

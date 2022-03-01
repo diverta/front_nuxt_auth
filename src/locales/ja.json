@@ -37,7 +37,8 @@
         "files" : "ファイル:",
         "view": "ファイルを見る",
         "download" : "ダウンロード",
-        "links": "リンク:"
+        "links": "リンク:",
+        "thanks": "更新しました。"
     },
     "member" : {
         "search" : "検索",
@@ -61,7 +62,8 @@
         "tab_detal":"詳細",
         "file_type":"ファイルタイプ",
         "link_url":"リンク",
-        "text_display":"本文"
+        "text_display":"本文",
+        "choose_file":"アップロードするファイルのタイプを選択してください。"
     },
     "signup": {
         "title": "サインアップ",
@@ -69,7 +71,8 @@
         "success":"登録しました。"
     },
     "inquiry": {
-        "message": "以下の項目を入力してください。こちらからご連絡させていただきます。"
+        "message": "以下の項目を入力してください。こちらからご連絡させていただきます。",
+        "thanks":"送信しました。"
     },
     "reminder": {
         "back_to_login": "<a href='/'>ログイン</a> へ戻る",
