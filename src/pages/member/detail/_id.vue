@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="l-content_heading">
-            <h1>Member details</h1>
+            <h1>{{$t('member.detail_title')}}</h1>
         </div>
         <v-col>
             <v-row>
@@ -80,7 +80,7 @@
                 class="c-btn c-btn_dark c-btn_icon"
                 @click="back()"
             >
-                Back
+                {{$t('common.back')}}
                 <v-icon class="icon c-text_white pr-2">
                     mdi-undo-variant
                 </v-icon>

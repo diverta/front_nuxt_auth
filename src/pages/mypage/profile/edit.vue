@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="l-content_heading">
-            <h1>My page</h1>
+            <h1>{{$t('mypage.title')}}</h1>
         </div>
 
         <v-tabs
@@ -13,16 +13,16 @@
             centered
         >
             <v-tab @click="go_page('/mypage/')">
-                My page
+                {{$t('mypage.my_page')}}
             </v-tab>
             <v-tab @click="go_page('/mypage/favorite_list/')">
-                Favorite List
+                {{$t('mypage.favoire_list')}}
             </v-tab>
             <v-tab @click="go_page('/mypage/profile/edit/')">
-                Profile Edit
+                {{$t('mypage.profile_edit')}}
             </v-tab>
             <v-tab @click="go_page('/mypage/posted_list')">
-                Posted list
+                {{$t('mypage.posted_list')}}
             </v-tab>
         </v-tabs>
 
@@ -35,7 +35,7 @@
         />
 
         <h1 class="mt-5 pt-5">
-            Profile editing
+            {{$t('mypage.profile_editing')}}
         </h1>
         <br>
         <div class="v-stepper c-form_wrap">
@@ -50,7 +50,7 @@
 
                 <v-checkbox v-model="disabled" class="c-form_tnc">
                     <template v-slot:label>
-                        <div>I agree to the terms of Use.</div>
+                        <div>{{$t('common.agree')}}</div>
                     </template>
                 </v-checkbox>
                 <div class="text-center mb-5">
@@ -62,7 +62,7 @@
                         class="c-btn c-btn_main"
                         @click="submitF()"
                     >
-                        SUBMIT
+                        {{$t('common.submit')}}
                     </button
                     >
                 </div>
@@ -131,7 +131,7 @@ export default {
                         if (response.data.errors.length === 0) {
                             self.$store.dispatch(
                                 'snackbar/setMessage',
-                                'Your profile is changed.'
+                                this.$i18n.t('mypage.profile_changed')
                             );
                             self.$store.dispatch('snackbar/snackOn');
                             self.$router.push('/');
@@ -141,7 +141,7 @@ export default {
                         self.$store.dispatch('snackbar/snackOn');
                     }); ;
             } else {
-                self.$store.dispatch('snackbar/setError', 'Please fill the fields properly.');
+                self.$store.dispatch('snackbar/setError', this.$i18n.t('verify.fille_property'));
                 self.$store.dispatch('snackbar/snackOn');
             }
         }
@@ -240,7 +240,7 @@ export default {
                         inputType: 'text',
                         min: 0,
                         max: 100,
-                        label: 'First Name',
+                        label: this.$i18n.t('label.first_name'),
                         model: 'name1',
                         text: '',
                         required: true
@@ -250,7 +250,7 @@ export default {
                         inputType: 'text',
                         min: 0,
                         max: 100,
-                        label: 'Last Name',
+                        label: this.$i18n.t('label.last_name'),
                         text: '',
                         model: 'name2',
                         required: true
@@ -261,7 +261,7 @@ export default {
                         text: '',
                         min: 0,
                         max: 100,
-                        label: 'Department',
+                        label: this.$i18n.t('label.department'),
                         model: 'department',
                         required: true
                     },
@@ -271,7 +271,7 @@ export default {
                         text: '',
                         min: 0,
                         max: 100,
-                        label: 'Position',
+                        label: this.$i18n.t('label.position'),
                         model: 'position',
                         required: false
                     },
@@ -281,7 +281,7 @@ export default {
                         text: '',
                         min: 0,
                         max: 100,
-                        label: 'Phone',
+                        label: this.$i18n.t('label.phone'),
                         model: 'tel',
                         texttype: 'tel',
                         required: true
@@ -291,7 +291,7 @@ export default {
                         inputType: 'text',
                         min: 0,
                         max: 100,
-                        label: 'Email address',
+                        label: this.$i18n.t('label.email'),
                         model: 'email',
                         text: '',
                         texttype: 'email',
@@ -300,7 +300,7 @@ export default {
                     {
                         type: 'vuetifyPassword',
                         inputType: 'text',
-                        label: 'Password',
+                        label: this.$i18n.t('label.password'),
                         text: '',
                         model: 'login_pwd',
                         required: true
@@ -373,20 +373,20 @@ export default {
                         text: '',
                         min: 0,
                         max: 100,
-                        label: 'Address',
+                        label: this.$i18n.t('label.address'),
                         model: 'address1',
                         required: true
                     },
                     {
                         type: 'UploadFile',
-                        label: 'Avatar',
+                        label: this.$i18n.t('label.avatar'),
                         model: 'profileimage',
                         required: false,
                         visible: (model, field, form) => model.choice === 'Check a boolean value'
                     },
                     {
                         model: 'pull_down',
-                        label: 'Pull-down',
+                        label: this.$i18n.t('label.pull_down'),
                         contents: [
                             {
                                 key: 0,
@@ -418,7 +418,7 @@ export default {
                     },
                     {
                         model: 'radio_button_2',
-                        label: 'Radio button',
+                        label: this.$i18n.t('label.radio'),
                         contents: [
                             {
                                 key: 1,
@@ -444,7 +444,7 @@ export default {
                     },
                     {
                         model: 'multiple_check',
-                        label: 'Multiple',
+                        label: this.$i18n.t('label.multiple'),
                         contents: [
                             {
                                 key: 1,
@@ -472,7 +472,7 @@ export default {
                         model: 'notes',
                         type: 'vuetifyTextArea',
                         inputType: 'text',
-                        label: 'Notes',
+                        label: this.$i18n.t('label.notes'),
                         placeholder: '',
                         text: '',
                         required: false,

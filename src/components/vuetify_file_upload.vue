@@ -7,7 +7,7 @@
                 (v) =>
                     schema.required == false ||
                     (schema.required == true && !!v) ||
-                    'need to upload file',
+                    $t('verify.required_file'),
             ]"
             :label="schema.accept"
             :accept="schema.accept"

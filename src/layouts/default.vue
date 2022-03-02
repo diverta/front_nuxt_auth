@@ -71,7 +71,7 @@
             </div>
             <div v-else-if="!auth.loggedIn">
                 Already have an account? <button class="c-btn c-btn_sm c-btn_dark ml-2" nuxt @click="go_page('/')">
-                    Sign In
+                    {{ $t('common.sign_in') }}
                 </button>
             </div>
         </v-app-bar>
@@ -104,7 +104,7 @@
 
             <template v-slot:action="{ attrs }">
                 <v-btn text v-bind="attrs" @click="snackbarVisible = false">
-                    Close
+                    {{ $t('common.close') }}
                 </v-btn>
             </template>
         </v-snackbar>
@@ -180,7 +180,7 @@ export default {
         },
         subtitle() {
             if (this.$store.$auth.loggedIn) {
-                return 'Hi, ' + this.$auth.user.name1;
+                return this.$i18n.t('common.hi') + this.$auth.user.name1;
             } else {
                 return '';
             }
@@ -211,9 +211,9 @@ export default {
         async logout() {
             await this.$auth.logout().then((response) => {
                 this.updateDesign();
-                this.$store.dispatch('snackbar/setMessage', 'Logged Out.');
+                this.$store.dispatch('snackbar/setMessage', this.$i18n.t('slackbar.logged_out'));
                 this.$store.dispatch('snackbar/snackOn');
-                this.$router.push(this.localePath('/'));;
+                this.$router.push(this.localePath('/'));
             });
         }
     }

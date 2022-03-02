@@ -12,11 +12,11 @@
                 (v) =>
                     schema.required == false ||
                     (schema.required == true && !!v) ||
-                    'required field',
+                    $t('verify.required_field'),
                 (v) =>
-                    v.length >= schema.min || 'minimum ' + schema.min + ' characters',
+                    v.length >= schema.min || $t('verify.text_minimum') + schema.min + $t('verify.text_character'),
                 (v) =>
-                    v.length <= schema.max || 'maximum ' + schema.max + ' characters',
+                    v.length <= schema.max || $t('verify.text_maximum') + schema.max + $t('verify.text_character'),
                 (v) => isValid(schema, v),
             ]"
             :placeholder="schema.placeholder"
@@ -42,7 +42,7 @@ export default {
             if (schema.texttype === 'regex') {
                 const regex = new RegExp(schema.regex);
                 if (!regex.test(value)) {
-                    return 'Wrong regex format. ' + regex;
+                    return this.$i18n.t('verify.text_format_regex') + regex;
                 }
             }
 

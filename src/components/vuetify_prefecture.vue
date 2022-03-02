@@ -11,7 +11,7 @@
                 (v) =>
                     schema.required == false ||
                     (schema.required == true && !!v) ||
-                    'required field',
+                    $t('verify.required_field'),,
             ]"
             return-object
             @change="check($event)"

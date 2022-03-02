@@ -7,14 +7,14 @@
                         <img src="~/assets/images/logo.png?width=150" class="p-login_logo">
                         <div class="p-login_intro-text">
                             <h1 class="heading">
-                                {{ $t('welcomeback') }}<br> Muzica!
+                                <span v-html="$t('login.welcomeback')"></span>
                             </h1>
-                            <p>Sign in to continue your portal</p>
+                            <p>{{$t('login.message')}}</p>
                             <p>
-                                Demo account<br>
-                                <strong>SiteKey:</strong> dev-nuxt-auth<br>
-                                <strong>ID：</strong>demo@kuroco-mail.app<br>
-                                <strong>PWD：</strong>demo0512<br>
+                                {{$t('login.demoaccount')}}<br>
+                                <strong>{{$t('common.sitekey')}}：</strong> dev-nuxt-auth<br>
+                                <strong>{{$t('common.id')}}：</strong>demo@kuroco-mail.app<br>
+                                <strong>{{$t('common.password')}}：</strong>demo0512<br>
                             </p>
                         </div>
                     </div>
@@ -25,26 +25,26 @@
                             <div class="login-screen lgn-left">
                                 <v-card-title>
                                     <h2 align="center" class="pb-4 c-text_blue">
-                                        Sign In
+                                        {{ $t('common.sign_in') }}
                                     </h2>
                                 </v-card-title>
                                 <v-card-text class="inner">
                                     <form @submit.prevent="login">
                                         <v-text-field
                                             v-model="sitekey"
-                                            label="Your sitekey"
+                                            :label="$t('login.site_key')"
                                             type="text"
                                             outlined
                                         />
                                         <v-text-field
                                             v-model="form.email"
-                                            label="Login ID or Email address"
+                                            :label="$t('login.id_or_email')"
                                             type="email"
                                             outlined
                                         />
                                         <v-text-field
                                             v-model="form.password"
-                                            label="Password"
+                                            :label="$t('common.password')"
                                             :type="show_pwd1 ? 'text' : 'password'"
                                             :append-icon="show_pwd1 ? 'mdi-eye' : 'mdi-eye-off'"
                                             outlined
@@ -52,7 +52,7 @@
                                         />
                                         <p>
                                             <NuxtLink to="/reminder/">
-                                                Forgot Password?
+                                                {{ $t('login.forget_password') }}
                                             </NuxtLink>
                                         </p>
                                         <div class="text-center">
@@ -63,10 +63,9 @@
                                                 :loading="loading"
                                                 class="c-btn_dark c-btn submit-btn"
                                             >
-                                                {{ $t('sign_in') }}
+                                                {{ $t('common.sign_in') }}
                                             </button>
-                                            ※This site don't work on iOS because of ITP. <br>But you can build this with your domain, it will work fine.<br>
-                                            This site is just for demonstration.
+                                            <span v-html="$t('login.note')"></span>
                                         </div>
                                     </form>
                                 </v-card-text>
@@ -89,7 +88,7 @@
             </v-carousel>
 
             <h1 class="text-left mt-5 pt-4">
-                Latest articles
+                {{ $t('top.latest_articles') }}
             </h1>
             <v-topics :topics="topics" />
 
@@ -102,7 +101,7 @@
                     class="c-btn c-btn_main c-btn_md c-btn_icon"
                     @click="back()"
                 >
-                    More articles
+                    {{ $t('top.more_articles') }}
                     <v-icon
                         dark
                         right
@@ -115,7 +114,7 @@
             </div>
 
             <h1 class="text-left mt-5 pt-4">
-                Starred
+                {{ $t('top.starred') }}
             </h1>
             <v-favourite :topics="favourite" />
             <div class="text-center py-5">
@@ -127,7 +126,7 @@
                     class="c-btn c-btn_main c-btn_md c-btn_icon"
                     @click="linkFav()"
                 >
-                    More starred post
+                    {{ $t('top.more_starred') }}
                     <v-icon
                         dark
                         right
@@ -342,13 +341,13 @@ export default {
                 .then(() => {
                     this.updateTopics();
                     this.updateDesign();
-                    this.$router.push(this.localePath('/'));;
-                    this.$store.dispatch('snackbar/setMessage', 'Logged in.');
+                    this.$router.push(this.localePath('/'));
+                    this.$store.dispatch('snackbar/setMessage', this.$i18n.t('slackbar.logged_in'));
                     this.$store.dispatch('snackbar/snackOn');
                     this.loading = false;
                 })
                 .catch(() => {
-                    this.$store.dispatch('snackbar/setError', 'Login failed.');
+                    this.$store.dispatch('snackbar/setError', this.$i18n.t('slackbar.login_fail'));
                     this.$store.dispatch('snackbar/snackOn');
                     this.loading = false;
                 });
@@ -357,13 +356,3 @@ export default {
 };
 </script>
 
-<i18n>
-{
-  "en": {
-    "welcomeback": "Welcome Back to"
-  },
-  "ja": {
-    "welcomeback": "おかえりなさい"
-  }
-}
-</i18n>

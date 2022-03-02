@@ -11,11 +11,11 @@
             <v-toolbar flat color="primary" dark>
                 <v-toolbar-title
                 >
-                    Select type of the Topic #{{ topic_id }}
+                {{ $t('mypage.select_type') }}{{ topic_id }}
                 </v-toolbar-title>
                 <v-col class="text-right">
                     <v-btn class="ma-2" color="green" dark @click="submit()">
-                        Save
+                        {{ $t('common.save') }}
                         <v-icon dark right>
                             mdi-checkbox-marked-circle
                         </v-icon>
@@ -27,19 +27,19 @@
                     <v-icon left>
                         mdi-file-excel
                     </v-icon>
-                    File document
+                    {{ $t('mypage.tab_file') }}
                 </v-tab>
                 <v-tab @click="change_tab(1)">
                     <v-icon left>
                         mdi-launch
                     </v-icon>
-                    Url link
+                    {{ $t('mypage.tab_url') }}
                 </v-tab>
                 <v-tab @click="change_tab(2)">
                     <v-icon left>
                         mdi-details
                     </v-icon>
-                    Detail page
+                    {{ $t('mypage.tab_detal') }}
                 </v-tab>
                 <v-tab-item>
                     <v-card flat>
@@ -141,7 +141,7 @@ export default {
                 if (fileType === null || file === null) {
                     this.$store.dispatch(
                         'snackbar/setError',
-                        'Choose file type/ upload file.'
+                        this.$i18n.t('mypage.choose_file')
                     );
                     this.$store.dispatch('snackbar/snackOn');
                 } else {
@@ -215,8 +215,7 @@ export default {
                 .then(function (response) {
                     if (response.data.errors.length === 0) {
                         self.$store.dispatch(
-                            'snackbar/setMessage',
-                            'Thanks! Your topic is updated.'
+                            'snackbar/setMessage', this.$i18n.t('detail.thanks')
                         );
                         self.$store.dispatch('snackbar/snackOn');
                         self.$router.push('/mypage/posted_list');
@@ -245,7 +244,7 @@ export default {
                 fields: [
                     {
                         model: 'type',
-                        label: 'File type',
+                        label: this.$i18n.t('mypage.file_type'),
                         radioGroup: null,
                         contents: [
                             {
@@ -286,7 +285,7 @@ export default {
                         text: '',
                         min: 0,
                         max: 100,
-                        label: 'Link URL',
+                        label: this.$i18n.t('mypage.link_url'),
                         model: 'url',
                         texttype: 'url',
                         required: true
@@ -297,7 +296,7 @@ export default {
                         text: '',
                         min: 0,
                         max: 100,
-                        label: 'Text to display',
+                        label: this.$i18n.t('mypage.text_display'),
                         model: 'toDisplay',
                         required: true
                     }
