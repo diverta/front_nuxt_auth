@@ -21,7 +21,7 @@
                 <v-list-item
                     v-for="(item, i) in items"
                     :key="i"
-                    :to="item.to"
+                    :to="localePath(item.to)"
                     router
                     exact
                 >
@@ -45,7 +45,7 @@
             <v-app-bar-nav-icon v-if="auth.loggedIn" @click.stop="drawer = !drawer" />
             <v-spacer />
 
-            <v-toolbar-title height="30" to="/" class="l-header_user" v-text="subtitle" />
+            <v-toolbar-title height="30" :to="localePath('/')" class="l-header_user" v-text="subtitle" />
 
             <div class="l-header_lang">
                 <v-select

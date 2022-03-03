@@ -51,7 +51,7 @@
                                             @click:append="show_pwd1 = !show_pwd1"
                                         />
                                         <p>
-                                            <NuxtLink to="/reminder/">
+                                            <NuxtLink :to="localePath('/reminder')">
                                                 {{ $t('login.forget_password') }}
                                             </NuxtLink>
                                         </p>

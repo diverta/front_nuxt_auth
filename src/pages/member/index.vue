@@ -46,7 +46,7 @@
             @page-count="pageCount = $event"
         >
             <template v-slot:item.name="{ item }">
-                <NuxtLink :to="{ path: '/member/detail/' + item.id }" no-prefetch>
+                <NuxtLink :to="localePath({ path: '/member/detail/' + item.id })" no-prefetch>
                     {{
                         item.name
                     }}
