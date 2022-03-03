@@ -4,7 +4,7 @@
             <div v-if="topics.length > 0" class="row">
 
                 <v-col class="col-md-4 col-sm-6 col-12" v-for="item in topics" :key="item.id">
-                    <v-card class="c-article" :to="{ path: '/topics_detail/' + item.id }">
+                    <v-card class="c-article" :to="localePath({ path: '/topics_detail/' + item.id })">
                         <div class="c-article_thumb">
                         <v-img v-if="item.thumbnail"
                             :src="item.thumbnail"

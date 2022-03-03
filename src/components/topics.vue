@@ -39,7 +39,7 @@
                                 <v-icon>mdi-launch</v-icon>
                             </div>
                             <div v-else>
-                                <NuxtLink :to="{ path: '/topics_detail/' + item.id }" no-prefetch>
+                                <NuxtLink :to="localePath({ path: '/topics_detail/' + item.id })" no-prefetch>
                                     {{
                                         item.link
                                     }}
