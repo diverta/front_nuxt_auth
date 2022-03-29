@@ -74,107 +74,6 @@ Vue.use(VueFormGenerator);
 Vue.use(KurocoParser);
 
 export default {
-    components: {
-        'vue-form-generator': VueFormGenerator.component
-    },
-    mounted() {
-        this.getSchema();
-    },
-    methods: {
-        getModel() {
-            const self = this;
-            this.$store.$auth.ctx.$axios
-                .get(this.inquirySchemaUrl)
-                .then(function (response) {
-                    const model = {};
-                    const columns = response.data.details.cols;
-                    for (const key in columns) {
-                        if (columns.hasOwnProperty(key)) {
-                            if (columns[key].hasOwnProperty('attribute')) {
-                                if (columns[key].attribute.hasOwnProperty('placeholder')) {
-                                    model[key] = columns[key].attribute.placeholder;
-                                }
-                            }
-                        }
-                    }
-                    self.model = model;
-                })
-                .catch(function (error) {
-                    self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                    self.$store.dispatch('snackbar/snackOn');
-                });
-        },
-        getSchema() {
-            const self = this;
-            this.loading = true;
-            this.$store.$auth.ctx.$axios
-                .get(this.inquirySchemaUrl)
-                .then(function (response) {
-                    console.log(response);
-                    const schema = {};
-                    schema.fields = [];
-                    const columns = response.data.details.cols;
-                    for (const key in columns) {
-                            
-                        let result = {};
-                        if (columns.hasOwnProperty(key)) {
-                            result = self.$parse(columns[key], key);
-                            if (
-                                typeof result !== 'undefined' &&
-                Object.keys(result).length !== 0
-                            ) {
-                                schema.fields.push(result);
-                            }
-                        }
-                    }
-
-                    self.schema = schema;
-                    self.loading = false;
-                })
-                .catch(function (error) {
-                    self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                    self.$store.dispatch('snackbar/snackOn');
-                    self.loading = false;
-                });
-        },
-        onInput (value, fieldName) {
-            this.$set(this.model, fieldName, value);
-        },
-        submitF () {
-            const self = this;
-
-            this.validForm = true;
-            for (const key in self.$children[1].$children) {
-                self.$children[1].$children[key].$children[0].$refs.myForm.validate();
-                if (self.$children[1].$children[key].$children[0].formValid === false) {
-                    this.validForm = false;
-                }
-            }
-
-            if (this.validForm) {
-                const sendModel = JSON.parse(JSON.stringify(self.model));
-                sendModel.body = 'example message';
-                self.$store.$auth.ctx.$axios
-                    .post(this.inquirySubmitUrl, sendModel)
-                    .then(function (response) {
-                        if (response.data.errors.length === 0) {
-                            self.$store.dispatch(
-                                'snackbar/setMessage', this.$i18n.t('inquiry.thanks')
-                            );
-                            self.$store.dispatch('snackbar/snackOn');
-                            // self.$router.push("/");
-                        }
-                    })
-                    .catch(function (error) {
-                        self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                        self.$store.dispatch('snackbar/snackOn');
-                    });
-            } else {
-                self.$store.dispatch('snackbar/setError', this.$i18n.t('verify.fille_property'));
-                self.$store.dispatch('snackbar/snackOn');
-            }
-        }
-    },
     title() {
         return 'Inquiry';
     },
@@ -189,6 +88,63 @@ export default {
             model: {},
             schema: {}
         };
-    }
+    },
+    components: {
+        'vue-form-generator': VueFormGenerator.component
+    },
+    mounted() {
+        this.getSchema();
+    },
+    methods: {
+        async getSchema() {
+            this.loading = true;
+            let response;
+            try {
+                response = await this.$store.$auth.ctx.$axios.get(this.inquirySchemaUrl)
+                this.schema = {
+                    fields: Object.entries(response.data.details.cols)
+                        .map(([key, val]) => this.$parse(val, key))
+                        .filter(res => res)
+                }
+            } catch (e) {
+                this.$store.dispatch('snackbar/setError', e?.response?.data.errors?.[0]?.message);
+                this.$store.dispatch('snackbar/snackOn');
+            }
+            this.loading = false;
+        },
+        onInput (value, fieldName) {
+            this.$set(this.model, fieldName, value);
+        },
+        async submitF () {
+            this.validForm = true;
+            for (const key in this.$children[1].$children) {
+                this.$children[1].$children[key].$children[0].$refs.myForm.validate();
+                if (this.$children[1].$children[key].$children[0].formValid === false) {
+                    this.validForm = false;
+                }
+            }
+
+            if (!this.validForm) {
+                this.$store.dispatch('snackbar/setError', this.$i18n.t('verify.fille_property'));
+                this.$store.dispatch('snackbar/snackOn');
+                return;
+            }
+
+            try {
+                const sendModel = JSON.parse(JSON.stringify(this.model));
+                sendModel.body = 'example message';
+                const response = await this.$store.$auth.ctx.$axios.post(this.inquirySubmitUrl, sendModel);
+                if (response.data.errors.length === 0) {
+                    this.$store.dispatch(
+                        'snackbar/setMessage', this.$i18n.t('inquiry.thanks')
+                    );
+                    this.$store.dispatch('snackbar/snackOn');
+                }
+            } catch (e) {
+                this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
+                this.$store.dispatch('snackbar/snackOn');
+            };
+        }
+    },
 };
 </script>

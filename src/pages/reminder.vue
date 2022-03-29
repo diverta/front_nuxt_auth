@@ -223,57 +223,44 @@ export default {
         login() {
             this.$router.push(this.localePath('/'));
         },
-        reminder() {
+        async reminder() {
             this.loading1 = true;
-            const self = this;
-            this.$store.$auth.ctx.$axios
-                .post('/rcms-api/1/reminder', {
-                    email: this.email
-                })
-                .then(function (response) {
-                    if (response.data.errors.length === 0) {
-                        self.$store.dispatch(
-                            'snackbar/setMessage',
-                            this.$i18n.t('reminder.password_sent')
-                        );
-                        self.$store.dispatch('snackbar/snackOn');
-                    }
-                    self.e1 = 3;
-                    self.loading1 = false;
-                })
-                .catch(function () {
-                    self.$store.dispatch('snackbar/setError', this.$i18n.t('reminder.invalid_email'));
-                    self.$store.dispatch('snackbar/snackOn');
-                    self.loading1 = false;
-                });
+            try {
+                const response = await this.$store.$auth.ctx.$axios.post('/rcms-api/1/reminder', { email: this.email });
+                this.e1 = 3;
+                if (response.data.errors.length > 0) {
+                    throw new Error(response.data.errors.join('\t'));
+                }
+                this.$store.dispatch('snackbar/setMessage', this.$i18n.t('reminder.password_sent'));
+                this.$store.dispatch('snackbar/snackOn');
+            } catch (e) {
+                this.$store.dispatch('snackbar/setError', this.$i18n.t('reminder.invalid_email'));
+                this.$store.dispatch('snackbar/snackOn');
+            };
+            this.loading1 = false;
         },
-        set_password() {
-            if (this.$refs.form2.validate() && this.token) {
-                console.log('reset');
-                this.loading2 = true;
-                const self = this;
-                self.$auth.ctx.$axios
+        async set_password() {
+            if (!this.$refs.form2.validate() || !this.token) {
+                return;
+            }
+
+            this.loading2 = true;
+            try {
+                await this.$auth.ctx.$axios
                     .post('/rcms-api/1/reminder', {
                         token: this.token,
                         login_pwd: this.login_pwd,
                         temp_pwd: this.temp_pwd
-                    })
-                    .then(() => {
-                        self.$store.dispatch(
-                            'snackbar/setMessage',
-                            this.$i18n.t('reminder.already_updated')
-                        );
-                        self.$store.dispatch('snackbar/snackOn');
-                        self.$router.push('/');
-                        self.loading2 = false;
-                        self.e1 = 4;
-                    })
-                    .catch(function (error) {
-                        self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                        self.$store.dispatch('snackbar/snackOn');
-                        self.loading2 = false;
                     });
+                this.$store.dispatch('snackbar/setMessage', this.$i18n.t('reminder.already_updated'));
+                this.$store.dispatch('snackbar/snackOn');
+                this.$router.push('/');
+                this.e1 = 4;
+            } catch (e) {
+                this.$store.dispatch('snackbar/setError', e.response.data.errors?.[0].message);
+                this.$store.dispatch('snackbar/snackOn');
             }
+            this.loading2 = false;
         }
     }
 };

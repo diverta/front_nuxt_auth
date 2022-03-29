@@ -7,23 +7,23 @@
             top
             color="orange white-4"
         />
-        <template>
+        <template v-if="topicsDetail">
             <v-col>
                 <v-card class="d-flex justify-space-between mb-6" flat tile>
                     <v-card flat>
                         <v-row>
                             <v-col class="pt-0">
                                 <h1 class="mb-3 mt-0">
-                                    {{ attrs.title }}
+                                    {{ topicsDetail.subject }}
                                 </h1>
                                 <span class="c-btn c-btn_main c-btn_sm c-btn_disable">
-                                    {{ attrs.label }}
+                                    {{ topicsDetail.contents_type_nm }}
                                 </span>
                             </v-col>
                         </v-row>
                     </v-card>
                     <v-card flat>
-                        {{ attrs.date }}
+                        {{ $dateFns.format(topicsDetail.inst_ymdhi, 'yyyy/MM/dd') }}
                         <div class="text-right mt-2">
                             <v-btn icon :color="favoriteColor" @click="onClickToggleFavorite()">
                                 <v-icon x-large left>
@@ -34,32 +34,27 @@
                     </v-card>
                 </v-card>
                 <v-row v-for="(item, idx) in items" :key="idx" class="p-article_content">
-                    <topic-detail
-                        :text="item.text"
-                        :image_url="item.image_url"
-                        :subtitle="item.subtitle"
-                        :pattern="item.pattern"
-                    />
+                    <TopicsDetail v-bind="{ ...item }" />
                 </v-row>
             </v-col>
             <v-col>
-                <div v-if="attrs.file_url || attrs.file_download" class="p-article_footer-content">
+                <div v-if="topicsDetail.fileUrl || topicsDetail.fileDownload" class="p-article_footer-content">
                     <h3 class="heading">{{ $t('detail.files') }}</h3>
-                    <a v-if="attrs.file_url" :href="attrs.file_url" target="_blank" class="c-btn c-btn_dark p-article_file">
+                    <a v-if="topicsDetail.fileUrl" :href="topicsDetail.fileUrl" target="_blank" class="c-btn c-btn_dark p-article_file">
                         {{ $t('detail.view') }}
-                        <FileTypeIcon :file-type="attrs.file_type" />
+                        <FileTypeIcon :file-type="topicsDetail.fileType" />
                     </a>
-                    <a v-if="attrs.file_download" :href="attrs.file_download" target="_blank" class="c-btn c-btn_main p-article_file">
+                    <a v-if="topicsDetail.fileDownload" :href="topicsDetail.fileDownload" target="_blank" class="c-btn c-btn_main p-article_file">
                         {{ $t('detail.download') }}
-                        <FileTypeIcon :file-type="attrs.file_type" />
+                        <FileTypeIcon :file-type="topicsDetail.fileType" />
                     </a>
                 </div>
-                <div v-if="attrs.link_url" class="p-article_footer-content">
+                <div v-if="topicsDetail.linkUrl" class="p-article_footer-content">
                     <h3 class="heading">{{ $t('detail.links') }}</h3>
-                    <a v-if="attrs.link_url" :href="attrs.link_url" target="_blank" class="c-link">
-                        <v-icon v-if="attrs.file_type == 'pdf'">mdi-open-in-new</v-icon>
-                        <span v-if="attrs.link_title">{{ attrs.link_title }}</span>
-                        <span v-else>{{ attrs.link_url }}</span>
+                    <a v-if="topicsDetail.linkUrl" :href="topicsDetail.linkUrl" target="_blank" class="c-link">
+                        <v-icon v-if="topicsDetail.fileType == 'pdf'">mdi-open-in-new</v-icon>
+                        <span v-if="topicsDetail.linkTitle">{{ topicsDetail.linkTitle }}</span>
+                        <span v-else>{{ topicsDetail.linkUrl }}</span>
                     </a>
                 </div>
             </v-col>
@@ -80,58 +75,26 @@
 </template>
 
 <script>
-import topicDetail from '../../components/topic_detail';
 export default {
     auth: true,
-    components: {
-        topicDetail,
-    },
     computed: {
-        attrs() {
-            const attrs = {};
-            attrs.label = this.topicsDetailResponse?.data?.details?.contents_type_nm;
-            attrs.title = this.topicsDetailResponse?.data?.details?.subject;
-            attrs.date = this.topicsDetailResponse?.data?.details?.inst_ymdhi
-                ?.substring(0, 10)
-                ?.replaceAll('-', '/');
-            attrs.file_type = this.topicsDetailResponse?.data?.details?.ext_col_01?.key;
-            attrs.file_url = this.topicsDetailResponse?.data?.details?.ext_col_02?.url;
-            attrs.file_download = this.topicsDetailResponse?.data?.details?.ext_col_02?.dl_link;
-            attrs.link_url = this.topicsDetailResponse?.data?.details?.ext_col_03?.url;
-            attrs.link_title = this.topicsDetailResponse?.data?.details?.ext_col_03?.title;
-            return attrs;
-        },
         items() {
-            if (!this.topicsDetailResponse) {
+            if (!this.topicsDetail) {
                 return [];
             }
-
-            const positions = this.topicsDetailResponse.data.details.ext_col_04;
-            const imageUrls = this.topicsDetailResponse.data.details.ext_col_05;
-            const texts = this.topicsDetailResponse.data.details.ext_col_07;
-            const subtitles = this.topicsDetailResponse.data.details.ext_col_09;
-
-            const getPattern = (key) => {
-                switch (key) {
-                case '0':
-                    return 'no image';
-                case '1':
-                    return 'top';
-                case '2':
-                    return 'left';
-                case '3':
-                    return 'bottom';
-                case '4':
-                    return 'right';
-                default:
-                    return null;
-                }
-            };
-            return positions.map(({ key }, i) => ({
-                text: texts[i],
-                pattern: getPattern(key),
-                image_url: imageUrls[i]?.hasOwnProperty('url') ? `${imageUrls[i].url}?width=800` : null,
-                subtitle: subtitles[i]
+            const {
+                texts,
+                positionPatterns,
+                imageUrls,
+                subtitles
+            } = this.topicsDetail;
+            return positionPatterns.map(({ key }, i) => ({
+                text: texts?.[i],
+                positionPatternKey: key,
+                imageUrl: imageUrls?.[i]?.url
+                    ? `${imageUrls?.[i]?.url}?width=800`
+                    : null,
+                subtitle: subtitles?.[i]
             }));
         }
     },
@@ -149,14 +112,14 @@ export default {
                 await request;
                 this.favoriteColor = this.favoriteColor === 'gray' ? 'red' : 'gray';
             } catch (error) {
-                this.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
+                this.$store.dispatch('snackbar/setError', error?.response?.data?.errors?.[0]?.message);
                 this.$store.dispatch('snackbar/snackOn');
             }
         }
     },
     data() {
         return {
-            topicsDetailResponse: null,
+            topicsDetail: null,
             favoriteResponse: null,
             favoriteColor: 'grey',
             loading: true,
@@ -165,17 +128,37 @@ export default {
     },
     async mounted() {
         this.topic_id = this.$route.params.id;
-        this.topicsDetailResponse = await this.$store.$auth.ctx.$axios.get(`/rcms-api/1/topic/detail/${this.topic_id}`)
-            .catch((error) => {
-                self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                self.$store.dispatch('snackbar/snackOn');
-            });
-        this.favoriteResponse = await this.$store.$auth.ctx.$axios
-            .get(`/rcms-api/1/favorites?member_id=${this.$auth.user.member_id}&module_type=topics&module_id=${this.topic_id}`)
-            .catch((error) => {
-                this.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                this.$store.dispatch('snackbar/snackOn');
-            });
+
+        try {
+            const topicsDetailResponse = await this.$store.$auth.ctx.$axios.get(`/rcms-api/1/topic/detail/${this.topic_id}`);
+            const d = topicsDetailResponse.data.details;
+            this.topicsDetail = {
+                ...d,
+                fileType: d?.ext_col_01?.key,
+                fileUrl: d?.ext_col_02?.url,
+                fileDownload: d?.ext_col_02?.dl_link,
+                linkUrl: d?.ext_col_03?.url,
+                linkTitle: d?.ext_col_03?.title,
+
+                // for TopicsDetail
+                positionPatterns: d?.ext_col_04,
+                texts: d?.ext_col_07,
+                imageUrls: d?.ext_col_05,
+                subtitles: d?.ext_col_09
+            };
+            this.favoriteResponse = await this.$store.$auth.ctx.$axios
+                .get('/rcms-api/1/favorites', {
+                    params: {
+                        member_id: this.$auth.user.member_id,
+                        module_type: 'topics',
+                        module_id: this.topic_id
+                    }
+                });
+        } catch (e) {
+            this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
+            this.$store.dispatch('snackbar/snackOn');
+        }
+
         this.favoriteColor = this.favoriteResponse?.data?.pageInfo?.totalCnt > 0 ? 'red' : 'grey';
         this.loading = false;
     }

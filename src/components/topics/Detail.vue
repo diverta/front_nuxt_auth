@@ -1,6 +1,5 @@
 <template>
-
-    <v-container v-if="pattern == 'no image' && text" fluid>
+    <v-container v-if="positionPattern === 'no image' && text" fluid>
         <v-card class="mx-auto" max-width="7000">
             <v-card-title class="c-heading_h2" v-text="subtitle" />
             <v-card-text>
@@ -11,12 +10,12 @@
         </v-card>
     </v-container>
 
-    <v-container v-else-if="pattern == 'top'" fluid>
+    <v-container v-else-if="positionPattern === 'top'" fluid>
         <v-card class="mx-auto" max-width="7000">
             <v-card-title class="c-heading_h2" v-text="subtitle" />
             <v-img
                 class="mx-auto"
-                :src="image_url"
+                :src="imageUrl"
                 max-width="1060"
                 max-height="800"
                 position="center"
@@ -30,7 +29,7 @@
         </v-card>
     </v-container>
 
-    <v-container v-else-if="pattern == 'bottom'" fluid>
+    <v-container v-else-if="positionPattern === 'bottom'" fluid>
         <v-card class="mx-auto" max-width="7000">
             <v-card-title class="c-heading_h2" v-text="subtitle" />
             <v-card-text>
@@ -40,7 +39,7 @@
                 <v-img
                     class="mx-auto"
                     :aspect-ration="16 / 9"
-                    :src="image_url"
+                    :src="imageUrl"
                     max-height="900"
                     max-width="1000"
                     position="center"
@@ -49,7 +48,7 @@
         </v-card>
     </v-container>
 
-    <v-container v-else-if="pattern == 'left'" fluid>
+    <v-container v-else-if="positionPattern === 'left'" fluid>
         <v-card class="mx-auto" max-width="7000">
             <v-card-title class="text-h4" v-text="subtitle" />
             <v-card-text>
@@ -59,7 +58,7 @@
                             fluid
                             class="mr-auto img-responsive"
                             :aspect-ration="16 / 9"
-                            :src="image_url"
+                            :src="imageUrl"
                             max-height="900"
                             max-width="500"
                         />
@@ -74,7 +73,7 @@
         </v-card>
     </v-container>
 
-    <v-container v-else-if="pattern == 'right'" fluid>
+    <v-container v-else-if="positionPattern === 'right'" fluid>
         <v-card class="mx-auto" max-width="7000">
             <v-card-title class="text-h5" v-text="subtitle" />
             <v-container key="start">
@@ -89,7 +88,7 @@
                             fluid
                             class="ml-auto img-responsive"
                             :aspect-ration="16 / 9"
-                            :src="image_url"
+                            :src="imageUrl"
                             max-height="900"
                             max-width="500"
                         />
@@ -98,7 +97,6 @@
             </v-container>
         </v-card>
     </v-container>
-
 </template>
 
 <script>
@@ -109,12 +107,12 @@ export default {
             required: false,
             default: ''
         },
-        image_url: {
+        imageUrl: {
             type: String,
             required: false,
             default: ''
         },
-        pattern: {
+        positionPatternKey: {
             type: String,
             required: false,
             default: null
@@ -123,7 +121,28 @@ export default {
             type: String,
             required: false,
             default: ''
-        },
+        }
+    },
+    computed: {
+        positionPattern() {
+            const getPattern = (key) => {
+                switch (key) {
+                case '0':
+                    return 'no image';
+                case '1':
+                    return 'top';
+                case '2':
+                    return 'left';
+                case '3':
+                    return 'bottom';
+                case '4':
+                    return 'right';
+                default:
+                    return null;
+                }
+            };
+            return getPattern(this.positionPatternKey);
+        }
     }
 };
 </script>

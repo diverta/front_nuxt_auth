@@ -125,8 +125,7 @@ export default {
         onInput (value, fieldName) {
             this.$set(this.model, fieldName, value);
         },
-        submit() {
-            const self = this;
+        async submit() {
             let sendModel = {};
             if (this.tab_id === 0) {
                 const fileType = this.schemaFile.fields[0].radioGroup;
@@ -210,21 +209,19 @@ export default {
                 }
             }
 
-            self.$store.$auth.ctx.$axios
-                .post(this.update_url, sendModel)
-                .then(function (response) {
-                    if (response.data.errors.length === 0) {
-                        self.$store.dispatch(
-                            'snackbar/setMessage', this.$i18n.t('detail.thanks')
-                        );
-                        self.$store.dispatch('snackbar/snackOn');
-                        self.$router.push('/mypage/posted_list');
-                    }
-                })
-                .catch(function (error) {
-                    self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                    self.$store.dispatch('snackbar/snackOn');
-                });
+            try {
+                const response = await this.$store.$auth.ctx.$axios.post(`/rcms-api/1/topics/update/${this.topic_id}`, sendModel);
+                if (response.data.errors.length === 0) {
+                    this.$store.dispatch(
+                        'snackbar/setMessage', this.$i18n.t('detail.thanks')
+                    );
+                    this.$store.dispatch('snackbar/snackOn');
+                    this.$router.push('/mypage/posted_list');
+                }
+            } catch (e) {
+                this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
+                this.$store.dispatch('snackbar/snackOn');
+            };
         },
         change_tab(id) {
             this.tab_id = id;
@@ -304,135 +301,130 @@ export default {
             }
         };
     },
-    mounted() {
+    async mounted() {
         this.topic_id = this.$route.params.id;
-        this.update_url = '/rcms-api/1/topics/update/' + this.topic_id;
-        const url = '/rcms-api/1/topic/detail/' + this.topic_id;
-        const self = this;
 
         this.loading = true;
-        this.$store.$auth.ctx.$axios
-            .get(url)
-            .then(function (response) {
-                const json = response.data.details;
-                self.json = json;
+        try {
+            const response = await this.$store.$auth.ctx.$axios.get(`/rcms-api/1/topic/detail/${this.topic_id}`);
+            const json = response.data.details;
+            this.json = json;
 
-                if (json.ext_col_01.key === 'url') {
-                    self.schemaUrl.fields[0].text = json.ext_col_03.url;
-                    self.schemaUrl.fields[1].text = json.ext_col_03.title;
-                    self.tab_id = 1;
-                } else if (
-                    json.ext_col_01.key === 'pdf' ||
-          json.ext_col_01.key === 'word' ||
-          json.ext_col_01.key === 'excel'
-                ) {
-                    let fileFormat = {};
-                    for (let i = 0; i < 3; ++i) {
-                        if (
-                            self.schemaFile.fields[0].contents[i].key === json.ext_col_01.key
-                        ) {
-                            fileFormat = self.schemaFile.fields[0].contents[i];
-                        }
+            if (json.ext_col_01.key === 'url') {
+                this.schemaUrl.fields[0].text = json.ext_col_03.url;
+                this.schemaUrl.fields[1].text = json.ext_col_03.title;
+                this.tab_id = 1;
+            } else if (
+                json.ext_col_01.key === 'pdf' ||
+                json.ext_col_01.key === 'word' ||
+                json.ext_col_01.key === 'excel'
+            ) {
+                let fileFormat = {};
+                for (let i = 0; i < 3; ++i) {
+                    if (
+                        this.schemaFile.fields[0].contents[i].key === json.ext_col_01.key
+                    ) {
+                        fileFormat = this.schemaFile.fields[0].contents[i];
                     }
-                    self.schemaFile.fields[0].radioGroup = fileFormat;
-                    self.schemaFile.fields[1].file = new File([''], json.ext_col_02.url);
-                    self.tab_id = 0;
-                } else {
-                    self.tab_id = 2;
                 }
+                this.schemaFile.fields[0].radioGroup = fileFormat;
+                this.schemaFile.fields[1].file = new File([''], json.ext_col_02.url);
+                this.tab_id = 0;
+            } else {
+                this.tab_id = 2;
+            }
 
-                for (let i = 0; i < 30; ++i) {
-                    const schemaDetail = {
-                        fields: []
-                    };
-                    let labelText = '';
-                    let textarea = '';
-                    let url = null;
-                    let imagePos = {};
-                    let textSize = {};
+            for (let i = 0; i < 30; ++i) {
+                const schemaDetail = {
+                    fields: []
+                };
+                let labelText = '';
+                let textarea = '';
+                let url = null;
+                let imagePos = {};
+                let textSize = {};
 
-                    if (json.ext_col_01.key === 'data') {
-                        if (typeof json.ext_col_09[i] === 'string') {
-                            labelText = json.ext_col_09[i];
-                        }
-                        if (typeof json.ext_col_07[i] === 'string') {
-                            textarea = json.ext_col_07[i];
-                        }
-                        if (
-                            json.ext_col_05[i] !== undefined &&
-              typeof json.ext_col_05[i].url === 'string'
-                        ) {
-                            url = json.ext_col_05[i].url;
-                        }
-                        imagePos = json.ext_col_04[i];
-                        textSize = json.ext_col_06[i];
+                if (json.ext_col_01.key === 'data') {
+                    if (typeof json.ext_col_09[i] === 'string') {
+                        labelText = json.ext_col_09[i];
                     }
-                    schemaDetail.fields.push({
-                        type: 'vuetifyText',
-                        inputType: 'text',
-                        text: labelText,
-                        min: 0,
-                        max: 100,
-                        label: 'subtitle_' + i.toString(),
-                        model: 'ext_col_09_' + i.toString(),
-                        required: false
-                    });
-                    schemaDetail.fields.push({
-                        model: 'ext_col_07_' + i.toString(),
-                        type: 'vuetifyTextArea',
-                        inputType: 'text',
-                        label: 'text_' + i.toString(),
-                        placeholder: '',
-                        text: textarea,
-                        required: false,
-                        counter: 1000,
-                        max: 1000,
-                        min: 0
-                    });
-                    schemaDetail.fields.push({
-                        model: 'ext_col_06_' + i.toString(),
-                        type: 'vuetifySingleOption',
-                        label: 'text_size_' + i.toString(),
-                        option: textSize,
-                        contents: [
-                            { key: '1', value: 'H2' },
-                            { key: '2', value: 'H3' },
-                            { key: '3', value: 'H4' },
-                            { key: '4', value: 'H5' },
-                            { key: '5', value: 'No level' }
-                        ],
-                        required: true,
-                        edit: true
-                    });
-                    schemaDetail.fields.push({
-                        model: 'ext_col_04_' + i.toString(),
-                        type: 'vuetifySingleOption',
-                        label: 'imagePosition_' + i.toString(),
-                        option: imagePos,
-                        contents: [
-                            { key: '1', value: 'Top' },
-                            { key: '2', value: 'Left' },
-                            { key: '4', value: 'Right' },
-                            { key: '3', value: 'Bottom' },
-                            { key: '5', value: 'No image' }
-                        ],
-                        required: true,
-                        edit: true
-                    });
-                    schemaDetail.fields.push({
-                        model: 'ext_col_05_' + i.toString(),
-                        type: 'vuetifyUploadImage',
-                        url
-                    });
-                    self.schemaDetailList.push(schemaDetail);
+                    if (typeof json.ext_col_07[i] === 'string') {
+                        textarea = json.ext_col_07[i];
+                    }
+                    if (
+                        json.ext_col_05[i] !== undefined &&
+                        typeof json.ext_col_05[i].url === 'string'
+                    ) {
+                        url = json.ext_col_05[i].url;
+                    }
+                    imagePos = json.ext_col_04[i];
+                    textSize = json.ext_col_06[i];
                 }
-                self.loading = false;
-            })
-            .catch(function (error) {
-                self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                self.$store.dispatch('snackbar/snackOn');
-                self.loading = false;
-            });
+                schemaDetail.fields.push({
+                    type: 'vuetifyText',
+                    inputType: 'text',
+                    text: labelText,
+                    min: 0,
+                    max: 100,
+                    label: 'subtitle_' + i.toString(),
+                    model: 'ext_col_09_' + i.toString(),
+                    required: false
+                });
+                schemaDetail.fields.push({
+                    model: 'ext_col_07_' + i.toString(),
+                    type: 'vuetifyTextArea',
+                    inputType: 'text',
+                    label: 'text_' + i.toString(),
+                    placeholder: '',
+                    text: textarea,
+                    required: false,
+                    counter: 1000,
+                    max: 1000,
+                    min: 0
+                });
+                schemaDetail.fields.push({
+                    model: 'ext_col_06_' + i.toString(),
+                    type: 'vuetifySingleOption',
+                    label: 'text_size_' + i.toString(),
+                    option: textSize,
+                    contents: [
+                        { key: '1', value: 'H2' },
+                        { key: '2', value: 'H3' },
+                        { key: '3', value: 'H4' },
+                        { key: '4', value: 'H5' },
+                        { key: '5', value: 'No level' }
+                    ],
+                    required: true,
+                    edit: true
+                });
+                schemaDetail.fields.push({
+                    model: 'ext_col_04_' + i.toString(),
+                    type: 'vuetifySingleOption',
+                    label: 'imagePosition_' + i.toString(),
+                    option: imagePos,
+                    contents: [
+                        { key: '1', value: 'Top' },
+                        { key: '2', value: 'Left' },
+                        { key: '4', value: 'Right' },
+                        { key: '3', value: 'Bottom' },
+                        { key: '5', value: 'No image' }
+                    ],
+                    required: true,
+                    edit: true
+                });
+                schemaDetail.fields.push({
+                    model: 'ext_col_05_' + i.toString(),
+                    type: 'vuetifyUploadImage',
+                    url
+                });
+                this.schemaDetailList.push(schemaDetail);
+            }
+            this.loading = false;
+        } catch (e) {
+            this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
+            this.$store.dispatch('snackbar/snackOn');
+            this.loading = false;
+        };
     }
 };
 </script>
