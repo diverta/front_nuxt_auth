@@ -1,5 +1,11 @@
 <template>
-    <v-app class="l-content_wrap">
+    <v-app
+        class="l-content_wrap"
+        :class="[
+            $auth.loggedIn ? 'p-dashboard' : 'p-login',
+            $route.name === 'index' ? 'p-home' : undefined
+        ]"
+    >
         <v-navigation-drawer v-if="auth.loggedIn"
                              id="c-navi_side"
                              v-model="drawer"
@@ -103,7 +109,7 @@
             {{ this.$store.getters["snackbar/message"] }}
 
             <template v-slot:action="{ attrs }">
-                <v-btn text v-bind="attrs" @click="snackbarVisible = false">
+                <v-btn text v-bind="attrs" @click="() => snackbarVisible = false">
                     {{ $t('common.close') }}
                 </v-btn>
             </template>
@@ -114,16 +120,6 @@
 <script>
 import '../sass/style.scss';
 export default {
-    created() {
-        const myBody = document.getElementsByTagName('body')[0];
-        if (this.$auth.loggedIn) {
-            myBody.classList.add('p-dashboard');
-            myBody.classList.remove('p-login');
-        } else {
-            myBody.classList.remove('p-dashboard');
-            myBody.classList.add('p-login');
-        }
-    },
     data() {
         return {
             langDefault: 'English',
@@ -200,21 +196,13 @@ export default {
     },
     methods: {
         go_page(path) {
-            this.$router.push(this.localePath(path));;
-        },
-        updateDesign() {
-            console.log('You logout!');
-            const myBody = document.getElementsByTagName('body')[0];
-            myBody.classList.remove('p-dashboard');
-            myBody.classList.add('p-login');
+            this.$router.push(this.localePath(path));
         },
         async logout() {
-            await this.$auth.logout().then((response) => {
-                this.updateDesign();
-                this.$store.dispatch('snackbar/setMessage', this.$i18n.t('slackbar.logged_out'));
-                this.$store.dispatch('snackbar/snackOn');
-                this.$router.push(this.localePath('/'));
-            });
+            await this.$auth.logout();
+            this.$store.dispatch('snackbar/setMessage', this.$i18n.t('slackbar.logged_out'));
+            this.$store.dispatch('snackbar/snackOn');
+            this.$router.push(this.localePath('/'));
         }
     }
 };

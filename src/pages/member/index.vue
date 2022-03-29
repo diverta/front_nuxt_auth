@@ -1,10 +1,5 @@
 <template>
     <div>
-        <!--
-    <div class="l-content_heading">
-      <h1>Members list</h1>
-    </div>
-    -->
         <v-row>
             <v-col class="col-sm-5 col-12 py-0">
                 <v-autocomplete
@@ -85,7 +80,6 @@ export default {
             perpage: 10,
             page: 1,
             pageCount: 0,
-            // totalCnt: 50,
             member: '',
             department: ''
         };
@@ -114,66 +108,48 @@ export default {
             if (this.department === '' && this.member === '') {
                 this.filteredItems = this.items;
             } else if (this.department === '') {
-                const self = this;
                 this.filteredItems = this.items.filter(function (obj) {
-                    return obj.name.includes(self.member);
+                    return obj.name.includes(this.member);
                 });
             } else if (this.member === '') {
-                const self = this;
                 this.filteredItems = this.items.filter(function (obj) {
-                    return obj.department.includes(self.department);
+                    return obj.department.includes(this.department);
                 });
             } else {
-                const self = this;
                 this.filteredItems = this.items.filter(function (obj) {
                     return (
-                        obj.department.includes(self.department) &&
-            obj.name.includes(self.member)
+                        obj.department.includes(this.department) &&
+            obj.name.includes(this.member)
                     );
                 });
             }
         }
     },
-    mounted() {
-        const url = '/rcms-api/1/members';
-        const self = this;
-        this.$store.$auth.ctx.$axios
-            .get(url)
-            .then(function (response) {
-                const items = [];
-                const members = [];
-                const departments = [];
-                for (const key in response.data.list) {
-                    const item = response.data.list[key];
-                    let department = '';
-                    let position = '';
-                    if (item.hasOwnProperty('department')) {
-                        department = item.department;
-                    }
-                    if (item.hasOwnProperty('position')) {
-                        position = item.position;
-                    }
-                    items.push({
-                        name: item.name1 + ' ' + item.name2,
-                        department,
-                        position,
-                        phone: item.tel,
-                        id: item.member_id
-                    });
-                    members.push(item.name1 + ' ' + item.name2);
-                    if (department !== '') {
-                        departments.push(department);
-                    }
-                }
-                self.filteredItems = items;
-                self.items = items;
-                self.members = members;
-                self.departments = departments;
-            })
-            .catch(function (error) {
-                self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                self.$store.dispatch('snackbar/snackOn');
-            });
+    async mounted() {
+        let response;
+        try {
+            response = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/members');
+        } catch (e) {
+            this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
+            this.$store.dispatch('snackbar/snackOn');
+            return;
+        }
+
+        response.data.list.forEach((item) => {
+            const itm = {
+                name: item.name1 + ' ' + item.name2,
+                department: item.department,
+                position: item.position,
+                phone: item.tel,
+                id: item.member_id
+            };
+            this.items.push(itm);
+            this.filteredItems.push(itm);
+            this.members.push(`${item.name1} ${item.name2}`);
+            if (item.department !== '') {
+                this.departments.push(item.department);
+            }
+        });
     }
 };
 </script>

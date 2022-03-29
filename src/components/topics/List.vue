@@ -46,13 +46,13 @@
                                 </NuxtLink>
                             </div>
                         </div>
-                        <v-col v-if="item.edit == true" class="py-2">
+                        <v-col v-if="item.edit" class="py-2">
                             <v-btn
                                 class="mx-3 c-icon_main c-icon_sm"
                                 fab
                                 dark
                                 small
-                                @click="edit_topic(item.id)"
+                                @click="() => $router.push(localePath(`/mypage/topic_edit/${item.id}`))"
                             >
                                 <v-icon dark>
                                     mdi-pencil
@@ -68,17 +68,11 @@
                 </div>
             </div>
         </div>
-        </div>
     </section>
 </template>
 
 <script>
 export default {
-    methods: {
-        edit_topic(topicId) {
-            this.$router.push(this.localePath('/profile/topic_edit/' + topicId));;
-        }
-    },
     props: {
         topics: {
             type: Array,

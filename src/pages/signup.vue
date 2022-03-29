@@ -90,40 +90,38 @@ export default {
         onInput (value, fieldName) {
             this.$set(this.model, fieldName, value);
         },
-        submitF () {
-            const self = this;
+        async submitF () {
+            this.loading = true;
 
             this.validForm = true;
-            for (const key in self.$children[1].$children) {
-                self.$children[1].$children[key].$children[0].$refs.myForm.validate();
-                if (self.$children[1].$children[key].$children[0].formValid === false) {
+            for (const key in this.$children[1].$children) {
+                this.$children[1].$children[key].$children[0].$refs.myForm.validate();
+                if (this.$children[1].$children[key].$children[0].formValid === false) {
                     this.validForm = false;
                 }
             }
 
-            if (this.validForm) {
-                const sendModel = JSON.parse(JSON.stringify(self.model));
-                this.loading = true;
-                this.$auth.ctx.$axios
-                    .post('/rcms-api/1/member/regist', sendModel)
-                    .then(function (response) {
-                        if (response.data.errors.length === 0) {
-                            self.$store.dispatch('snackbar/setMessage', this.$i18n.t('signup.success'));
-                            self.$store.dispatch('snackbar/snackOn');
-                        }
-                        self.loading = false;
-                        self.$router.push('/');
-                    })
-                    .catch(function (error) {
-                        self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                        self.$store.dispatch('snackbar/snackOn');
-                        self.loading = false;
-                    });
-            } else {
-                self.$store.dispatch('snackbar/setError', this.$i18n.t('verify.fille_property'));
-                self.$store.dispatch('snackbar/snackOn');
-                self.loading = false;
+            if (!this.validForm) {
+                this.$store.dispatch('snackbar/setError', this.$i18n.t('verify.fille_property'));
+                this.$store.dispatch('snackbar/snackOn');
+                this.loading = false;
+                return;
             }
+
+            try {
+                const sendModel = JSON.parse(JSON.stringify(this.model));
+                const response = await this.$auth.ctx.$axios.post('/rcms-api/1/member/regist', sendModel);
+                if (response.data.errors.length === 0) {
+                    this.$store.dispatch('snackbar/setMessage', this.$i18n.t('signup.success'));
+                    this.$store.dispatch('snackbar/snackOn');
+                }
+                this.$router.push('/');
+            } catch (e) {
+                this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
+                this.$store.dispatch('snackbar/snackOn');
+            };
+
+            this.loading = false;
         }
     },
     mounted() {},

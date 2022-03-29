@@ -1,5 +1,4 @@
 <template>
-
     <v-container v-if="pattern == 'no image' && text" fluid>
         <v-card class="mx-auto" max-width="7000">
             <v-card-title class="c-heading_h2" v-text="subtitle" />
@@ -98,7 +97,6 @@
             </v-container>
         </v-card>
     </v-container>
-
 </template>
 
 <script>
@@ -109,7 +107,7 @@ export default {
             required: false,
             default: ''
         },
-        image_url: {
+        imageUrl: {
             type: String,
             required: false,
             default: ''
@@ -123,7 +121,7 @@ export default {
             type: String,
             required: false,
             default: ''
-        },
+        }
     }
 };
 </script>

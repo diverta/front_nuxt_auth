@@ -39,7 +39,7 @@
                     <v-simple-table class="elevation-1 mt-5 c-table_responsive">
                         <template v-slot:default>
                             <tbody>
-                                <tr v-for="item in profile" :key="item.id">
+                                <tr v-for="item in profile" :key="item.name">
                                     <td width="200">
                                         {{ item.name }}
                                     </td>
@@ -85,7 +85,6 @@ export default {
     data() {
         return {
             placeholder: require('assets/images/avatar-placeholder.png'),
-            member_id: null,
             detail: {
                 name: '',
                 department: '',
@@ -148,89 +147,60 @@ export default {
             ]
         };
     },
-    mounted() {
-        this.member_id = this.$auth.user.member_id;
-        const self = this;
-        this.$auth.ctx.$axios
-            .get('/rcms-api/1/members/' + this.$auth.user.member_id)
-            .then(function (response) {
-                // console.log('testing');
-                const detail = {};
-                const detailsObj = response.data.details;
-                detail.name = detailsObj.name1 + ' ' + detailsObj.name2;
-                detail.zip = detailsObj.zip_code;
-                if (detailsObj.address1 == null) {
-                    detail.location = '';
-                } else {
-                    detail.location =
-            detailsObj.address1 +
-            ', ' +
-            detailsObj.address2 +
-            ' ' +
-            detailsObj.address3;
-                }
-                detail.phone = detailsObj.tel;
-                detail.email = detailsObj.email;
-                if (detailsObj.profileimage.url !== undefined) {
-                    detail.url = 'https://dev-nuxt-auth-mng.r-cms.jp' + detailsObj.profileimage.url;
-                } else {
-                    detail.url = self.placeholder;
-                }
-                if (detailsObj.hasOwnProperty('birth')) {
-                    detail.birth = detailsObj.birth;
-                }
-                if (detailsObj.hasOwnProperty('role')) {
-                    detail.position = detailsObj.role;
-                }
-                if (detailsObj.hasOwnProperty('department')) {
-                    detail.department = detailsObj.department;
-                }
-                if (detailsObj.hasOwnProperty('radio_button_2')) {
-                    detail.radio_button_2 = detailsObj.radio_button_2.label;
-                }
-                if (detailsObj.hasOwnProperty('pull_down')) {
-                    detail.pull_down = detailsObj.pull_down.label;
-                }
-                if (detailsObj.hasOwnProperty('notes')) {
-                    detail.text = detailsObj.notes;
-                }
-                if (detailsObj.hasOwnProperty('multiple_check')) {
-                    let multipleInput = '';
-                    for (let i = 0; i < detailsObj.multiple_check.length; ++i) {
-                        multipleInput += detailsObj.multiple_check[i].label + ', ';
-                        detail.multiple_check = multipleInput;
-                    }
-                }
+    async mounted() {
+        let response;
+        try {
+            response = await this.$auth.ctx.$axios.get(`/rcms-api/1/members/${this.$auth.user.member_id}`)
+        } catch (e) {
+            this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
+            this.$store.dispatch('snackbar/snackOn');
+            return;
+        }
 
-                self.detail = detail;
-                for (let i = 0; i < self.profile.length; i++) {
-                    if (self.profile[i].name === 'First Name' && detailsObj.name1) {
-                        self.profile[i].value = detailsObj.name1;
-                    } else if (self.profile[i].name === 'Last Name' && detailsObj.name2) {
-                        self.profile[i].value = detailsObj.name2;
-                    } else if (self.profile[i].name === 'Hire Date' && detailsObj.hire_date) {
-                        self.profile[i].value = detailsObj.hire_date;
-                    } else if (self.profile[i].name === 'Department' && detailsObj.department) {
-                        self.profile[i].value = detailsObj.department;
-                    } else if (self.profile[i].name === 'Position' && detailsObj.role) {
-                        self.profile[i].value = detailsObj.role;
-                    } else if (self.profile[i].name === 'Phone' && detail.phone) {
-                        self.profile[i].value = detail.phone;
-                    } else if (self.profile[i].name === 'Email' && detail.email) {
-                        self.profile[i].value = detail.email;
-                    } else if (self.profile[i].name === 'Office' && detail.pull_down) {
-                        self.profile[i].value = detail.pull_down;
-                    } else if (self.profile[i].name === 'Hobby' && detail.multiple_check) {
-                        self.profile[i].value = detail.multiple_check;
-                    } else if (self.profile[i].name === 'Notes' && detail.text) {
-                        self.profile[i].value = detail.text;
-                    }
-                }
-            })
-            .catch(function (error) {
-                self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                self.$store.dispatch('snackbar/snackOn');
-            });
+        const detailsObj = response.data.details;
+        this.detail = {
+            ...detailsObj,
+            name: `${detailsObj.name1} ${detailsObj.name2}`,
+            zip: detailsObj.zip_code,
+            location: detailsObj.address1 ? `${detailsObj.address1}, ${detailsObj.address2} ${detailsObj.address3}` : '',
+            phone: detailsObj.tel,
+            email: detailsObj.email,
+            url: detailsObj.profileimage.url ? `https://dev-nuxt-auth-mng.r-cms.jp${detailsObj.profileimage.url}` : this.placeholder,
+            birth: detailsObj?.birth || '',
+            position: detailsObj?.role || '',
+            department: detailsObj?.department || '',
+            radio_button_2: detailsObj?.radio_button_2?.label || '',
+            pull_down: detailsObj?.pull_down?.label || '',
+            text: detailsObj?.notes || '',
+            multiple_check: detailsObj?.multiple_check?.map((label) => label).join(', '),
+        };
+
+        this.profile = this.profile.map((item) => {
+            switch (item.name) {
+            case 'First Name':
+                return this.detail.name1 ? { ...item, value: this.detail.name1 } : item;
+            case 'Last Name':
+                return this.detail.name2 ? { ...item, value: this.detail.name2 } : item;
+            case 'Hire Date':
+                return this.detail.hire_date ? { ...item, value: this.detail.hire_date } : item;
+            case 'Department':
+                return this.detail.department ? { ...item, value: this.detail.department } : item;
+            case 'Position':
+                return this.detail.role ? { ...item, value: this.detail.role } : item;
+            case 'Phone':
+                return this.detail.phone ? { ...item, value: this.detail.phone } : item;
+            case 'Email':
+                return this.detail.email ? { ...item, value: this.detail.email } : item;
+            case 'Office':
+                return this.detail.pull_down ? { ...item, value: this.detail.pull_down } : item;
+            case 'Hobby':
+                return this.detail.multiple_check ? { ...item, value: this.detail.multiple_check } : item;
+            case 'Notes':
+                return this.detail.text ? { ...item, value: this.detail.text } : item;
+            default:
+                return item;
+            }
+        })
     }
 };
 </script>

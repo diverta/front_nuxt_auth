@@ -14,7 +14,7 @@
                         :src="detail.url"
                         max-height="180"
                         max-width="180"
-                    /> 
+                    />
                 </v-col>
                 <v-col class="mx-auto">
                     <v-container fluid>
@@ -78,9 +78,9 @@
             <button
                 type="submit"
                 class="c-btn c-btn_dark c-btn_icon"
-                @click="back()"
+                @click="() => back()"
             >
-                {{$t('common.back')}}
+                {{ $t('common.back') }}
                 <v-icon class="icon c-text_white pr-2">
                     mdi-undo-variant
                 </v-icon>
@@ -140,80 +140,67 @@ export default {
             ]
         };
     },
-    mounted() {
+    async mounted() {
         this.member_id = this.$route.params.id;
-        const url = '/rcms-api/1/members?id=' + this.member_id;
-        const self = this;
-        this.$store.$auth.ctx.$axios
-            .get(url)
-            .then(function (response) {
-                const detail = {};
-                const detailsObj = response.data.list[0];
-                detail.name = detailsObj.name1 + ' ' + detailsObj.name2;
-                detail.zip = detailsObj.zip_code;
-                if (detailsObj.address1 == null) {
-                    detail.location = '';
-                } else {
-                    detail.location =
-            detailsObj.address1 +
-            ', ' +
-            detailsObj.address2 +
-            ' ' +
-            detailsObj.address3;
-                }
-                detail.phone = detailsObj.tel;
-                detail.email = detailsObj.email;
-                if (detailsObj.profileimage.url !== undefined) {
-                    detail.url = "https://dev-nuxt-auth-mng.r-cms.jp" + detailsObj.profileimage.url;
-                    console.log(detail.url);
-                } else {
-                    detail.url = self.placeholder;
-                }
-                if (detailsObj.hasOwnProperty('sex')) {
-                    detail.sex = detailsObj.sex.label;
-                }
-                if (detailsObj.hasOwnProperty('birth')) {
-                    detail.birth = detailsObj.birth;
-                }
-                if (detailsObj.hasOwnProperty('position')) {
-                    detail.position = detailsObj.position;
-                }
-                if (detailsObj.hasOwnProperty('department')) {
-                    detail.department = detailsObj.department;
-                }
-                if (detailsObj.hasOwnProperty('radio_button_2')) {
-                    detail.radio_button_2 = detailsObj.radio_button_2.label;
-                }
-                if (detailsObj.hasOwnProperty('multiple_check')) {
-                    let multipleInput = '';
-                    for (let i = 0; i < detailsObj.multiple_check.length; ++i) {
-                        multipleInput += detailsObj.multiple_check[i].label + ', ';
-                        detail.multiple_check = multipleInput;
-                    }
-                }
 
-                self.detail = detail;
-                for (let i = 0; i < self.profile.length; i++) {
-                    if (self.profile[i].name === 'Hire Date' && detailsObj.hire_date) {
-                        self.profile[i].value = detailsObj.hire_date;
-                    } else if (self.profile[i].name === 'Phone' && detail.phone) {
-                        self.profile[i].value = detail.phone;
-                    } else if (self.profile[i].name === 'Email' && detail.email) {
-                        self.profile[i].value = detail.email;
-                    } else if (self.profile[i].name === 'Office' && detailsObj.pull_down.label) {
-                        self.profile[i].value = detailsObj.pull_down.label;
-                    } else if (self.profile[i].name === 'Hobby' && detail.multiple_check) {
-                        self.profile[i].value = detail.multiple_check;
-                    } else if (self.profile[i].name === 'Notes' && detailsObj.notes) {
-                        self.profile[i].value = detailsObj.notes;
-                    }
+        try {
+            const response = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/members', {
+                params: {
+                    id: this.member_id
                 }
-            })
-            .catch(function (error) {
-                console.log(error);
-                self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                self.$store.dispatch('snackbar/snackOn');
             });
+
+            const detail = {};
+            const detailsObj = response.data.list[0];
+            detail.name = `${detailsObj.name1} ${detailsObj.name2}`;
+            detail.zip = detailsObj.zip_code;
+            detail.location = detailsObj.address1 ? `${detailsObj.address1}, ${detailsObj.address2} ${detailsObj.address3}` : '';
+            detail.phone = detailsObj.tel;
+            detail.email = detailsObj.email;
+            detail.url = detailsObj.profileimage.url ? `https://dev-nuxt-auth-mng.r-cms.jp${detailsObj.profileimage.url}` : this.placeholder;
+            if (detailsObj.sex) {
+                detail.sex = detailsObj.sex.label;
+            }
+            if (detailsObj.birth) {
+                detail.birth = detailsObj.birth;
+            }
+            if (detailsObj.position) {
+                detail.position = detailsObj.position;
+            }
+            if (detailsObj.department) {
+                detail.department = detailsObj.department;
+            }
+            if (detailsObj.radio_button_2) {
+                detail.radio_button_2 = detailsObj.radio_button_2.label;
+            }
+            if (detailsObj.multiple_check) {
+                let multipleInput = '';
+                for (let i = 0; i < detailsObj.multiple_check.length; ++i) {
+                    multipleInput += detailsObj.multiple_check[i].label + ', ';
+                    detail.multiple_check = multipleInput;
+                }
+            }
+
+            this.detail = detail;
+            for (let i = 0; i < this.profile.length; i++) {
+                if (this.profile[i].name === 'Hire Date' && detailsObj.hire_date) {
+                    this.profile[i].value = detailsObj.hire_date;
+                } else if (this.profile[i].name === 'Phone' && detail.phone) {
+                    this.profile[i].value = detail.phone;
+                } else if (this.profile[i].name === 'Email' && detail.email) {
+                    this.profile[i].value = detail.email;
+                } else if (this.profile[i].name === 'Office' && detailsObj.pull_down.label) {
+                    this.profile[i].value = detailsObj.pull_down.label;
+                } else if (this.profile[i].name === 'Hobby' && detail.multiple_check) {
+                    this.profile[i].value = detail.multiple_check;
+                } else if (this.profile[i].name === 'Notes' && detailsObj.notes) {
+                    this.profile[i].value = detailsObj.notes;
+                }
+            }
+        } catch (e) {
+            this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
+            this.$store.dispatch('snackbar/snackOn');
+        }
     }
 };
 </script>

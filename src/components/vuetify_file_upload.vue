@@ -25,38 +25,31 @@ export default {
         };
     },
     methods: {
-        check (e) {
+        async check (e) {
             const formData = new FormData();
             formData.append('file', this.schema.file);
-            const self = this;
             const headers = {
                 accept: '*/*',
                 'Content-Type': 'multipart/form-data'
             };
-            console.log(this.schema.file);
-            self.formValid = false;
-            self.$store.$auth.ctx.$axios
-                .post('/rcms-api/1/upload', formData, {
-                    headers
-                })
-                .then(function (response) {
-                    console.log(response);
-                    self.formValid = true;
-                    self.$emit(
-                        'model-updated',
-                        {
-                            file_id: response.data.file_id,
-                            file_nm: self.schema.file.name,
-                            desc: self.schema.file.name
-                        },
-                        self.schema.model
-                    );
-                })
-                .catch(function (error) {
-                    self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                    self.$store.dispatch('snackbar/snackOn');
-                    self.loading = false;
-                });
+            this.formValid = false;
+            try {
+                const response = await this.$store.$auth.ctx.$axios.post('/rcms-api/1/upload', formData, { headers })
+                this.formValid = true;
+                this.$emit(
+                    'model-updated',
+                    {
+                        file_id: response.data.file_id,
+                        file_nm: this.schema.file.name,
+                        desc: this.schema.file.name
+                    },
+                    this.schema.model
+                );
+            } catch (e) {
+                this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
+                this.$store.dispatch('snackbar/snackOn');
+                this.loading = false;
+            };
         }
     },
     mixins: [abstractField],

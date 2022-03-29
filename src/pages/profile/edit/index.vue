@@ -77,98 +77,73 @@ export default {
         'vue-form-generator': VueFormGenerator.component
     },
     methods: {
-        go_page(path) {
-            this.$router.push(this.localePath(path));
-        },
         onInput (value, fieldName) {
             this.$set(this.model, fieldName, value);
         },
-        submitF () {
-            const self = this;
+        async submitF () {
             this.validForm = true;
-            for (const key in self.$children[1].$children) {
-                self.$children[1].$children[key].$children[0].$refs.myForm.validate();
-                if (self.$children[1].$children[key].$children[0].formValid === false) {
+            for (const key in this.$children[1].$children) {
+                this.$children[1].$children[key].$children[0].$refs.myForm.validate();
+                if (this.$children[1].$children[key].$children[0].formValid === false) {
                     this.validForm = false;
                 }
             }
 
-            if (this.validForm) {
-                const sendModel = JSON.parse(JSON.stringify(self.model));
-                self.$store.$auth.ctx.$axios
-                    .post('/rcms-api/1/member/update', sendModel)
-                    .then(function (response) {
-                        if (response.data.errors.length === 0) {
-                            self.$store.dispatch(
-                                'snackbar/setMessage',
-                                'Your profile is changed.'
-                            );
-                            self.$store.dispatch('snackbar/snackOn');
-                            self.$router.push('/');
-                        }
-                    }).catch(function (error) {
-                        self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                        self.$store.dispatch('snackbar/snackOn');
-                    }); ;
-            } else {
-                self.$store.dispatch('snackbar/setError', this.$i18n.t('verify.fille_property'));
-                self.$store.dispatch('snackbar/snackOn');
+            if (!this.validForm) {
+                this.$store.dispatch('snackbar/setError', this.$i18n.t('verify.fille_property'));
+                this.$store.dispatch('snackbar/snackOn');
+                return;
+            }
+
+            const sendModel = JSON.parse(JSON.stringify(this.model));
+            try {
+                const response = await this.$store.$auth.ctx.$axios.post('/rcms-api/1/member/update', sendModel);
+                if (response.data.errors.length === 0) {
+                    this.$store.dispatch(
+                        'snackbar/setMessage',
+                        'Your profile is changed.'
+                    );
+                    this.$store.dispatch('snackbar/snackOn');
+                    this.$router.push('/');
+                }
+            } catch (e) {
+                this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
+                this.$store.dispatch('snackbar/snackOn');
             }
         }
     },
-    mounted() {
-        if (this.$auth.loggedIn) {
-            const self = this;
-            this.$auth.ctx.$axios
-                .get('/rcms-api/1/members/' + this.$auth.user.member_id)
-                .then(function (response) {
-                    for (let i = 0; i < self.schema.fields.length; i++) {
-                        if (self.schema.fields[i].model === 'name1' && response.data.details.name1) {
-                            self.schema.fields[i].text = response.data.details.name1;
-                        } else if (self.schema.fields[i].model === 'name2' && response.data.details.name2) {
-                            self.schema.fields[i].text = response.data.details.name2;
-                        } else if (self.schema.fields[i].model === 'hire_date' && response.data.details.hire_date) {
-                            self.schema.fields[i].time = response.data.details.hire_date;
-                        } else if (self.schema.fields[i].model === 'department' && response.data.details.department) {
-                            self.schema.fields[i].text = response.data.details.department;
-                        } else if (self.schema.fields[i].model === 'position' && response.data.details.position) {
-                            self.schema.fields[i].text = response.data.details.position;
-                        } else if (self.schema.fields[i].model === 'tel' && response.data.details.tel) {
-                            self.schema.fields[i].text = response.data.details.tel;
-                        } else if (self.schema.fields[i].model === 'email' && response.data.details.email) {
-                            self.schema.fields[i].text = response.data.details.email;
-                        } else if (self.schema.fields[i].model === 'notes' && response.data.details.notes) {
-                            self.schema.fields[i].text = response.data.details.notes;
-                        }
+    async mounted() {
+        try {
+            const response = await this.$auth.ctx.$axios.get(`/rcms-api/1/members/${this.$auth.user.member_id}`);
+            const details = response.data.details;
+            this.schema.fields.forEach(d => {
+                switch (d.model) {
+                case 'name1':
+                case 'name2':
+                case 'department':
+                case 'position':
+                case 'tel':
+                case 'email':
+                case 'notes':
+                    if (details[d.model]) {
+                        d.text = details[d.model];
                     }
-                    /*
-          for (var i = 0; i < self.schema.fields[10].options.length; ++i) {
-            if (
-              self.schema.fields[10].options[i].value ==
-              response.data.details.tdfk_cd
-            ) {
-              self.schema.fields[10].option = self.schema.fields[10].options[i];
-            }
-          }
-          for (var i = 0; i < self.schema.fields[10].contents.length; ++i) {
-            d
-            if (
-              self.schema.fields[10].contents[i].key ==
-              response.data.details.pull_down.key
-            ) {
-              //self.schema.fields[13].contents.value = self.schema.fields[13].cotnent[i];
-              console.log(self.schema.fields[10].contents.value);
-            }
-          }
-          */
-                    self.loading = false;
-                })
-                .catch(function (error) {
-                    self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                    self.$store.dispatch('snackbar/snackOn');
-                    self.loading = false;
-                });
-        }
+                    break;
+                case 'hire_date':
+                    if (details[d.model]) {
+                        d.time = details[d.model];
+                    }
+                    break;
+                default:
+                    break;
+                }
+            });
+        } catch (e) {
+            this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
+            this.$store.dispatch('snackbar/snackOn');
+        };
+
+        this.loading = false;
     },
     data() {
         return {

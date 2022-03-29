@@ -34,7 +34,7 @@
                     </v-card>
                 </v-card>
                 <v-row v-for="(item, idx) in items" :key="idx" class="p-article_content">
-                    <topic-detail
+                    <TopicsDetail
                         :text="item.text"
                         :image_url="item.image_url"
                         :subtitle="item.subtitle"
@@ -80,12 +80,8 @@
 </template>
 
 <script>
-import topicDetail from '../../components/topic_detail';
 export default {
     auth: true,
-    components: {
-        topicDetail,
-    },
     computed: {
         attrs() {
             const attrs = {};
@@ -149,7 +145,7 @@ export default {
                 await request;
                 this.favoriteColor = this.favoriteColor === 'gray' ? 'red' : 'gray';
             } catch (error) {
-                this.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
+                this.$store.dispatch('snackbar/setError', error?.response?.data?.errors?.[0]?.message);
                 this.$store.dispatch('snackbar/snackOn');
             }
         }
@@ -165,17 +161,22 @@ export default {
     },
     async mounted() {
         this.topic_id = this.$route.params.id;
-        this.topicsDetailResponse = await this.$store.$auth.ctx.$axios.get(`/rcms-api/1/topic/detail/${this.topic_id}`)
-            .catch((error) => {
-                self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                self.$store.dispatch('snackbar/snackOn');
-            });
-        this.favoriteResponse = await this.$store.$auth.ctx.$axios
-            .get(`/rcms-api/1/favorites?member_id=${this.$auth.user.member_id}&module_type=topics&module_id=${this.topic_id}`)
-            .catch((error) => {
-                this.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                this.$store.dispatch('snackbar/snackOn');
-            });
+
+        try {
+            this.topicsDetailResponse = await this.$store.$auth.ctx.$axios.get(`/rcms-api/1/topic/detail/${this.topic_id}`);
+            this.favoriteResponse = await this.$store.$auth.ctx.$axios
+                .get('/rcms-api/1/favorites', {
+                    params: {
+                        member_id: this.$auth.user.member_id,
+                        module_type: 'topics',
+                        module_id: this.topic_id
+                    }
+                });
+        } catch (e) {
+            this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
+            this.$store.dispatch('snackbar/snackOn');
+        }
+
         this.favoriteColor = this.favoriteResponse?.data?.pageInfo?.totalCnt > 0 ? 'red' : 'grey';
         this.loading = false;
     }
