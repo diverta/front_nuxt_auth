@@ -95,35 +95,32 @@ export default {
         };
     },
     async mounted() {
-        let response;
         try {
-            response = await this.$auth.ctx.$axios.get(`/rcms-api/1/members/${this.$auth.user.member_id}`)
+            const response = await this.$auth.ctx.$axios.get(`/rcms-api/1/members/${this.$auth.user.member_id}`);
+            const detailsObj = response.data.details;
+            this.detail = {
+                name: `${detailsObj.name1} ${detailsObj.name2}`,
+                profileImageUrl: detailsObj.profileimage.url
+                    ? `https://dev-nuxt-auth-mng.r-cms.jp${detailsObj.profileimage.url}`
+                    : this.placeholder,
+                position: detailsObj?.role || '',
+                department: detailsObj?.department || '',
+                profile: {
+                    'First Name': detailsObj.name1 || 'N/A',
+                    'Last Name': detailsObj.name2 || 'N/A',
+                    'Hire Date': detailsObj?.hire_date || 'N/A',
+                    Department: detailsObj.department || 'N/A',
+                    Position: detailsObj.role || 'N/A',
+                    Phone: detailsObj.tel || 'N/A',
+                    Email: detailsObj.email || 'N/A',
+                    Office: detailsObj?.pull_down?.label || 'N/A',
+                    Hobby: detailsObj?.multiple_check?.map(({ label }) => label)?.join(', ') || 'N/A',
+                    Notes: detailsObj?.notes || 'N/A'
+                }
+            };
         } catch (e) {
             this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
-            return;
         }
-
-        const detailsObj = response.data.details;
-        this.detail = {
-            name: `${detailsObj.name1} ${detailsObj.name2}`,
-            profileImageUrl: detailsObj.profileimage.url
-                ? `https://dev-nuxt-auth-mng.r-cms.jp${detailsObj.profileimage.url}`
-                : this.placeholder,
-            position: detailsObj?.role || '',
-            department: detailsObj?.department || '',
-            profile: {
-                'First Name': detailsObj.name1 || 'N/A',
-                'Last Name': detailsObj.name2 || 'N/A',
-                'Hire Date': detailsObj?.hire_date || 'N/A',
-                Department: detailsObj.department || 'N/A',
-                Position: detailsObj.role || 'N/A',
-                Phone: detailsObj.tel || 'N/A',
-                Email: detailsObj.email || 'N/A',
-                Office: detailsObj?.pull_down?.label || 'N/A',
-                Hobby: detailsObj?.multiple_check?.map(({ label }) => label)?.join(', ') || 'N/A',
-                Notes: detailsObj?.notes || 'N/A'
-            }
-        };
     }
 };
 </script>
