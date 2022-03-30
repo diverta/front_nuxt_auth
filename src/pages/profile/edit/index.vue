@@ -20,7 +20,7 @@
 
                 <v-checkbox v-model="disabled" class="c-form_tnc">
                     <template v-slot:label>
-                        <div>{{$t('common.agree')}}</div>
+                        <div>{{ $t('common.agree') }}</div>
                     </template>
                 </v-checkbox>
                 <div class="text-center mb-5">
@@ -32,7 +32,7 @@
                         class="c-btn c-btn_main"
                         @click="submitF()"
                     >
-                        {{$t('common.submit')}}
+                        {{ $t('common.submit') }}
                     </button
                     >
                 </div>
@@ -113,7 +113,7 @@ export default {
         try {
             const response = await this.$auth.ctx.$axios.get(`/rcms-api/1/members/${this.$auth.user.member_id}`);
             const details = response.data.details;
-            this.schema.fields.forEach(d => {
+            this.schema.fields.forEach((d) => {
                 switch (d.model) {
                 case 'name1':
                 case 'name2':
