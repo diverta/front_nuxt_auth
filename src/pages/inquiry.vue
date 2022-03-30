@@ -10,7 +10,7 @@
 
         <div class="l-content_heading">
             <h3 class="slogan text-left">
-                {{$t('inquiry.message')}}<br>
+                {{ $t('inquiry.message') }}<br>
             </h3>
         </div>
 
@@ -26,7 +26,7 @@
 
                 <v-checkbox v-model="disabled" class="c-form_tnc">
                     <template v-slot:label>
-                        <div>{{$t('common.agree')}}</div>
+                        <div>{{ $t('common.agree') }}</div>
                     </template>
                 </v-checkbox>
 
@@ -37,7 +37,7 @@
                         :disabled="!disabled"
                         @click="submitF()"
                     >
-                        {{$t('common.submit')}}
+                        {{ $t('common.submit') }}
                     </button>
                 </div>
             </v-container>
@@ -100,12 +100,12 @@ export default {
             this.loading = true;
             let response;
             try {
-                response = await this.$store.$auth.ctx.$axios.get(this.inquirySchemaUrl)
+                response = await this.$store.$auth.ctx.$axios.get(this.inquirySchemaUrl);
                 this.schema = {
                     fields: Object.entries(response.data.details.cols)
                         .map(([key, val]) => this.$parse(val, key))
-                        .filter(res => res)
-                }
+                        .filter((res) => res)
+                };
             } catch (e) {
                 this.$snackbar.error(e?.response?.data.errors?.[0]?.message);
             }
@@ -141,6 +141,6 @@ export default {
                 this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
             };
         }
-    },
+    }
 };
 </script>

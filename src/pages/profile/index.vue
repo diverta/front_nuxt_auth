@@ -65,7 +65,7 @@
                 class="c-btn c-btn_dark c-btn_icon"
                 @click="edit()"
             >
-                {{$t('common.edit')}}
+                {{ $t('common.edit') }}
                 <v-icon class="icon c-text_white pl-2">
                     mdi-pencil
                 </v-icon>
@@ -91,7 +91,7 @@ export default {
                 position: '',
                 profileImageUrl: '',
                 profile: {}
-            },
+            }
         };
     },
     async mounted() {

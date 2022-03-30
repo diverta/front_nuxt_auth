@@ -34,7 +34,7 @@ export default {
             };
             this.formValid = false;
             try {
-                const response = await this.$store.$auth.ctx.$axios.post('/rcms-api/1/upload', formData, { headers })
+                const response = await this.$store.$auth.ctx.$axios.post('/rcms-api/1/upload', formData, { headers });
                 this.formValid = true;
                 this.$emit(
                     'model-updated',

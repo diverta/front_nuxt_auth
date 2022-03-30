@@ -64,7 +64,7 @@
                                         >
                                             {{ $t('common.sign_in') }}
                                         </button>
-                                        <span v-html="$t('login.note')"></span>
+                                        <span v-html="$t('login.note')" />
                                     </div>
                                 </form>
                             </v-card-text>

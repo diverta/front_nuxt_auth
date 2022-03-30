@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="l-content_heading">
-            <h1>{{$t('member.detail_title')}}</h1>
+            <h1>{{ $t('member.detail_title') }}</h1>
         </div>
         <v-col>
             <v-row>
@@ -106,7 +106,7 @@ export default {
                 email: '',
                 text: '',
                 profile: {}
-            },
+            }
         };
     },
     async mounted() {

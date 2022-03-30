@@ -76,7 +76,11 @@ export default {
    */
     buildModules: [
         '@nuxtjs/vuetify',
-        '@nuxtjs/date-fns'
+        '@nuxtjs/date-fns',
+        // Doc: https://github.com/nuxt-community/eslint-module
+        ['@nuxtjs/eslint-module', { fix: true }],
+        // Doc: https://github.com/nuxt-community/stylelint-module
+        ['@nuxtjs/stylelint-module', { fix: true }],
     ],
     /*
    ** Nuxt.js modules

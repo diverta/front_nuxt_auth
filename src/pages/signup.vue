@@ -14,9 +14,9 @@
         <div class="v-stepper c-form_wrap">
             <v-container fluid>
                 <div class="l-content_heading">
-                    <h1>{{$t('signup.title')}}</h1>
+                    <h1>{{ $t('signup.title') }}</h1>
                     <h4 class="slogan">
-                        {{$t('signup.text')}}
+                        {{ $t('signup.text') }}
                     </h4>
                 </div>
                 <vue-form-generator
@@ -29,7 +29,7 @@
 
                 <v-checkbox v-model="disabled" class="c-form_tnc">
                     <template v-slot:label>
-                        <div>{{$t('common.agree')}}</div>
+                        <div>{{ $t('common.agree') }}</div>
                     </template>
                 </v-checkbox>
                 <div class="text-center mb-5">
@@ -41,7 +41,7 @@
                         :disabled="!disabled"
                         @click="submitF()"
                     >
-                        {{$t('common.submit')}}
+                        {{ $t('common.submit') }}
                     </button
                     >
                 </div>

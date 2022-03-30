@@ -6,7 +6,7 @@
                     <img src="~/assets/images/logo.png?width=150px" class="p-login_logo">
                     <div class="p-login_intro-text">
                         <h1 class="heading">
-                            <span v-html="$t('reminder.back_to_login')"></span>
+                            <span v-html="$t('reminder.back_to_login')" />
                             <v-icon
                                 dark
                                 right
@@ -16,7 +16,7 @@
                                 mdi-undo-variant
                             </v-icon>
                         </h1>
-                        <p v-html="$t('reminder.sign_up')"></p>
+                        <p v-html="$t('reminder.sign_up')" />
                     </div>
                 </div>
             </v-col>
@@ -30,13 +30,13 @@
                     >
                         <v-card-title>
                             <h2 align="center" class="pb-4 c-text_blue">
-                                {{$t('reminder.password_reset')}}
+                                {{ $t('reminder.password_reset') }}
                             </h2>
                         </v-card-title>
                         <v-container fluid>
                             <v-row>
                                 <v-col cols="12">
-                                    <p>{{$t('reminder.send_email')}}</p>
+                                    <p>{{ $t('reminder.send_email') }}</p>
                                     <v-text-field
                                         v-model="email"
                                         label="Email address"
@@ -53,7 +53,7 @@
                                         :loading="loading1"
                                         class="c-btn c-btn_dark"
                                     >
-                                        {{$t('reminder.reset')}}
+                                        {{ $t('reminder.reset') }}
                                     </button>
                                 </v-col>
                             </v-row>
@@ -69,19 +69,19 @@
                     >
                         <v-card-title>
                             <h2 align="center" class="pb-4 c-text_blue">
-                                <p>{{$t('reminder.set_password')}}</p>
+                                <p>{{ $t('reminder.set_password') }}</p>
                             </h2>
                         </v-card-title>
                         <v-container fluid class="p-login_content-inner">
                             <v-row>
                                 <v-col cols="12 py-0">
-                                    <p>{{$t('reminder.temp_password')}}</p>
+                                    <p>{{ $t('reminder.temp_password') }}</p>
                                     <v-text-field v-model="temp_pwd" :type="text" label="" outlined />
                                 </v-col>
                             </v-row>
                             <v-row>
                                 <v-col cols="12 py-0">
-                                    <p>{{$t('reminder.new_password')}}</p>
+                                    <p>{{ $t('reminder.new_password') }}</p>
                                     <v-text-field
                                         v-model="login_pwd"
                                         :append-icon="password_show ? 'mdi-eye' : 'mdi-eye-off'"
@@ -97,7 +97,7 @@
                             </v-row>
                             <v-row>
                                 <v-col cols="12 pt-0">
-                                    <p>{{$t('reminder.conf_password')}}</p>
+                                    <p>{{ $t('reminder.conf_password') }}</p>
                                     <v-text-field
                                         v-model="login_pwd2"
                                         :append-icon="password_show2 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -125,7 +125,7 @@
                                         dark
                                         :loading="loading2"
                                     >
-                                        {{$t('reminder.submit')}}
+                                        {{ $t('reminder.submit') }}
                                     </v-btn>
                                 </v-col>
                             </v-row>
@@ -143,7 +143,7 @@
                             <v-row>
                                 <v-col cols="12">
                                     <p align="center">
-                                        {{$t('reminder.update_ok')}}
+                                        {{ $t('reminder.update_ok') }}
                                     </p>
                                 </v-col>
                             </v-row>
@@ -157,7 +157,7 @@
                                         class="white--text"
                                         @click="login()"
                                     >
-                                        {{$t('reminder.login')}}
+                                        {{ $t('reminder.login') }}
                                     </v-btn>
                                 </v-col>
                             </v-row>
@@ -174,7 +174,7 @@
                         <v-container fluid>
                             <v-row class="p-login_content-inner">
                                 <v-col cols="12" class="align-self-center">
-                                    <p align="center" v-html="$t('reminder.send_emailed')"></p>
+                                    <p align="center" v-html="$t('reminder.send_emailed')" />
                                 </v-col>
                             </v-row>
                         </v-container>

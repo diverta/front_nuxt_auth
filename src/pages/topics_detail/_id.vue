@@ -39,7 +39,9 @@
             </v-col>
             <v-col>
                 <div v-if="topicsDetail.fileUrl || topicsDetail.fileDownload" class="p-article_footer-content">
-                    <h3 class="heading">{{ $t('detail.files') }}</h3>
+                    <h3 class="heading">
+                        {{ $t('detail.files') }}
+                    </h3>
                     <a v-if="topicsDetail.fileUrl" :href="topicsDetail.fileUrl" target="_blank" class="c-btn c-btn_dark p-article_file">
                         {{ $t('detail.view') }}
                         <FileTypeIcon :file-type="topicsDetail.fileType" />
@@ -50,7 +52,9 @@
                     </a>
                 </div>
                 <div v-if="topicsDetail.linkUrl" class="p-article_footer-content">
-                    <h3 class="heading">{{ $t('detail.links') }}</h3>
+                    <h3 class="heading">
+                        {{ $t('detail.links') }}
+                    </h3>
                     <a v-if="topicsDetail.linkUrl" :href="topicsDetail.linkUrl" target="_blank" class="c-link">
                         <v-icon v-if="topicsDetail.fileType == 'pdf'">mdi-open-in-new</v-icon>
                         <span v-if="topicsDetail.linkTitle">{{ topicsDetail.linkTitle }}</span>
@@ -122,7 +126,7 @@ export default {
             favoriteResponse: null,
             favoriteColor: 'grey',
             loading: true,
-            topic_id: null,
+            topic_id: null
         };
     },
     async mounted() {

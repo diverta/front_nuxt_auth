@@ -4,8 +4,8 @@
  */
 export default ({ store }, inject) => {
     const snackbar = {
-        info: msg => store.dispatch('snackbar/popupInfo', msg),
-        error: msg => store.dispatch('snackbar/popupError', msg),
+        info: (msg) => store.dispatch('snackbar/popupInfo', msg),
+        error: (msg) => store.dispatch('snackbar/popupError', msg)
     };
     inject('snackbar', snackbar);
 };
