@@ -103,7 +103,7 @@ export default {
                     }
                 });
                 const topicsIds = favouriteRes.data.list.map((item) => item.module_id);
-                if (topicsIds === 0) {
+                if (topicsIds.length === 0) {
                     return;
                 }
 
