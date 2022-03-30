@@ -109,8 +109,7 @@ export default {
                     }));
                 this.totalCnt = this.topics.length;
             } catch (e) {
-                this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
-                this.$store.dispatch('snackbar/snackOn');
+                this.$store.dispatch('snackbar/popupError', e?.response?.data?.errors?.[0]?.message);
             };
         }
     },
@@ -123,8 +122,7 @@ export default {
                 value: item.category_nm
             }));
         } catch (e) {
-            this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
-            this.$store.dispatch('snackbar/snackOn');
+            this.$store.dispatch('snackbar/popupError', e?.response?.data?.errors?.[0]?.message);
         };
 
         this.updateTopics();

@@ -189,8 +189,7 @@ export default {
     methods: {
         async logout() {
             await this.$auth.logout();
-            this.$store.dispatch('snackbar/setMessage', this.$i18n.t('slackbar.logged_out'));
-            this.$store.dispatch('snackbar/snackOn');
+            this.$store.dispatch('snackbar/popupMessage', this.$i18n.t('slackbar.logged_out'));
             this.$router.push(this.localePath('/'));
         }
     }

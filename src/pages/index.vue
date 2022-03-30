@@ -90,8 +90,7 @@ export default {
                 const response = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/topics?cnt=6');
                 this.topics = response.data.list;
             } catch (e) {
-                this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
-                this.$store.dispatch('snackbar/snackOn');
+                this.$store.dispatch('snackbar/popupError', e?.response?.data?.errors?.[0]?.message);
             };
         },
         async updateFavourite() {
@@ -116,8 +115,7 @@ export default {
                 });
                 this.favourite = favouriteTopicsRes.data.list;
             } catch (e) {
-                this.$store.dispatch('snackbar/setError', e?.response?.data.errors?.[0]?.message);
-                this.$store.dispatch('snackbar/snackOn');
+                this.$store.dispatch('snackbar/popupError', e?.response?.data.errors?.[0]?.message);
             };
         }
     },

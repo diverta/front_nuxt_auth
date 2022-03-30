@@ -107,8 +107,7 @@ export default {
                         .filter(res => res)
                 }
             } catch (e) {
-                this.$store.dispatch('snackbar/setError', e?.response?.data.errors?.[0]?.message);
-                this.$store.dispatch('snackbar/snackOn');
+                this.$store.dispatch('snackbar/popupError', e?.response?.data.errors?.[0]?.message);
             }
             this.loading = false;
         },
@@ -125,8 +124,7 @@ export default {
             }
 
             if (!this.validForm) {
-                this.$store.dispatch('snackbar/setError', this.$i18n.t('verify.fille_property'));
-                this.$store.dispatch('snackbar/snackOn');
+                this.$store.dispatch('snackbar/popupError', this.$i18n.t('verify.fille_property'));
                 return;
             }
 
@@ -138,11 +136,9 @@ export default {
                     this.$store.dispatch(
                         'snackbar/setMessage', this.$i18n.t('inquiry.thanks')
                     );
-                    this.$store.dispatch('snackbar/snackOn');
                 }
             } catch (e) {
-                this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
-                this.$store.dispatch('snackbar/snackOn');
+                this.$store.dispatch('snackbar/popupError', e?.response?.data?.errors?.[0]?.message);
             };
         }
     },

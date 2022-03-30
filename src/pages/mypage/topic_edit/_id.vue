@@ -142,7 +142,6 @@ export default {
                         'snackbar/setError',
                         this.$i18n.t('mypage.choose_file')
                     );
-                    this.$store.dispatch('snackbar/snackOn');
                 } else {
                     sendModel = {
                         ext_col_01: {
@@ -215,12 +214,10 @@ export default {
                     this.$store.dispatch(
                         'snackbar/setMessage', this.$i18n.t('detail.thanks')
                     );
-                    this.$store.dispatch('snackbar/snackOn');
                     this.$router.push('/mypage/posted_list');
                 }
             } catch (e) {
-                this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
-                this.$store.dispatch('snackbar/snackOn');
+                this.$store.dispatch('snackbar/popupError', e?.response?.data?.errors?.[0]?.message);
             };
         },
         change_tab(id) {
@@ -421,8 +418,7 @@ export default {
             }
             this.loading = false;
         } catch (e) {
-            this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
-            this.$store.dispatch('snackbar/snackOn');
+            this.$store.dispatch('snackbar/popupError', e?.response?.data?.errors?.[0]?.message);
             this.loading = false;
         };
     }

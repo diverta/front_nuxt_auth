@@ -101,11 +101,9 @@ export default {
 
             try {
                 await this.$auth.loginWith('local', { data: this.form });
-                this.$store.dispatch('snackbar/setMessage', this.$i18n.t('slackbar.logged_in'));
-                this.$store.dispatch('snackbar/snackOn');
+                this.$store.dispatch('snackbar/popupInfo', this.$i18n.t('slackbar.logged_in'));
             } catch (e) {
-                this.$store.dispatch('snackbar/setError', this.$i18n.t('slackbar.login_fail'));
-                this.$store.dispatch('snackbar/snackOn');
+                this.$store.dispatch('snackbar/popupError', this.$i18n.t('slackbar.login_fail'));
             }
             this.loading = false;
         }

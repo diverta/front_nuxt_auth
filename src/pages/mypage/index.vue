@@ -90,8 +90,7 @@ export default {
             }
 
             if (!this.validForm) {
-                this.$store.dispatch('snackbar/setError', this.$i18n.t('verify.fille_property'));
-                this.$store.dispatch('snackbar/snackOn');
+                this.$store.dispatch('snackbar/popupError', this.$i18n.t('verify.fille_property'));
                 return;
             }
 
@@ -103,12 +102,10 @@ export default {
                         'snackbar/setMessage',
                         this.$i18n.t('mypage.profile_changed')
                     );
-                    this.$store.dispatch('snackbar/snackOn');
                     this.$router.push('/');
                 }
             } catch (e) {
-                this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
-                this.$store.dispatch('snackbar/snackOn');
+                this.$store.dispatch('snackbar/popupError', e?.response?.data?.errors?.[0]?.message);
             }
         }
     },
@@ -127,8 +124,7 @@ export default {
             this.schema.fields[9].text = d?.address1 || '';
             this.schema.fields[13].contents[2].default = true;
         } catch (e) {
-            this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
-            this.$store.dispatch('snackbar/snackOn');
+            this.$store.dispatch('snackbar/popupError', e?.response?.data?.errors?.[0]?.message);
         };
 
         this.loading = false;

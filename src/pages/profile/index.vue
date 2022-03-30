@@ -99,8 +99,7 @@ export default {
         try {
             response = await this.$auth.ctx.$axios.get(`/rcms-api/1/members/${this.$auth.user.member_id}`)
         } catch (e) {
-            this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
-            this.$store.dispatch('snackbar/snackOn');
+            this.$store.dispatch('snackbar/popupError', e?.response?.data?.errors?.[0]?.message);
             return;
         }
 

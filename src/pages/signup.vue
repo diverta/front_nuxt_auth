@@ -102,8 +102,7 @@ export default {
             }
 
             if (!this.validForm) {
-                this.$store.dispatch('snackbar/setError', this.$i18n.t('verify.fille_property'));
-                this.$store.dispatch('snackbar/snackOn');
+                this.$store.dispatch('snackbar/popupError', this.$i18n.t('verify.fille_property'));
                 this.loading = false;
                 return;
             }
@@ -112,13 +111,11 @@ export default {
                 const sendModel = JSON.parse(JSON.stringify(this.model));
                 const response = await this.$auth.ctx.$axios.post('/rcms-api/1/member/regist', sendModel);
                 if (response.data.errors.length === 0) {
-                    this.$store.dispatch('snackbar/setMessage', this.$i18n.t('signup.success'));
-                    this.$store.dispatch('snackbar/snackOn');
+                    this.$store.dispatch('snackbar/popupMessage', this.$i18n.t('signup.success'));
                 }
                 this.$router.push('/');
             } catch (e) {
-                this.$store.dispatch('snackbar/setError', e?.response?.data?.errors?.[0]?.message);
-                this.$store.dispatch('snackbar/snackOn');
+                this.$store.dispatch('snackbar/popupError', e?.response?.data?.errors?.[0]?.message);
             };
 
             this.loading = false;
