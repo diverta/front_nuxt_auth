@@ -90,7 +90,7 @@ export default {
             }
 
             if (!this.validForm) {
-                this.$store.dispatch('snackbar/popupError', this.$i18n.t('verify.fille_property'));
+                this.$snackbar.error(this.$i18n.t('verify.fille_property'));
                 return;
             }
 
@@ -105,7 +105,7 @@ export default {
                     this.$router.push('/');
                 }
             } catch (e) {
-                this.$store.dispatch('snackbar/popupError', e?.response?.data?.errors?.[0]?.message);
+                this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
             }
         }
     },
@@ -136,7 +136,7 @@ export default {
                 }
             });
         } catch (e) {
-            this.$store.dispatch('snackbar/popupError', e?.response?.data?.errors?.[0]?.message);
+            this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
         };
 
         this.loading = false;

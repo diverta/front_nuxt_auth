@@ -81,7 +81,7 @@ export default {
                 this.totalCnt = favouriteTopicsRes.data.pageInfo.totalCnt;
                 this.topics = favouriteTopicsRes.data.list;
             } catch (e) {
-                this.$store.dispatch('snackbar/popupError', e?.response?.data?.errors?.[0]?.message);
+                this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
             };
         }
     },

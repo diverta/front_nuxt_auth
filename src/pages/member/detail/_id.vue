@@ -143,7 +143,7 @@ export default {
                 }
             };
         } catch (e) {
-            this.$store.dispatch('snackbar/popupError', e?.response?.data?.errors?.[0]?.message);
+            this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
         }
     }
 };

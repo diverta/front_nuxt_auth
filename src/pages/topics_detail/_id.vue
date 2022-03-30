@@ -112,7 +112,7 @@ export default {
                 await request;
                 this.favoriteColor = this.favoriteColor === 'gray' ? 'red' : 'gray';
             } catch (error) {
-                this.$store.dispatch('snackbar/popupError', error?.response?.data?.errors?.[0]?.message);
+                this.$snackbar.error(error?.response?.data?.errors?.[0]?.message);
             }
         }
     },
@@ -154,7 +154,7 @@ export default {
                     }
                 });
         } catch (e) {
-            this.$store.dispatch('snackbar/popupError', e?.response?.data?.errors?.[0]?.message);
+            this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
         }
 
         this.favoriteColor = this.favoriteResponse?.data?.pageInfo?.totalCnt > 0 ? 'red' : 'grey';

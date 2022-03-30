@@ -217,7 +217,7 @@ export default {
                     this.$router.push('/mypage/posted_list');
                 }
             } catch (e) {
-                this.$store.dispatch('snackbar/popupError', e?.response?.data?.errors?.[0]?.message);
+                this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
             };
         },
         change_tab(id) {
@@ -418,7 +418,7 @@ export default {
             }
             this.loading = false;
         } catch (e) {
-            this.$store.dispatch('snackbar/popupError', e?.response?.data?.errors?.[0]?.message);
+            this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
             this.loading = false;
         };
     }

@@ -230,9 +230,9 @@ export default {
                 if (response.data.errors.length > 0) {
                     throw new Error(response.data.errors.join('\t'));
                 }
-                this.$store.dispatch('snackbar/popupMessage', this.$i18n.t('reminder.password_sent'));
+                this.$snackbar.info(this.$i18n.t('reminder.password_sent'));
             } catch (e) {
-                this.$store.dispatch('snackbar/popupError', this.$i18n.t('reminder.invalid_email'));
+                this.$snackbar.error(this.$i18n.t('reminder.invalid_email'));
             };
             this.loading1 = false;
         },
@@ -249,11 +249,11 @@ export default {
                         login_pwd: this.login_pwd,
                         temp_pwd: this.temp_pwd
                     });
-                this.$store.dispatch('snackbar/popupMessage', this.$i18n.t('reminder.already_updated'));
+                this.$snackbar.info(this.$i18n.t('reminder.already_updated'));
                 this.$router.push('/');
                 this.e1 = 4;
             } catch (e) {
-                this.$store.dispatch('snackbar/popupError', e.response.data.errors?.[0].message);
+                this.$snackbar.error(e.response.data.errors?.[0].message);
             }
             this.loading2 = false;
         }

@@ -101,9 +101,10 @@ export default {
 
             try {
                 await this.$auth.loginWith('local', { data: this.form });
-                this.$store.dispatch('snackbar/popupInfo', this.$i18n.t('slackbar.logged_in'));
+                this.$snackbar.info(this.$i18n.t('slackbar.logged_in'));
             } catch (e) {
-                this.$store.dispatch('snackbar/popupError', this.$i18n.t('slackbar.login_fail'));
+                console.error(e);
+                this.$snackbar.error(this.$i18n.t('slackbar.login_fail'));
             }
             this.loading = false;
         }
