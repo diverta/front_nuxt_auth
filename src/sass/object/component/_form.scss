@@ -1,4 +1,22 @@
 .c-form {
+    padding: 8px;
+
+    .error--text {
+        color: red;
+    }
+    .formulate-input {
+        margin-top: 10px;
+
+        &-label {
+            display: block;
+            margin-bottom: 8px
+        }
+    }
+
+    .input-radio-group,
+    .input-checkbox-group {
+        display: flex;
+    }
 
     &_wrap {
         background: #fff;

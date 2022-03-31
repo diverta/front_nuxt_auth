@@ -16,30 +16,30 @@
 
         <div class="v-stepper mt-5 c-form_wrap">
             <v-container fluid>
-                <vue-form-generator
-                    ref="form"
-                    :schema="schema"
-                    :model="model"
+                <FormulateForm
+                    v-if="formulateScheme"
+                    #default="{ isValid }"
+                    v-model="formValues"
                     class="c-form"
-                    @model-updated="onInput"
-                />
+                    :schema="formulateScheme"
+                >
+                    <v-checkbox v-model="agreementChecked" class="c-form_tnc">
+                        <template v-slot:label>
+                            <div>{{ $t('common.agree') }}</div>
+                        </template>
+                    </v-checkbox>
 
-                <v-checkbox v-model="disabled" class="c-form_tnc">
-                    <template v-slot:label>
-                        <div>{{ $t('common.agree') }}</div>
-                    </template>
-                </v-checkbox>
-
-                <div class="text-center mb-5">
-                    <button
-                        type="submit"
-                        class="c-btn c-btn_main"
-                        :disabled="!disabled"
-                        @click="submitF()"
-                    >
-                        {{ $t('common.submit') }}
-                    </button>
-                </div>
+                    <div class="text-center mb-5">
+                        <button
+                            type="submit"
+                            class="c-btn c-btn_main"
+                            :disabled="!agreementChecked || !isValid"
+                            @click="submitF"
+                        >
+                            {{ $t('common.submit') }}
+                        </button>
+                    </div>
+                </FormulateForm>
             </v-container>
         </div>
     </div>
@@ -47,31 +47,6 @@
 
 <script>
 import '../assets/form.css';
-import Vue from 'vue';
-import VueFormGenerator from 'vue-form-generator';
-import KurocoParser from '../plugins/parser.js';
-import fieldUploadFile from '../components/vuetify_file_upload.vue';
-import fieldVuetifyText from '../components/vuetify_text.vue';
-import fieldVuetifyTextArea from '../components/vuetify_textarea.vue';
-import fieldVuetifyDate from '../components/vuetify_date.vue';
-import fieldVuetifyJson from '../components/vuetify_json.vue';
-import fieldVuetifyPrefecture from '../components/vuetify_prefecture.vue';
-import fieldVuetifyMultipleChoice from '../components/vuetify_multiple_choice.vue';
-import fieldVuetifySingleChoice from '../components/vuetify_single_choice.vue';
-import fieldVuetifySingleOption from '../components/vuetify_single_option.vue';
-
-Vue.component('fieldUploadFile', fieldUploadFile);
-Vue.component('fieldVuetifyDate', fieldVuetifyDate);
-Vue.component('fieldVuetifyText', fieldVuetifyText);
-Vue.component('fieldVuetifyTextArea', fieldVuetifyTextArea);
-Vue.component('fieldVuetifyJson', fieldVuetifyJson);
-Vue.component('fieldVuetifyPrefecture', fieldVuetifyPrefecture);
-Vue.component('fieldVuetifySingleOption', fieldVuetifySingleOption);
-Vue.component('fieldVuetifySingleChoice', fieldVuetifySingleChoice);
-Vue.component('fieldVuetifyMultipleChoice', fieldVuetifyMultipleChoice);
-
-Vue.use(VueFormGenerator);
-Vue.use(KurocoParser);
 
 export default {
     title() {
@@ -80,17 +55,14 @@ export default {
     auth: true,
     data() {
         return {
-            inquirySubmitUrl: '/rcms-api/1/inquiry/1',
-            inquirySchemaUrl: '/rcms-api/1/inquiry/get/1',
-            disabled: false,
-            validForm: true,
+            inquiryID: 1,
+
             loading: true,
-            model: {},
-            schema: {}
+            agreementChecked: false,
+
+            formulateScheme: null,
+            formValues: {}
         };
-    },
-    components: {
-        'vue-form-generator': VueFormGenerator.component
     },
     mounted() {
         this.getSchema();
@@ -98,40 +70,25 @@ export default {
     methods: {
         async getSchema() {
             this.loading = true;
-            let response;
             try {
-                response = await this.$store.$auth.ctx.$axios.get(this.inquirySchemaUrl);
-                this.schema = {
-                    fields: Object.entries(response.data.details.cols)
-                        .map(([key, val]) => this.$parse(val, key))
-                        .filter((res) => res)
-                };
+                const response = await this.$store.$auth.ctx.$axios.get(`/rcms-api/1/inquiry/get/${this.inquiryID}`);
+                this.formulateScheme = this.$parseFormulateScheme(response.data.details.cols)
+                    .filter(({ name }) => {
+                        // we skip some items in this form.
+                        return !['body', 'ext_03'].includes(name);
+                    });
             } catch (e) {
                 this.$snackbar.error(e?.response?.data.errors?.[0]?.message);
             }
             this.loading = false;
         },
-        onInput (value, fieldName) {
-            this.$set(this.model, fieldName, value);
-        },
         async submitF () {
-            this.validForm = true;
-            for (const key in this.$children[1].$children) {
-                this.$children[1].$children[key].$children[0].$refs.myForm.validate();
-                if (this.$children[1].$children[key].$children[0].formValid === false) {
-                    this.validForm = false;
-                }
-            }
-
-            if (!this.validForm) {
-                this.$snackbar.error(this.$i18n.t('verify.fille_property'));
-                return;
-            }
-
             try {
-                const sendModel = JSON.parse(JSON.stringify(this.model));
-                sendModel.body = 'example message';
-                const response = await this.$store.$auth.ctx.$axios.post(this.inquirySubmitUrl, sendModel);
+                const sendModel = {
+                    ...this.formValues,
+                    body: 'example message'
+                };
+                const response = await this.$store.$auth.ctx.$axios.post(`/rcms-api/1/inquiry/${this.inquiryID}`, sendModel);
                 if (response.data.errors.length === 0) {
                     this.$store.dispatch(
                         'snackbar/setMessage', this.$i18n.t('inquiry.thanks')

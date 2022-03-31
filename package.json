@@ -41,6 +41,7 @@
     "vue-snack": "^0.1.4"
   },
   "devDependencies": {
+    "@braid/vue-formulate": "^2.5.3",
     "@nuxt/typescript-build": "^1.0.3",
     "@nuxtjs/date-fns": "^1.5.0",
     "@nuxtjs/eslint-config-typescript": "^6.0.0",

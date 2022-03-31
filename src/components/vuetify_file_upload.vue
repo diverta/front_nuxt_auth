@@ -1,59 +1,78 @@
 <template>
-    <v-form ref="myForm" v-model="formValid">
-        <v-file-input
-            ref="schema.model"
-            v-model="schema.file"
-            :rules="[
-                (v) =>
-                    schema.required == false ||
-                    (schema.required == true && !!v) ||
-                    $t('verify.required_file'),
-            ]"
-            :label="schema.accept"
-            :accept="schema.accept"
-            @change="check($event)"
-        />
-    </v-form>
+    <v-file-input
+        v-model="file"
+        :rules="rules"
+        :label="context.label"
+        :accept="accept"
+        @change="uploadFile"
+    />
 </template>
 
 <script>
-import { abstractField } from 'vue-form-generator';
 export default {
-    data () {
+    props: {
+        context: {
+            type: Object,
+            required: true
+        }
+    },
+    data() {
         return {
-            formValid: true
+            file: null
         };
     },
+    computed: {
+        accept() {
+            return this?.context?.rules
+                ?.filter(({ ruleName }) => ruleName === 'mime')
+                ?.map(({ args }) => args?.map((v) => '.' + v)?.join(', '))
+                ?.[0];
+        },
+        rules() {
+            if (!this?.context?.rules) {
+                return [];
+            }
+            return this.context.rules.map(({ ruleName, args }) => {
+                switch (ruleName) {
+                case 'required':
+                    return (v) => {
+                        return v
+                            ? true
+                            : this.$t('verify.required_file');
+                    };
+                default:
+                    return null;
+                }
+            })
+                .filter((fn) => fn);
+        }
+    },
     methods: {
-        async check (e) {
+        async uploadFile (file) {
+            if (!file) {
+                this.file = null;
+                this.context.model = undefined;
+                return;
+            }
             const formData = new FormData();
-            formData.append('file', this.schema.file);
+            formData.append('file', file);
             const headers = {
                 accept: '*/*',
                 'Content-Type': 'multipart/form-data'
             };
-            this.formValid = false;
             try {
                 const response = await this.$store.$auth.ctx.$axios.post('/rcms-api/1/upload', formData, { headers });
-                this.formValid = true;
-                this.$emit(
-                    'model-updated',
-                    {
-                        file_id: response.data.file_id,
-                        file_nm: this.schema.file.name,
-                        desc: this.schema.file.name
-                    },
-                    this.schema.model
-                );
+                this.context.model = {
+                    file_id: response.data.file_id,
+                    file_nm: file.name,
+                    desc: file.name
+                };
             } catch (e) {
+                this.file = null;
+                this.context.model = undefined;
                 this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
-                this.loading = false;
             };
         }
-    },
-    mixins: [abstractField],
-    mounted() {
-        this.formValid = this.$refs.myForm.validate();
     }
 };
 </script>

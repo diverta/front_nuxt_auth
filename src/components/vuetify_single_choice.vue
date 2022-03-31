@@ -1,52 +1,51 @@
 <template>
-    <v-form ref="myForm" v-model="formValid">
-        <v-radio-group
-            v-model="schema.radioGroup"
-            :rules="[
-                (v) =>
-                    schema.required == false ||
-                    (schema.required == true && !!v) ||
-                    $t('verify.required_field'),
-            ]"
-            @change="check($event)"
-        >
-            <v-radio
-                v-for="item in schema.contents"
-                :key="item.key"
-                :label="item.value"
-                :value="item"
-            />
-        </v-radio-group>
-    </v-form>
+    <v-radio-group
+        v-if="context"
+        v-model="context.model"
+        :rules="rules"
+    >
+        <v-radio
+            v-for="({ key, value }) in context.options"
+            :key="`${key}_${value}`"
+            :label="value"
+            :value="key"
+        />
+    </v-radio-group>
 </template>
 
 <script>
-import { abstractField } from 'vue-form-generator';
 
 export default {
-    data () {
-        return {
-            formValid: false
-        };
+    props: {
+        context: {
+            type: Object,
+            required: true
+        }
     },
-    methods: {
-        check (e) {
-            this.formValid = this.$refs.myForm.validate();
-            if (this.formValid) {
-                this.$emit(
-                    'model-updated',
-                    /* {
-           "key": this.radioGroup.key,
-           "label": this.radioGroup.value
-         } */ this.schema.radioGroup.key.toString(),
-                    this.schema.model
-                );
+    computed: {
+        rules() {
+            if (!this?.context?.rules) {
+                return [];
             }
+            return this.context.rules.map(({ ruleName, args }) => {
+                switch (ruleName) {
+                case 'required':
+                    return (v) => v !== ''
+                        ? true
+                        : this.$t('verify.required_field');
+                default:
+                    return null;
+                }
+            })
+                .filter((fn) => fn);
         }
     },
     mounted() {
-        this.formValid = this.$refs.myForm.validate();
-    },
-    mixins: [abstractField]
+        this.context.options.forEach((option) => {
+            if (option.default) {
+                this.context.model = option.value;
+            }
+        });
+    }
 };
 </script>

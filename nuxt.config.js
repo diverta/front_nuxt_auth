@@ -64,7 +64,9 @@ export default {
     plugins: [
         '@/plugins/parser',
         '@/plugins/axios',
-        '@/plugins/snackbar.client'
+        '@/plugins/snackbar.client',
+        '@/plugins/parseFormulateScheme.client',
+        '@/plugins/formulateInputsRegister.client'
     ],
     /*
    ** Auto import components
@@ -81,6 +83,7 @@ export default {
         ['@nuxtjs/eslint-module', { fix: true }],
         // Doc: https://github.com/nuxt-community/stylelint-module
         ['@nuxtjs/stylelint-module', { fix: true }],
+        '@braid/vue-formulate/nuxt'
     ],
     /*
    ** Nuxt.js modules
@@ -186,5 +189,8 @@ export default {
             files: ['*.vue'],
             processor: 'vue/.vue'
         }
-    ]
+    ],
+    formulate: {
+        configPath: '@/../formulate.config.js'
+    }
 };

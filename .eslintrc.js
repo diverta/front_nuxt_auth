@@ -27,6 +27,8 @@ module.exports = {
         'comma-dangle': 'warn',
         'no-multiple-empty-lines': 'warn',
         'vue/comment-directive': 0,
-        'vue/no-v-html': 'off'
+        'vue/no-v-html': 'off',
+        'no-case-declarations': 'off',
+        'prefer-regex-literals': 'off'
     }
 };
