@@ -11,7 +11,7 @@
             <v-toolbar flat color="primary" dark>
                 <v-toolbar-title
                 >
-                {{ $t('mypage.select_type') }}{{ topic_id }}
+                    {{ $t('mypage.select_type') }}{{ topic_id }}
                 </v-toolbar-title>
                 <v-col class="text-right">
                     <v-btn class="ma-2" color="green" dark @click="submit()">
@@ -138,10 +138,7 @@ export default {
                     ext_col_02: file
                 };
                 if (fileType === null || file === null) {
-                    this.$store.dispatch(
-                        'snackbar/setError',
-                        this.$i18n.t('mypage.choose_file')
-                    );
+                    this.$snackbar.error(this.$i18n.t('mypage.choose_file'));
                 } else {
                     sendModel = {
                         ext_col_01: {
@@ -211,9 +208,7 @@ export default {
             try {
                 const response = await this.$store.$auth.ctx.$axios.post(`/rcms-api/1/topics/update/${this.topic_id}`, sendModel);
                 if (response.data.errors.length === 0) {
-                    this.$store.dispatch(
-                        'snackbar/setMessage', this.$i18n.t('detail.thanks')
-                    );
+                    this.$store.info(this.$i18n.t('detail.thanks'));
                     this.$router.push('/mypage/posted_list');
                 }
             } catch (e) {

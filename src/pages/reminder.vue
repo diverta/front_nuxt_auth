@@ -211,10 +211,7 @@ export default {
     created() {
         this.token = this.$route.query.token;
         if (this.token) {
-            this.$store.dispatch(
-                'snackbar/setMessage',
-                this.$i18n.t('reminder.not_entered')
-            );
+            this.$snackbar.info(this.$i18n.t('reminder.not_entered'));
             this.e1 = 2;
         }
     },

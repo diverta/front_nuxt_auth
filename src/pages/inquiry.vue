@@ -90,9 +90,7 @@ export default {
                 };
                 const response = await this.$store.$auth.ctx.$axios.post(`/rcms-api/1/inquiry/${this.inquiryID}`, sendModel);
                 if (response.data.errors.length === 0) {
-                    this.$store.dispatch(
-                        'snackbar/setMessage', this.$i18n.t('inquiry.thanks')
-                    );
+                    this.$snackbar.info(this.$i18n.t('inquiry.thanks'));
                 }
             } catch (e) {
                 this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
