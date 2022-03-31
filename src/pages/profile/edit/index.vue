@@ -98,10 +98,7 @@ export default {
             try {
                 const response = await this.$store.$auth.ctx.$axios.post('/rcms-api/1/member/update', sendModel);
                 if (response.data.errors.length === 0) {
-                    this.$store.dispatch(
-                        'snackbar/setMessage',
-                        'Your profile is changed.'
-                    );
+                    this.$store.info('Your profile is changed.');
                     this.$router.push('/');
                 }
             } catch (e) {

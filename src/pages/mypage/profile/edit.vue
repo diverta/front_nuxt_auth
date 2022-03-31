@@ -35,7 +35,7 @@
         />
 
         <h1 class="mt-5 pt-5">
-            {{$t('mypage.profile_editing')}}
+            {{ $t('mypage.profile_editing') }}
         </h1>
         <br>
         <div class="v-stepper c-form_wrap">
@@ -50,7 +50,7 @@
 
                 <v-checkbox v-model="disabled" class="c-form_tnc">
                     <template v-slot:label>
-                        <div>{{$t('common.agree')}}</div>
+                        <div>{{ $t('common.agree') }}</div>
                     </template>
                 </v-checkbox>
                 <div class="text-center mb-5">
@@ -62,7 +62,7 @@
                         class="c-btn c-btn_main"
                         @click="submitF()"
                     >
-                        {{$t('common.submit')}}
+                        {{ $t('common.submit') }}
                     </button
                     >
                 </div>
@@ -126,12 +126,9 @@ export default {
 
             try {
                 const sendModel = JSON.parse(JSON.stringify(this.model));
-                const response = await this.$store.$auth.ctx.$axios.post('/rcms-api/1/member/update', sendModel)
+                const response = await this.$store.$auth.ctx.$axios.post('/rcms-api/1/member/update', sendModel);
                 if (response.data.errors.length === 0) {
-                    this.$store.dispatch(
-                        'snackbar/setMessage',
-                        this.$i18n.t('mypage.profile_changed')
-                    );
+                    this.$snackbar.info(this.$i18n.t('mypage.profile_changed'));
                     this.$router.push('/');
                 }
             } catch (e) {

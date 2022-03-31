@@ -20,7 +20,7 @@
 
                 <v-checkbox v-model="disabled" class="c-form_tnc">
                     <template v-slot:label>
-                        <div>{{$t('common.agree')}}</div>
+                        <div>{{ $t('common.agree') }}</div>
                     </template>
                 </v-checkbox>
                 <div class="text-center mb-5">
@@ -32,7 +32,7 @@
                         class="c-btn c-btn_main"
                         @click="submitF()"
                     >
-                        {{$t('common.submit')}}
+                        {{ $t('common.submit') }}
                     </button
                     >
                 </div>
@@ -98,10 +98,7 @@ export default {
                 const sendModel = JSON.parse(JSON.stringify(this.model));
                 const response = await this.$store.$auth.ctx.$axios.post('/rcms-api/1/member/update', sendModel);
                 if (response.data.errors.length === 0) {
-                    this.$store.dispatch(
-                        'snackbar/setMessage',
-                        this.$i18n.t('mypage.profile_changed')
-                    );
+                    this.$snackbar.info(this.$i18n.t('mypage.profile_changed'));
                     this.$router.push('/');
                 }
             } catch (e) {
@@ -111,7 +108,7 @@ export default {
     },
     async mounted() {
         try {
-            const response = await this.$auth.ctx.$axios.get(`/rcms-api/1/members/${this.$auth.user.member_id}`)
+            const response = await this.$auth.ctx.$axios.get(`/rcms-api/1/members/${this.$auth.user.member_id}`);
             const d = response.data.details;
             this.schema.fields[0].text = d?.name1 || '';
             this.schema.fields[1].text = d?.name2 || '';
