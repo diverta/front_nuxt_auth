@@ -141,7 +141,7 @@ export default {
                     name: 'login_pwd',
                     type: 'VuetifyPassword',
                     label: this.$i18n.t('label.password'),
-                    validation: 'passsword',
+                    validation: 'required|min:8,length|password',
                     'label-class': ['required'],
                     disableErrors: true
                 },
