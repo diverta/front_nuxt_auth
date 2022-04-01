@@ -20,6 +20,12 @@ export default {
         },
         VuetifyFileUpload: {
             component: 'VuetifyFileUpload',
+        },
+        VuetifyDate: {
+            component: 'VuetifyDate',
+        },
+        VuetifyPassword: {
+            component: 'VuetifyPassword',
         }
     },
     /**
@@ -33,6 +39,7 @@ export default {
         },
         tel: (ctx, args) => validator.isMobilePhone(ctx.value),
         zip: (ctx, args) => ctx.value.length === 7 && validator.isNumeric(ctx.value),
-        number: (ctx, args) => validator.isNumeric(ctx.value)
+        number: (ctx, args) => validator.isNumeric(ctx.value),
+        password: (ctx, args) => !!ctx.value && ctx.value.length >= 8 && /^[a-zA-Z0-9\-_&=+%#@$*.!:]+$/.test(ctx.value)
     }
 };

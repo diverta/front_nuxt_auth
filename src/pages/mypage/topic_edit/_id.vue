@@ -11,10 +11,10 @@
             <v-toolbar flat color="primary" dark>
                 <v-toolbar-title
                 >
-                    {{ $t('mypage.select_type') }}{{ topic_id }}
+                    {{ $t('mypage.select_type') }}{{ $route.params.id }}
                 </v-toolbar-title>
                 <v-col class="text-right">
-                    <v-btn class="ma-2" color="green" dark @click="submit()">
+                    <v-btn class="ma-2" color="green" dark @click="submit">
                         {{ $t('common.save') }}
                         <v-icon dark right>
                             mdi-checkbox-marked-circle
@@ -22,33 +22,33 @@
                     </v-btn>
                 </v-col>
             </v-toolbar>
-            <v-tabs v-model="tab_id">
-                <v-tab @click="change_tab(0)">
+            <v-tabs v-model="tabID">
+                <v-tab @click="() => tabID = 0">
                     <v-icon left>
                         mdi-file-excel
                     </v-icon>
                     {{ $t('mypage.tab_file') }}
                 </v-tab>
-                <v-tab @click="change_tab(1)">
+                <v-tab @click="() => tabID = 1">
                     <v-icon left>
                         mdi-launch
                     </v-icon>
                     {{ $t('mypage.tab_url') }}
                 </v-tab>
-                <v-tab @click="change_tab(2)">
+                <v-tab @click="() => tabID = 2">
                     <v-icon left>
                         mdi-details
                     </v-icon>
                     {{ $t('mypage.tab_detal') }}
                 </v-tab>
+
                 <v-tab-item>
                     <v-card flat>
                         <v-container>
-                            <vue-form-generator
-                                ref="form"
-                                :schema="schemaFile"
-                                :model="model"
-                                @model-updated="onInput"
+                            <FormulateForm
+                                v-model="form.file.values"
+                                class="c-form"
+                                :schema="form.file.schema"
                             />
                         </v-container>
                         <br>
@@ -57,11 +57,10 @@
                 <v-tab-item>
                     <v-card flat>
                         <v-container>
-                            <vue-form-generator
-                                ref="form"
-                                :schema="schemaUrl"
-                                :model="model"
-                                @model-updated="onInput"
+                            <FormulateForm
+                                v-model="form.url.values"
+                                class="c-form"
+                                :schema="form.url.schema"
                             />
                         </v-container>
                     </v-card>
@@ -71,11 +70,10 @@
                         <v-col>
                             <v-card outlined>
                                 <v-container>
-                                    <vue-form-generator
-                                        ref="form"
-                                        :schema="item"
-                                        :model="model"
-                                        @model-updated="onInput"
+                                    <FormulateForm
+                                        v-model="form.detail.values"
+                                        class="c-form"
+                                        :schema="form.detail.schema"
                                     />
                                 </v-container>
                             </v-card>
@@ -88,46 +86,13 @@
 </template>
 
 <script>
-import '~/assets/form.css';
-import Vue from 'vue';
-import VueFormGenerator from 'vue-form-generator';
-import KurocoParser from '~/plugins/parser.js';
-import fieldVuetifyUploadFile from '~/components/vuetify_file_upload.vue';
-import fieldVuetifyUploadImage from '~/components/vuetify_image_upload.vue';
-import fieldVuetifyText from '~/components/vuetify_text.vue';
-import fieldVuetifyTextArea from '~/components/vuetify_textarea.vue';
-import fieldVuetifyDate from '~/components/vuetify_date.vue';
-import fieldVuetifyJson from '~/components/vuetify_json.vue';
-import fieldVuetifyPrefecture from '~/components/vuetify_prefecture.vue';
-import fieldVuetifyMultipleChoice from '~/components/vuetify_multiple_choice.vue';
-import fieldVuetifySingleChoice from '~/components/vuetify_single_choice.vue';
-import fieldVuetifySingleOption from '~/components/vuetify_single_option.vue';
-import fieldVuetifyPassword from '~/components/vuetify_password.vue';
-
-Vue.component('fieldVuetifyUploadFile', fieldVuetifyUploadFile);
-Vue.component('fieldVuetifyUploadImage', fieldVuetifyUploadImage);
-Vue.component('fieldVuetifyDate', fieldVuetifyDate);
-Vue.component('fieldVuetifyText', fieldVuetifyText);
-Vue.component('fieldVuetifyTextArea', fieldVuetifyTextArea);
-Vue.component('fieldVuetifyJson', fieldVuetifyJson);
-Vue.component('fieldVuetifyPrefecture', fieldVuetifyPrefecture);
-Vue.component('fieldVuetifySingleOption', fieldVuetifySingleOption);
-Vue.component('fieldVuetifySingleChoice', fieldVuetifySingleChoice);
-Vue.component('fieldVuetifyMultipleChoice', fieldVuetifyMultipleChoice);
-Vue.component('fieldVuetifyPassword', fieldVuetifyPassword);
-
-Vue.use(VueFormGenerator);
-Vue.use(KurocoParser);
-
 export default {
     auth: true,
     methods: {
-        onInput (value, fieldName) {
-            this.$set(this.model, fieldName, value);
-        },
+        // TODO
         async submit() {
             let sendModel = {};
-            if (this.tab_id === 0) {
+            if (this.tabID === 0) {
                 const fileType = this.schemaFile.fields[0].radioGroup;
                 const file = this.model.file;
                 sendModel = {
@@ -148,7 +113,7 @@ export default {
                         ext_col_02: file
                     };
                 }
-            } else if (this.tab_id === 1) {
+            } else if (this.tabID === 1) {
                 let url = this.model.url;
                 let toDisplay = this.model.toDisplay;
 
@@ -170,7 +135,7 @@ export default {
                         }
                     };
                 }
-            } else if (this.tab_id === 2) {
+            } else if (this.tabID === 2) {
                 sendModel = {
                     ext_col_01: {
                         key: 'data',
@@ -204,9 +169,11 @@ export default {
                     }
                 }
             }
-
+            await this.requestUpdate(sendModel);
+        },
+        async requestUpdate(sendModel) {
             try {
-                const response = await this.$store.$auth.ctx.$axios.post(`/rcms-api/1/topics/update/${this.topic_id}`, sendModel);
+                const response = await this.$store.$auth.ctx.$axios.post(`/rcms-api/1/topics/update/${this.$route.params.id}`, sendModel);
                 if (response.data.errors.length === 0) {
                     this.$store.info(this.$i18n.t('detail.thanks'));
                     this.$router.push('/mypage/posted_list');
@@ -214,208 +181,174 @@ export default {
             } catch (e) {
                 this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
             };
-        },
-        change_tab(id) {
-            this.tab_id = id;
         }
     },
     data() {
         return {
-            topic_id: null,
-            update_url: '',
             text: '',
             loading: true,
-            tab_id: null,
+            tabID: null,
             json: '',
             model: {},
             schemaDetailList: [],
-            schemaFile: {
-                fields: [
-                    {
-                        model: 'type',
-                        label: this.$i18n.t('mypage.file_type'),
-                        radioGroup: null,
-                        contents: [
-                            {
-                                key: 'pdf',
-                                value: 'pdf',
-                                default: false,
-                                attribute: { group: '1' }
-                            },
-                            {
-                                key: 'word',
-                                value: 'word',
-                                default: false,
-                                attribute: { group: '1' }
-                            },
-                            {
-                                key: 'excel',
-                                value: 'excel',
-                                default: false,
-                                attribute: { group: '1' }
-                            }
-                        ],
-                        required: true,
-                        type: 'vuetifySingleChoice'
-                    },
-                    {
-                        model: 'file',
-                        type: 'vuetifyUploadFile',
-                        file: null,
-                        required: true
-                    }
-                ]
-            },
-            schemaUrl: {
-                fields: [
-                    {
-                        type: 'vuetifyText',
-                        inputType: 'text',
-                        text: '',
-                        min: 0,
-                        max: 100,
-                        label: this.$i18n.t('mypage.link_url'),
-                        model: 'url',
-                        texttype: 'url',
-                        required: true
-                    },
-                    {
-                        type: 'vuetifyText',
-                        inputType: 'text',
-                        text: '',
-                        min: 0,
-                        max: 100,
-                        label: this.$i18n.t('mypage.text_display'),
-                        model: 'toDisplay',
-                        required: true
-                    }
-                ]
+
+            form: {
+                file: {
+                    schema: [
+                        {
+                            name: 'type',
+                            label: this.$i18n.t('mypage.file_type'),
+                            type: 'VuetifySingleChoice',
+                            'label-class': ['required'],
+                            validation: 'required',
+                            disableErrors: true,
+                            options: [
+                                {
+                                    key: 'pdf',
+                                    value: 'pdf',
+                                    default: false,
+                                    attribute: { group: '1' }
+                                },
+                                {
+                                    key: 'word',
+                                    value: 'word',
+                                    default: false,
+                                    attribute: { group: '1' }
+                                },
+                                {
+                                    key: 'excel',
+                                    value: 'excel',
+                                    default: false,
+                                    attribute: { group: '1' }
+                                }
+                            ]
+                        },
+                        {
+                            name: 'file',
+                            type: 'VuetifyFileUpload',
+                            label: 'File',
+                            'label-class': ['required'],
+                            validation: 'required',
+                            disableErrors: true
+                        }
+                    ],
+                    values: {}
+                },
+                url: {
+                    schema: [
+                        {
+                            name: 'url',
+                            label: this.$i18n.t('mypage.link_url'),
+                            type: 'VuetifyText',
+                            validation: 'required|url',
+                            'label-class': ['required'],
+                            disableErrors: true
+                        },
+                        {
+                            name: 'toDisplay',
+                            label: this.$i18n.t('mypage.text_display'),
+                            type: 'VuetifyText',
+                            validation: 'required|min:0,length|max:100,length',
+                            'label-class': ['required'],
+                            disableErrors: true
+                        }
+                    ],
+                    values: {}
+                },
+                detail: {
+                    schema: [],
+                    values: {}
+                }
             }
         };
     },
     async mounted() {
-        this.topic_id = this.$route.params.id;
-
         this.loading = true;
         try {
-            const response = await this.$store.$auth.ctx.$axios.get(`/rcms-api/1/topic/detail/${this.topic_id}`);
-            const json = response.data.details;
-            this.json = json;
+            const response = await this.$store.$auth.ctx.$axios.get(`/rcms-api/1/topic/detail/${this.$route.params.id}`);
+            this.details = response.data.details;
 
-            if (json.ext_col_01.key === 'url') {
-                this.schemaUrl.fields[0].text = json.ext_col_03.url;
-                this.schemaUrl.fields[1].text = json.ext_col_03.title;
-                this.tab_id = 1;
+            const attachedFileType = this.details.ext_col_01.key;
+            switch (attachedFileType) {
+            case 'url':
+                this.tabID = 1;
+                break;
+            case 'pdf':
+            case 'word':
+            case 'excel':
+                this.tabID = 0;
+                break;
+            default:
+                this.tabID = 2;
+            }
+
+            if (attachedFileType === 'url') {
+                this.form.url.values.url = this.details.ext_col_03.url;
+                this.form.url.values.toDisplay = this.details.ext_col_03.title;
             } else if (
-                json.ext_col_01.key === 'pdf' ||
-                json.ext_col_01.key === 'word' ||
-                json.ext_col_01.key === 'excel'
+                attachedFileType === 'pdf' ||
+                attachedFileType === 'word' ||
+                attachedFileType === 'excel'
             ) {
-                let fileFormat = {};
-                for (let i = 0; i < 3; ++i) {
-                    if (
-                        this.schemaFile.fields[0].contents[i].key === json.ext_col_01.key
-                    ) {
-                        fileFormat = this.schemaFile.fields[0].contents[i];
-                    }
-                }
-                this.schemaFile.fields[0].radioGroup = fileFormat;
-                this.schemaFile.fields[1].file = new File([''], json.ext_col_02.url);
-                this.tab_id = 0;
-            } else {
-                this.tab_id = 2;
+                this.form.file.file = new File([''], this.details.ext_col_02.url);
             }
 
             for (let i = 0; i < 30; ++i) {
-                const schemaDetail = {
-                    fields: []
-                };
-                let labelText = '';
-                let textarea = '';
-                let url = null;
-                let imagePos = {};
-                let textSize = {};
-
-                if (json.ext_col_01.key === 'data') {
-                    if (typeof json.ext_col_09[i] === 'string') {
-                        labelText = json.ext_col_09[i];
+                this.form.detail.schema = [
+                    {
+                        name: `ext_col_09_${i}`,
+                        label: `subtitle_${i}`,
+                        type: 'VuetifyText',
+                        text: this?.details.ext_col_09?.[i] || '',
+                        validation: 'min:0,length|max:100,length'
+                    },
+                    {
+                        name: `ext_col_07_${i}`,
+                        label: `text_${i}`,
+                        type: 'VuetifyTextArea',
+                        text: this?.details.ext_col_07?.[i] || '',
+                        validation: 'min:0,length|max:1000,length'
+                    },
+                    {
+                        name: `ext_col_06_${i}`,
+                        label: `text_size_${i}`,
+                        type: 'VuetifySingleOption',
+                        option: this?.details?.ext_col_06?.[i] || '', // TODO
+                        options: [
+                            { key: '1', value: 'H2' },
+                            { key: '2', value: 'H3' },
+                            { key: '3', value: 'H4' },
+                            { key: '4', value: 'H5' },
+                            { key: '5', value: 'No level' }
+                        ],
+                        edit: true // TODO
+                    },
+                    {
+                        name: `ext_col_04_${i}`,
+                        label: `imagePosition_${i}`,
+                        type: 'VuetifySingleOption',
+                        option: this?.details?.ext_col_04?.[i] || '', // TODO
+                        options: [
+                            { key: '1', value: 'Top' },
+                            { key: '2', value: 'Left' },
+                            { key: '4', value: 'Right' },
+                            { key: '3', value: 'Bottom' },
+                            { key: '5', value: 'No image' }
+                        ],
+                        required: true,
+                        edit: true // TODO
+                    },
+                    {
+                        model: `ext_col_05_${i}`,
+                        type: 'VuetifyImageUpload', // TODO
+                        url: this?.details.ext_col_05?.[i]?.url || ''
                     }
-                    if (typeof json.ext_col_07[i] === 'string') {
-                        textarea = json.ext_col_07[i];
-                    }
-                    if (
-                        json.ext_col_05[i] !== undefined &&
-                        typeof json.ext_col_05[i].url === 'string'
-                    ) {
-                        url = json.ext_col_05[i].url;
-                    }
-                    imagePos = json.ext_col_04[i];
-                    textSize = json.ext_col_06[i];
-                }
-                schemaDetail.fields.push({
-                    type: 'vuetifyText',
-                    inputType: 'text',
-                    text: labelText,
-                    min: 0,
-                    max: 100,
-                    label: 'subtitle_' + i.toString(),
-                    model: 'ext_col_09_' + i.toString(),
-                    required: false
-                });
-                schemaDetail.fields.push({
-                    model: 'ext_col_07_' + i.toString(),
-                    type: 'vuetifyTextArea',
-                    inputType: 'text',
-                    label: 'text_' + i.toString(),
-                    placeholder: '',
-                    text: textarea,
-                    required: false,
-                    counter: 1000,
-                    max: 1000,
-                    min: 0
-                });
-                schemaDetail.fields.push({
-                    model: 'ext_col_06_' + i.toString(),
-                    type: 'vuetifySingleOption',
-                    label: 'text_size_' + i.toString(),
-                    option: textSize,
-                    contents: [
-                        { key: '1', value: 'H2' },
-                        { key: '2', value: 'H3' },
-                        { key: '3', value: 'H4' },
-                        { key: '4', value: 'H5' },
-                        { key: '5', value: 'No level' }
-                    ],
-                    required: true,
-                    edit: true
-                });
-                schemaDetail.fields.push({
-                    model: 'ext_col_04_' + i.toString(),
-                    type: 'vuetifySingleOption',
-                    label: 'imagePosition_' + i.toString(),
-                    option: imagePos,
-                    contents: [
-                        { key: '1', value: 'Top' },
-                        { key: '2', value: 'Left' },
-                        { key: '4', value: 'Right' },
-                        { key: '3', value: 'Bottom' },
-                        { key: '5', value: 'No image' }
-                    ],
-                    required: true,
-                    edit: true
-                });
-                schemaDetail.fields.push({
-                    model: 'ext_col_05_' + i.toString(),
-                    type: 'vuetifyUploadImage',
-                    url
-                });
-                this.schemaDetailList.push(schemaDetail);
+                ];
             }
-            this.loading = false;
         } catch (e) {
             this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
-            this.loading = false;
         };
+        this.loading = false;
     }
 };
 </script>

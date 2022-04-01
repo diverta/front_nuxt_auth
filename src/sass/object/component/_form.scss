@@ -9,13 +9,33 @@
 
         &-label {
             display: block;
-            margin-bottom: 8px
+            margin-bottom: 8px;
+
+            &.required::after {
+                content: "*";
+                margin-left: 2px;
+                color: red;
+            }
         }
     }
 
     .input-radio-group,
     .input-checkbox-group {
         display: flex;
+        flex-wrap: wrap;
+    }
+
+    .inpute-date {
+        &--datetime-wrapper {
+            display: flex;
+        }
+        &--datetime-icon {
+            margin-right: 6px;
+        }
+        @at-root .v-dialog .v-card .v-card.theme--light {
+            background-color: #1777ca;
+            border-radius: 0;
+        }
     }
 
     &_wrap {

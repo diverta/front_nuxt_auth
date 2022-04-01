@@ -17,11 +17,11 @@
         <div class="v-stepper mt-5 c-form_wrap">
             <v-container fluid>
                 <FormulateForm
-                    v-if="formulateScheme"
+                    v-if="formulateSchema"
                     #default="{ isValid }"
                     v-model="formValues"
                     class="c-form"
-                    :schema="formulateScheme"
+                    :schema="formulateSchema"
                 >
                     <v-checkbox v-model="agreementChecked" class="c-form_tnc">
                         <template v-slot:label>
@@ -46,8 +46,6 @@
 </template>
 
 <script>
-import '../assets/form.css';
-
 export default {
     title() {
         return 'Inquiry';
@@ -60,19 +58,19 @@ export default {
             loading: true,
             agreementChecked: false,
 
-            formulateScheme: null,
+            formulateSchema: null,
             formValues: {}
         };
     },
     mounted() {
-        this.getSchema();
+        this.createSchema();
     },
     methods: {
-        async getSchema() {
+        async createSchema() {
             this.loading = true;
             try {
                 const response = await this.$store.$auth.ctx.$axios.get(`/rcms-api/1/inquiry/get/${this.inquiryID}`);
-                this.formulateScheme = this.$parseFormulateScheme(response.data.details.cols)
+                this.formulateSchema = this.$parseFormulateSchema(response.data.details.cols)
                     .filter(({ name }) => {
                         // we skip some items in this form.
                         return !['body', 'ext_03'].includes(name);

@@ -38,7 +38,8 @@
     "vue-generator": "^1.1.0",
     "vue-json-pretty": "^2.0.2",
     "vue-property-decorator": "^9.0.0",
-    "vue-snack": "^0.1.4"
+    "vue-snack": "^0.1.4",
+    "vuetify-datetime-picker": "^2.1.1"
   },
   "devDependencies": {
     "@braid/vue-formulate": "^2.5.3",
@@ -63,6 +64,7 @@
     "prettier": "^2.0.5",
     "sass": "^1.32.8",
     "sass-loader": "^7.3.1",
+    "stylus-loader": "^4.3.3",
     "ts-jest": "^26.1.0",
     "vue-jest": "^3.0.4"
   }

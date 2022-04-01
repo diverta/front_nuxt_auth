@@ -1,180 +1,110 @@
 <template>
-    <v-form ref="myForm" v-model="formValid">
-        <div v-if="schema.time == '1'">
-            <v-dialog
-                ref="dialogdate"
-                v-model="modal"
-                :return-value.sync="date"
-                persistent
-                width="290px"
+    <div class="input-date">
+        <!-- TODO -->
+        <v-dialog
+            v-if="context.time !== '1'"
+            v-model="modal"
+            persistent
+            width="290px"
+        >
+            <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                    v-model="model"
+                    :label="$t('label.date_picker')"
+                    prepend-icon="mdi-calendar"
+                    readonly
+                    :rules="rules"
+                    v-bind="attrs"
+                    v-on="on"
+                />
+            </template>
+            <v-date-picker
+                v-model="model"
+                mode="dateTime"
+                color="#1777ca"
+                is24hr
+                scrollable
             >
-                <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                        v-model="date"
-                        :label="$t('label.date_picker')"
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        :rules="[
-                            (v) =>
-                                schema.required == false ||
-                                (schema.required == true && !!v) ||
-                                $t('verify.required_field'),,
-                        ]"
-                        v-bind="attrs"
-                        v-on="on"
-                    />
-                </template>
-                <v-date-picker
-                    v-model="date"
-                    mode="dateTime"
-                    :min="schema.minYear"
-                    :max="schema.maxYear"
-                    is24hr
-                    scrollable
-                    @change="checkdate($event)"
-                >
-                    <v-spacer />
-                    <v-btn text color="primary" @click="modal = false">
-                        Cancel
-                    </v-btn>
-                    <v-btn text color="primary" @click="$refs.dialogdate.save(date)">
-                        OK
-                    </v-btn>
-                </v-date-picker>
-            </v-dialog>
-            <v-dialog
-                ref="dialogtime"
-                v-model="modal2"
-                :return-value.sync="time"
-                persistent
-                width="290px"
+                <v-spacer />
+                <v-btn text color="primary" @click="() => modal = false">
+                    Close
+                </v-btn>
+            </v-date-picker>
+        </v-dialog>
+
+        <div
+            v-else
+            class="inpute-date--datetime-wrapper"
+        >
+            <v-icon class="inpute-date--datetime-icon">
+                mdi-calendar
+            </v-icon>
+            <v-datetime-picker
+                v-model="model"
+                class="inpute-date--datetime-picker"
+                :label="$t('label.time_picker')"
+                :dialog-width="340"
+                clear="Clear"
+                ok-text="OK"
             >
-                <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                        v-model="time"
-                        :label="$t('label.time_picker')"
-                        :rules="[
-                            (v) =>
-                                schema.required == false ||
-                                (schema.required == true && !!v) ||
-                                $t('verify.required_field'),,
-                        ]"
-                        prepend-icon="mdi-clock-time-four-outline"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                    />
+                <template #dateIcon>
+                    <v-icon>mdi-calendar</v-icon>
                 </template>
-                <v-time-picker
-                    v-if="modal2"
-                    v-model="time"
-                    full-width
-                    @change="checkdatetime($event)"
-                >
-                    <v-spacer />
-                    <v-btn text color="primary" @click="modal2 = false">
-                        Cancel
-                    </v-btn>
-                    <v-btn text color="primary" @click="$refs.dialogtime.save(time)">
-                        OK
-                    </v-btn>
-                </v-time-picker>
-            </v-dialog>
+                <template #timeIcon>
+                    <v-icon>mdi-clock</v-icon>
+                </template>
+            </v-datetime-picker>
         </div>
-        <div v-else>
-            <v-dialog
-                ref="dialogdate"
-                v-model="modal"
-                :return-value.sync="date"
-                persistent
-                width="290px"
-            >
-                <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                        v-model="date"
-                        :label="$t('label.date_picker')"
-                        :rules="[
-                            (v) =>
-                                schema.required == false ||
-                                (schema.required == true && !!v) ||
-                                $t('verify.required_field'),
-                        ]"
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                    />
-                </template>
-                <v-date-picker
-                    v-model="date"
-                    mode="dateTime"
-                    :min="schema.minYear"
-                    :max="schema.maxYear"
-                    is24hr
-                    scrollable
-                    @change="checkdate($event)"
-                >
-                    <v-spacer />
-                    <v-btn text color="primary" @click="modal = false">
-                        Cancel
-                    </v-btn>
-                    <v-btn text color="primary" @click="$refs.dialogdate.save(date)">
-                        OK
-                    </v-btn>
-                </v-date-picker>
-            </v-dialog>
-        </div>
-    </v-form>
+    </div>
 </template>
 
 <script>
-import { abstractField } from 'vue-form-generator';
+import Vue from 'vue';
+import DatetimePicker from 'vuetify-datetime-picker';
+
+Vue.use(DatetimePicker);
 
 export default {
-    mixins: [abstractField],
-    data () {
-        return {
-            formValid: true,
-            date: null,
-            time: null,
-            modal: false,
-            modal2: false
-        };
-    },
-    methods: {
-        checkdate (e) {
-            this.formValid = this.$refs.myForm.validate();
-            if (this.formValid) {
-                if (this.date && this.time) {
-                    console.log(this.date + ' ' + this.time);
-                    this.$emit(
-                        'model-updated',
-                        this.date + ' ' + this.time + ' +0900',
-                        this.schema.model
-                    );
-                } else {
-                    this.$emit('model-updated', this.date, this.schema.model);
-                }
-            }
-        },
-        checkdatetime (e) {
-            this.formValid = this.$refs.myForm.validate();
-            if (this.formValid) {
-                if (this.date && this.time) {
-                    console.log(this.date + ' ' + this.time);
-                    this.$emit(
-                        'model-updated',
-                        this.date + ' ' + this.time + ' +0900',
-                        this.schema.model
-                    );
-                } else {
-                    this.$emit('model-updated', this.date, this.schema.model);
-                }
-            }
+    props: {
+        context: {
+            type: Object,
+            required: true
         }
     },
-    mounted() {
-        this.formValid = this.$refs.myForm.validate();
+    data () {
+        return {
+            datetime: null,
+            modal: false
+        };
+    },
+    computed: {
+        model: {
+            get() {
+                return this.context.model;
+            },
+            set(date) {
+                const isYYYYMMDD = /^\d{4}-\d{2}-\d{2}$/.test(date);
+                this.context.model = isYYYYMMDD
+                    ? date
+                    : this.$dateFns.format(new Date(date), 'yyyy-MM-dd hh:mm');
+            }
+        },
+        rules() {
+            if (!this?.context?.rules) {
+                return [];
+            }
+            return this.context.rules.map(({ ruleName, args }) => {
+                switch (ruleName) {
+                case 'required':
+                    return (v) => v !== ''
+                        ? true
+                        : this.$t('verify.required_field');
+                default:
+                    return null;
+                }
+            })
+                .filter((fn) => fn);
+        }
     }
 };
 </script>

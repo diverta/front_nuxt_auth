@@ -29,6 +29,9 @@ export function getFormulateScheme(keyName, { attribute, title, type, contents, 
     const scheme = {
         name: keyName,
         label: title,
+        'label-class': [
+            required === 2 ? 'required' : undefined
+        ],
         placeholder: attribute?.placeholder,
         validation,
         disableErrors: true // disable native FormulateInput errors, uses custom errors instead.
@@ -63,12 +66,10 @@ export function getFormulateScheme(keyName, { attribute, title, type, contents, 
             type: 'VuetifyMultipleChoice',
             options: attribute?.random === '1' ? shuffle(contents) : contents
         };
-    // TODO date
     case 6:
         return {
             ...scheme,
-            type: 'datetune-locale',
-            options: contents
+            type: 'VuetifyDate'
         };
     case 7:
         return {
