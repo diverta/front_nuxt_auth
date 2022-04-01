@@ -10,185 +10,87 @@
 
         <div class="l-content_heading">
             <h3 class="slogan text-left">
-                {{$t('inquiry.message')}}<br>
+                {{ $t('inquiry.message') }}<br>
             </h3>
         </div>
 
         <div class="v-stepper mt-5 c-form_wrap">
             <v-container fluid>
-                <vue-form-generator
-                    ref="form"
-                    :schema="schema"
-                    :model="model"
+                <FormulateForm
+                    v-if="formulateSchema"
+                    #default="{ isValid }"
+                    v-model="formValues"
                     class="c-form"
-                    @model-updated="onInput"
-                />
+                    :schema="formulateSchema"
+                >
+                    <v-checkbox v-model="agreementChecked" class="c-form_tnc">
+                        <template v-slot:label>
+                            <div>{{ $t('common.agree') }}</div>
+                        </template>
+                    </v-checkbox>
 
-                <v-checkbox v-model="disabled" class="c-form_tnc">
-                    <template v-slot:label>
-                        <div>{{$t('common.agree')}}</div>
-                    </template>
-                </v-checkbox>
-
-                <div class="text-center mb-5">
-                    <button
-                        type="submit"
-                        class="c-btn c-btn_main"
-                        :disabled="!disabled"
-                        @click="submitF()"
-                    >
-                        {{$t('common.submit')}}
-                    </button>
-                </div>
+                    <div class="text-center mb-5">
+                        <button
+                            type="submit"
+                            class="c-btn c-btn_main"
+                            :disabled="!agreementChecked || !isValid"
+                            @click="submitF"
+                        >
+                            {{ $t('common.submit') }}
+                        </button>
+                    </div>
+                </FormulateForm>
             </v-container>
         </div>
     </div>
 </template>
 
 <script>
-import '../assets/form.css';
-import Vue from 'vue';
-import VueFormGenerator from 'vue-form-generator';
-import KurocoParser from '../plugins/parser.js';
-import fieldUploadFile from '../components/vuetify_file_upload.vue';
-import fieldVuetifyText from '../components/vuetify_text.vue';
-import fieldVuetifyTextArea from '../components/vuetify_textarea.vue';
-import fieldVuetifyDate from '../components/vuetify_date.vue';
-import fieldVuetifyJson from '../components/vuetify_json.vue';
-import fieldVuetifyPrefecture from '../components/vuetify_prefecture.vue';
-import fieldVuetifyMultipleChoice from '../components/vuetify_multiple_choice.vue';
-import fieldVuetifySingleChoice from '../components/vuetify_single_choice.vue';
-import fieldVuetifySingleOption from '../components/vuetify_single_option.vue';
-
-Vue.component('fieldUploadFile', fieldUploadFile);
-Vue.component('fieldVuetifyDate', fieldVuetifyDate);
-Vue.component('fieldVuetifyText', fieldVuetifyText);
-Vue.component('fieldVuetifyTextArea', fieldVuetifyTextArea);
-Vue.component('fieldVuetifyJson', fieldVuetifyJson);
-Vue.component('fieldVuetifyPrefecture', fieldVuetifyPrefecture);
-Vue.component('fieldVuetifySingleOption', fieldVuetifySingleOption);
-Vue.component('fieldVuetifySingleChoice', fieldVuetifySingleChoice);
-Vue.component('fieldVuetifyMultipleChoice', fieldVuetifyMultipleChoice);
-
-Vue.use(VueFormGenerator);
-Vue.use(KurocoParser);
-
 export default {
-    components: {
-        'vue-form-generator': VueFormGenerator.component
-    },
-    mounted() {
-        this.getSchema();
-    },
-    methods: {
-        getModel() {
-            const self = this;
-            this.$store.$auth.ctx.$axios
-                .get(this.inquirySchemaUrl)
-                .then(function (response) {
-                    const model = {};
-                    const columns = response.data.details.cols;
-                    for (const key in columns) {
-                        if (columns.hasOwnProperty(key)) {
-                            if (columns[key].hasOwnProperty('attribute')) {
-                                if (columns[key].attribute.hasOwnProperty('placeholder')) {
-                                    model[key] = columns[key].attribute.placeholder;
-                                }
-                            }
-                        }
-                    }
-                    self.model = model;
-                })
-                .catch(function (error) {
-                    self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                    self.$store.dispatch('snackbar/snackOn');
-                });
-        },
-        getSchema() {
-            const self = this;
-            this.loading = true;
-            this.$store.$auth.ctx.$axios
-                .get(this.inquirySchemaUrl)
-                .then(function (response) {
-                    console.log(response);
-                    const schema = {};
-                    schema.fields = [];
-                    const columns = response.data.details.cols;
-                    for (const key in columns) {
-                            
-                        let result = {};
-                        if (columns.hasOwnProperty(key)) {
-                            result = self.$parse(columns[key], key);
-                            if (
-                                typeof result !== 'undefined' &&
-                Object.keys(result).length !== 0
-                            ) {
-                                schema.fields.push(result);
-                            }
-                        }
-                    }
-
-                    self.schema = schema;
-                    self.loading = false;
-                })
-                .catch(function (error) {
-                    self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                    self.$store.dispatch('snackbar/snackOn');
-                    self.loading = false;
-                });
-        },
-        onInput (value, fieldName) {
-            this.$set(this.model, fieldName, value);
-        },
-        submitF () {
-            const self = this;
-
-            this.validForm = true;
-            for (const key in self.$children[1].$children) {
-                self.$children[1].$children[key].$children[0].$refs.myForm.validate();
-                if (self.$children[1].$children[key].$children[0].formValid === false) {
-                    this.validForm = false;
-                }
-            }
-
-            if (this.validForm) {
-                const sendModel = JSON.parse(JSON.stringify(self.model));
-                sendModel.body = 'example message';
-                self.$store.$auth.ctx.$axios
-                    .post(this.inquirySubmitUrl, sendModel)
-                    .then(function (response) {
-                        if (response.data.errors.length === 0) {
-                            self.$store.dispatch(
-                                'snackbar/setMessage', this.$i18n.t('inquiry.thanks')
-                            );
-                            self.$store.dispatch('snackbar/snackOn');
-                            // self.$router.push("/");
-                        }
-                    })
-                    .catch(function (error) {
-                        self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                        self.$store.dispatch('snackbar/snackOn');
-                    });
-            } else {
-                self.$store.dispatch('snackbar/setError', this.$i18n.t('verify.fille_property'));
-                self.$store.dispatch('snackbar/snackOn');
-            }
-        }
-    },
     title() {
         return 'Inquiry';
     },
     auth: true,
     data() {
         return {
-            inquirySubmitUrl: '/rcms-api/1/inquiry/1',
-            inquirySchemaUrl: '/rcms-api/1/inquiry/get/1',
-            disabled: false,
-            validForm: true,
+            inquiryID: 1,
+
             loading: true,
-            model: {},
-            schema: {}
+            agreementChecked: false,
+
+            formulateSchema: null,
+            formValues: {}
         };
+    },
+    async mounted() {
+        this.loading = true;
+        try {
+            const response = await this.$store.$auth.ctx.$axios.get(`/rcms-api/1/inquiry/get/${this.inquiryID}`);
+            this.formulateSchema = this.$parseFormulateSchema(response.data.details.cols)
+                .filter(({ name }) => {
+                    // we skip some items in this form.
+                    return !['body', 'ext_03'].includes(name);
+                });
+        } catch (e) {
+            this.$snackbar.error(e?.response?.data.errors?.[0]?.message);
+        }
+        this.loading = false;
+    },
+    methods: {
+        async submitF () {
+            try {
+                const sendModel = {
+                    ...this.formValues,
+                    body: 'example message'
+                };
+                const response = await this.$store.$auth.ctx.$axios.post(`/rcms-api/1/inquiry/${this.inquiryID}`, sendModel);
+                if (response.data.errors.length === 0) {
+                    this.$snackbar.info(this.$i18n.t('inquiry.thanks'));
+                }
+            } catch (e) {
+                this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
+            };
+        }
     }
 };
 </script>

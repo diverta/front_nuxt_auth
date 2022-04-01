@@ -1,6 +1,12 @@
 <template>
-    <v-app class="l-content_wrap">
-        <v-navigation-drawer v-if="auth.loggedIn"
+    <v-app
+        class="l-content_wrap"
+        :class="[
+            $auth.loggedIn ? 'p-dashboard' : 'p-login',
+            $route.name === 'index' ? 'p-home' : undefined
+        ]"
+    >
+        <v-navigation-drawer v-if="$auth.loggedIn"
                              id="c-navi_side"
                              v-model="drawer"
                              :mini-variant="miniVariant"
@@ -31,8 +37,8 @@
                     <v-list-item-content>
                         <v-list-item-title
                             v-text="
-                                auth.loggedIn && item.title_loggedIn
-                                    ? item.title_loggedIn
+                                $auth.loggedIn && item.titleLoggedIn
+                                    ? item.titleLoggedIn
                                     : item.title
                             "
                         />
@@ -41,8 +47,8 @@
             </v-list>
         </v-navigation-drawer>
 
-        <v-app-bar :clipped-left="clipped" color="#1414A0" dense dark app :hide-on-scroll="!auth.loggedIn">
-            <v-app-bar-nav-icon v-if="auth.loggedIn" @click.stop="drawer = !drawer" />
+        <v-app-bar :clipped-left="clipped" color="#1414A0" dense dark app :hide-on-scroll="!$auth.loggedIn">
+            <v-app-bar-nav-icon v-if="$auth.loggedIn" @click.stop="drawer = !drawer" />
             <v-spacer />
 
             <v-toolbar-title height="30" :to="localePath('/')" class="l-header_user" v-text="subtitle" />
@@ -55,32 +61,35 @@
                 />
             </div>
 
-            <v-btn v-if="auth.loggedIn" icon class="l-header_logout" @click="logout">
-                <v-icon>mdi-exit-to-app</v-icon>
-            </v-btn>
-
-            <!--
-      <div v-if="!auth.loggedIn">
-        <NuxtLink to="/signup"> Sign Up </NuxtLink>
-      </div>
-      -->
-            <div v-if="!auth.loggedIn && !signUpPage">
-                <span class="d-none d-sm-inline">New to Muzica?</span><button class="c-btn c-btn_sm c-btn_dark ml-2" nuxt @click="go_page('/signup/')">
-                    Sign Up
-                </button>
-            </div>
-            <div v-else-if="!auth.loggedIn">
-                Already have an account? <button class="c-btn c-btn_sm c-btn_dark ml-2" nuxt @click="go_page('/')">
-                    {{ $t('common.sign_in') }}
-                </button>
-            </div>
+            <template v-if="$auth.loggedIn">
+                <v-btn icon class="l-header_logout" @click="logout">
+                    <v-icon>mdi-exit-to-app</v-icon>
+                </v-btn>
+            </template>
+            <template v-else>
+                <div v-if="this.$route.name === 'signup'">
+                    <span>Already have an account?</span>
+                    <button
+                        class="c-btn c-btn_sm c-btn_dark ml-2"
+                        nuxt
+                        @click="() => $router.push(localePath('/'))"
+                    >
+                        {{ $t('common.sign_in') }}
+                    </button>
+                </div>
+                <div v-else>
+                    <span class="d-none d-sm-inline">New to Muzica?</span>
+                    <button
+                        class="c-btn c-btn_sm c-btn_dark ml-2"
+                        nuxt
+                        @click="() => $router.push(localePath('/signup/'))"
+                    >
+                        Sign Up
+                    </button>
+                </div>
+            </template>
         </v-app-bar>
         <v-main>
-            <!--<br />
-      <div align="center" v-if="!auth.loggedIn">
-        <v-btn disable align> Logo Diverta Inc. </v-btn>
-      </div>
-      <br />-->
             <v-container class="l-content_inner" fluid>
                 <nuxt />
             </v-container>
@@ -103,7 +112,7 @@
             {{ this.$store.getters["snackbar/message"] }}
 
             <template v-slot:action="{ attrs }">
-                <v-btn text v-bind="attrs" @click="snackbarVisible = false">
+                <v-btn text v-bind="attrs" @click="() => snackbarVisible = false">
                     {{ $t('common.close') }}
                 </v-btn>
             </template>
@@ -114,16 +123,6 @@
 <script>
 import '../sass/style.scss';
 export default {
-    created() {
-        const myBody = document.getElementsByTagName('body')[0];
-        if (this.$auth.loggedIn) {
-            myBody.classList.add('p-dashboard');
-            myBody.classList.remove('p-login');
-        } else {
-            myBody.classList.remove('p-dashboard');
-            myBody.classList.add('p-login');
-        }
-    },
     data() {
         return {
             langDefault: 'English',
@@ -134,7 +133,7 @@ export default {
                 {
                     icon: 'mdi-home',
                     title: 'Home',
-                    title_loggedIn: 'Home',
+                    titleLoggedIn: 'Home',
                     to: '/'
                 },
                 {
@@ -169,21 +168,10 @@ export default {
         };
     },
     computed: {
-        user() {
-            return this.$auth.user;
-        },
-        auth() {
-            return this.$store.$auth;
-        },
-        signUpPage() {
-            return this.$route.name === 'signup';
-        },
         subtitle() {
-            if (this.$store.$auth.loggedIn) {
-                return this.$i18n.t('common.hi') + this.$auth.user.name1;
-            } else {
-                return '';
-            }
+            return this.$store.$auth.loggedIn
+                ? `${this.$i18n.t('common.hi')}${this.$auth.user.name1}`
+                : '';
         },
         // snackbarが自動でfalseに設定するためセッタを用意して、明示的にdispatchからOffするようにする
         snackbarVisible: {
@@ -199,22 +187,10 @@ export default {
         }
     },
     methods: {
-        go_page(path) {
-            this.$router.push(this.localePath(path));;
-        },
-        updateDesign() {
-            console.log('You logout!');
-            const myBody = document.getElementsByTagName('body')[0];
-            myBody.classList.remove('p-dashboard');
-            myBody.classList.add('p-login');
-        },
         async logout() {
-            await this.$auth.logout().then((response) => {
-                this.updateDesign();
-                this.$store.dispatch('snackbar/setMessage', this.$i18n.t('slackbar.logged_out'));
-                this.$store.dispatch('snackbar/snackOn');
-                this.$router.push(this.localePath('/'));
-            });
+            await this.$auth.logout();
+            this.$snackbar.info(this.$i18n.t('slackbar.logged_out'));
+            this.$router.push(this.localePath('/'));
         }
     }
 };

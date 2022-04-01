@@ -61,7 +61,12 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-    plugins: ['@/plugins/parser','@/plugins/axios'],
+    plugins: [
+        '@/plugins/axios',
+        '@/plugins/snackbar.client',
+        '@/plugins/parseFormulateSchema.client',
+        '@/plugins/formulateInputsRegister.client'
+    ],
     /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -70,7 +75,15 @@ export default {
     /*
    ** Nuxt.js dev-modules
    */
-    buildModules: ['@nuxtjs/vuetify'],
+    buildModules: [
+        '@nuxtjs/vuetify',
+        '@nuxtjs/date-fns',
+        // Doc: https://github.com/nuxt-community/eslint-module
+        ['@nuxtjs/eslint-module', { fix: true }],
+        // Doc: https://github.com/nuxt-community/stylelint-module
+        ['@nuxtjs/stylelint-module', { fix: true }],
+        '@braid/vue-formulate/nuxt'
+    ],
     /*
    ** Nuxt.js modules
    */
@@ -127,10 +140,6 @@ export default {
             }
         }
     },
-    typescript: {
-        typeCheck: true,
-        ignoreNotFoundWarnings: true
-    },
     router: {
         middleware: ['auth']
     },
@@ -175,5 +184,8 @@ export default {
             files: ['*.vue'],
             processor: 'vue/.vue'
         }
-    ]
+    ],
+    formulate: {
+        configPath: '@/../formulate.config.js'
+    }
 };

@@ -31,16 +31,15 @@ export const mutations = {
 };
 
 export const actions = {
-    snackOn({ commit }) {
-        commit('setenable');
-    },
     snackOff({ commit }) {
         commit('setdisable');
     },
-    setMessage({ commit }, message) {
+    popupInfo({ commit }, message) {
         commit('setMessage', message);
+        commit('setenable');
     },
-    setError({ commit }, message) {
+    popupError({ commit }, message) {
         commit('setError', message);
+        commit('setenable');
     }
 };

@@ -6,7 +6,7 @@
                     <img src="~/assets/images/logo.png?width=150px" class="p-login_logo">
                     <div class="p-login_intro-text">
                         <h1 class="heading">
-                            <span v-html="$t('reminder.back_to_login')"></span>
+                            <span v-html="$t('reminder.back_to_login')" />
                             <v-icon
                                 dark
                                 right
@@ -16,7 +16,7 @@
                                 mdi-undo-variant
                             </v-icon>
                         </h1>
-                        <p v-html="$t('reminder.sign_up')"></p>
+                        <p v-html="$t('reminder.sign_up')" />
                     </div>
                 </div>
             </v-col>
@@ -30,13 +30,13 @@
                     >
                         <v-card-title>
                             <h2 align="center" class="pb-4 c-text_blue">
-                                {{$t('reminder.password_reset')}}
+                                {{ $t('reminder.password_reset') }}
                             </h2>
                         </v-card-title>
                         <v-container fluid>
                             <v-row>
                                 <v-col cols="12">
-                                    <p>{{$t('reminder.send_email')}}</p>
+                                    <p>{{ $t('reminder.send_email') }}</p>
                                     <v-text-field
                                         v-model="email"
                                         label="Email address"
@@ -53,7 +53,7 @@
                                         :loading="loading1"
                                         class="c-btn c-btn_dark"
                                     >
-                                        {{$t('reminder.reset')}}
+                                        {{ $t('reminder.reset') }}
                                     </button>
                                 </v-col>
                             </v-row>
@@ -69,19 +69,19 @@
                     >
                         <v-card-title>
                             <h2 align="center" class="pb-4 c-text_blue">
-                                <p>{{$t('reminder.set_password')}}</p>
+                                <p>{{ $t('reminder.set_password') }}</p>
                             </h2>
                         </v-card-title>
                         <v-container fluid class="p-login_content-inner">
                             <v-row>
                                 <v-col cols="12 py-0">
-                                    <p>{{$t('reminder.temp_password')}}</p>
+                                    <p>{{ $t('reminder.temp_password') }}</p>
                                     <v-text-field v-model="temp_pwd" :type="text" label="" outlined />
                                 </v-col>
                             </v-row>
                             <v-row>
                                 <v-col cols="12 py-0">
-                                    <p>{{$t('reminder.new_password')}}</p>
+                                    <p>{{ $t('reminder.new_password') }}</p>
                                     <v-text-field
                                         v-model="login_pwd"
                                         :append-icon="password_show ? 'mdi-eye' : 'mdi-eye-off'"
@@ -97,7 +97,7 @@
                             </v-row>
                             <v-row>
                                 <v-col cols="12 pt-0">
-                                    <p>{{$t('reminder.conf_password')}}</p>
+                                    <p>{{ $t('reminder.conf_password') }}</p>
                                     <v-text-field
                                         v-model="login_pwd2"
                                         :append-icon="password_show2 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -125,7 +125,7 @@
                                         dark
                                         :loading="loading2"
                                     >
-                                        {{$t('reminder.submit')}}
+                                        {{ $t('reminder.submit') }}
                                     </v-btn>
                                 </v-col>
                             </v-row>
@@ -143,7 +143,7 @@
                             <v-row>
                                 <v-col cols="12">
                                     <p align="center">
-                                        {{$t('reminder.update_ok')}}
+                                        {{ $t('reminder.update_ok') }}
                                     </p>
                                 </v-col>
                             </v-row>
@@ -157,7 +157,7 @@
                                         class="white--text"
                                         @click="login()"
                                     >
-                                        {{$t('reminder.login')}}
+                                        {{ $t('reminder.login') }}
                                     </v-btn>
                                 </v-col>
                             </v-row>
@@ -174,7 +174,7 @@
                         <v-container fluid>
                             <v-row class="p-login_content-inner">
                                 <v-col cols="12" class="align-self-center">
-                                    <p align="center" v-html="$t('reminder.send_emailed')"></p>
+                                    <p align="center" v-html="$t('reminder.send_emailed')" />
                                 </v-col>
                             </v-row>
                         </v-container>
@@ -211,11 +211,7 @@ export default {
     created() {
         this.token = this.$route.query.token;
         if (this.token) {
-            this.$store.dispatch(
-                'snackbar/setMessage',
-                this.$i18n.t('reminder.not_entered')
-            );
-            this.$store.dispatch('snackbar/snackOn');
+            this.$snackbar.info(this.$i18n.t('reminder.not_entered'));
             this.e1 = 2;
         }
     },
@@ -223,57 +219,40 @@ export default {
         login() {
             this.$router.push(this.localePath('/'));
         },
-        reminder() {
+        async reminder() {
             this.loading1 = true;
-            const self = this;
-            this.$store.$auth.ctx.$axios
-                .post('/rcms-api/1/reminder', {
-                    email: this.email
-                })
-                .then(function (response) {
-                    if (response.data.errors.length === 0) {
-                        self.$store.dispatch(
-                            'snackbar/setMessage',
-                            this.$i18n.t('reminder.password_sent')
-                        );
-                        self.$store.dispatch('snackbar/snackOn');
-                    }
-                    self.e1 = 3;
-                    self.loading1 = false;
-                })
-                .catch(function () {
-                    self.$store.dispatch('snackbar/setError', this.$i18n.t('reminder.invalid_email'));
-                    self.$store.dispatch('snackbar/snackOn');
-                    self.loading1 = false;
-                });
+            try {
+                const response = await this.$store.$auth.ctx.$axios.post('/rcms-api/1/reminder', { email: this.email });
+                this.e1 = 3;
+                if (response.data.errors.length > 0) {
+                    throw new Error(response.data.errors.join('\t'));
+                }
+                this.$snackbar.info(this.$i18n.t('reminder.password_sent'));
+            } catch (e) {
+                this.$snackbar.error(this.$i18n.t('reminder.invalid_email'));
+            };
+            this.loading1 = false;
         },
-        set_password() {
-            if (this.$refs.form2.validate() && this.token) {
-                console.log('reset');
-                this.loading2 = true;
-                const self = this;
-                self.$auth.ctx.$axios
+        async set_password() {
+            if (!this.$refs.form2.validate() || !this.token) {
+                return;
+            }
+
+            this.loading2 = true;
+            try {
+                await this.$auth.ctx.$axios
                     .post('/rcms-api/1/reminder', {
                         token: this.token,
                         login_pwd: this.login_pwd,
                         temp_pwd: this.temp_pwd
-                    })
-                    .then(() => {
-                        self.$store.dispatch(
-                            'snackbar/setMessage',
-                            this.$i18n.t('reminder.already_updated')
-                        );
-                        self.$store.dispatch('snackbar/snackOn');
-                        self.$router.push('/');
-                        self.loading2 = false;
-                        self.e1 = 4;
-                    })
-                    .catch(function (error) {
-                        self.$store.dispatch('snackbar/setError', error.response.data.errors?.[0].message);
-                        self.$store.dispatch('snackbar/snackOn');
-                        self.loading2 = false;
                     });
+                this.$snackbar.info(this.$i18n.t('reminder.already_updated'));
+                this.$router.push('/');
+                this.e1 = 4;
+            } catch (e) {
+                this.$snackbar.error(e.response.data.errors?.[0].message);
             }
+            this.loading2 = false;
         }
     }
 };

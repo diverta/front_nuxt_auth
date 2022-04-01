@@ -26,6 +26,9 @@ module.exports = {
         'vue/html-closing-bracket-newline': 'off',
         'comma-dangle': 'warn',
         'no-multiple-empty-lines': 'warn',
-        'vue/comment-directive': 0
+        'vue/comment-directive': 0,
+        'vue/no-v-html': 'off',
+        'no-case-declarations': 'off',
+        'prefer-regex-literals': 'off'
     }
 };
