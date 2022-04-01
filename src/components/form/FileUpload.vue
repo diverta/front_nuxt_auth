@@ -1,11 +1,23 @@
 <template>
-    <v-file-input
-        v-model="file"
-        :rules="rules"
-        :label="context.label"
-        :accept="accept"
-        @change="uploadFile"
-    />
+    <div>
+        <v-file-input
+            v-model="file"
+            :rules="rules"
+            :label="context.label"
+            :accept="accept"
+            @change="uploadFile"
+        />
+        <v-img
+            v-if="context.slotProps.component.image"
+            class="mx-auto"
+            :src="context.model ? `${context.model.file_id}?width=300px` : ''"
+            :aspect-ration="16 / 9"
+            width="33%"
+            max-height="300"
+            max-width="300"
+            position="center"
+        />
+    </div>
 </template>
 
 <script>

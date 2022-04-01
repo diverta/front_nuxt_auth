@@ -1,6 +1,16 @@
 .c-form {
     padding: 8px;
 
+    &_wrap {
+        border-radius: 15px;
+    }
+
+    label {
+        color: $color_main_dark;
+        font-weight: bold;
+        text-transform: capitalize;
+    }
+
     .error--text {
         color: red;
     }
@@ -20,9 +30,18 @@
     }
 
     .input-radio-group,
-    .input-checkbox-group {
+    .input-checkbox-group,
+    .v-input--radio-group__input {
         display: flex;
         flex-wrap: wrap;
+        flex-direction: row;
+    }
+    .v-input--checkbox, 
+    .v-radio {
+        margin: 0 25px 0 0 !important;
+    }
+    .v-input--selection-controls {
+        margin-top: 0;
     }
 
     .inpute-date {
@@ -38,10 +57,6 @@
         }
     }
 
-    &_wrap {
-        background: #fff;
-        border-radius: 15px;
-    }
     &_tnc {
         .v-input__slot {
             justify-content: center;
@@ -54,43 +69,14 @@
             flex: 0 0 auto !important;
         }
     }
-    & label {
-        color: $color_main_dark;
-        font-weight: bold;
-        text-transform: capitalize;
-    }
-    & .v-form {
-        margin-top: 10px;
-    }
-    & .v-form, & .v-input--radio-group__input {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-    }
-    & .form-group {
-        margin-bottom: 10px;
-    }
-    & .v-input--checkbox, 
-    & .v-radio {
-        //flex: 1 1 30%;
-        margin: 0 25px 0 0 !important;
-    }
-    & .v-input--radio-group {
-        width: 100%;
-    }
-    & .v-input--selection-controls {
-        margin-top: 0;
-    }
-    & .v-messages__message {
-        color: red;
-    }
-    & .v-radio {
+
+    .v-radio {
         @include sm {
             width: 100%;
             padding-bottom: 15px;
         }
     }
-    & .v-input {
+    .v-input {
         @include sm {
             width: 100%;
         }

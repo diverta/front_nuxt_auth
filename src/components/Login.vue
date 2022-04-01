@@ -103,7 +103,6 @@ export default {
                 await this.$auth.loginWith('local', { data: this.form });
                 this.$snackbar.info(this.$i18n.t('slackbar.logged_in'));
             } catch (e) {
-                console.error(e);
                 this.$snackbar.error(this.$i18n.t('slackbar.login_fail'));
             }
             this.loading = false;

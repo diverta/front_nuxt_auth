@@ -62,10 +62,9 @@ export default {
    ** https://nuxtjs.org/guide/plugins
    */
     plugins: [
-        '@/plugins/parser',
         '@/plugins/axios',
         '@/plugins/snackbar.client',
-        '@/plugins/parseFormulateScheme.client',
+        '@/plugins/parseFormulateSchema.client',
         '@/plugins/formulateInputsRegister.client'
     ],
     /*
@@ -140,10 +139,6 @@ export default {
                 options.loose = true;
             }
         }
-    },
-    typescript: {
-        typeCheck: true,
-        ignoreNotFoundWarnings: true
     },
     router: {
         middleware: ['auth']

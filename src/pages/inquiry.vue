@@ -62,24 +62,21 @@ export default {
             formValues: {}
         };
     },
-    mounted() {
-        this.createSchema();
+    async mounted() {
+        this.loading = true;
+        try {
+            const response = await this.$store.$auth.ctx.$axios.get(`/rcms-api/1/inquiry/get/${this.inquiryID}`);
+            this.formulateSchema = this.$parseFormulateSchema(response.data.details.cols)
+                .filter(({ name }) => {
+                    // we skip some items in this form.
+                    return !['body', 'ext_03'].includes(name);
+                });
+        } catch (e) {
+            this.$snackbar.error(e?.response?.data.errors?.[0]?.message);
+        }
+        this.loading = false;
     },
     methods: {
-        async createSchema() {
-            this.loading = true;
-            try {
-                const response = await this.$store.$auth.ctx.$axios.get(`/rcms-api/1/inquiry/get/${this.inquiryID}`);
-                this.formulateSchema = this.$parseFormulateSchema(response.data.details.cols)
-                    .filter(({ name }) => {
-                        // we skip some items in this form.
-                        return !['body', 'ext_03'].includes(name);
-                    });
-            } catch (e) {
-                this.$snackbar.error(e?.response?.data.errors?.[0]?.message);
-            }
-            this.loading = false;
-        },
         async submitF () {
             try {
                 const sendModel = {

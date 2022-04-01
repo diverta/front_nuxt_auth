@@ -86,7 +86,7 @@ export default {
                 {
                     name: 'name1',
                     label: this.$i18n.t('label.first_name'),
-                    type: 'VuetifyText',
+                    type: 'FormText',
                     'label-class': ['required'],
                     validation: 'required|min:0,length|max:100,length',
                     disableErrors: true
@@ -94,7 +94,7 @@ export default {
                 {
                     name: 'name2',
                     label: this.$i18n.t('label.last_name'),
-                    type: 'VuetifyText',
+                    type: 'FormText',
                     'label-class': ['required'],
                     validation: 'required|min:0,length|max:100,length',
                     disableErrors: true
@@ -102,7 +102,7 @@ export default {
                 {
                     name: 'hire_date',
                     label: this.$i18n.t('label.hire_date'),
-                    type: 'VuetifyDate',
+                    type: 'FormDate',
                     'label-class': ['required'],
                     validation: 'required',
                     disableErrors: true
@@ -110,21 +110,21 @@ export default {
                 {
                     name: 'department',
                     label: this.$i18n.t('label.department'),
-                    type: 'VuetifyText',
+                    type: 'FormText',
                     validation: 'min:0,length|max:100,length',
                     disableErrors: true
                 },
                 {
                     name: 'position',
                     label: this.$i18n.t('label.position'),
-                    type: 'VuetifyText',
+                    type: 'FormText',
                     validation: 'min:0,length|max:100,length',
                     disableErrors: true
                 },
                 {
                     name: 'tel',
                     label: this.$i18n.t('label.phone'),
-                    type: 'VuetifyText',
+                    type: 'FormText',
                     validation: 'required|tel',
                     'label-class': ['required'],
                     disableErrors: true
@@ -132,14 +132,14 @@ export default {
                 {
                     name: 'email',
                     label: this.$i18n.t('label.email'),
-                    type: 'VuetifyText',
+                    type: 'FormText',
                     validation: 'required|email|min:0,length|max:100,length',
                     'label-class': ['required'],
                     disableErrors: true
                 },
                 {
                     name: 'login_pwd',
-                    type: 'VuetifyPassword',
+                    type: 'FormPassword',
                     label: this.$i18n.t('label.password'),
                     validation: 'required|min:8,length|password',
                     'label-class': ['required'],
@@ -147,13 +147,13 @@ export default {
                 },
                 {
                     name: 'profileimage',
-                    type: 'VuetifyFileUpload',
+                    type: 'FormFileUpload',
                     label: this.$i18n.t('label.avatar')
                 },
                 {
                     name: 'pull_down',
                     label: this.$i18n.t('label.office'),
-                    type: 'VuetifySingleOption',
+                    type: 'FormSingleOption',
                     options: [
                         {
                             key: '0',
@@ -184,7 +184,7 @@ export default {
                 {
                     name: 'multiple_check',
                     label: this.$i18n.t('label.hobby'),
-                    type: 'VuetifyMultipleChoice',
+                    type: 'FormMultipleChoice',
                     options: [
                         {
                             key: '1',
@@ -251,7 +251,7 @@ export default {
                 {
                     name: 'notes',
                     label: this.$i18n.t('label.notes'),
-                    type: 'VuetifyTextarea',
+                    type: 'FormTextarea',
                     validation: 'min:0,length|max:400,length'
                 }
             ],
