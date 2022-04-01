@@ -25,7 +25,7 @@
                     <v-card flat>
                         {{ $dateFns.format(topicsDetail.inst_ymdhi, 'yyyy/MM/dd') }}
                         <div class="text-right mt-2">
-                            <v-btn icon :color="favoriteColor" @click="onClickToggleFavorite()">
+                            <v-btn icon :color="favoriteColor" @click="onClickToggleFavorite">
                                 <v-icon x-large left>
                                     mdi-star
                                 </v-icon>
@@ -108,13 +108,13 @@ export default {
                 module_type: 'topics',
                 module_id: parseInt(this.topic_id)
             };
-            const request = this.favoriteColor === 'gray'
+            const request = this.favoriteColor === 'grey'
                 ? this.$store.$auth.ctx.$axios.post('/rcms-api/1/favorites', requestOption)
                 : this.$store.$auth.ctx.$axios.post('/rcms-api/1/favorites/delete', requestOption);
 
             try {
                 await request;
-                this.favoriteColor = this.favoriteColor === 'gray' ? 'red' : 'gray';
+                this.favoriteColor = this.favoriteColor === 'grey' ? 'red' : 'grey';
             } catch (error) {
                 this.$snackbar.error(error?.response?.data?.errors?.[0]?.message);
             }

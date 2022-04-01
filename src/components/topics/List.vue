@@ -44,19 +44,6 @@
                                 </NuxtLink>
                             </div>
                         </div>
-                        <v-col v-if="item.edit" class="py-2">
-                            <v-btn
-                                class="mx-3 c-icon_main c-icon_sm"
-                                fab
-                                dark
-                                small
-                                @click="() => $router.push(localePath(`/mypage/topic_edit/${item.id}`))"
-                            >
-                                <v-icon dark>
-                                    mdi-pencil
-                                </v-icon>
-                            </v-btn>
-                        </v-col>
                     </div>
                 </div>
             </div>
