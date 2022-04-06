@@ -16,7 +16,7 @@
                                 <h1 class="mb-3 mt-0">
                                     {{ topicsDetail.subject }}
                                 </h1>
-                                <span class="c-btn c-btn_main c-btn_sm c-btn_disable">
+                                <span class="c-btn c-btn_main c-btn_sm c-btn_disable white--text">
                                     {{ topicsDetail.contents_type_nm }}
                                 </span>
                             </v-col>
@@ -42,14 +42,18 @@
                     <h3 class="heading">
                         {{ $t('detail.files') }}
                     </h3>
-                    <a v-if="topicsDetail.fileUrl" :href="topicsDetail.fileUrl" target="_blank" class="c-btn c-btn_dark p-article_file">
-                        {{ $t('detail.view') }}
-                        <FileTypeIcon :file-type="topicsDetail.fileType" />
-                    </a>
-                    <a v-if="topicsDetail.fileDownload" :href="topicsDetail.fileDownload" target="_blank" class="c-btn c-btn_main p-article_file">
-                        {{ $t('detail.download') }}
-                        <FileTypeIcon :file-type="topicsDetail.fileType" />
-                    </a>
+                    <div v-if="topicsDetail.fileUrl" class="white--text">
+                        <a :href="topicsDetail.fileUrl" target="_blank" class="c-btn c-btn_dark p-article_file">
+                            {{ $t('detail.view') }}
+                            <FileTypeIcon :file-type="topicsDetail.fileType" />
+                        </a>
+                    </div>
+                    <div v-if="topicsDetail.fileDownload" class="white--text">
+                        <a target="_blank" class="c-btn c-btn_main p-article_file">
+                            {{ $t('detail.download') }}
+                            <FileTypeIcon :file-type="topicsDetail.fileType" />
+                        </a>
+                    </div>
                 </div>
                 <div v-if="topicsDetail.linkUrl" class="p-article_footer-content">
                     <h3 class="heading">
@@ -65,7 +69,7 @@
             <div class="text-center col mt-5">
                 <button
                     type="submit"
-                    class="c-btn c-btn_dark c-btn_icon"
+                    class="c-btn c-btn_dark c-btn_icon white--text"
                     @click="() => $router.go(-1)"
                 >
                     {{ $t('common.back_to_listing') }}

@@ -18,18 +18,18 @@
             <v-container fluid>
                 <FormulateForm
                     v-if="formulateSchema"
-                    #default="{ isValid }"
+                    v-slot="{ isValid }"
                     v-model="formValues"
                     class="c-form"
                     :schema="formulateSchema"
                 >
                     <v-checkbox v-model="agreementChecked" class="c-form_tnc">
-                        <template v-slot:label>
+                        <template #label>
                             <div>{{ $t('common.agree') }}</div>
                         </template>
                     </v-checkbox>
 
-                    <div class="text-center mb-5">
+                    <div class="text-center mb-5 white--text">
                         <button
                             type="submit"
                             class="c-btn c-btn_main"

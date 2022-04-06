@@ -7,12 +7,24 @@ header {
     @at-root .p-dashboard & {
         background-color: $color_main !important;
     }
+
+    // for i18n select input
+    .v-input {
+        &__control {
+          .v-input__slot {
+            margin: 0;
+          }
+          .v-text-field__details {
+            display: none;
+          }
+        }
+      }
 }
 
 .l-header {
     &_logout {
         background: #0c61ab;
-        border-radius: 0;
+        border-radius: 0 !important;
         padding: 10px 30px;
     }
     &_user {

@@ -54,7 +54,7 @@
                                             {{ $t('login.forget_password') }}
                                         </NuxtLink>
                                     </p>
-                                    <div class="text-center">
+                                    <div class="text-center white--text">
                                         <button
                                             type="submit"
                                             block

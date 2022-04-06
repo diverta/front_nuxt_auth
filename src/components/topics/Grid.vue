@@ -15,7 +15,7 @@
                             class="pb-0 c-article_title"
                             v-text="topic.subject"
                         />
-                        <v-card-actions>
+                        <v-card-actions class="white--text">
                             <span class="c-btn c-btn_dark c-btn_sm c-btn_disable mr-3">
                                 {{ topic.contents_type_nm }}
                             </span>
