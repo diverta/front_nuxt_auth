@@ -20,22 +20,14 @@
     "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/google-gtag": "^1.0.4",
+    "@nuxtjs/i18n": "^7.2.1",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
     "@types/jwt-decode": "^2.2.1",
     "@vimeo/player": "^2.12.2",
     "axios": "^0.19.2",
     "cross-env": "^7.0.2",
-    "firebase": "^7.17.1",
-    "firebase-admin": "^8.10.0",
-    "firebase-functions": "^3.6.1",
     "nuxt": "^2.15.5",
-    "nuxt-i18n": "^6.27.0",
     "validator": "^13.5.2",
-    "vee-validate": "^4.1.17",
-    "vue-class-component": "^7.2.5",
-    "vue-generator": "^1.1.0",
-    "vue-json-pretty": "^2.0.2",
-    "vue-property-decorator": "^9.0.0",
     "vue-snack": "^0.1.4",
     "vuetify-datetime-picker": "^2.1.1"
   },
@@ -62,8 +54,6 @@
     "prettier": "^2.0.5",
     "sass": "^1.32.8",
     "sass-loader": "^7.3.1",
-    "stylus-loader": "^4.3.3",
-    "ts-jest": "^26.1.0",
     "vue-jest": "^3.0.4"
   }
 }

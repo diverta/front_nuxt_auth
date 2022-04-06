@@ -8,7 +8,7 @@
             color="orange white-4"
         />
 
-        <div class="v-stepper c-form_wrap">
+        <div class="v-stepper c-form_wrap white">
             <v-container fluid>
                 <div class="l-content_heading">
                     <h1>{{ $t('signup.title') }}</h1>
