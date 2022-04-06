@@ -121,7 +121,6 @@
 </template>
 
 <script>
-import '../sass/style.scss';
 export default {
     data() {
         return {
