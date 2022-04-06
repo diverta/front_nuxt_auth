@@ -52,7 +52,7 @@
                 opacity: 1 !important;
             }
         }
-        & .v-btn:before {
+        & .v-btn::before {
             border-radius: 10px;
         }
     }

@@ -52,7 +52,7 @@
             <v-row>
                 <v-col>
                     <v-simple-table class="elevation-1">
-                        <template v-slot:default>
+                        <template #default>
                             <tbody>
                                 <tr v-for="([keyName, value]) in Object.entries(detail.profile)" :key="keyName">
                                     <td width="200">
@@ -74,7 +74,7 @@
                 </v-col>
             </v-row>
         </v-col>
-        <div class="text-center col">
+        <div class="text-center col white--text">
             <button
                 type="submit"
                 class="c-btn c-btn_dark c-btn_icon"

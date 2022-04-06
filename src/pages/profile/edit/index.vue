@@ -12,13 +12,13 @@
             <v-container fluid>
                 <FormulateForm
                     v-if="formulateSchema"
-                    #default="{ isValid }"
+                    v-slot="{ isValid }"
                     v-model="formValues"
                     class="c-form"
                     :schema="formulateSchema"
                 >
                     <v-checkbox v-model="agreementChecked" class="c-form_tnc">
-                        <template v-slot:label>
+                        <template #label>
                             <div>{{ $t('common.agree') }}</div>
                         </template>
                     </v-checkbox>
@@ -28,6 +28,7 @@
                             type="submit"
                             block
                             x-large
+                            class="c-btn c-btn_dark"
                             :disabled="!agreementChecked || !isValid"
                             @click="submitF"
                         >

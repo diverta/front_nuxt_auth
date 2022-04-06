@@ -18,7 +18,7 @@
             </h1>
             <TopicsGrid :topics="topics" />
 
-            <div class="text-center py-5 mt-4">
+            <div class="text-center py-5 mt-4 white--text">
                 <a
                     type="submit"
                     block
@@ -43,7 +43,7 @@
                 {{ $t('top.starred') }}
             </h1>
             <TopicsList :topics="favourite" />
-            <div class="text-center py-5">
+            <div class="text-center py-5 white--text">
                 <a
                     type="submit"
                     block

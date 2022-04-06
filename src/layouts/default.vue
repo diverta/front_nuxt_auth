@@ -47,7 +47,7 @@
             </v-list>
         </v-navigation-drawer>
 
-        <v-app-bar :clipped-left="clipped" color="#1414A0" dense dark app :hide-on-scroll="!$auth.loggedIn">
+        <v-app-bar :clipped-left="clipped" color="#1414A0" dense dark app>
             <v-app-bar-nav-icon v-if="$auth.loggedIn" @click.stop="drawer = !drawer" />
             <v-spacer />
 
@@ -67,7 +67,7 @@
                 </v-btn>
             </template>
             <template v-else>
-                <div v-if="this.$route.name === 'signup'">
+                <div v-if="$route.name === 'signup'" class="white--text">
                     <span>Already have an account?</span>
                     <button
                         class="c-btn c-btn_sm c-btn_dark ml-2"
@@ -77,7 +77,7 @@
                         {{ $t('common.sign_in') }}
                     </button>
                 </div>
-                <div v-else>
+                <div v-else class="white--text">
                     <span class="d-none d-sm-inline">New to Muzica?</span>
                     <button
                         class="c-btn c-btn_sm c-btn_dark ml-2"
@@ -109,9 +109,9 @@
             :color="snackbarColor"
             timeout="2000"
         >
-            {{ this.$store.getters["snackbar/message"] }}
+            {{ $store.getters["snackbar/message"] }}
 
-            <template v-slot:action="{ attrs }">
+            <template #action="{ attrs }">
                 <v-btn text v-bind="attrs" @click="() => snackbarVisible = false">
                     {{ $t('common.close') }}
                 </v-btn>
@@ -121,7 +121,6 @@
 </template>
 
 <script>
-import '../sass/style.scss';
 export default {
     data() {
         return {

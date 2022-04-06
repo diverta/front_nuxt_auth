@@ -47,7 +47,7 @@
                                 </v-col>
                             </v-row>
                             <v-row>
-                                <v-col cols="12" class="text-center">
+                                <v-col cols="12" class="text-center white--text">
                                     <button
                                         type="submit"
                                         :loading="loading1"

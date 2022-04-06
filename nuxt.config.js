@@ -56,7 +56,9 @@ export default {
     /*
    ** Global CSS
    */
-    css: [],
+    css: [
+        '@/assets/style.scss'
+    ],
     /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
@@ -91,7 +93,7 @@ export default {
         '@nuxtjs/axios',
         '@nuxtjs/auth',
         ['@nuxtjs/pwa', { workbox: false, autoRegister: false, manifest: { publicPath: '/_nuxt/', crossorigin: 'use-credentials' } }],
-        'nuxt-i18n',
+        '@nuxtjs/i18n',
         // ['@nuxtjs/google-gtag', {
         //     id: 'G-XXXXXXXX',
         //     config: {
