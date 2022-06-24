@@ -39,7 +39,7 @@ export default {
                     return;
                 }
 
-                const favouriteTopicsRes = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/topics', {
+                const favouriteTopicsRes = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/content/list', {
                     params: {
                         pageID: this.page,
                         cnt: this.perPage,
