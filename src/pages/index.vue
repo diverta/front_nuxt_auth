@@ -87,7 +87,7 @@ export default {
         async updateTopics() {
             try {
                 this.topics = [];
-                const response = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/topics?cnt=6');
+                const response = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/content/list?cnt=6');
                 this.topics = response.data.list;
             } catch (e) {
                 this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
@@ -107,7 +107,7 @@ export default {
                     return;
                 }
 
-                const favouriteTopicsRes = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/topics', {
+                const favouriteTopicsRes = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/content/list', {
                     params: {
                         cnt: this.maxFavPerPage,
                         id: topicsIds

@@ -56,7 +56,7 @@ export default {
         },
         async updateTopics() {
             try {
-                const response = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/topics', {
+                const response = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/content/list', {
                     params: {
                         pageID: this.page,
                         cnt: this.perPage,
@@ -74,7 +74,7 @@ export default {
     async mounted() {
         this.category_key = null;
         try {
-            const response = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/topic/category');
+            const response = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/content/category');
             this.categories = response.data.list.map((item) => ({
                 key: item.topics_category_id,
                 value: item.category_nm

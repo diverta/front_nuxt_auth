@@ -137,7 +137,7 @@ export default {
         this.topic_id = this.$route.params.id;
 
         try {
-            const topicsDetailResponse = await this.$store.$auth.ctx.$axios.get(`/rcms-api/1/topic/detail/${this.topic_id}`);
+            const topicsDetailResponse = await this.$store.$auth.ctx.$axios.get(`/rcms-api/1/content/details/${this.topic_id}`);
             const d = topicsDetailResponse.data.details;
             this.topicsDetail = {
                 ...d,
