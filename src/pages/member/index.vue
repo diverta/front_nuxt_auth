@@ -30,7 +30,7 @@
             @page-count="pageCount = $event"
         >
             <template v-slot:item.name="{ item }">
-                <NuxtLink :to="localePath({ path: `/member/detail/${item.id}` })" no-prefetch>
+                <NuxtLink :to="localePath({ path: `/member/${item.id}` })" no-prefetch>
                     {{
                         item.name
                     }}
@@ -79,7 +79,7 @@ export default {
     },
     async mounted() {
         try {
-            const response = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/members');
+            const response = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/member/list');
             this.items = response.data.list.map((item) => ({
                 name: `${item.name1} ${item.name2}`,
                 department: item.department,

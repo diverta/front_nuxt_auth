@@ -113,7 +113,7 @@ export default {
         this.member_id = this.$route.params.id;
 
         try {
-            const response = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/members', {
+            const response = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/member/list', {
                 params: {
                     id: this.member_id
                 }
@@ -126,7 +126,7 @@ export default {
                 location: detailsObj.address1 ? `${detailsObj.address1}, ${detailsObj.address2} ${detailsObj.address3}` : '',
                 phone: detailsObj.tel,
                 email: detailsObj.email,
-                url: detailsObj.profileimage.url ? `https://dev-nuxt-auth-mng.r-cms.jp${detailsObj.profileimage.url}` : this.placeholder,
+                url: detailsObj.profileimage.url ? `${detailsObj.profileimage.url}` : this.placeholder,
                 sex: detailsObj?.sex?.label || '',
                 birth: detailsObj?.birth || '',
                 position: detailsObj?.position || '',
