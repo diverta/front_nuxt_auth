@@ -37,14 +37,19 @@
                 </v-card>
 
                 <!-- Wysiwyg contents -->
-                <v-container v-if="topicsDetail" fluid>
-                    <v-card class="mx-auto" max-width="7000">
-                        <v-card-title class="c-heading_h2" v-text="subtitle" />
-                        <v-card-text>
-                            <div class="text--primary" v-html="topicsDetail.contents" />
-                        </v-card-text>
-                    </v-card>
-                </v-container>
+                <v-row
+                    v-if="topicsDetail && topicsDetail.contents"
+                    class="p-article_content"
+                >
+                    <v-container fluid>
+                        <v-card class="mx-auto" max-width="7000">
+                            <v-card-title class="c-heading_h2" v-text="subtitle" />
+                            <v-card-text>
+                                <div class="text--primary" v-html="topicsDetail.contents" />
+                            </v-card-text>
+                        </v-card>
+                    </v-container>
+                </v-row>
 
                 <!-- extension contents -->
                 <v-row
