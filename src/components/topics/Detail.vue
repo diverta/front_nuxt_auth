@@ -4,7 +4,7 @@
             <v-card-title class="c-heading_h2" v-text="subtitle" />
             <v-card-text>
                 <div class="text--primary">
-                    {{ text }}
+                    <span class="text">{{ text }}</span>
                 </div>
             </v-card-text>
         </v-card>
@@ -23,7 +23,7 @@
             />
             <v-card-text>
                 <div class="text--primary">
-                    {{ text }}
+                    <span class="text">{{ text }}</span>
                 </div>
             </v-card-text>
         </v-card>
@@ -34,7 +34,7 @@
             <v-card-title class="c-heading_h2" v-text="subtitle" />
             <v-card-text>
                 <div class="text--primary pb-5">
-                    {{ text }}
+                    <span class="text">{{ text }}</span>
                 </div>
                 <v-img
                     class="mx-auto"
@@ -65,7 +65,7 @@
                     </v-col>
                     <v-col>
                         <div class="text--primary">
-                            {{ text }}
+                            <span class="text">{{ text }}</span>
                         </div>
                     </v-col>
                 </v-row>
@@ -80,7 +80,7 @@
                 <v-row>
                     <v-col>
                         <div class="text--primary">
-                            {{ text }}
+                            <span class="text">{{ text }}</span>
                         </div>
                     </v-col>
                     <v-col>
@@ -146,3 +146,9 @@ export default {
     }
 };
 </script>
+
+<style>
+.text {
+  white-space: pre-line;
+}
+</style>

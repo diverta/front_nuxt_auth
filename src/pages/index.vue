@@ -28,14 +28,7 @@
                     @click="() => $router.push(localePath('/topics_list/'))"
                 >
                     {{ $t('top.more_articles') }}
-                    <v-icon
-                        dark
-                        right
-                        class="icon"
-                    >
-                        mdi-arrow-right-drop-circle
-                    </v-icon>
-
+                    <v-icon dark right class="icon"> mdi-arrow-right-drop-circle </v-icon>
                 </a>
             </div>
 
@@ -53,14 +46,7 @@
                     @click="() => $router.push(localePath('/favourite/'))"
                 >
                     {{ $t('top.more_starred') }}
-                    <v-icon
-                        dark
-                        right
-                        class="icon"
-                    >
-                        mdi-arrow-right-drop-circle
-                    </v-icon>
-
+                    <v-icon dark right class="icon"> mdi-arrow-right-drop-circle </v-icon>
                 </a>
             </div>
         </div>
@@ -79,7 +65,7 @@ export default {
     computed: {
         sliderImages() {
             return this.topics
-                .map((topic) => topic?.ext_col_08?.url)
+                .map((topic) => topic?.ext_8?.url)
                 .filter((sliderImage) => sliderImage);
         }
     },
@@ -87,36 +73,44 @@ export default {
         async updateTopics() {
             try {
                 this.topics = [];
-                const response = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/content/list?cnt=6');
+                const response = await this.$store.$auth.ctx.$axios.get(
+                    '/rcms-api/1/content/list?cnt=6'
+                );
                 this.topics = response.data.list;
             } catch (e) {
                 this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
-            };
+            }
         },
         async updateFavourite() {
             try {
                 this.favourite = [];
-                const favouriteRes = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/favorites', {
-                    params: {
-                        member_id: this.$auth.user.member_id,
-                        module_type: 'topics'
+                const favouriteRes = await this.$store.$auth.ctx.$axios.get(
+                    '/rcms-api/1/favorites',
+                    {
+                        params: {
+                            member_id: this.$auth.user.member_id,
+                            module_type: 'topics'
+                        }
                     }
-                });
+                );
                 const topicsIds = favouriteRes.data.list.map((item) => item.module_id);
                 if (topicsIds.length === 0) {
                     return;
                 }
 
-                const favouriteTopicsRes = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/content/list', {
-                    params: {
-                        cnt: this.maxFavPerPage,
-                        id: topicsIds
+                const favouriteTopicsRes = await this.$store.$auth.ctx.$axios.get(
+                    '/rcms-api/1/content/list',
+                    {
+                        params: {
+                            cnt: this.maxFavPerPage,
+                            id: topicsIds
+                        }
                     }
-                });
+                );
                 this.favourite = favouriteTopicsRes.data.list;
             } catch (e) {
                 this.$snackbar.error(e?.response?.data.errors?.[0]?.message);
-            };
+            }
         }
     },
     watch: {

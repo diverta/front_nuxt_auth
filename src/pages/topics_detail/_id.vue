@@ -16,7 +16,9 @@
                                 <h1 class="mb-3 mt-0">
                                     {{ topicsDetail.subject }}
                                 </h1>
-                                <span class="c-btn c-btn_main c-btn_sm c-btn_disable white--text">
+                                <span
+                                    class="c-btn c-btn_main c-btn_sm c-btn_disable white--text"
+                                >
                                     {{ topicsDetail.contents_type_nm }}
                                 </span>
                             </v-col>
@@ -33,17 +35,40 @@
                         </div>
                     </v-card>
                 </v-card>
-                <v-row v-for="(item, idx) in items" :key="idx" class="p-article_content">
-                    <TopicsDetail v-bind="{ ...item }" />
+
+                <!-- Wysiwyg contents -->
+                <v-container v-if="topicsDetail" fluid>
+                    <v-card class="mx-auto" max-width="7000">
+                        <v-card-title class="c-heading_h2" v-text="subtitle" />
+                        <v-card-text>
+                            <div class="text--primary" v-html="topicsDetail.contents" />
+                        </v-card-text>
+                    </v-card>
+                </v-container>
+
+                <!-- extension contents -->
+                <v-row
+                    v-for="(item, idx) in items"
+                    :key="idx"
+                    class="p-article_content"
+                >
+                    <TopicsDetail v-if="item" v-bind="{ ...item }" />
                 </v-row>
             </v-col>
             <v-col>
-                <div v-if="topicsDetail.fileUrl || topicsDetail.fileDownload" class="p-article_footer-content">
+                <div
+                    v-if="topicsDetail.fileUrl || topicsDetail.fileDownload"
+                    class="p-article_footer-content"
+                >
                     <h3 class="heading">
                         {{ $t('detail.files') }}
                     </h3>
                     <div v-if="topicsDetail.fileUrl" class="white--text">
-                        <a :href="topicsDetail.fileUrl" target="_blank" class="c-btn c-btn_dark p-article_file">
+                        <a
+                            :href="topicsDetail.fileUrl"
+                            target="_blank"
+                            class="c-btn c-btn_dark p-article_file"
+                        >
                             {{ $t('detail.view') }}
                             <FileTypeIcon :file-type="topicsDetail.fileType" />
                         </a>
@@ -59,9 +84,18 @@
                     <h3 class="heading">
                         {{ $t('detail.links') }}
                     </h3>
-                    <a v-if="topicsDetail.linkUrl" :href="topicsDetail.linkUrl" target="_blank" class="c-link">
-                        <v-icon v-if="topicsDetail.fileType == 'pdf'">mdi-open-in-new</v-icon>
-                        <span v-if="topicsDetail.linkTitle">{{ topicsDetail.linkTitle }}</span>
+                    <a
+                        v-if="topicsDetail.linkUrl"
+                        :href="topicsDetail.linkUrl"
+                        target="_blank"
+                        class="c-link"
+                    >
+                        <v-icon v-if="topicsDetail.fileType == 'pdf'"
+                        >mdi-open-in-new</v-icon
+                        >
+                        <span v-if="topicsDetail.linkTitle">{{
+                            topicsDetail.linkTitle
+                        }}</span>
                         <span v-else>{{ topicsDetail.linkUrl }}</span>
                     </a>
                 </div>
@@ -90,12 +124,8 @@ export default {
             if (!this.topicsDetail) {
                 return [];
             }
-            const {
-                texts,
-                positionPatterns,
-                imageUrls,
-                subtitles
-            } = this.topicsDetail;
+            const { texts, positionPatterns, imageUrls, subtitles } =
+        this.topicsDetail;
             return positionPatterns.map(({ key }, i) => ({
                 text: texts?.[i],
                 positionPatternKey: key,
@@ -112,9 +142,16 @@ export default {
                 module_type: 'topics',
                 module_id: parseInt(this.topic_id)
             };
-            const request = this.favoriteColor === 'grey'
-                ? this.$store.$auth.ctx.$axios.post('/rcms-api/1/favorites', requestOption)
-                : this.$store.$auth.ctx.$axios.post('/rcms-api/1/favorites/delete', requestOption);
+            const request =
+        this.favoriteColor === 'grey'
+            ? this.$store.$auth.ctx.$axios.post(
+                '/rcms-api/1/favorites',
+                requestOption
+            )
+            : this.$store.$auth.ctx.$axios.post(
+                '/rcms-api/1/favorites/delete',
+                requestOption
+            );
 
             try {
                 await request;
@@ -137,35 +174,40 @@ export default {
         this.topic_id = this.$route.params.id;
 
         try {
-            const topicsDetailResponse = await this.$store.$auth.ctx.$axios.get(`/rcms-api/1/content/details/${this.topic_id}`);
+            const topicsDetailResponse = await this.$store.$auth.ctx.$axios.get(
+                `/rcms-api/1/content/details/${this.topic_id}`
+            );
             const d = topicsDetailResponse.data.details;
             this.topicsDetail = {
                 ...d,
-                fileType: d?.ext_col_01?.key,
-                fileUrl: d?.ext_col_02?.url,
-                fileDownload: d?.ext_col_02?.dl_link,
-                linkUrl: d?.ext_col_03?.url,
-                linkTitle: d?.ext_col_03?.title,
+                fileType: d?.ext_1?.key,
+                fileUrl: d?.ext_2?.url,
+                fileDownload: d?.ext_2?.dl_link,
+                linkUrl: d?.ext_3?.url,
+                linkTitle: d?.ext_3?.title,
 
                 // for TopicsDetail
-                positionPatterns: d?.ext_col_04,
-                texts: d?.ext_col_07,
-                imageUrls: d?.ext_col_05,
-                subtitles: d?.ext_col_09
+                positionPatterns: d?.ext_4,
+                texts: d?.ext_7,
+                imageUrls: d?.ext_5,
+                subtitles: d?.ext_9
             };
-            this.favoriteResponse = await this.$store.$auth.ctx.$axios
-                .get('/rcms-api/1/favorites', {
+            this.favoriteResponse = await this.$store.$auth.ctx.$axios.get(
+                '/rcms-api/1/favorites',
+                {
                     params: {
                         member_id: this.$auth.user.member_id,
                         module_type: 'topics',
                         module_id: this.topic_id
                     }
-                });
+                }
+            );
         } catch (e) {
             this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
         }
 
-        this.favoriteColor = this.favoriteResponse?.data?.pageInfo?.totalCnt > 0 ? 'red' : 'grey';
+        this.favoriteColor =
+      this.favoriteResponse?.data?.pageInfo?.totalCnt > 0 ? 'red' : 'grey';
         this.loading = false;
     }
 };
