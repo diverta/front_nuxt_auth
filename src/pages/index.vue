@@ -85,7 +85,7 @@ export default {
             try {
                 this.favourite = [];
                 const favouriteRes = await this.$store.$auth.ctx.$axios.get(
-                    '/rcms-api/1/favorites',
+                    '/rcms-api/1/favorite/list',
                     {
                         params: {
                             member_id: this.$auth.user.member_id,

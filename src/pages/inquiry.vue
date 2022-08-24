@@ -65,7 +65,7 @@ export default {
     async mounted() {
         this.loading = true;
         try {
-            const response = await this.$store.$auth.ctx.$axios.get(`/rcms-api/1/inquiry/get/${this.inquiryID}`);
+            const response = await this.$store.$auth.ctx.$axios.get(`/rcms-api/1/inquiry/${this.inquiryID}`);
             this.formulateSchema = this.$parseFormulateSchema(response.data.details.cols)
                 .filter(({ name }) => {
                     // we skip some items in this form.

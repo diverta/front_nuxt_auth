@@ -46,7 +46,7 @@ export default {
     auth: true,
     methods: {
         async submitF () {
-            const sendModel = JSON.parse(JSON.stringify(this.model));
+            const sendModel = JSON.parse(JSON.stringify(this.formValues));
             try {
                 const response = await this.$store.$auth.ctx.$axios.post('/rcms-api/1/member/update', sendModel);
                 if (response.data.errors.length === 0) {
