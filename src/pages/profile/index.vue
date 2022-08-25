@@ -96,7 +96,7 @@ export default {
     },
     async mounted() {
         try {
-            const response = await this.$auth.ctx.$axios.get(`/rcms-api/1/member/${this.$auth.user.member_id}`);
+            const response = await this.$auth.ctx.$axios.get('/rcms-api/1/member/me');
             const detailsObj = response.data.details;
             this.detail = {
                 name: `${detailsObj.name1} ${detailsObj.name2}`,
