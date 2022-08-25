@@ -23,7 +23,7 @@
                         </template>
                     </v-checkbox>
 
-                    <div class="text-center mb-5">
+                    <div class="text-center mb-5 white--text">
                         <button
                             type="submit"
                             block
