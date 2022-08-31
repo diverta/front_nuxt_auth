@@ -54,13 +54,13 @@
                                             {{ $t('login.forget_password') }}
                                         </NuxtLink>
                                     </p>
-                                    <div class="text-center white--text">
+                                    <div class="text-center">
                                         <button
                                             type="submit"
                                             block
                                             x-large
                                             :loading="loading"
-                                            class="c-btn_dark c-btn submit-btn"
+                                            class="c-btn_dark c-btn submit-btn white--text"
                                         >
                                             {{ $t('common.sign_in') }}
                                         </button>
