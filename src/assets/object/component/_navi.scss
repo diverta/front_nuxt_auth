@@ -3,7 +3,7 @@
     &_side {
         background: linear-gradient(to bottom, #152E4D, #051324) !important;
         max-width: 230px;
-        
+
         & a {
             color: #fff !important;
             transition: 0.4s all ease-in-out;
@@ -26,7 +26,7 @@
     }
     &_filter {
         flex-wrap: wrap;
-        
+
         & .v-btn__content {
             text-transform: none !important;
             @include md {

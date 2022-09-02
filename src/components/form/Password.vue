@@ -9,6 +9,7 @@
         :label="context.label"
         persistent-hint
         counter
+        autocomplete="off"
         @click:append="() => showsPassword = !showsPassword"
     />
 </template>

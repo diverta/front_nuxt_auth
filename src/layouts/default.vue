@@ -47,7 +47,7 @@
             </v-list>
         </v-navigation-drawer>
 
-        <v-app-bar :clipped-left="clipped" color="#1414A0" dense dark app>
+        <v-app-bar :clipped-left="clipped" color="#1414A0" dense dark app class="l-header_toolbar">
             <v-app-bar-nav-icon v-if="$auth.loggedIn" @click.stop="drawer = !drawer" />
             <v-spacer />
 
