@@ -55,7 +55,7 @@ export default {
         async submitF () {
             this.loading = true;
             try {
-                const response = await this.$auth.ctx.$axios.post('/rcms-api/1/member/regist', this.formValues);
+                const response = await this.$auth.ctx.$axios.post('/rcms-api/1/member/register', this.formValues);
                 if (response.data.errors.length === 0) {
                     this.$snackbar.info(this.$i18n.t('signup.success'));
                 }

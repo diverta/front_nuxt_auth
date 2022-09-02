@@ -11,7 +11,9 @@
         "submit" : "SUBMIT",
         "edit": "Edit",
         "save": "Save",
-        "agree": "I agree to the terms of Use."
+        "agree": "I agree to the terms of Use.",
+        "executed": "A process has executed.",
+        "error": "An error has occurred."
     },
     "slackbar": {
         "logged_in" : "Logged in.",

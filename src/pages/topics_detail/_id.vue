@@ -150,11 +150,11 @@ export default {
             const request =
         this.favoriteColor === 'grey'
             ? this.$store.$auth.ctx.$axios.post(
-                '/rcms-api/1/favorites',
+                '/rcms-api/1/favorite/register',
                 requestOption
             )
             : this.$store.$auth.ctx.$axios.post(
-                '/rcms-api/1/favorites/delete',
+                '/rcms-api/1/favorite/delete',
                 requestOption
             );
 
@@ -198,7 +198,7 @@ export default {
                 subtitles: d?.ext_9
             };
             this.favoriteResponse = await this.$store.$auth.ctx.$axios.get(
-                '/rcms-api/1/favorites',
+                '/rcms-api/1/favorite/list',
                 {
                     params: {
                         member_id: this.$auth.user.member_id,

@@ -23,7 +23,7 @@
                         </template>
                     </v-checkbox>
 
-                    <div class="text-center mb-5">
+                    <div class="text-center mb-5 white--text">
                         <button
                             type="submit"
                             block
@@ -46,7 +46,7 @@ export default {
     auth: true,
     methods: {
         async submitF () {
-            const sendModel = JSON.parse(JSON.stringify(this.model));
+            const sendModel = JSON.parse(JSON.stringify(this.formValues));
             try {
                 const response = await this.$store.$auth.ctx.$axios.post('/rcms-api/1/member/update', sendModel);
                 if (response.data.errors.length === 0) {
@@ -60,7 +60,7 @@ export default {
     },
     async mounted() {
         try {
-            const response = await this.$auth.ctx.$axios.get(`/rcms-api/1/member/${this.$auth.user.member_id}`);
+            const response = await this.$auth.ctx.$axios.get('/rcms-api/1/member/me');
             const d = response.data.details;
             this.formValues = {
                 name1: d?.name1,

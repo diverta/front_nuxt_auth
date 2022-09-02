@@ -145,7 +145,8 @@ export default (ctx, inject) => {
     inject(
         'parseFormulateSchema',
         (cols) => Object.entries(cols)
-            .sort(([, a], [, b]) => a > b ? 1 : -1)
+            .sort(([, a], [, b]) =>
+                a.order_no < b.order_no ? 1 : (a.order_no > b.order_no ? -1 : 0))
             .map(([keyName, v]) => getFormulateScheme(keyName, v))
     );
 };

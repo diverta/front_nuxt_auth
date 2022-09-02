@@ -28,7 +28,7 @@ export default {
     methods: {
         async updateTopics() {
             try {
-                const favouriteRes = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/favorites', {
+                const favouriteRes = await this.$store.$auth.ctx.$axios.get('/rcms-api/1/favorite/list', {
                     params: {
                         member_id: this.$auth.user.member_id,
                         module_type: 'topics'
