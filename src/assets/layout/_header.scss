@@ -22,6 +22,9 @@ header {
 }
 
 .l-header {
+    &_toolbar {
+        background-color: #1777ca;
+    }
     &_logout {
         background: #0c61ab;
         border-radius: 0 !important;

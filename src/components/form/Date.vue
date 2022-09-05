@@ -32,7 +32,7 @@
             persistent
             width="290px"
         >
-            <template v-slot:activator="{ on, attrs }">
+            <template #activator="{ on, attrs }">
                 <v-text-field
                     v-model="model"
                     :label="$t('label.date_picker')"

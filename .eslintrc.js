@@ -16,6 +16,7 @@ module.exports = {
         semi: ['warn', 'always'],
         indent: ['warn', 4],
         'vue/html-indent': ['warn', 4],
+        'vue/no-mutating-props': 'off',
         'no-console': 'off',
         'no-prototype-builtins': 'off',
         'vue/order-in-components': 'off',

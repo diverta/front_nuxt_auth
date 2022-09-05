@@ -17,8 +17,15 @@
                     </h4>
                 </div>
 
+                <v-text-field
+                    v-model="sitekey"
+                    :label="$t('login.site_key')"
+                    type="text"
+                    outlined
+                />
+
                 <FormulateForm
-                    v-if="formulateSchema"
+                    v-if="sitekey && formulateSchema"
                     v-slot="{ isValid }"
                     v-model="formValues"
                     class="c-form"
@@ -54,14 +61,25 @@ export default {
     methods: {
         async submitF () {
             this.loading = true;
+
+            localStorage.setItem('sitekey', this.sitekey); // save sitekey
+
+            this.$store.$auth.ctx.$axios.defaults.baseURL = this.sitekey === 'dev-nuxt-auth'
+                ? 'https://dev-nuxt-auth.a.kuroco.app'
+                : `https://${this.sitekey}.g.kuroco.app`;
+
             try {
                 const response = await this.$auth.ctx.$axios.post('/rcms-api/1/member/register', this.formValues);
-                if (response.data.errors.length === 0) {
-                    this.$snackbar.info(this.$i18n.t('signup.success'));
+
+                if (response.data.errors.length !== 0) {
+                    throw new Error(response.data.errors.join('\n'));
                 }
+
+                this.$snackbar.info(this.$i18n.t('signup.success'));
+                await this.$auth.loginWith('local', { data: { email: this.formValues.email, password: this.formValues.login_pwd } });
                 this.$router.push('/');
             } catch (e) {
-                this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
+                this.$snackbar.error(e?.response?.data?.errors?.[0]?.message || e);
             };
             this.loading = false;
         }
@@ -70,6 +88,7 @@ export default {
         return {
             loading: false,
             agreementChecked: false,
+            sitekey: '',
 
             formulateSchema: [
                 {
@@ -123,6 +142,14 @@ export default {
                     label: this.$i18n.t('label.email'),
                     type: 'FormText',
                     validation: 'required|email|min:0,length|max:100,length',
+                    'label-class': ['required'],
+                    disableErrors: true
+                },
+                {
+                    name: 'login_pwd',
+                    type: 'FormPassword',
+                    label: this.$i18n.t('label.password'),
+                    validation: 'required|min:8,length|password',
                     'label-class': ['required'],
                     disableErrors: true
                 },
@@ -233,6 +260,9 @@ export default {
             ],
             formValues: {}
         };
+    },
+    mounted() {
+        this.sitekey = localStorage.getItem('sitekey') || 'dev-nuxt-auth';
     }
 };
 </script>

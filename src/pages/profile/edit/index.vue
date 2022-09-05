@@ -49,12 +49,14 @@ export default {
             const sendModel = JSON.parse(JSON.stringify(this.formValues));
             try {
                 const response = await this.$store.$auth.ctx.$axios.post('/rcms-api/1/member/update', sendModel);
-                if (response.data.errors.length === 0) {
-                    this.$store.info('Your profile is changed.');
-                    this.$router.push('/');
+
+                if (response.data.errors.length !== 0) {
+                    throw new Error(response.data.errors.join('\n'));
                 }
+
+                this.$snackbar.info(this.$i18n.t('mypage.profile_changed'));
             } catch (e) {
-                this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
+                this.$snackbar.error(e?.response?.data?.errors?.[0]?.message || e);
             }
         }
     },
