@@ -25,7 +25,7 @@
         "message" : "ここから先はログインしないと遷移できません。",
         "demoaccount": "デモサイト用アカウント",
         "site_key": "サイトキー",
-        "id_or_email": "Eメールアドレス(ログインID)",
+        "email": "Eメールアドレス",
         "forget_password" : "パスワードを忘れた場合はこちら",
         "note": "＊このサイトはITP機能のためiOSでは動作しません。<br>ドメインを作成して動作させることはできます。<br>このサイトはデモンストレーションサイトです。"
     },
@@ -46,7 +46,8 @@
         "search" : "検索",
         "search_member": "氏名",
         "department" : "部署",
-        "detail_title" : "メンバー一覧"
+        "detail_title" : "メンバー一覧",
+        "disallowed": "この操作を行う権限がありません。"
     },
     "mypage" : {
         "title": "マイページ",

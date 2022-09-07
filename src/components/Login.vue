@@ -37,7 +37,7 @@
                                     />
                                     <v-text-field
                                         v-model="form.email"
-                                        :label="$t('login.id_or_email')"
+                                        :label="$t('login.email')"
                                         type="email"
                                         outlined
                                     />
