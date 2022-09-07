@@ -25,7 +25,7 @@
         "message" : "Sign in to continue your portal",
         "demoaccount": "Demo account",
         "site_key": "Your sitekey",
-        "id_or_email": "Login ID or Email address",
+        "email": "Email address",
         "forget_password" : "Forgot Password?",
         "note": "※This site does't work on iOS because of ITP. <br>But you can build this with your domain, it will work fine.<br>This site is just for demonstration."
     },
@@ -46,7 +46,8 @@
         "search" : "Seach",
         "search_member": "Search member",
         "department" : "Deparment",
-        "detail_title" : "Member details"
+        "detail_title" : "Member details",
+        "disallowed": "You don't have permission to perform this action."
     },
     "mypage" : {
         "title": "My page",

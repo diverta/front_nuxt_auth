@@ -31,6 +31,7 @@ module.exports = {
         'vue/comment-directive': 0,
         'vue/no-v-html': 'off',
         'no-case-declarations': 'off',
-        'prefer-regex-literals': 'off'
+        'prefer-regex-literals': 'off',
+        'vue/valid-v-slot': 'off'
     }
 };
