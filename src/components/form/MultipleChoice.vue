@@ -6,12 +6,11 @@
         <v-checkbox
             v-for="({ key, value }) in context.options"
             :key="`${key}_${value}`"
-            v-model="checkedCategories"
+            v-model="context.model"
             :label="value"
             :value="key"
             return-object
             checked="true"
-            @change="() => context.model = checkedCategories"
         />
     </div>
 </template>
@@ -24,16 +23,12 @@ export default {
             required: true
         }
     },
-    data () {
-        return {
-            checkedCategories: [],
-            testVal: null
-        };
-    },
     mounted() {
+        if (!(this.context.model instanceof Array)) {
+            this.context.model = [];
+        }
         this.context.options.forEach((option) => {
             if (option.default) {
-                this.checkedCategories.push(option.key);
                 this.context.model = this.checkedCategories;
             }
         });
