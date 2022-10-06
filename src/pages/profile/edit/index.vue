@@ -64,7 +64,9 @@ export default {
         try {
             const response = await this.$auth.ctx.$axios.get('/rcms-api/1/member/me');
             const d = response.data.details;
+
             this.formValues = {
+                ...this.formValues,
                 name1: d?.name1,
                 name2: d?.name2,
                 department: d?.department,
@@ -72,7 +74,8 @@ export default {
                 tel: d?.tel,
                 email: d?.email,
                 notes: d?.notes,
-                hire_date: d?.hire_date
+                hire_date: d?.hire_date,
+                multiple_check: d?.multiple_check?.map(({ key }) => `${key}`) || ''
             };
         } catch (e) {
             this.$snackbar.error(e?.response?.data?.errors?.[0]?.message);
