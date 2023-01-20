@@ -92,7 +92,7 @@
         "update_ok" : "Your password has been updated",
         "login": "Login",
         "rule" : "Please set a mixture of alphanumeric characters and at least 8 characters.",
-        "required": "This filed is required.",
+        "required": "This field is required.",
         "word_count": "Please input at least 8 characters.",
         "conf_error": "The confirmation password is incorrect.",
         "not_entered": "Please input a new password.",
