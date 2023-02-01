@@ -182,7 +182,6 @@ export default {
             const topicsDetailResponse = this.$route.params.id === 'preview'
                 ? await this.$store.$auth.ctx.$axios.get(`/rcms-api/1/content/preview?preview_token=${this.$route.query.preview_token}`)
                 : await this.$store.$auth.ctx.$axios.get(`/rcms-api/1/content/details/${this.topic_id}`);
-            console.log(topicsDetailResponse);
 
             const d = topicsDetailResponse.data.details;
             this.topicsDetail = {
