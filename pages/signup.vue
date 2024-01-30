@@ -1,5 +1,4 @@
 <template>
-    <h1>hello</h1>
     <div class="l-content_maxWidth-sm mb-5 pb-5">
         <!-- <v-progress-linear
             :active="loading"
@@ -10,6 +9,12 @@
         /> -->
         <div class="v-stepper c-form_wrap white">
             <v-container fluid>
+                <div class="l-content_heading">
+                    <h1>{{ $t('signup.title') }}</h1>
+                    <h4 class="slogan">
+                        {{ $t('signup.text') }}
+                    </h4>
+                </div>
             </v-container>
         </div>
     </div>
