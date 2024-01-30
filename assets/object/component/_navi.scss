@@ -1,0 +1,64 @@
+#c-navi {
+
+    &_side {
+        background: linear-gradient(to bottom, #152E4D, #051324) !important;
+        max-width: 230px;
+
+        & a {
+            color: #fff !important;
+            transition: 0.4s all ease-in-out;
+
+            &:hover {
+                text-decoration: none;
+                padding-left: 23px;
+            }
+        }
+    }
+
+}
+
+.c-navi {
+
+    &_side {
+        &-logo {
+            max-width: 150px;
+        }
+    }
+    &_filter {
+        flex-wrap: wrap;
+
+        & .v-btn__content {
+            text-transform: none !important;
+            @include md {
+                font-size: 0.85em;
+            }
+        }
+        & .v-size--default {
+            height: auto !important;
+            padding: 5px 15px !important;
+
+            @include md {
+                padding: 5px 8px !important;
+            }
+        }
+        & .v-item--active {
+            border-radius: 10px !important;
+            color: #fff !important;
+            height: auto !important;
+            padding: 5px 8px !important;
+
+            &::before {
+                background: $color_main;
+                opacity: 1 !important;
+            }
+        }
+        & .v-btn::before {
+            border-radius: 10px;
+        }
+    }
+    &_pagination {
+        & .v-pagination__item--active {
+            background: $color_main !important;
+        }
+    }
+}

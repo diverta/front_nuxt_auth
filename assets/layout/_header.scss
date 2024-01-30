@@ -1,0 +1,66 @@
+header {
+    background-color: inherit !important;
+    border-bottom: none !important;
+    //border-bottom: 1px solid rgba(255,255,255, 0.1) !important;
+    box-shadow: none !important;
+
+    @at-root .p-dashboard & {
+        background-color: $color_main !important;
+    }
+
+    // for i18n select input
+    .v-input {
+        &__control {
+          .v-input__slot {
+            margin: 0;
+          }
+          .v-text-field__details {
+            display: none;
+          }
+        }
+      }
+}
+
+.l-header {
+    &_toolbar {
+        background-color: #1777ca;
+    }
+    &_logout {
+        background: #0c61ab;
+        border-radius: 0 !important;
+        padding: 10px 30px;
+    }
+    &_user {
+        font-size: 0.9em;
+        padding-right: 20px;
+        margin-right: 20px;
+        color: #fff;
+        border-right: 1px solid rgba(0, 0, 0, 0.3);
+    }
+    &_lang {
+        display: inline-block;
+        max-width: 98px;
+
+        & .v-input {
+            padding-top: 20px;
+            font-size: 0.9rem;
+        }
+        & .v-icon.v-icon {
+            font-size: 1.2em;
+        }
+        & .v-text-field>.v-input__control>.v-input__slot::before {
+            border-style: none;
+        }
+        & .custom.v-text-field>.v-input__control>.v-input__slot::after {
+            border-style: none;
+        }
+        & .v-select__selection--comma {
+            //padding-bottom: 1px;
+        }
+        @at-root .p-login & {
+            margin-right: 15px;
+            padding-right: 15px;
+            max-width: 112px;
+        }
+    }
+}

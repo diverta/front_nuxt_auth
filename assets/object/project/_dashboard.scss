@@ -1,0 +1,15 @@
+.p-dashboard {
+    background: #f9fcff;
+
+    & .v-main__wrap > .container {
+        padding-left: 280px;
+        margin-left: 0;
+
+        @include xl {
+            padding-left: 15px;
+        }
+    }
+    &_banner {
+        border-radius: 8px;
+    }
+}

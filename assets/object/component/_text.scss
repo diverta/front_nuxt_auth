@@ -1,0 +1,26 @@
+.c-text {
+
+    &_blue {
+        color: $color_main !important;
+    }
+    &_white {
+        color: #fff !important;
+    }
+
+}
+
+.c-heading {
+
+    &_h2 {
+        font-size: 1.6em;
+    }
+}
+
+.c-link {
+    color: $color_main;
+
+    &:hover {
+        text-decoration: none;
+        color: $color_main_dark;
+    }
+}

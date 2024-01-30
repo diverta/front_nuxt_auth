@@ -1,0 +1,35 @@
+.p-article {
+    
+    &_content {
+        margin-top: 50px; 
+
+        & .v-card__text {
+            font-size: 1rem;
+        }
+    }
+    &_file {
+        &.c-btn {
+            padding: 5px 20px 5px 20px;
+            font-size: 0.9em;
+            margin-right: 10px;
+
+            & i {
+                color: #fff;
+                font-size: 1.5em;
+
+                @at-root .p-article_file:hover i {
+                    color: $color_main_dark;
+                }
+            }
+        }
+    }
+    &_footer-content {
+        padding: 15px 0;
+        & .heading {
+            padding-bottom: 10px;
+        }
+        & + & {
+            border-top: 1px solid #ddd;
+        }
+    }
+}

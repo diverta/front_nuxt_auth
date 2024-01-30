@@ -1,0 +1,70 @@
+.c-btn {
+    font-weight: bold;
+    font-size: 1.2em;
+    transition: background-color .3s,color .3s;
+    padding: 15px 40px;
+    border-radius: 24px;
+    color: #fff;
+    cursor: pointer;
+
+    &[disabled="disabled"] {
+        background: #ccc;
+        cursor: not-allowed;
+        &:hover {
+            background: #ccc;
+            color: #fff;
+            border: 1px solid #ccc;
+        }
+    }
+    &:hover {
+        text-decoration: none;
+    }
+    &_sm {
+        padding: 5px 15px;
+        font-size: 0.7em;
+    }
+    &_md {
+        padding: 10px 30px;
+        font-size: 1em;
+    }
+    &_main {
+        background: $color_main;
+        border: 1px solid #fff;
+
+        &:hover {
+            background: #fff;
+            color: $color_main;
+            border: 1px solid $color_main;
+
+            & .icon {
+                color: $color_main !important;
+            }
+        }
+        &.c-btn_disable {
+            &:hover {
+                cursor: inherit;
+                background: $color_main;
+                border: 1px solid #fff;
+                color: #fff;
+            }
+        }
+    }
+    &_dark {
+        background: $color_main_dark;
+        border: 1px solid $color_main_dark;
+
+        &:hover {
+            background: #fff;
+            color: $color_main_dark;
+
+            & .icon {
+                color: $color_main_dark !important;
+            }
+        }
+    }
+    &_icon {
+        padding-right: 10px;
+        padding-left: 20px;
+    }
+
+}

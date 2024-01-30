@@ -1,0 +1,31 @@
+.l-content {
+    &_wrap {
+        background: inherit !important;
+    }
+    &_maxWidth {
+        &-sm {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+    }
+    &_inner {
+        height: 100%;
+        max-width: 1410px;
+    }
+    &_heading {
+        text-align: center;
+        margin-bottom: 50px;
+        
+        & .slogan {
+            font-weight: normal;
+        }
+    }
+}
+
+.v-main__wrap {
+    padding-top: 50px;
+
+    @at-root .p-home & {
+        padding-top: 25px;
+    }
+}
