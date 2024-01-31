@@ -39,7 +39,7 @@ header {
     }
     &_lang {
         display: inline-block;
-        max-width: 98px;
+        max-width: max-content;
 
         & .v-input {
             padding-top: 20px;
@@ -60,7 +60,7 @@ header {
         @at-root .p-login & {
             margin-right: 15px;
             padding-right: 15px;
-            max-width: 112px;
+            max-width: max-content;
         }
     }
 }

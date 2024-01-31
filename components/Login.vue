@@ -1,5 +1,4 @@
 <template>
-    <h1>Hello</h1>
     <div class="p-login_content elevation-7">
         <v-row>
             <v-col class="pa-0 col-sm-6 col-12">
@@ -30,12 +29,12 @@
                             </v-card-title>
                             <v-card-text class="inner">
                                 <form @submit.prevent="handleLogin">
-                                    <!-- <v-text-field
+                                    <v-text-field
                                         v-model="sitekey"
                                         :label="$t('login.site_key')"
                                         type="text"
                                         outlined
-                                    /> -->
+                                    />
                                     <v-text-field
                                         v-model="formData.email"
                                         :label="$t('login.email')"
@@ -50,11 +49,11 @@
                                         outlined
                                         @click:append="() => showsPassword = !showsPassword"
                                     />
-                                    <!-- <p>
-                                        <NuxtLink :to="localePath('/reminder')">
+                                    <p>
+                                        <NuxtLink :to="/reminder/">
                                             {{ $t('login.forget_password') }}
                                         </NuxtLink>
-                                    </p> -->
+                                    </p>
                                     <div class="text-center">
                                         <button
                                             type="submit"
@@ -78,6 +77,7 @@
 </template>
 <script setup>
 const { login } = useAuth(); // uses the default signIn function provided by nuxt-auth
+const sitekey = 'dev-nuxt-auth';
 const formData = reactive({
   email: '',
   password: '',
