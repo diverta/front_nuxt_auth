@@ -59,9 +59,39 @@
           ログアウト
         </span>
       </button>
+      <ul v-if="contents.length > 0">
+        <li v-for="content in contents" :key="content.id">
+          {{ content.topics_id }}
+        </li>
+      </ul>
     </div>
   </ClientOnly>
 </template>
 <script setup>
 const { authUser, profile, logout } = useAuth();
+
+const config = useRuntimeConfig();
+const contents = ref([]);
+
+watch(
+  () => authUser.value,
+  async () => {
+    if (!authUser.value.member_id) {
+      return [];
+    }
+
+    const { list } = await $fetch(
+      `${config.public.kurocoApiDomain}/rcms-api/1/content/list`,
+      {
+        credentials: 'include',
+        server: false,
+      }
+    );
+    contents.value = list;
+  },
+  {
+    deep: true,
+    immediate: true,
+  }
+);
 </script>
