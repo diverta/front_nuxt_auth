@@ -35,7 +35,7 @@
         {{ $t("top.starred") }}
       </h1>
 
-      <!-- <TopicsList :topics="favouriteList" /> -->
+      <TopicsList :topics="favouriteList" />
 
       <h1>Miracle Gaurav</h1>
       <h2>{{ authUser.member_id }}</h2>
