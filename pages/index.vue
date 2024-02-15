@@ -11,56 +11,39 @@
   <ClientOnly>
     <Login v-if="!authUser.member_id" />
     <div v-else class="mypage">
+      <h1 class="text-left mt-5 pt-4">
+        {{ $t("top.latest_articles") }}
+      </h1>
+
+      <TopicsGrid :topics="topicsList" />
+
+      <div class="text-center py-5 mt-4 white--text">
+        <a
+          type="submit"
+          block
+          x-large
+          color="success"
+          class="c-btn c-btn_main c-btn_md c-btn_icon"
+          @click="() => $router.push('/topics_list/')"
+        >
+          {{ $t("top.more_articles") }}
+          <v-icon dark right class="icon"> mdi-arrow-right-drop-circle </v-icon>
+        </a>
+      </div>
+
+      <h1 class="text-left mt-5 pt-4">
+        {{ $t("top.starred") }}
+      </h1>
+
+      <!-- <TopicsList :topics="favouriteList" /> -->
+
       <h1>Miracle Gaurav</h1>
       <h2>{{ authUser.member_id }}</h2>
       <h2>{{ authUser.name1 }}</h2>
       <h2>{{ authUser.name2 }}</h2>
-      <button
-        type="button"
-        @click="
-          () => {
-            logout();
-            useRouter().push('/');
-          }
-        "
-        class="c-button u-display-flex u-display-flex-justify-content-between u-width-100"
-      >
-        <span>
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            class="u-mr-5"
-          >
-            <path
-              d="M6 14H3.33333C2.97971 14 2.64057 13.8595 2.39052 13.6095C2.14048 13.3594 2 13.0203 2 12.6667V3.33333C2 2.97971 2.14048 2.64057 2.39052 2.39052C2.64057 2.14048 2.97971 2 3.33333 2H6"
-              stroke="white"
-              stroke-width="1.33333"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M10.6667 11.3333L14.0001 7.99996L10.6667 4.66663"
-              stroke="white"
-              stroke-width="1.33333"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M14 8H6"
-              stroke="white"
-              stroke-width="1.33333"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-          ログアウト
-        </span>
-      </button>
-      <ul v-if="contents.length > 0">
-        <li v-for="content in contents" :key="content.id">
+
+      <ul v-if="topicsList.length > 0">
+        <li v-for="content in topicsList" :key="content.id">
           {{ content.topics_id }}
         </li>
       </ul>
@@ -71,7 +54,8 @@
 const { authUser, profile, logout } = useAuth();
 
 const config = useRuntimeConfig();
-const contents = ref([]);
+const topicsList = ref([]);
+const favouriteList = ref([]);
 
 watch(
   () => authUser.value,
@@ -80,14 +64,23 @@ watch(
       return [];
     }
 
-    const { list } = await $fetch(
-      `${config.public.kurocoApiDomain}/rcms-api/1/content/list`,
+    const { list: topics } = await $fetch(
+      `${config.public.kurocoApiDomain}/rcms-api/1/content/list?cnt=6`,
       {
-        credentials: 'include',
+        credentials: "include",
         server: false,
       }
     );
-    contents.value = list;
+    const { list: favourite } = await $fetch(
+      `${config.public.kurocoApiDomain}/rcms-api/1/favorite/list`,
+      {
+        credentials: "include",
+        server: false,
+      }
+    );
+    topicsList.value = topics;
+    favouriteList.value = favourite;
+    console.log(favourite);
   },
   {
     deep: true,
