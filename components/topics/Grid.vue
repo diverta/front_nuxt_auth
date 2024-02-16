@@ -2,8 +2,9 @@
     <section>
         <div class="container">
             <div v-if="topics.length > 0" class="row">
+                <v-row v-for="(chunk, chunkIndex) in Math.ceil(topics.length / 3)" :key="chunkIndex">
                 <v-col
-                    v-for="topic in topics"
+                v-for="(topic, topicIndex) in topics.slice(chunkIndex * 3, (chunkIndex + 1) * 3)"
                     :key="topic.topics_id"
                     class="col-md-10 col-sm-6 col-12"
                 >
@@ -22,6 +23,7 @@
                         </v-card-actions>
                 </v-card>
                 </v-col>
+            </v-row>
             </div>
         </div>
     </section>

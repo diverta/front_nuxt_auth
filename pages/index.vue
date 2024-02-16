@@ -37,6 +37,20 @@
 
       <TopicsList :topics="favouriteList" />
 
+      <div class="text-center py-5 white--text">
+                <a
+                    type="submit"
+                    block
+                    x-large
+                    color="success"
+                    class="c-btn c-btn_main c-btn_md c-btn_icon"
+                    @click="() => $router.push('/favourite/')"
+                >
+                    {{ $t('top.more_starred') }}
+                    <v-icon dark right class="icon"> mdi-arrow-right-drop-circle </v-icon>
+                </a>
+            </div>
+
       <h1>Miracle Gaurav</h1>
       <h2>{{ authUser.member_id }}</h2>
       <h2>{{ authUser.name1 }}</h2>
