@@ -1,4 +1,3 @@
-import type { NuxtLink } from '#build/components';
 <template>
   <section class="c-table">
     <div class="container">
