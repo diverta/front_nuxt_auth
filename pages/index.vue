@@ -11,6 +11,16 @@
   <ClientOnly>
     <Login v-if="!authUser.member_id" />
     <div v-else class="mypage">
+      <v-carousel class="p-dashboard_banner">
+        <v-carousel-item
+          v-for="(url, i) in sliderImages"
+          :key="i"
+          :src="`${url}?height=500px`"
+          reverse-transition="fade-transition"
+          transition="fade-transition"
+        />
+      </v-carousel>
+
       <h1 class="text-left mt-5 pt-4">
         {{ $t("top.latest_articles") }}
       </h1>
@@ -38,29 +48,18 @@
       <TopicsList :topics="favouriteList" />
 
       <div class="text-center py-5 white--text">
-                <a
-                    type="submit"
-                    block
-                    x-large
-                    color="success"
-                    class="c-btn c-btn_main c-btn_md c-btn_icon"
-                    @click="() => $router.push('/favourite/')"
-                >
-                    {{ $t('top.more_starred') }}
-                    <v-icon dark right class="icon"> mdi-arrow-right-drop-circle </v-icon>
-                </a>
-            </div>
-
-      <h1>Miracle Gaurav</h1>
-      <h2>{{ authUser.member_id }}</h2>
-      <h2>{{ authUser.name1 }}</h2>
-      <h2>{{ authUser.name2 }}</h2>
-
-      <ul v-if="topicsList.length > 0">
-        <li v-for="content in topicsList" :key="content.id">
-          {{ content.topics_id }}
-        </li>
-      </ul>
+        <a
+          type="submit"
+          block
+          x-large
+          color="success"
+          class="c-btn c-btn_main c-btn_md c-btn_icon"
+          @click="() => $router.push('/favourite/')"
+        >
+          {{ $t("top.more_starred") }}
+          <v-icon dark right class="icon"> mdi-arrow-right-drop-circle </v-icon>
+        </a>
+      </div>
     </div>
   </ClientOnly>
 </template>
@@ -70,6 +69,12 @@ const { authUser, profile, logout } = useAuth();
 const config = useRuntimeConfig();
 const topicsList = ref([]);
 const favouriteList = ref([]);
+
+const sliderImages = computed(() => {
+  return topicsList.value
+    .map((topic) => topic?.ext_8?.url)
+    .filter((sliderImage) => sliderImage);
+});
 
 watch(
   () => authUser.value,
@@ -94,7 +99,6 @@ watch(
     );
     topicsList.value = topics;
     favouriteList.value = favourite;
-    console.log(favourite);
   },
   {
     deep: true,
