@@ -25,8 +25,18 @@
               </v-col>
             </v-row>
           </v-card>
+          <!-- For favorite -->
           <v-card flat>
-            <!-- For favorite -->
+            <div class="text-right mt-2">
+                <!-- Format the given date value in standard format -->
+                <!-- {{ topicsDetail.inst_ymdhi }}
+                {{ formattedDateString }}
+                Hello -->
+
+              <v-btn icon :color="favoriteColor" @click="onClickToggleFavorite">
+                <v-icon x-large left> mdi-star </v-icon>
+              </v-btn>
+            </div>
           </v-card>
         </v-card>
 
@@ -58,17 +68,15 @@
 
       <!-- </v-row> -->
       <div class="text-center col mt-5">
-                <button
-                    type="submit"
-                    class="c-btn c-btn_dark c-btn_icon c-text_white"
-                    @click="() => $router.push('/topics_list')"
-                >
-                    {{ $t('common.back_to_listing') }}
-                    <v-icon class="icon c-text_white pr-2">
-                        mdi-undo-variant
-                    </v-icon>
-                </button>
-            </div>
+        <button
+          type="submit"
+          class="c-btn c-btn_dark c-btn_icon c-text_white"
+          @click="() => $router.push('/topics_list')"
+        >
+          {{ $t("common.back_to_listing") }}
+          <v-icon class="icon c-text_white pr-2"> mdi-undo-variant </v-icon>
+        </button>
+      </div>
     </template>
   </div>
 </template>
@@ -77,6 +85,9 @@ const { authUser, profile, logout } = useAuth();
 const config = useRuntimeConfig();
 const route = useRoute();
 const topicsDetail = ref(null);
+const loading = ref(true);
+const favoriteResponse = ref(null);
+const favoriteColor = ref("grey");
 
 const items = computed(() => {
   if (!topicsDetail) {
@@ -92,6 +103,47 @@ const items = computed(() => {
   }));
 });
 
+const onClickToggleFavorite = async () => {
+  try {
+    const request =
+      favoriteColor.value === "grey"
+        ? await $fetch(
+            `${config.public.kurocoApiDomain}/rcms-api/1/favorite/register`,
+            {
+              method: "POST",
+              credentials: "include",
+              server: false,
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                module_id: parseInt(route.params.slug),
+                module_type: "topics",
+              }),
+            }
+          )
+        : await $fetch(
+            `${config.public.kurocoApiDomain}/rcms-api/1/favorite/delete`,
+            {
+              method: "POST",
+              credentials: "include",
+              server: false,
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                module_id: parseInt(route.params.slug),
+                module_type: "topics",
+              }),
+            }
+          );
+
+    await request;
+    favoriteColor.value = favoriteColor.value === "grey" ? "red" : "grey";
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 try {
   const response = await $fetch(
@@ -116,6 +168,23 @@ try {
     imageUrls: d?.ext_5,
     subtitles: d?.ext_9,
   };
+
+  const fav = await $fetch(
+    `${config.public.kurocoApiDomain}/rcms-api/1/favorite/list`,
+    {
+      credentials: "include",
+      server: false,
+      params: {
+        member_id: parseInt(authUser.value.member_id),
+        module_id: parseInt(route.params.slug),
+        module_type: "topics",
+      },
+    }
+  );
+  favoriteResponse.value = fav;
+  favoriteColor.value =
+    favoriteResponse.value?.pageInfo?.totalCnt > 0 ? "red" : "grey";
+  loading.value = false;
 } catch (error) {
   console.error(error);
 }
