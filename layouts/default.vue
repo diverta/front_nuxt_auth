@@ -114,11 +114,6 @@
     </v-app-bar>
 
     <v-main>
-      <h1>Gaurav</h1>
-      <h1>Gaurav</h1>
-      <h1>Gaurav</h1>
-      <h1>Gaurav</h1>
-      <h1>Gaurav</h1>
       <v-container class="l-content_inner" fluid>
         <slot />
       </v-container>
