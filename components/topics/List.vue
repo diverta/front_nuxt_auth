@@ -11,7 +11,7 @@
       <div v-if="topics.length > 0">
         <div class="col">
           <div
-            v-for="(item, index) in topics.slice(0, 5)"
+            v-for="item in topics"
             :key="item.topics_id"
             class="row c-table_row"
           >
@@ -21,15 +21,15 @@
               >
               <v-col
                 ><div class="col-sm-2 col-auto c-table_col">
-                  {{ item.module_type }}
+                  {{ item.contents_type_nm }}
                 </div></v-col
               >
               <v-col
                 ><div class="col-sm-2 col-auto c-table_col">
                   <NuxtLink
-                    :to="`/topics_detail/${item.module_id}`"
+                    :to="`/topics_detail/${item.topics_id}`"
                     no-prefetch
-                    >{{ item.module_title }}</NuxtLink
+                    >{{ item.subject }}</NuxtLink
                   >
                 </div></v-col
               >

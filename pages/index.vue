@@ -69,6 +69,7 @@ const { authUser, profile, logout } = useAuth();
 const config = useRuntimeConfig();
 const topicsList = ref([]);
 const favouriteList = ref([]);
+const perPage = ref(5);
 
 const sliderImages = computed(() => {
   return topicsList.value
@@ -90,15 +91,37 @@ watch(
         server: false,
       }
     );
-    const { list: favourite } = await $fetch(
+
+    const favouriteRes = await $fetch(
       `${config.public.kurocoApiDomain}/rcms-api/1/favorite/list`,
       {
         credentials: "include",
         server: false,
+        params: {
+          member_id: parseInt(authUser.value.member_id),
+          module_type: "topics",
+        },
+      }
+    );
+
+    const topicsIds = favouriteRes.list.map((item) => item.module_id);
+    if (topicsIds.length === 0) {
+      return;
+    }
+
+    const favouriteTopicsRes = await $fetch(
+      `${config.public.kurocoApiDomain}/rcms-api/1/content/list`,
+      {
+        credentials: "include",
+        server: false,
+        params: {
+          cnt: perPage.value,
+          module_id: topicsIds
+        },
       }
     );
     topicsList.value = topics;
-    favouriteList.value = favourite;
+    favouriteList.value = favouriteTopicsRes.list;
   },
   {
     deep: true,
