@@ -28,11 +28,7 @@
           <!-- For favorite -->
           <v-card flat>
             <div class="text-right mt-2">
-                <!-- Format the given date value in standard format -->
-                <!-- {{ topicsDetail.inst_ymdhi }}
-                {{ formattedDateString }}
-                Hello -->
-
+              {{ topicsDetail.inst_ymdhi.slice(0, 10) }}
               <v-btn icon :color="favoriteColor" @click="onClickToggleFavorite">
                 <v-icon x-large left> mdi-star </v-icon>
               </v-btn>

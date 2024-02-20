@@ -17,7 +17,7 @@
           >
             <v-row>
               <v-col
-                ><div class="col-sm-2 col-auto c-table_col">Date</div></v-col
+                ><div class="col-sm-2 col-auto c-table_col">{{ item.inst_ymdhi.slice(0, 10) }}</div></v-col
               >
               <v-col
                 ><div class="col-sm-2 col-auto c-table_col">
