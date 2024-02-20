@@ -27,7 +27,7 @@
 
       <TopicsGrid :topics="topicsList" />
 
-      <div class="text-center py-5 mt-4 white--text">
+      <div class="text-center py-5 mt-4 text-white">
         <a
           type="submit"
           block
@@ -47,7 +47,7 @@
 
       <TopicsList :topics="favouriteList" />
 
-      <div class="text-center py-5 white--text">
+      <div class="text-center py-5 text-white">
         <a
           type="submit"
           block
