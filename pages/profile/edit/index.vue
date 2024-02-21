@@ -18,7 +18,7 @@
             validation="required|email"
           />
         </FormKit> -->
-        <FormKit type="form" @submit="handleSubmit">
+        <FormKit v-model="formValues" type="form" @submit="handleSubmit">
           <FormKitSchema
             :schema="[
               {
@@ -28,11 +28,58 @@
                 validation: 'required|length:0,100',
               },
               {
-                $formkit: 'email',
-                name: 'email',
-                label: 'Email address',
-                help: 'Please enter your email address.',
+                name: 'name2',
+                label: $t('label.last_name'),
+                $formkit: 'text',
+                validation: 'required|length:0,100',
               },
+              {
+                name: 'hire_date',
+                label: $t('label.hire_date'),
+                $formkit: 'date',
+                validation: 'required',
+              },
+              {
+                name: 'department',
+                label: $t('label.department'),
+                $formkit: 'text',
+                validation: 'required|length:0,100',
+              },
+              {
+                name: 'position',
+                label: $t('label.position'),
+                $formkit: 'text',
+                validation: 'required|length:0,100',
+              },
+              {
+                name: 'tel',
+                label: $t('label.phone'),
+                $formkit: 'text',
+                validation: 'required|length:0,100',
+              },
+              {
+                name: 'email',
+                label: $t('label.email'),
+                $formkit: 'email',
+                validation: 'required|email|length:0,100',
+              },
+              // {
+              //   name: 'notes',
+              //   label: $t('label.notes'),
+              //   $formkit: 'textarea',
+              //   validation: 'length:0,1000',
+              // },
+              // {
+              //   name: 'multiple_check',
+              //   label: $t('label.hobby'),
+              //   $formkit: 'checkbox',
+              //   options: [
+              //     { label: 'Soccer', value: '1' },
+              //     { label: 'Baseball', value: '2' },
+              //     { label: 'Basketball', value: '3' },
+              //   ],
+              //   validation: 'required',
+              // },
             ]"
           />
         </FormKit>
@@ -51,12 +98,15 @@ const agreementChecked = ref(false);
 const handleSubmit = async (form) => {
   console.log(form);
   try {
-    const response = await $fetch(`${config.public.kurocoApiDomain}/rcms-api/1/member/update`, {
-      credentials: "include",
-      server: false,
-      method: "POST",
-      body: form,
-    });
+    const response = await $fetch(
+      `${config.public.kurocoApiDomain}/rcms-api/1/member/update`,
+      {
+        credentials: "include",
+        server: false,
+        method: "POST",
+        body: form,
+      }
+    );
 
     if (response.errors.length !== 0) {
       throw new Error(response.errors.join("\n"));
@@ -116,6 +166,7 @@ const fetchProfile = async () => {
       hire_date: d?.hire_date,
       multiple_check: d?.multiple_check?.map(({ key }) => `${key}`) || "",
     };
+    console.log(formValues.value);
   } catch (error) {
     console.error(error);
   }
