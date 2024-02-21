@@ -31,6 +31,7 @@
 const { authUser } = useAuth();
 const config = useRuntimeConfig();
 const topics = ref([]);
+const text = ref("0");
 const page = ref(1);
 const perPage = ref(20);
 const totalCnt = ref(0);
