@@ -19,6 +19,8 @@
     "vuetify": "^3.5.1"
   },
   "dependencies": {
+    "@formkit/nuxt": "^1.5.9",
+    "@formkit/themes": "^1.5.9",
     "@mdi/font": "^7.4.47"
   }
 }

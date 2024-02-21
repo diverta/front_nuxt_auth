@@ -20,8 +20,13 @@ export default defineNuxtConfig({
         config.plugins.push(vuetify({ autoImport: true }))
       })
     },
+    '@formkit/nuxt',
     //...
   ],
+  formkit: {
+    // Experimental support for auto loading (see note):
+    autoImport: true
+  },
   vite: {
     vue: {
       template: {
