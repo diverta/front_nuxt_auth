@@ -75,8 +75,6 @@
   </section>
 </template>
 <script setup>
-import { onMounted } from "vue";
-
 const { authUser } = useAuth();
 const config = useRuntimeConfig();
 // @TODO: Replace with the actual profile image URL
