@@ -119,7 +119,7 @@ const fetchProfile = async () => {
         "Last Name": detailsObj.name2 || "N/A",
         "Hire Date": detailsObj?.hire_date || "N/A",
         Department: detailsObj.department || "N/A",
-        Position: detailsObj.role || "N/A",
+        Position: detailsObj?.position || "N/A",
         Phone: detailsObj.tel || "N/A",
         Email: detailsObj.email || "N/A",
         Office: detailsObj?.pull_down?.label || "N/A",
