@@ -75,7 +75,8 @@
 </template>
 <script setup>
 const { login } = useAuth(); // uses the default signIn function provided by nuxt-auth
-const sitekey = "dev-nuxt-auth";
+const { sitekey } = useApiDomain();
+const { apiDomain } = useApiDomain();
 const formData = reactive({
   email: "",
   password: "",
@@ -90,9 +91,15 @@ const errorMessage = [
 const loading = ref(false);
 const showsPassword = ref(false);
 
+// onMounted(() => {
+//   sitekey.value = localStorage.getItem("sitekey") || "dev-nuxt-auth";
+// });
+
 const handleLogin = async () => {
   try {
     loading.value = true;
+    // localStorage.setItem('sitekey', sitekey.value);
+    apiDomain.value = sitekey.value === "dev-nuxt-auth" ? "https://dev-nuxt-auth.kuroco.app" : `https://${sitekey.value}.g.kuroco.app`;
     await login({ ...formData });
 
     useRouter().push("/");

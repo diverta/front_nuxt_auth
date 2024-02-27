@@ -4,10 +4,11 @@ const useUser = () => useState('user', () => null);
 export const useAuth = () => {
   const config = useRuntimeConfig();
   const userRef = useUser();
+  const { apiDomain } = useApiDomain();
 
   /** login and set user's information */
   const login = async ({ email, password }) => {
-    await $fetch(`${config.public.kurocoApiDomain}/rcms-api/1/login`, {
+    await $fetch(`${apiDomain.value}/rcms-api/1/login`, {
       method: 'POST',
       body: {
         email,
@@ -29,12 +30,13 @@ export const useAuth = () => {
       /** NP, to run following process */
     });
     userRef.value = null
+    localStorage.removeItem('sitekey');
   };
 
   /** process restore user's login state with requesting /profile, only in client side */
   const profile = async () => {
     userRef.value = await $fetch(
-      `${config.public.kurocoApiDomain}/rcms-api/1/profile`, {
+      `${apiDomain.value}/rcms-api/1/profile`, {
       server: false,
       credentials: 'include'
     })

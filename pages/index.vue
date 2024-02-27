@@ -65,7 +65,8 @@
 </template>
 <script setup>
 const { authUser, profile, logout } = useAuth();
-
+const { apiDomain } = useApiDomain();
+const { sitekey } = useApiDomain();
 const config = useRuntimeConfig();
 const topicsList = ref([]);
 const favouriteList = ref([]);
@@ -77,15 +78,21 @@ const sliderImages = computed(() => {
     .filter((sliderImage) => sliderImage);
 });
 
+const reactiveDependencies = computed(() => ({
+  authUser: authUser.value,
+  apiDomain: apiDomain.value,
+}));
+
 watch(
-  () => authUser.value,
+  reactiveDependencies,
   async () => {
     if (!authUser.value.member_id) {
       return [];
     }
 
+    console.log("apiDomain in index", apiDomain.value);
     const { list: topics } = await $fetch(
-      `${config.public.kurocoApiDomain}/rcms-api/1/content/list?cnt=6`,
+      `${apiDomain.value}/rcms-api/1/content/list?cnt=6`,
       {
         credentials: "include",
         server: false,
@@ -93,7 +100,7 @@ watch(
     );
 
     const favouriteRes = await $fetch(
-      `${config.public.kurocoApiDomain}/rcms-api/1/favorite/list`,
+      `${apiDomain.value}/rcms-api/1/favorite/list`,
       {
         credentials: "include",
         server: false,
@@ -110,13 +117,13 @@ watch(
     }
 
     const favouriteTopicsRes = await $fetch(
-      `${config.public.kurocoApiDomain}/rcms-api/1/content/list`,
+      `${apiDomain.value}/rcms-api/1/content/list`,
       {
         credentials: "include",
         server: false,
         params: {
           cnt: perPage.value,
-          module_id: topicsIds
+          module_id: topicsIds,
         },
       }
     );
