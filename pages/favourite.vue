@@ -51,7 +51,7 @@ const updateTopics = async () => {
         params: {
           pageID: page.value,
           cnt: perPage.value,
-          module_id: topicsIds,
+          ["id[]"]: topicsIds,
         },
       }
     );

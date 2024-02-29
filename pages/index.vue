@@ -115,7 +115,7 @@ watch(
         server: false,
         params: {
           cnt: perPage.value,
-          module_id: topicsIds,
+          ["id[]"]: topicsIds,
         },
       }
     );
