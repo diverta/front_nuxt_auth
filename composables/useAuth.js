@@ -1,14 +1,17 @@
 /** set global state for user's information */
 const useUser = () => useState('user', () => null);
 
+export const apiDomain = reactive({
+  sitekey: 'dev-nuxt-auth',
+  baseURL: 'https://dev-nuxt-auth.a.kuroco.app'
+});
+
 export const useAuth = () => {
-  const config = useRuntimeConfig();
   const userRef = useUser();
-  const { apiDomain } = useApiDomain();
 
   /** login and set user's information */
   const login = async ({ email, password }) => {
-    await $fetch(`${apiDomain.value}/rcms-api/1/login`, {
+    await $fetch(`${apiDomain.baseURL}/rcms-api/1/login`, {
       method: 'POST',
       body: {
         email,
@@ -22,7 +25,7 @@ export const useAuth = () => {
 
   /** logout and clear user's information */
   const logout = async () => {
-    await $fetch(`${config.public.kurocoApiDomain}/rcms-api/1/logout`, {
+    await $fetch(`${apiDomain.baseURL}/rcms-api/1/logout`, {
       method: 'POST',
       server: false,
       credentials: 'include'
@@ -36,7 +39,7 @@ export const useAuth = () => {
   /** process restore user's login state with requesting /profile, only in client side */
   const profile = async () => {
     userRef.value = await $fetch(
-      `${apiDomain.value}/rcms-api/1/profile`, {
+      `${apiDomain.baseURL}/rcms-api/1/profile`, {
       server: false,
       credentials: 'include'
     })

@@ -78,7 +78,6 @@
 </template>
 <script setup>
 const { authUser, profile, logout } = useAuth();
-const config = useRuntimeConfig();
 const route = useRoute();
 const topicsDetail = ref(null);
 const loading = ref(true);
@@ -104,7 +103,7 @@ const onClickToggleFavorite = async () => {
     const request =
       favoriteColor.value === "grey"
         ? await $fetch(
-            `${config.public.kurocoApiDomain}/rcms-api/1/favorite/register`,
+            `${apiDomain.baseURL}/rcms-api/1/favorite/register`,
             {
               method: "POST",
               credentials: "include",
@@ -119,7 +118,7 @@ const onClickToggleFavorite = async () => {
             }
           )
         : await $fetch(
-            `${config.public.kurocoApiDomain}/rcms-api/1/favorite/delete`,
+            `${apiDomain.baseURL}/rcms-api/1/favorite/delete`,
             {
               method: "POST",
               credentials: "include",
@@ -143,7 +142,7 @@ const onClickToggleFavorite = async () => {
 
 try {
   const response = await $fetch(
-    `${config.public.kurocoApiDomain}/rcms-api/1/content/details/${route.params.slug}`,
+    `${apiDomain.baseURL}/rcms-api/1/content/details/${route.params.slug}`,
     {
       credentials: "include",
       server: false,
@@ -166,7 +165,7 @@ try {
   };
 
   const fav = await $fetch(
-    `${config.public.kurocoApiDomain}/rcms-api/1/favorite/list`,
+    `${apiDomain.baseURL}/rcms-api/1/favorite/list`,
     {
       credentials: "include",
       server: false,

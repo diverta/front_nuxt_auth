@@ -76,7 +76,6 @@
 </template>
 <script setup>
 const { authUser } = useAuth();
-const config = useRuntimeConfig();
 // @TODO: Replace with the actual profile image URL
 // const defaultImage = ref("assets/images/avatar-placeholder.png");
 // const placeholder = require('assets/images/avatar-placeholder.png');
@@ -99,7 +98,7 @@ onMounted(() => {
 const fetchProfile = async () => {
   try {
     const res = await $fetch(
-      `${config.public.kurocoApiDomain}/rcms-api/1/member/me`,
+      `${apiDomain.baseURL}/rcms-api/1/member/me`,
       {
         credentials: "include",
         server: false,

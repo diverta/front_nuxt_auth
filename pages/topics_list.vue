@@ -29,7 +29,6 @@
 </template>
 <script setup>
 const { authUser } = useAuth();
-const config = useRuntimeConfig();
 const topics = ref([]);
 const text = ref("0");
 const page = ref(1);
@@ -53,7 +52,7 @@ const changeCategory = (item) => {
 const updateTopics = async () => {
   try {
     const response = await $fetch(
-      `${config.public.kurocoApiDomain}/rcms-api/1/content/list`,
+      `${apiDomain.baseURL}/rcms-api/1/content/list`,
       {
         credentials: "include",
         server: false,
@@ -77,7 +76,7 @@ onMounted(async () => {
   category_key.value = null;
   try {
     const response = await $fetch(
-      `${config.public.kurocoApiDomain}/rcms-api/1/content/category`,
+      `${apiDomain.baseURL}/rcms-api/1/content/category`,
         {
             credentials: "include",
             server: false,

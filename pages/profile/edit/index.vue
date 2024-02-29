@@ -113,7 +113,6 @@
 <script setup>
 import { FormKitSchema } from "@formkit/vue";
 const { authUser } = useAuth();
-const config = useRuntimeConfig();
 const formValues = ref({});
 const loading = ref(true);
 const agreementChecked = ref(false);
@@ -122,7 +121,7 @@ const handleSubmit = async (form) => {
   console.log(form);
   try {
     const response = await $fetch(
-      `${config.public.kurocoApiDomain}/rcms-api/1/member/update`,
+      `${apiDomain.baseURL}/rcms-api/1/member/update`,
       {
         credentials: "include",
         server: false,
@@ -145,7 +144,7 @@ const handleSubmit = async (form) => {
 const submitF = async () => {
   const sendModel = JSON.parse(JSON.stringify(formValues));
   try {
-    const response = await $fetch("/rcms-api/1/member/update", {
+    const response = await $fetch(`${apiDomain.baseURL}/rcms-api/1/member/update`, {
       method: "POST",
       body: sendModel,
     });
@@ -168,7 +167,7 @@ onMounted(() => {
 const fetchProfile = async () => {
   try {
     const res = await $fetch(
-      `${config.public.kurocoApiDomain}/rcms-api/1/member/me`,
+      `${apiDomain.baseURL}/rcms-api/1/member/me`,
       {
         credentials: "include",
         server: false,

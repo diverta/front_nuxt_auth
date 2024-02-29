@@ -65,9 +65,6 @@
 </template>
 <script setup>
 const { authUser, profile, logout } = useAuth();
-const { apiDomain } = useApiDomain();
-const { sitekey } = useApiDomain();
-const config = useRuntimeConfig();
 const topicsList = ref([]);
 const favouriteList = ref([]);
 const perPage = ref(5);
@@ -78,21 +75,16 @@ const sliderImages = computed(() => {
     .filter((sliderImage) => sliderImage);
 });
 
-const reactiveDependencies = computed(() => ({
-  authUser: authUser.value,
-  apiDomain: apiDomain.value,
-}));
-
 watch(
-  reactiveDependencies,
+  () => authUser.value,
   async () => {
     if (!authUser.value.member_id) {
       return [];
     }
 
-    console.log("apiDomain in index", apiDomain.value);
+    console.log("apiDomain in index", apiDomain.baseURL);
     const { list: topics } = await $fetch(
-      `${apiDomain.value}/rcms-api/1/content/list?cnt=6`,
+      `${apiDomain.baseURL}/rcms-api/1/content/list?cnt=6`,
       {
         credentials: "include",
         server: false,
@@ -100,7 +92,7 @@ watch(
     );
 
     const favouriteRes = await $fetch(
-      `${apiDomain.value}/rcms-api/1/favorite/list`,
+      `${apiDomain.baseURL}/rcms-api/1/favorite/list`,
       {
         credentials: "include",
         server: false,
@@ -117,7 +109,7 @@ watch(
     }
 
     const favouriteTopicsRes = await $fetch(
-      `${apiDomain.value}/rcms-api/1/content/list`,
+      `${apiDomain.baseURL}/rcms-api/1/content/list`,
       {
         credentials: "include",
         server: false,

@@ -15,7 +15,6 @@
 </template>
 <script setup>
 const { authUser } = useAuth();
-const config = useRuntimeConfig();
 const topics = ref([]);
 const page = ref(1);
 const perPage = ref(20);
@@ -28,7 +27,7 @@ onMounted(() => {
 const updateTopics = async () => {
   try {
     const favouriteRes = await $fetch(
-      `${config.public.kurocoApiDomain}/rcms-api/1/favorite/list`,
+      `${apiDomain.baseURL}/rcms-api/1/favorite/list`,
       {
         credentials: "include",
         server: false,
@@ -45,7 +44,7 @@ const updateTopics = async () => {
     }
 
     const favouriteTopicsRes = await $fetch(
-      `${config.public.kurocoApiDomain}/rcms-api/1/content/list`,
+      `${apiDomain.baseURL}/rcms-api/1/content/list`,
       {
         credentials: "include",
         server: false,
