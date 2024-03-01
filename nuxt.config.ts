@@ -21,11 +21,16 @@ export default defineNuxtConfig({
       })
     },
     '@formkit/nuxt',
+    'nuxt-snackbar'
     //...
   ],
   formkit: {
     // Experimental support for auto loading (see note):
     autoImport: true
+  },
+  snackbar: {
+    top: true,
+    duration: 5000
   },
   vite: {
     vue: {

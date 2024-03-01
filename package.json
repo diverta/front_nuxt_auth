@@ -21,6 +21,7 @@
   "dependencies": {
     "@formkit/nuxt": "^1.5.9",
     "@formkit/themes": "^1.5.9",
-    "@mdi/font": "^7.4.47"
+    "@mdi/font": "^7.4.47",
+    "nuxt-snackbar": "^1.0.4"
   }
 }

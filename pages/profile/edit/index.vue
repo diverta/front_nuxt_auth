@@ -62,10 +62,10 @@
                 placeholder: 'Password',
               },
               // {
-                //@TODO profile image
-                // name: 'profileimage',
-                // label: $t('label.avatar'),
-                // $formkit: 'file',
+              //@TODO profile image
+              // name: 'profileimage',
+              // label: $t('label.avatar'),
+              // $formkit: 'file',
               // },
               {
                 //@TODO by default select the dropdown value when reading
@@ -112,6 +112,7 @@
 </template>
 <script setup>
 import { FormKitSchema } from "@formkit/vue";
+const snackbar = useSnackbar();
 const { authUser } = useAuth();
 const formValues = ref({});
 const loading = ref(true);
@@ -135,8 +136,11 @@ const handleSubmit = async (form) => {
     }
 
     console.log("Profile updated successfully");
+    snackbar.add({
+      type: "success",
+      text: "Profile updated successfully",
+    });
   } catch (e) {
-    console.log("Phatti");
     console.log(e);
   }
 };
@@ -144,10 +148,13 @@ const handleSubmit = async (form) => {
 const submitF = async () => {
   const sendModel = JSON.parse(JSON.stringify(formValues));
   try {
-    const response = await $fetch(`${apiDomain.baseURL}/rcms-api/1/member/update`, {
-      method: "POST",
-      body: sendModel,
-    });
+    const response = await $fetch(
+      `${apiDomain.baseURL}/rcms-api/1/member/update`,
+      {
+        method: "POST",
+        body: sendModel,
+      }
+    );
 
     if (response.errors.length !== 0) {
       throw new Error(response.errors.join("\n"));
@@ -166,13 +173,10 @@ onMounted(() => {
 
 const fetchProfile = async () => {
   try {
-    const res = await $fetch(
-      `${apiDomain.baseURL}/rcms-api/1/member/me`,
-      {
-        credentials: "include",
-        server: false,
-      }
-    );
+    const res = await $fetch(`${apiDomain.baseURL}/rcms-api/1/member/me`, {
+      credentials: "include",
+      server: false,
+    });
     const d = res.details;
 
     formValues.value = {
