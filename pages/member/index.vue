@@ -30,7 +30,7 @@
       </v-row>
       <v-data-table
         :headers="headers"
-        :items="userList"
+        :items="filteredItems"
         class="elevation-1 mt-5 c-table"
       >
         <template v-slot:item.name="{ item, value }">
@@ -77,10 +77,12 @@ const departments = computed(() => {
 const filteredItems = computed(() => {
   return userList.value
     .filter(({ department }) =>
-      currDepartment === "" ? true : department === currDepartment
+      currDepartment.value === "" ? true : department === currDepartment.value
     )
-    .filter(({ name }) => (currName === "" ? true : name === currName));
+    .filter(({ name }) => (currName.value === "" ? true : name === currName.value));
 });
+
+console.log("Bhaijaan", filteredItems.value);
 
 onMounted(async () => {
   try {
