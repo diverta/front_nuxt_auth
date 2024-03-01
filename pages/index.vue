@@ -1,13 +1,4 @@
 <template>
-  <!-- <h1>Gaurav</h1>
-    <h1>{{ $t('hello', { name: 'vue-i18n' }) }}</h1>
-    <form>
-      <label for="locale-select">{{ $t('language') }}: </label>
-      <select id="locale-select" v-model="$i18n.locale">
-        <option value="en">en</option>
-        <option value="ja">ja</option>
-      </select>
-    </form> -->
   <ClientOnly>
     <Login v-if="!authUser.member_id" />
     <div v-else class="mypage">
@@ -76,14 +67,13 @@ const sliderImages = computed(() => {
     .filter((sliderImage) => sliderImage);
 });
 
-watch(
-  () => authUser.value,
-  async () => {
-    if (!authUser.value.member_id) {
-      return [];
-    }
+onMounted(() => {
+  updateTopics();
+});
 
-    console.log("apiDomain in index", apiDomain.baseURL);
+const updateTopics = async () => {
+  try {
+    topicsList.value = [];
     const { list: topics } = await $fetch(
       `${apiDomain.baseURL}/rcms-api/1/content/list?cnt=6`,
       {
@@ -91,7 +81,15 @@ watch(
         server: false,
       }
     );
+    topicsList.value = topics;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
+const updateFavourite = async () => {
+  try {
+    favouriteList.value = [];
     const favouriteRes = await $fetch(
       `${apiDomain.baseURL}/rcms-api/1/favorite/list`,
       {
@@ -120,8 +118,20 @@ watch(
         },
       }
     );
-    topicsList.value = topics;
     favouriteList.value = favouriteTopicsRes.list;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+watch(
+  () => authUser.value,
+  async () => {
+    if (!authUser.value.member_id) {
+      return [];
+    }
+    await updateTopics();
+    await updateFavourite();
   },
   {
     deep: true,
