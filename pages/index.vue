@@ -11,7 +11,7 @@
   <ClientOnly>
     <Login v-if="!authUser.member_id" />
     <div v-else class="mypage">
-      <v-carousel class="p-dashboard_banner">
+      <v-carousel class="p-dashboard_banner" v-model="active">
         <v-carousel-item
           v-for="(url, i) in sliderImages"
           :key="i"
@@ -68,6 +68,7 @@ const { authUser, profile, logout } = useAuth();
 const topicsList = ref([]);
 const favouriteList = ref([]);
 const perPage = ref(5);
+const active = ref(0);
 
 const sliderImages = computed(() => {
   return topicsList.value
