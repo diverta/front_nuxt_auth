@@ -145,27 +145,6 @@ const handleSubmit = async (form) => {
   }
 };
 
-const submitF = async () => {
-  const sendModel = JSON.parse(JSON.stringify(formValues));
-  try {
-    const response = await $fetch(
-      `${apiDomain.baseURL}/rcms-api/1/member/update`,
-      {
-        method: "POST",
-        body: sendModel,
-      }
-    );
-
-    if (response.errors.length !== 0) {
-      throw new Error(response.errors.join("\n"));
-    }
-
-    console.log("Profile updated successfully");
-  } catch (e) {
-    $snackbar.error(e?.response?.data?.errors?.[0]?.message || e);
-  }
-};
-
 onMounted(() => {
   fetchProfile();
   loading.value = false;
