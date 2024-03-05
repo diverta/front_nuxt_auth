@@ -67,6 +67,7 @@ jobs:
   #for Push
   pushed_build:
     name: Build(pushed)
+    if: (github.repository == 'diverta/front_nuxt_auth' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch'))
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
