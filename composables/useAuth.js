@@ -10,6 +10,17 @@ export const useAuth = () => {
   const userRef = useUser();
 
   /** login and set user's information */
+  const register = async (formData) => {
+    const res = await $fetch(`${apiDomain.baseURL}/rcms-api/1/member/register`, {
+      method: 'POST',
+      body: formData,
+      server: false,
+    });
+
+    await res.json();
+    console.log(res);
+  };
+  
   const login = async ({ email, password }) => {
     await $fetch(`${apiDomain.baseURL}/rcms-api/1/login`, {
       method: 'POST',
@@ -65,6 +76,7 @@ export const useAuth = () => {
   return {
     authUser,
     isLoggedIn,
+    register,
     login,
     logout,
     profile,
