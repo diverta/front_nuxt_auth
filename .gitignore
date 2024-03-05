@@ -2,3 +2,4 @@ node_modules
 .nuxt
 .DS_Store
 .output
+dist
