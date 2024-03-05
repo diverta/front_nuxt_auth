@@ -17,9 +17,6 @@
             <!-- @TODO FIX File upload -->
             <FormKit
               v-if="field.type === 7"
-              :type="getFieldType(field.type)"
-              :name="field.key"
-              :label="field.title"
             >
             </FormKit>
 
