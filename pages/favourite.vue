@@ -15,6 +15,7 @@
 </template>
 <script setup>
 const { authUser } = useAuth();
+const snackbar = useSnackbar();
 const topics = ref([]);
 const page = ref(1);
 const perPage = ref(20);
@@ -59,7 +60,10 @@ const updateTopics = async () => {
     totalCnt.value = favouriteTopicsRes.pageInfo.totalCnt;
     topics.value = favouriteTopicsRes.list;
   } catch (error) {
-    console.error(error);
+    snackbar.add({
+      type: "error",
+      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+    });
   }
 };
 </script>

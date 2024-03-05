@@ -36,6 +36,7 @@ const perPage = ref(20);
 const totalCnt = ref(0);
 const categories = ref([]);
 const category_key = ref(null);
+const snackbar = useSnackbar();
 
 const changeCategoryAll = () => {
   category_key.value = null;
@@ -68,7 +69,10 @@ const updateTopics = async () => {
     totalCnt.value = response.pageInfo.totalCnt;
     topics.value = response.list;
   } catch (error) {
-    console.error(error);
+    snackbar.add({
+      type: "error",
+      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+    });
   }
 };
 
@@ -87,7 +91,10 @@ onMounted(async () => {
       value: item.category_nm,
     }));
   } catch (error) {
-    console.error(error);
+    snackbar.add({
+      type: "error",
+      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+    });
   }
   updateTopics();
 });

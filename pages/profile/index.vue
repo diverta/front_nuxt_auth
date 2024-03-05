@@ -75,6 +75,7 @@
   </section>
 </template>
 <script setup>
+const snackbar = useSnackbar();
 const { authUser } = useAuth();
 // @TODO: Replace with the actual profile image URL
 // const defaultImage = ref("assets/images/avatar-placeholder.png");
@@ -129,7 +130,10 @@ const fetchProfile = async () => {
       },
     };
   } catch (error) {
-    console.error(error);
+    snackbar.add({
+      type: "error",
+      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+    });
   }
 };
 </script>

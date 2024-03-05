@@ -60,6 +60,7 @@ const topicsList = ref([]);
 const favouriteList = ref([]);
 const perPage = ref(5);
 const active = ref(0);
+const snackbar = useSnackbar();
 
 const sliderImages = computed(() => {
   return topicsList.value
@@ -83,7 +84,10 @@ const updateTopics = async () => {
     );
     topicsList.value = topics;
   } catch (error) {
-    console.error(error);
+    snackbar.add({
+      type: "error",
+      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+    });
   }
 };
 
@@ -120,7 +124,10 @@ const updateFavourite = async () => {
     );
     favouriteList.value = favouriteTopicsRes.list;
   } catch (error) {
-    console.error(error);
+    snackbar.add({
+      type: "error",
+      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+    });
   }
 };
 

@@ -16,7 +16,7 @@
           <template v-for="field in formFields" :key="field.key">
             <!-- @TODO FIX File upload -->
             <FormKit
-            v-if="field.type !== 7"
+              v-if="field.type !== 7"
               :type="getFieldType(field.type)"
               :name="field.key"
               :label="field.title"
@@ -75,7 +75,10 @@ const fetchInquiry = async () => {
     formFields.value = cols;
     console.log("formFields", formFields.value);
   } catch (e) {
-    console.error(e);
+    snackbar.add({
+      type: "error",
+      text: e?.response?._data?.errors?.[0]?.message || "An error occurred",
+    });
   }
   loading.value = false;
 };
@@ -91,7 +94,7 @@ const handleSubmit = async (form) => {
   // }
   console.log("Formdata");
   console.log(formDataAsText);
-  console.log("Form")
+  console.log("Form");
   console.log(form);
   try {
     const response = await $fetch(`${apiDomain.baseURL}/rcms-api/1/inquiry/1`, {
@@ -107,13 +110,15 @@ const handleSubmit = async (form) => {
       throw new Error(response.errors.join("\n"));
     }
 
-    console.log("Inquiry posted successfully");
     snackbar.add({
       type: "success",
       text: "Inquiry posted successfully",
     });
   } catch (e) {
-    console.log(e);
+    snackbar.add({
+      type: "error",
+      text: e?.response?._data?.errors?.[0]?.message || "An error occurred",
+    });
   }
 };
 </script>

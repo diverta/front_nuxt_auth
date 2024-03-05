@@ -142,6 +142,10 @@ const handleSubmit = async (form) => {
     });
   } catch (e) {
     console.log(e);
+    snackbar.add({
+      type: "error",
+      text: e?.response?._data?.errors?.[0]?.message || "An error occurred",
+    });
   }
 };
 
@@ -172,7 +176,10 @@ const fetchProfile = async () => {
     };
     console.log(formValues.value);
   } catch (error) {
-    console.error(error);
+    snackbar.add({
+      type: "error",
+      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+    });
   }
 };
 </script>

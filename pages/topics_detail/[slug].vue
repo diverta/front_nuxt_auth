@@ -83,6 +83,7 @@ const topicsDetail = ref(null);
 const loading = ref(true);
 const favoriteResponse = ref(null);
 const favoriteColor = ref("grey");
+const snackbar = useSnackbar();
 
 const items = computed(() => {
   if (!topicsDetail) {
@@ -136,7 +137,10 @@ const onClickToggleFavorite = async () => {
     await request;
     favoriteColor.value = favoriteColor.value === "grey" ? "red" : "grey";
   } catch (error) {
-    console.error(error);
+    snackbar.add({
+      type: "error",
+      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+    });
   }
 };
 
@@ -181,6 +185,9 @@ try {
     favoriteResponse.value?.pageInfo?.totalCnt > 0 ? "red" : "grey";
   loading.value = false;
 } catch (error) {
-  console.error(error);
+  snackbar.add({
+      type: "error",
+      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+    });
 }
 </script>

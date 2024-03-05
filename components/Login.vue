@@ -74,6 +74,7 @@
   </v-row>
 </template>
 <script setup>
+const snackbar = useSnackbar();
 const { login } = useAuth();
 const sitekey = ref(apiDomain.sitekey);
 const formData = reactive({
@@ -103,6 +104,10 @@ const handleLogin = async () => {
     useRouter().push("/");
   } catch (e) {
     error.value = e?.data?.errors || [];
+    snackbar.add({
+      type: "error",
+      text: e?.response?._data?.errors?.[0]?.message || "An error occurred",
+    });
   }
   loading.value = false;
 };

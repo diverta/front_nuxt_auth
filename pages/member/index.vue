@@ -55,6 +55,7 @@ const isDisallowed = ref(false);
 const perpage = ref(10);
 const page = ref(1);
 const pageCount = ref(0);
+const snackbar = useSnackbar();
 
 const headers = [
   { title: "Name", value: "name", sortable: false },
@@ -103,7 +104,10 @@ onMounted(async () => {
     }));
     console.log(userList.value);
   } catch (error) {
-    console.error(error);
+    snackbar.add({
+      type: "error",
+      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+    });
     if (error?.response?.status) {
       isDisallowed = true;
     }
