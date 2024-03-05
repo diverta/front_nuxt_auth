@@ -14,17 +14,17 @@
       <v-container fluid>
         <FormKit type="form" @submit="handleSubmit">
           <template v-for="field in formFields" :key="field.key">
-            <!-- Radio Buttons -->
-            <!-- <FormKit
-              v-if="field.type === 3 || field.type === 4"
+            <!-- @TODO FIX File upload -->
+            <FormKit
+              v-if="field.type === 7"
               :type="getFieldType(field.type)"
               :name="field.key"
               :label="field.title"
-              :options="field.options"
             >
-            </FormKit> -->
+            </FormKit>
 
             <FormKit
+            v-else
               :type="getFieldType(field.type)"
               :name="field.key"
               :label="field.title"
@@ -58,10 +58,12 @@ const getFieldType = (type) => {
       return "textarea";
     case 3:
       return "radio";
-    // case 4:
-    //   return "dropdown";
+    case 4:
+      return "select";
     case 5:
       return "checkbox";
+    case 7:
+      return "file";
     default:
       return "text";
   }
@@ -87,6 +89,17 @@ const fetchInquiry = async () => {
 };
 
 const handleSubmit = async (form) => {
+  let formDataAsText = {};
+  // @TODO: Convert form data to text
+  // for (const [key, value] of Object.entries(form)) {
+  //   if(value!==undefined && value!==null && value!==""){
+  //     // console.log(type(value))
+  //     formDataAsText[key] = value.toString();
+  //   }
+  // }
+  console.log("Formdata");
+  console.log(formDataAsText);
+  console.log("Form")
   console.log(form);
   try {
     const response = await $fetch(`${apiDomain.baseURL}/rcms-api/1/inquiry/1`, {
