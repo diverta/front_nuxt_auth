@@ -23,7 +23,7 @@
           outlined
         />
 
-        <FormKit type="form" @submit="handleSubmit">
+        <FormKit v-if="sitekey" type="form" @submit="handleSubmit">
           <FormKitSchema
             :schema="[
               {
@@ -113,6 +113,12 @@
             ]"
           ></FormKitSchema>
         </FormKit>
+
+        <v-checkbox v-model="agreementChecked" class="c-form_tnc">
+          <template #label>
+            <div>{{ $t("common.agree") }}</div>
+          </template>
+        </v-checkbox>
       </v-container>
     </div>
   </div>
@@ -120,23 +126,38 @@
 <script setup>
 import { FormKitSchema } from "@formkit/vue";
 const snackbar = useSnackbar();
-const { authUser } = useAuth();
+const { authUser, register } = useAuth();
 const loading = ref(false);
 const sitekey = ref(apiDomain.sitekey);
+const agreementChecked = ref(false);
 
 const handleSubmit = async (form) => {
+  if (!agreementChecked.value) {
+    snackbar.add({
+      type: "info",
+      text: "Please agree to the terms and conditions",
+    });
+    return;
+  }
+
   loading.value = true;
   console.log(form);
 
-  // try {
-  //     await authUser(formValues.value);
-  //     snackbar.success($t('signup.success'));
-  //     $router.push(localePath('/'));
-  // } catch (error) {
-  //     snackbar.error($t('signup.error'));
-  // } finally {
-  //     loading.value = false;
-  // }
-  loading.value = false;
+  apiDomain.sitekey = sitekey.value;
+  apiDomain.baseURL =
+    apiDomain.sitekey === "dev-nuxt-auth"
+      ? "https://dev-nuxt-auth.a.kuroco.app"
+      : `https://${apiDomain.sitekey}.g.kuroco.app`;
+
+  try {
+    await register(form);
+  } catch (error) {
+    snackbar.add({
+      type: "error",
+      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+    });
+  } finally {
+    loading.value = false;
+  }
 };
 </script>

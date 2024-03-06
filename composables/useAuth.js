@@ -8,19 +8,33 @@ export const apiDomain = reactive({
 
 export const useAuth = () => {
   const userRef = useUser();
+  const snackbar = useSnackbar();
 
-  /** login and set user's information */
+  /** register user's information */
   const register = async (formData) => {
+    console.log("bamboo")
+    console.log(formData)
+    console.log(formData.email)
     const res = await $fetch(`${apiDomain.baseURL}/rcms-api/1/member/register`, {
       method: 'POST',
       body: formData,
       server: false,
     });
 
-    await res.json();
-    console.log(res);
+    console.log("Herer bhaii")
+    if(res.errors.length > 0){
+      snackbar.add({
+        type: "error",
+        text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+      });
+    }
+    else{
+      const loginDetails = { email: formData.email, password: formData.login_pwd };
+      await login({...loginDetails});
+    }
   };
   
+  /** login and set user's information */
   const login = async ({ email, password }) => {
     await $fetch(`${apiDomain.baseURL}/rcms-api/1/login`, {
       method: 'POST',
@@ -32,6 +46,7 @@ export const useAuth = () => {
       credentials: 'include'
     });
     await profile();
+    useRouter().push("/");
   };
 
   /** logout and clear user's information */

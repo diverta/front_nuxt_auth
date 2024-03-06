@@ -100,8 +100,6 @@ const handleLogin = async () => {
         ? "https://dev-nuxt-auth.a.kuroco.app"
         : `https://${apiDomain.sitekey}.g.kuroco.app`;
     await login({ ...formData });
-
-    useRouter().push("/");
   } catch (e) {
     error.value = e?.data?.errors || [];
     snackbar.add({
