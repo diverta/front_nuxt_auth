@@ -68,10 +68,6 @@ const sliderImages = computed(() => {
     .filter((sliderImage) => sliderImage);
 });
 
-onMounted(() => {
-  updateTopics();
-});
-
 const updateTopics = async () => {
   try {
     topicsList.value = [];
