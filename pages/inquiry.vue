@@ -16,14 +16,22 @@
           <template v-for="field in formFields" :key="field.key">
             <!-- @TODO FIX File upload -->
             <FormKit
-              v-if="field.type !== 7"
+              v-if="field.type == 7"
+              :type="getFieldType(field.type)"
+              :name="field.key"
+              :label="field.title"
+              :validation="field.required == 2 ? 'required' : ''"
+              @input="handleFileUpload"
+              :value="fileID"
+            />
+            <FormKit
+              v-else
               :type="getFieldType(field.type)"
               :name="field.key"
               :label="field.title"
               :validation="field.required == 2 ? 'required' : ''"
               :options="field.options"
-            >
-            </FormKit>
+            />
           </template>
         </FormKit>
       </v-container>
@@ -37,6 +45,8 @@ const inquiryID = ref(1);
 const loading = ref(true);
 const agreementChecked = ref(false);
 const formFields = ref([]);
+const isUploadFile = ref(null);
+const fileID = ref(null);
 
 onMounted(() => {
   fetchInquiry();
@@ -83,6 +93,37 @@ const fetchInquiry = async () => {
   loading.value = false;
 };
 
+const handleFileUpload = async (file) => {
+  const fileData = new FormData();
+  fileData.append("file", file[0].file);
+
+  try {
+    const response = await $fetch(`${apiDomain.baseURL}/rcms-api/1/upload`, {
+      credentials: "include",
+      method: "POST",
+      body: fileData,
+    });
+    
+    if(response.errors.length !== 0){
+      snackbar.add({
+      type: "error",
+      text: response?.errors?.[0]?.message || "Error while uplaoding file",
+    });
+    }
+    else{
+      isUploadFile.value = true;
+      const file_id = response.file_id;
+      fileID.value = { file_id };
+    }
+  } catch (error) {
+    snackbar.add({
+      type: "error",
+      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+    });
+    return {};
+  }
+};
+
 const handleSubmit = async (form) => {
   let formDataAsText = {};
   // @TODO: Convert form data to text
@@ -92,10 +133,11 @@ const handleSubmit = async (form) => {
   //     formDataAsText[key] = value.toString();
   //   }
   // }
-  console.log("Formdata");
-  console.log(formDataAsText);
-  console.log("Form");
-  console.log(form);
+
+  if(isUploadFile.value){
+    form.ext_08 = fileID.value ;
+  }
+
   try {
     const response = await $fetch(`${apiDomain.baseURL}/rcms-api/1/inquiry/1`, {
       credentials: "include",
