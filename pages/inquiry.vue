@@ -17,16 +17,15 @@
             <!-- @TODO FIX File upload -->
             <FormKit
               v-if="field.type == 7"
-              :type="getFieldType(field.type)"
+              :type="getFieldType(field)"
               :name="field.key"
               :label="field.title"
               :validation="field.required == 2 ? 'required' : ''"
               @input="handleFileUpload"
-              :value="fileID"
             />
             <FormKit
               v-else
-              :type="getFieldType(field.type)"
+              :type="getFieldType(field)"
               :name="field.key"
               :label="field.title"
               :validation="field.required == 2 ? 'required' : ''"
@@ -47,13 +46,14 @@ const agreementChecked = ref(false);
 const formFields = ref([]);
 const isUploadFile = ref(null);
 const fileID = ref(null);
+const uploadFieldName = ref(null);
 
 onMounted(() => {
   fetchInquiry();
 });
 
-const getFieldType = (type) => {
-  switch (type) {
+const getFieldType = (field) => {
+  switch (field.type) {
     case 1:
       return "text";
     case 2:
@@ -65,6 +65,7 @@ const getFieldType = (type) => {
     case 5:
       return "checkbox";
     case 7:
+      uploadFieldName.value = field.key;
       return "file";
     default:
       return "text";
@@ -83,7 +84,6 @@ const fetchInquiry = async () => {
     );
     const cols = response.details.cols;
     formFields.value = cols;
-    console.log("formFields", formFields.value);
   } catch (e) {
     snackbar.add({
       type: "error",
@@ -135,7 +135,7 @@ const handleSubmit = async (form) => {
   // }
 
   if(isUploadFile.value){
-    form.ext_08 = fileID.value ;
+    form[uploadFieldName.value] = fileID.value ;
   }
 
   try {
@@ -145,8 +145,6 @@ const handleSubmit = async (form) => {
       method: "POST",
       body: form,
     });
-
-    console.log("response", response);
 
     if (response.errors.length !== 0) {
       throw new Error(response.errors.join("\n"));
