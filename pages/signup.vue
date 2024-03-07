@@ -112,13 +112,12 @@
               },
             ]"
           ></FormKitSchema>
-        </FormKit>
-
-        <v-checkbox v-model="agreementChecked" class="c-form_tnc">
+          <v-checkbox v-model="agreementChecked" class="c-form_tnc">
           <template #label>
             <div>{{ $t("common.agree") }}</div>
           </template>
         </v-checkbox>
+        </FormKit>
       </v-container>
     </div>
   </div>

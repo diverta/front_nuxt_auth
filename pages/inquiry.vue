@@ -32,7 +32,13 @@
               :options="field.options"
             />
           </template>
+          <v-checkbox v-model="agreementChecked" class="c-form_tnc">
+          <template #label>
+            <div>{{ $t("common.agree") }}</div>
+          </template>
+        </v-checkbox>
         </FormKit>
+
       </v-container>
     </div>
   </div>
@@ -125,6 +131,14 @@ const handleFileUpload = async (file) => {
 };
 
 const handleSubmit = async (form) => {
+  if (!agreementChecked.value) {
+    snackbar.add({
+      type: "info",
+      text: "Please agree to the terms and conditions",
+    });
+    return;
+  }
+
   let formDataAsText = {};
   // @TODO: Convert form data to text
   // for (const [key, value] of Object.entries(form)) {
