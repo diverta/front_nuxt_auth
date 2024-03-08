@@ -1,0 +1,25 @@
+footer {
+    background-color: inherit !important;
+    border-top: 1px solid rgba(255,255,255, 0.1) !important;
+    margin-top: 20px;
+
+    @at-root .p-dashboard & {
+        background-color: #f9fcff !important;
+        position: relative;
+        border-top: 1px solid #e2eaf3 !important;
+
+        & .l-footer_copyright {
+            color: #444;
+        }
+    }
+}
+
+.l-footer {
+    
+    &_copyright {
+        color: #fff;
+    }
+    &_logo {
+        max-width: 120px;
+    }
+}

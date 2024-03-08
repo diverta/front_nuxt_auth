@@ -1,0 +1,59 @@
+.c-table {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
+    background: #fff;
+    padding-top: 0;
+    padding-bottom: 5px;
+    overflow: hidden;
+
+    @include sm {
+        word-wrap: break-word;
+    }
+    &_title, 
+    & th {
+        //background: #e1e1e1;
+        background: $color_main_dark;
+        color: #fff;
+        font-weight: bold;
+    }
+    & th {
+        & span {
+            color: #fff;
+            font-weight: bold;
+        }
+    }
+    & tr td {
+        font-size: 1rem !important;
+    }
+    &_row {
+        border-bottom: 1px solid #eee;
+        @at-root .c-table &:last-child {
+            border: none;
+        }
+    }
+    &_col {
+        padding: 10px 15px;
+    }
+    &_responsive {
+        & tr {
+            @include sm {
+                display: flex;
+                flex-wrap: wrap;
+            }
+        }
+        & td {
+            @include sm {
+                width: 100%;
+                padding: 10px !important;
+                height: auto !important;
+            }
+            &:first-child {
+                @include sm {
+                    border: none !important;
+                    padding-bottom: 0 !important;
+                }
+            }
+        }
+    }
+}

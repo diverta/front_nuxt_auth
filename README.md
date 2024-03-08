@@ -1,29 +1,75 @@
-# nuxt_auth
+# Nuxt 3 Minimal Starter
 
-## Build Setup
+Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+
+## Setup
+
+Make sure to install the dependencies:
 
 ```bash
-# install dependencies
-$ npm install
+# npm
+npm install
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+# pnpm
+pnpm install
 
-# build for development and launch server
-$ npm run build
-$ npm run start
+# yarn
+yarn install
 
-# generate static project for development
-$ npm run generate
+# bun
+bun install
+```
 
-# build for production and launch server
-$ npm run build-prod
+## Development Server
 
-# generate static project for production
-$ npm run generate-prod
+Start the development server on `http://localhost:3000`:
 
+```bash
+# npm
+npm run dev
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+# pnpm
+pnpm run dev
 
-# License
-The source code is licensed MIT.
+# yarn
+yarn dev
+
+# bun
+bun run dev
+```
+
+## Production
+
+Build the application for production:
+
+```bash
+# npm
+npm run build
+
+# pnpm
+pnpm run build
+
+# yarn
+yarn build
+
+# bun
+bun run build
+```
+
+Locally preview production build:
+
+```bash
+# npm
+npm run preview
+
+# pnpm
+pnpm run preview
+
+# yarn
+yarn preview
+
+# bun
+bun run preview
+```
+
+Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

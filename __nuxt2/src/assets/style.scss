@@ -1,0 +1,38 @@
+/*
+ Partial
+-------------------------------------------------- */
+@import "partials/_var.scss";
+@import "partials/_mixin.scss";
+
+/*
+ foundation
+-------------------------------------------------- */
+@import "foundation/_common.scss";
+@import "foundation/_normalize.scss";
+
+/*
+ layout
+-------------------------------------------------- */
+@import "layout/_header.scss";
+@import "layout/_footer.scss";
+@import "layout/_content.scss";
+
+/*
+ object
+-------------------------------------------------- */
+
+/* component --------------------------- */
+@import "object/component/_button.scss";
+@import "object/component/_text.scss";
+@import "object/component/_navi.scss";
+@import "object/component/_icon.scss";
+@import "object/component/_table.scss";
+@import "object/component/_form.scss";
+@import "object/component/_article.scss";
+
+
+/* project ----------------------------- */
+@import "object/project/_login.scss";
+@import "object/project/_dashboard.scss";
+@import "object/project/_article.scss";
+@import "object/project/_contact.scss";

@@ -1,0 +1,31 @@
+.c-article {
+    transition: all 0.5s;
+    height: 100%;
+    overflow: hidden;
+
+    &:hover {
+        text-decoration: none;
+        transform: scale(0.99);
+    }
+    &_thumb {
+        min-height: 200px;
+        background: #ccc;
+        position: relative;
+
+        &::before {
+            content: "No image";
+            position: absolute;
+            z-index: -1px;
+            text-align: center;
+            display: block;
+            width: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgb(241, 241, 241);
+        }
+    }
+    &_title {
+        word-break: break-word;
+    }
+
+}

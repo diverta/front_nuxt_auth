@@ -1,0 +1,84 @@
+.c-form {
+    padding: 8px;
+
+    &_wrap {
+        border-radius: 15px;
+    }
+
+    label {
+        color: $color_main_dark;
+        font-weight: bold;
+        text-transform: capitalize;
+    }
+
+    .error--text {
+        color: red;
+    }
+    .formulate-input {
+        margin-top: 10px;
+
+        &-label {
+            display: block;
+            margin-bottom: 8px;
+
+            &.required::after {
+                content: "*";
+                margin-left: 2px;
+                color: red;
+            }
+        }
+    }
+
+    .input-radio-group,
+    .input-checkbox-group,
+    .v-input--radio-group__input {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+    .v-input--checkbox, 
+    .v-radio {
+        margin: 0 25px 0 0 !important;
+    }
+    .v-input--selection-controls {
+        margin-top: 0;
+    }
+
+    .inpute-date {
+        &--datetime-wrapper {
+            display: flex;
+        }
+        &--datetime-icon {
+            margin-right: 6px;
+        }
+        @at-root .v-dialog .v-card .v-card.theme--light {
+            background-color: #1777ca;
+            border-radius: 0;
+        }
+    }
+
+    &_tnc {
+        .v-input__slot {
+            justify-content: center;
+            margin-bottom: 15px;    
+        } 
+        & .v-input--selection-controls__input {
+            flex: 0 0 auto !important;
+        }
+        & label {
+            flex: 0 0 auto !important;
+        }
+    }
+
+    .v-radio {
+        @include sm {
+            width: 100%;
+            padding-bottom: 15px;
+        }
+    }
+    .v-input {
+        @include sm {
+            width: 100%;
+        }
+    }
+}
