@@ -22,6 +22,7 @@
     "@formkit/nuxt": "^1.5.9",
     "@formkit/themes": "^1.5.9",
     "@mdi/font": "^7.4.47",
-    "nuxt-snackbar": "^1.0.4"
+    "nuxt-snackbar": "^1.0.4",
+    "papaparse": "^5.4.1"
   }
 }
