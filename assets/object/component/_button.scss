@@ -1,3 +1,4 @@
+
 .c-btn {
     font-weight: bold;
     font-size: 1.2em;
@@ -50,12 +51,13 @@
         }
     }
     &_dark {
+        color: #fff !important;
         background: $color_main_dark;
         border: 1px solid $color_main_dark;
 
         &:hover {
             background: #fff;
-            color: $color_main_dark;
+            color: $color_main_dark !important;
 
             & .icon {
                 color: $color_main_dark !important;
