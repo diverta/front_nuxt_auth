@@ -22,6 +22,7 @@
               :label="field.title"
               :validation="field.required == 2 ? 'required' : ''"
               @input="handleFileUpload"
+              class="c-form_full"
             />
             <FormKit
               v-else
@@ -30,6 +31,7 @@
               :label="field.title"
               :validation="field.required == 2 ? 'required' : ''"
               :options="field.options"
+              class="c-form_full"
             />
           </template>
           <v-checkbox v-model="agreementChecked" class="c-form_tnc">

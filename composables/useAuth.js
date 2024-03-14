@@ -63,26 +63,13 @@ export const useAuth = () => {
   };
 
   /** process restore user's login state with requesting /profile, only in client side */
-    const profile = async () => {
-        try {
-            userRef.value = await $fetch(
-                `${apiDomain.baseURL}/rcms-api/1/profile`, {
-                server: false,
-                credentials: 'include'
-            })
-        } catch {
-            if (process.server) {
-                return;
-            }
-
-            const router = useRouter();
-            await router.isReady();
-            if (router.currentRoute.value.path === '/') {
-                return;
-            }
-            await router.push('/');
-            userRef.value = null;
-        };
+  const profile = async () => {
+    userRef.value = await $fetch(
+      `${apiDomain.baseURL}/rcms-api/1/profile`, {
+      server: false,
+      credentials: 'include'
+    })
+      .catch(() => null);
   }
 
   /** get user's information */
