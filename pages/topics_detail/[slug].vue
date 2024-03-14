@@ -10,11 +10,11 @@
     <template v-if="topicsDetail">
       <!-- <v-row> -->
       <v-col>
-        <v-card class="d-flex justify-space-between mb-6" flat tile>
-          <v-card flat>
+        <div class="d-flex justify-space-between mb-6" flat tile>
+          <div flat>
             <v-row>
               <v-col class="pt-0">
-                <h1 class="mb-3">
+                <h1 class="mt-3 mb-3">
                   {{ topicsDetail.subject }}
                 </h1>
                 <span
@@ -24,17 +24,20 @@
                 </span>
               </v-col>
             </v-row>
-          </v-card>
+          </div>
           <!-- For favorite -->
-          <v-card flat>
-            <div class="text-right mt-2">
-              {{ topicsDetail.inst_ymdhi.slice(0, 10) }}
-              <v-btn icon :color="favoriteColor" @click="onClickToggleFavorite">
-                <v-icon x-large left> mdi-star </v-icon>
-              </v-btn>
-            </div>
-          </v-card>
-        </v-card>
+          <div class="text-right mt-2">
+            <div>{{ topicsDetail.inst_ymdhi.slice(0, 10) }}</div>
+            <v-btn
+              icon
+              variant="text"
+              :color="favoriteColor"
+              @click="onClickToggleFavorite"
+            >
+              <v-icon size="x-large" left> mdi-star </v-icon>
+            </v-btn>
+          </div>
+        </div>
 
         <!-- Wysiwyg contents -->
         <v-row
@@ -66,11 +69,11 @@
       <div class="text-center col mt-5">
         <button
           type="submit"
-          class="c-btn c-btn_dark c-btn_icon c-text_white"
+          class="c-btn c-btn_dark c-btn_icon"
           @click="() => $router.push('/topics_list')"
         >
-          {{ $t("common.back_to_listing") }}
-          <v-icon class="icon c-text_white pr-2"> mdi-undo-variant </v-icon>
+          {{ $t('common.back_to_listing') }}
+          <v-icon class="icon pr-2"> mdi-undo-variant </v-icon>
         </button>
       </div>
     </template>
@@ -82,7 +85,7 @@ const route = useRoute();
 const topicsDetail = ref(null);
 const loading = ref(true);
 const favoriteResponse = ref(null);
-const favoriteColor = ref("grey");
+const favoriteColor = ref('grey');
 const snackbar = useSnackbar();
 
 const items = computed(() => {
@@ -102,44 +105,38 @@ const items = computed(() => {
 const onClickToggleFavorite = async () => {
   try {
     const request =
-      favoriteColor.value === "grey"
-        ? await $fetch(
-            `${apiDomain.baseURL}/rcms-api/1/favorite/register`,
-            {
-              method: "POST",
-              credentials: "include",
-              server: false,
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                module_id: parseInt(route.params.slug),
-                module_type: "topics",
-              }),
-            }
-          )
-        : await $fetch(
-            `${apiDomain.baseURL}/rcms-api/1/favorite/delete`,
-            {
-              method: "POST",
-              credentials: "include",
-              server: false,
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                module_id: parseInt(route.params.slug),
-                module_type: "topics",
-              }),
-            }
-          );
+      favoriteColor.value === 'grey'
+        ? await $fetch(`${apiDomain.baseURL}/rcms-api/1/favorite/register`, {
+            method: 'POST',
+            credentials: 'include',
+            server: false,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              module_id: parseInt(route.params.slug),
+              module_type: 'topics',
+            }),
+          })
+        : await $fetch(`${apiDomain.baseURL}/rcms-api/1/favorite/delete`, {
+            method: 'POST',
+            credentials: 'include',
+            server: false,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              module_id: parseInt(route.params.slug),
+              module_type: 'topics',
+            }),
+          });
 
     await request;
-    favoriteColor.value = favoriteColor.value === "grey" ? "red" : "grey";
+    favoriteColor.value = favoriteColor.value === 'grey' ? 'red' : 'grey';
   } catch (error) {
     snackbar.add({
-      type: "error",
-      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+      type: 'error',
+      text: error?.response?._data?.errors?.[0]?.message || 'An error occurred',
     });
   }
 };
@@ -148,7 +145,7 @@ try {
   const response = await $fetch(
     `${apiDomain.baseURL}/rcms-api/1/content/details/${route.params.slug}`,
     {
-      credentials: "include",
+      credentials: 'include',
       server: false,
     }
   );
@@ -168,26 +165,23 @@ try {
     subtitles: d?.ext_9,
   };
 
-  const fav = await $fetch(
-    `${apiDomain.baseURL}/rcms-api/1/favorite/list`,
-    {
-      credentials: "include",
-      server: false,
-      params: {
-        member_id: parseInt(authUser.value.member_id),
-        module_id: parseInt(route.params.slug),
-        module_type: "topics",
-      },
-    }
-  );
+  const fav = await $fetch(`${apiDomain.baseURL}/rcms-api/1/favorite/list`, {
+    credentials: 'include',
+    server: false,
+    params: {
+      member_id: parseInt(authUser.value.member_id),
+      module_id: parseInt(route.params.slug),
+      module_type: 'topics',
+    },
+  });
   favoriteResponse.value = fav;
   favoriteColor.value =
-    favoriteResponse.value?.pageInfo?.totalCnt > 0 ? "red" : "grey";
+    favoriteResponse.value?.pageInfo?.totalCnt > 0 ? 'red' : 'grey';
   loading.value = false;
 } catch (error) {
   snackbar.add({
-      type: "error",
-      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
-    });
+    type: 'error',
+    text: error?.response?._data?.errors?.[0]?.message || 'An error occurred',
+  });
 }
 </script>
