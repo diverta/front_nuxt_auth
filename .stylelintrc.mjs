@@ -1,7 +1,7 @@
 export default {
     extends: [
         'stylelint-config-standard-scss',
-        // 'stylelint-config-sass-guidelines',
+        'stylelint-config-sass-guidelines',
     ],
     "plugins": ["stylelint-order"],
     "rules": {
