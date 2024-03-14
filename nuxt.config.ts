@@ -1,17 +1,16 @@
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 export default defineNuxtConfig({
-
   runtimeConfig: {
     public: {
-      kurocoApiDomain: 'https://dev-nuxt-auth.a.kuroco.app',
-    },
+      kurocoApiDomain: 'https://dev-nuxt-auth.a.kuroco.app'
+    }
   },
 
   devtools: { enabled: true },
   css: ['@/assets/style.scss'],
 
   build: {
-    transpile: ['vuetify'],
+    transpile: ['vuetify']
   },
   modules: [
     (_options, nuxt) => {
@@ -32,17 +31,22 @@ export default defineNuxtConfig({
     top: true,
     duration: 5000
   },
+  module: ['@nuxtjs/eslint-module'],
+  eslint: {
+    cache: false,
+    eslintPath: './eslintrc.js'
+  },
   vite: {
     vue: {
       template: {
-        transformAssetUrls,
+        transformAssetUrls
       },
       // @ts-ignore-next-line
       server: {
         watch: {
-          usePolling: true,
-        },
-      },
-    },
-  },
+          usePolling: true
+        }
+      }
+    }
+  }
 })

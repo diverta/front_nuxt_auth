@@ -7,11 +7,37 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "prepare": "husky",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "**/*.{js,vue}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "**/*.{css,sccs}": [
+      "prettier --write"
+    ],
+    "assets/**/*.{css,scss}": [
+      "stylelint --fix"
+    ]
   },
   "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-unused-imports": "^3.1.0",
+    "eslint-plugin-vue": "^9.23.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
     "nuxt": "^3.9.3",
+    "prettier": "^3.2.5",
     "sass": "^1.70.0",
+    "stylelint": "^16.2.1",
+    "stylelint-config-sass-guidelines": "^11.1.0",
+    "stylelint-config-standard": "^36.0.0",
+    "stylelint-config-standard-scss": "^13.0.0",
+    "stylelint-order": "^6.0.4",
     "vite-plugin-vuetify": "^2.0.1",
     "vue": "^3.4.14",
     "vue-i18n": "^9.9.0",
