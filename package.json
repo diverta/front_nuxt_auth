@@ -16,10 +16,8 @@
       "prettier --write",
       "eslint --fix"
     ],
-    "**/*.{css,sccs}": [
-      "prettier --write"
-    ],
     "assets/**/*.{css,scss}": [
+      "prettier --write",
       "stylelint --fix"
     ]
   },
