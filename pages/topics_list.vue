@@ -1,31 +1,33 @@
 <template>
-  <section>
-    <div>
-      <v-btn-toggle v-model="text" class="c-navi_filter" group>
-        <v-btn value="0" @click="changeCategoryAll"> ALL </v-btn>
-        <v-btn
-          v-for="item in categories"
-          :key="item.key"
-          :value="item.key"
-          @click="() => changeCategory(item)"
-        >
-          {{ item.value }}
-        </v-btn>
-      </v-btn-toggle>
-    </div>
-    <div class="mt-4">
-      <TopicsGrid :topics="topics" />
-    </div>
-    <div class="text-center mt-5 pt-5">
-      <v-pagination
-        v-if="Math.ceil(totalCnt / perPage) > 1"
-        v-model="page"
-        :length="Math.ceil(totalCnt / perPage)"
-        class="c-navi_pagination"
-        @input="updateTopics"
-      />
-    </div>
-  </section>
+  <ClientOnly>
+    <section>
+      <div>
+        <v-btn-toggle v-model="text" class="c-navi_filter" group>
+          <v-btn value="0" @click="changeCategoryAll"> ALL </v-btn>
+          <v-btn
+            v-for="item in categories"
+            :key="item.key"
+            :value="item.key"
+            @click="() => changeCategory(item)"
+          >
+            {{ item.value }}
+          </v-btn>
+        </v-btn-toggle>
+      </div>
+      <div class="mt-4">
+        <TopicsGrid :topics="topics" />
+      </div>
+      <div class="text-center mt-5 pt-5">
+        <v-pagination
+          v-if="Math.ceil(totalCnt / perPage) > 1"
+          v-model="page"
+          :length="Math.ceil(totalCnt / perPage)"
+          class="c-navi_pagination"
+          @input="updateTopics"
+        />
+      </div>
+    </section>
+  </ClientOnly>
 </template>
 <script setup>
 const { authUser } = useAuth();

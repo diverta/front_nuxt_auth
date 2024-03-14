@@ -1,49 +1,49 @@
 <template>
-  <div>
-    <v-progress-linear
-      :active="loading"
-      :indeterminate="loading"
-      absolute
-      top
-      color="orange white-4"
-    />
-    <div class="l-content_heading">
-      <h3 class="slogan text-left">{{ $t("inquiry.message") }}<br /></h3>
-    </div>
-    <div class="v-stepper mt-5 c-form_wrap">
-      <v-container fluid>
-        <FormKit type="form" @submit="handleSubmit">
-          <template v-for="field in formFields" :key="field.key">
-            <!-- @TODO FIX File upload -->
-            <FormKit
-              v-if="field.type == 7"
-              :type="getFieldType(field)"
-              :name="field.key"
-              :label="field.title"
-              :validation="field.required == 2 ? 'required' : ''"
-              @input="handleFileUpload"
-              class="c-form_full"
-            />
-            <FormKit
-              v-else
-              :type="getFieldType(field)"
-              :name="field.key"
-              :label="field.title"
-              :validation="field.required == 2 ? 'required' : ''"
-              :options="field.options"
-              class="c-form_full"
-            />
-          </template>
-          <v-checkbox v-model="agreementChecked" class="c-form_tnc">
-          <template #label>
-            <div>{{ $t("common.agree") }}</div>
-          </template>
-        </v-checkbox>
-        </FormKit>
+  <ClientOnly>
+    <div>
+      <v-progress-linear
+        :active="loading"
+        :indeterminate="loading"
+        absolute
+        top
+        color="orange white-4"
+      />
+      <div class="l-content_heading">
+        <h3 class="slogan text-left">{{ $t("inquiry.message") }}<br /></h3>
+      </div>
+      <div class="v-stepper mt-5 c-form_wrap">
+        <v-container fluid>
+          <FormKit type="form" @submit="handleSubmit">
+            <template v-for="field in formFields" :key="field.key">
+              <!-- @TODO FIX File upload -->
+              <FormKit
+                v-if="field.type == 7"
+                :type="getFieldType(field)"
+                :name="field.key"
+                :label="field.title"
+                :validation="field.required == 2 ? 'required' : ''"
+                @input="handleFileUpload"
+              />
+              <FormKit
+                v-else
+                :type="getFieldType(field)"
+                :name="field.key"
+                :label="field.title"
+                :validation="field.required == 2 ? 'required' : ''"
+                :options="field.options"
+              />
+            </template>
+            <v-checkbox v-model="agreementChecked" class="c-form_tnc">
+            <template #label>
+              <div>{{ $t("common.agree") }}</div>
+            </template>
+          </v-checkbox>
+          </FormKit>
 
-      </v-container>
+        </v-container>
+      </div>
     </div>
-  </div>
+  </ClientOnly>
 </template>
 <script setup>
 const { authUser } = useAuth();
