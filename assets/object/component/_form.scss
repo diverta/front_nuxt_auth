@@ -15,20 +15,6 @@
     .error--text {
         color: red;
     }
-    .formulate-input {
-        margin-top: 10px;
-
-        &-label {
-            display: block;
-            margin-bottom: 8px;
-
-            &.required::after {
-                content: "*";
-                margin-left: 2px;
-                color: red;
-            }
-        }
-    }
 
     .input-radio-group,
     .input-checkbox-group,
@@ -86,6 +72,21 @@
     &_full {
         & input {
             width: 100%;
+        }
+    }
+    
+    &_formulate {
+        &-wrapper {
+            min-width: 100%;
+        }
+        &-fieldset {
+            min-width: 100%;
+            height: 100%;
+            .formkit-options {
+                padding: 0 10px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
         }
     }
 }
