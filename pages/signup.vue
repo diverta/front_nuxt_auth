@@ -18,7 +18,6 @@
           </div>
 
           <FormKit
-            v-if="sitekey"
             type="form"
             @submit="handleSubmit"
             :submit-label="$t('common.submit')"
@@ -36,6 +35,7 @@
             <div class="signup-form_container">
               <FormKit
                 v-model="sitekey"
+                name="sitekey"
                 :label="$t('login.site_key')"
                 type="text"
                 :classes="{ outer: 'signup-form_elm-sitekey' }"
@@ -117,7 +117,7 @@
                     },
                   },
                   {
-                    name: 'office',
+                    name: 'pull_down',
                     label: $t('label.office'),
                     $formkit: 'select',
                     placeholder: 'Select office',
@@ -132,7 +132,7 @@
                     },
                   },
                   {
-                    name: 'hobby',
+                    name: 'multiple_check',
                     label: $t('label.hobby'),
                     $formkit: 'checkbox',
                     options: [
@@ -166,7 +166,7 @@
             <FormKit
               type="checkbox"
               :label="$t('common.agree')"
-              name="terms"
+              name="term"
               v-model="agreementChecked"
               validation="accepted"
               :classes="{
@@ -189,16 +189,7 @@ const sitekey = ref(apiDomain.sitekey);
 const agreementChecked = ref(false);
 
 const handleSubmit = async (form) => {
-  if (!agreementChecked.value) {
-    snackbar.add({
-      type: 'info',
-      text: 'Please agree to the terms and conditions',
-    });
-    return;
-  }
-
   loading.value = true;
-  console.log(form);
 
   apiDomain.sitekey = sitekey.value;
   apiDomain.baseURL =
@@ -207,7 +198,12 @@ const handleSubmit = async (form) => {
       : `https://${apiDomain.sitekey}.g.kuroco.app`;
 
   try {
-    await register(form);
+    await register({
+      ...form,
+      // remove unnecessary fields
+      sitekey: undefined,
+      term: undefined,
+    });
   } catch (error) {
     snackbar.add({
       type: 'error',
