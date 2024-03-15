@@ -196,7 +196,7 @@ const handleSubmit = async (form) => {
     apiDomain.sitekey === 'dev-nuxt-auth'
       ? 'https://dev-nuxt-auth.a.kuroco.app'
       : `https://${apiDomain.sitekey}.g.kuroco.app`;
-
+  localStorage.setItem('sitekey', apiDomain.baseURL);
   try {
     await register({
       ...form,

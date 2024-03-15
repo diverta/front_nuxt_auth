@@ -6,6 +6,12 @@ export const apiDomain = reactive({
   baseURL: 'https://dev-nuxt-auth.a.kuroco.app'
 });
 
+export function updateApiDomainFromLocalStorage() {
+  if (typeof window !== 'undefined' && localStorage.getItem('sitekey')) {
+    apiDomain.baseURL = localStorage.getItem('sitekey');
+  }
+}
+
 export const useAuth = () => {
   const userRef = useUser();
   const snackbar = useSnackbar();

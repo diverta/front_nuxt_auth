@@ -9,5 +9,6 @@
 </template>
 
 <script setup>
+updateApiDomainFromLocalStorage();
 await useAuth().profile();
 </script>
