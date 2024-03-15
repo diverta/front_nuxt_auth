@@ -1,7 +1,8 @@
 <template>
   <FormKit
     type="form"
-    @submit="(formValue) => emit('submit', formValue)"
+    v-model="formValues"
+    @submit="(formValues) => emit('submit', formValues)"
     :submit-label="$t('common.submit')"
     :submit-attrs="{
       wrapperClass: 'signup-form_elm-submit',
@@ -15,15 +16,8 @@
     }"
   >
     <div class="signup-form_container">
-      <FormKit
-        v-if="!props.hasUserProfile"
-        v-model="sitekey"
-        name="sitekey"
-        :label="$t('login.site_key')"
-        type="text"
-        :classes="{ outer: 'signup-form_elm-sitekey' }"
-        validation="required|length:0,100"
-      />
+      <slot name="headInput" />
+
       <FormKitSchema
         :schema="[
           {
@@ -150,7 +144,6 @@
       type="checkbox"
       :label="$t('common.agree')"
       name="term"
-      v-model="agreementChecked"
       validation="accepted"
       :classes="{
         outer: 'signup-form_elm-terms',
@@ -162,15 +155,7 @@
 
 <script setup>
 import { FormKitSchema } from '@formkit/vue';
-const snackbar = useSnackbar();
-const { register } = useAuth();
-const loading = ref(false);
-const sitekey = ref(apiDomain.sitekey);
-const agreementChecked = ref(false);
-
-const props = defineProps({
-  hasUserProfile: Boolean,
-});
+const formValues = ref({});
 const emit = defineEmits(['submit']);
 </script>
 
@@ -196,10 +181,6 @@ const emit = defineEmits(['submit']);
 
   @media screen and (min-width: 769px) {
     &_elm {
-      &-sitekey {
-        grid-row: 1;
-        grid-column: 1 / 3;
-      }
       &-name1 {
         grid-row: 2;
         grid-column: 1;
