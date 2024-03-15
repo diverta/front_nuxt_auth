@@ -118,7 +118,8 @@
         "text_format_regex":"Wrong regex format. ",
         "multiple_required":"At least one item should be selected",
         "fille_property":"Please fill the fields properly.",
-        "required_file":"need to upload file"
+        "required_file":"need to upload file",
+        "required_checkbox":"need to check"
     },
     "label": {
         "date_picker":"Date picker.",
