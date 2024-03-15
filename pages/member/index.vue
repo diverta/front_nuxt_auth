@@ -85,8 +85,6 @@ const filteredItems = computed(() => {
     .filter(({ name }) => (currName.value === "" ? true : name === currName.value));
 });
 
-console.log("Bhaijaan", filteredItems.value);
-
 onMounted(async () => {
   try {
     const { list } = await $fetch(
@@ -96,7 +94,6 @@ onMounted(async () => {
         server: false,
       }
     );
-    console.log(list);
     userList.value = list.map((item) => ({
       name: `${item.name1} ${item.name2}`,
       department: item.department,

@@ -156,6 +156,15 @@
 <script setup>
 import { FormKitSchema } from '@formkit/vue';
 const formValues = ref({});
+
+const props = defineProps({
+  formValues: {
+    type: Object,
+    default: () => ({}),
+  },
+});
+formValues.value = { ...props.formValues };
+
 const emit = defineEmits(['submit']);
 </script>
 
