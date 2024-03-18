@@ -3,6 +3,7 @@
 
     &_wrap {
         border-radius: 15px;
+        max-width: 1000px;
     }
 
     label {
@@ -68,6 +69,12 @@
         }
     }
 
+    &_full {
+        & input {
+            width: 100%;
+        }
+    }
+    
     &_formulate {
         &-wrapper {
             min-width: 100%;
