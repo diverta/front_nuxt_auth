@@ -3,6 +3,7 @@
 
     &_wrap {
         border-radius: 15px;
+        max-width: 1000px;
     }
 
     label {
@@ -64,6 +65,12 @@
     }
     .v-input {
         @include sm {
+            width: 100%;
+        }
+    }
+
+    &_full {
+        & input {
             width: 100%;
         }
     }
