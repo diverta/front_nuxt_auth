@@ -42,13 +42,7 @@ const sitekey = ref(apiDomain.sitekey);
 
 const handleSubmit = async (formValues) => {
   loading.value = true;
-
-  apiDomain.sitekey = sitekey.value;
-  apiDomain.baseURL =
-    apiDomain.sitekey === 'dev-nuxt-auth'
-      ? 'https://dev-nuxt-auth.a.kuroco.app'
-      : `https://${apiDomain.sitekey}.g.kuroco.app`;
-
+  setSitekey(sitekey.value);
   try {
     await register({
       ...formValues,

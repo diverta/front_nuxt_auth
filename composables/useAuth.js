@@ -6,6 +6,22 @@ export const apiDomain = reactive({
   baseURL: 'https://dev-nuxt-auth.a.kuroco.app'
 });
 
+export function setSitekey(sitekey) {
+  apiDomain.sitekey = sitekey;
+  localStorage.setItem('sitekey', apiDomain.sitekey);
+  updateApiDomainFromLocalStorage();  
+}
+
+export function updateApiDomainFromLocalStorage() {
+  if (typeof window !== 'undefined' && localStorage.getItem('sitekey')) {
+    apiDomain.sitekey = localStorage.getItem('sitekey');
+    apiDomain.baseURL =
+      apiDomain.sitekey === "dev-nuxt-auth"
+        ? "https://dev-nuxt-auth.a.kuroco.app"
+        : `https://${apiDomain.sitekey}.g.kuroco.app`;
+  }
+}
+
 export const useAuth = () => {
   const userRef = useUser();
   const snackbar = useSnackbar();
