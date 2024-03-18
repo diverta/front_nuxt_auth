@@ -74,7 +74,6 @@ const handleSubmit = async (formValues) => {
         body: {
           ...formValues,
           // remove unnecessary fields
-          sitekey: undefined,
           term: undefined,
         },
       }
