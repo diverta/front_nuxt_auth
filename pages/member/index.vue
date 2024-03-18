@@ -1,49 +1,51 @@
 <template>
-  <div v-if="done">
-    <template v-if="isDisallowed">
-      <v-card>
-        <v-card-text class="text-center">
-          {{ $t("member.disallowed") }}
-        </v-card-text>
-      </v-card>
-    </template>
-    <template v-else>
-      <v-row>
-        <v-col class="col-sm-6 col-12 py-0">
-          <v-autocomplete
-            v-model="currName"
-            :items="names"
-            dense
-            filled
-            :label="$t('member.search_member')"
-          />
-        </v-col>
-        <v-col class="col-sm-6 col-12 py-0">
-          <v-autocomplete
-            v-model="currDepartment"
-            :items="departments"
-            dense
-            filled
-            :label="$t('member.department')"
-          />
-        </v-col>
-      </v-row>
-      <v-data-table
-        :headers="headers"
-        :items="filteredItems"
-        class="elevation-1 mt-5 c-table"
-      >
-        <template v-slot:item.name="{ item, value }">
-          <NuxtLink :to="`/member/detail/${item.id}`" no-prefetch>
-            {{ value }}
-          </NuxtLink>
-        </template>
-        <template v-slot:item.phone="{ value }">
-          <a :href="`tel:${value}`">{{ value }}</a>
-        </template>
-      </v-data-table>
-    </template>
-  </div>
+  <ClientOnly>
+    <div v-if="done">
+      <template v-if="isDisallowed">
+        <v-card>
+          <v-card-text class="text-center">
+            {{ $t("member.disallowed") }}
+          </v-card-text>
+        </v-card>
+      </template>
+      <template v-else>
+        <v-row>
+          <v-col class="col-sm-6 col-12 py-0">
+            <v-autocomplete
+              v-model="currName"
+              :items="names"
+              dense
+              filled
+              :label="$t('member.search_member')"
+            />
+          </v-col>
+          <v-col class="col-sm-6 col-12 py-0">
+            <v-autocomplete
+              v-model="currDepartment"
+              :items="departments"
+              dense
+              filled
+              :label="$t('member.department')"
+            />
+          </v-col>
+        </v-row>
+        <v-data-table
+          :headers="headers"
+          :items="filteredItems"
+          class="elevation-1 mt-5 c-table"
+        >
+          <template v-slot:item.name="{ item, value }">
+            <NuxtLink :to="`/member/detail/${item.id}`" no-prefetch>
+              {{ value }}
+            </NuxtLink>
+          </template>
+          <template v-slot:item.phone="{ value }">
+            <a :href="`tel:${value}`">{{ value }}</a>
+          </template>
+        </v-data-table>
+      </template>
+    </div>
+  </ClientOnly>
 </template>
 <script setup>
 const { authUser } = useAuth();
@@ -83,8 +85,6 @@ const filteredItems = computed(() => {
     .filter(({ name }) => (currName.value === "" ? true : name === currName.value));
 });
 
-console.log("Bhaijaan", filteredItems.value);
-
 onMounted(async () => {
   try {
     const { list } = await $fetch(
@@ -94,7 +94,6 @@ onMounted(async () => {
         server: false,
       }
     );
-    console.log(list);
     userList.value = list.map((item) => ({
       name: `${item.name1} ${item.name2}`,
       department: item.department,

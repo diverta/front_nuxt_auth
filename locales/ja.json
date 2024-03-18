@@ -118,7 +118,8 @@
         "text_format_regex":"正規表現のフォーマットが正しくありません。 ",
         "multiple_required":"一つ選択してください。",
         "fille_property":"項目に入力してください。",
-        "required_file":"ファイルをアップロードしてください。"
+        "required_file":"ファイルをアップロードしてください。",
+        "required_checkbox":"チェックしてください。"
     },
     "label": {
         "date_picker":"日付選択",

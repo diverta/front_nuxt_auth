@@ -1,17 +1,19 @@
 <template>
-  <div fluid>
-    <TopicsList :topics="topics" />
-    <br />
-    <div class="text-center mt-5 pt-5">
-      <v-pagination
-        v-if="Math.ceil(totalCnt / perPage) > 1"
-        v-model="page"
-        :length="Math.ceil(totalCnt / perPage)"
-        class="c-navi_pagination"
-        @input="() => updateTopics()"
-      />
+  <ClientOnly>
+    <div fluid>
+      <TopicsList :topics="topics" />
+      <br />
+      <div class="text-center mt-5 pt-5">
+        <v-pagination
+          v-if="Math.ceil(totalCnt / perPage) > 1"
+          v-model="page"
+          :length="Math.ceil(totalCnt / perPage)"
+          class="c-navi_pagination"
+          @input="() => updateTopics()"
+        />
+      </div>
     </div>
-  </div>
+  </ClientOnly>
 </template>
 <script setup>
 const { authUser } = useAuth();
