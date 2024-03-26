@@ -134,33 +134,6 @@
             </v-container>
           </v-form>
         </v-card>
-        <v-card v-else-if="pageState == 4">
-          <v-form>
-            <v-container fluid class="p-login_content-inner">
-              <v-row>
-                <v-col cols="12">
-                  <p align="center">
-                    {{ $t("reminder.update_ok") }}
-                  </p>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12">
-                  <v-btn
-                    type="submit"
-                    block
-                    x-large
-                    color="success"
-                    class="white--text"
-                    @click="redirectLogin()"
-                  >
-                    {{ $t("reminder.login") }}
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-form>
-        </v-card>
       </v-col>
     </v-row>
   </div>
@@ -193,10 +166,6 @@ onMounted(() => {
     pageState.value = 2;
   }
 });
-
-const redirectLogin = () => {
-  useRouter().push("/");
-};
 
 const reminder = async () => {
   loading1.value = true;
@@ -236,11 +205,12 @@ const set_password = async () => {
       },
     });
 
-    pageState.value = 4;
     snackbar.add({
-      type: "info",
+      type: "success",
       text: "Password has been reset. Please login.",
     });
+
+    useRouter().push("/");
   } catch (error) {
     snackbar.add({
       type: "error",
