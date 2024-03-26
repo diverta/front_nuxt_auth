@@ -52,7 +52,7 @@
           </v-form>
         </v-card>
         <v-card v-else-if="pageState == 2">
-          <v-form @submit.prevent="set_password">
+          <v-form ref="form2" lazy-validation @submit.prevent="set_password">
             <v-card-title>
               <h2 align="center" class="pb-4 c-text_blue">
                 <p>{{ $t("reminder.set_password") }}</p>
@@ -147,6 +147,7 @@ const loading1 = ref(false);
 const loading2 = ref(false);
 const password_show = ref(false);
 const password_show2 = ref(false);
+const form2 = ref(null);
 const rules = {
   required: (v) => !!v || "Required",
   password_min: (v) =>
@@ -193,6 +194,10 @@ const reminder = async () => {
 };
 
 const set_password = async () => {
+  const isValid = await form2.value?.validate();
+  if (!isValid.valid) {
+    return;
+  }
   loading2.value = true;
   try {
     const response = await $fetch(`${apiDomain.baseURL}/rcms-api/1/reminder`, {
