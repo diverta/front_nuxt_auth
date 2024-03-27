@@ -81,14 +81,15 @@ const loading = ref(true);
 const formFields = ref({});
 
 const transformAdapter = (field) => {
-  // If field.options is an array of objects, transform it
-  if (Array.isArray(field.options) && field.options.every(option => typeof option === 'object' && option.hasOwnProperty('key') && option.hasOwnProperty('value'))) {
-    return field.options.reduce((acc, { key, value }) => {
-      acc[key] = value;
-      return acc;
-    }, {});
+  if (Array.isArray(field.options)) {
+    const options = {};
+    field.options.forEach(({ key, value }) => {
+      if (key !== undefined && value !== undefined) {
+        options[key] = value;
+      }
+    });
+    return options;
   }
-
   return field.options;
 };
 
