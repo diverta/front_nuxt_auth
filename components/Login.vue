@@ -51,7 +51,7 @@
                     @click:append="() => (showsPassword = !showsPassword)"
                   />
                   <p class="pb-3">
-                    <NuxtLink :to="/reminder/">
+                    <NuxtLink :to="'/reminder/'">
                       {{ $t("login.forget_password") }}
                     </NuxtLink>
                   </p>
