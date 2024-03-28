@@ -58,7 +58,12 @@
         />
         <v-spacer />
 
-        <v-toolbar-title height="30" class="l-header_user" v-text="subtitle" />
+        <v-toolbar-title
+          v-if="authUser.member_id"
+          height="30"
+          class="l-header_user"
+          v-text="$t('common.hi') + authUser.name1"
+        />
 
         <div class="l-header_lang">
           <v-select
@@ -66,15 +71,12 @@
             :items="langOptions"
             item-title="text"
             item-value="value"
+            @update:modelValue="onLocaleChange"
           />
         </div>
 
         <template v-if="authUser.member_id">
-          <v-btn
-            icon
-            class="l-header_logout"
-            @click="handleLogout"
-          >
+          <v-btn icon class="l-header_logout" @click="handleLogout">
             <v-icon>mdi-exit-to-app</v-icon>
           </v-btn>
         </template>
@@ -134,21 +136,20 @@
 
 <script setup>
 const { authUser, isLoggedIn, logout } = useAuth();
+import { changeLocale } from "@formkit/vue";
+import { useI18n } from "vue-i18n";
 
+const { locale } = useI18n();
 const drawer = ref(false);
 const clipped = ref(false);
 
+const onLocaleChange = () => {
+  changeLocale(locale.value);
+};
 const handleLogout = async () => {
   await logout();
   useRouter().push("/");
 };
-const subtitle = computed(() => {
-  if (authUser.value.member_id) {
-    return "Hi, " + authUser.value.name1;
-    // return i18n.t("common.hi") + ", " + authUser.value.name1;
-  }
-  return "";
-});
 const langOptions = [
   { text: "English", value: "en" },
   { text: "日本語", value: "ja" },

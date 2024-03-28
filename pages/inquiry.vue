@@ -74,11 +74,13 @@
 
 <script setup>
 import { reset } from '@formkit/core';
+import { useI18n } from "vue-i18n";
 
 const router = useRouter();
 const snackbar = useSnackbar();
 const loading = ref(true);
 const formFields = ref({});
+const { t } = useI18n();
 
 const transformAdapter = (field) => {
   if (Array.isArray(field.options)) {
@@ -214,7 +216,7 @@ const handleSubmit = async (formValues) => {
     reset('inquiry-form');
     snackbar.add({
       type: 'success',
-      text: 'Inquiry posted successfully',
+      text: t('inquiry.message'),
     });
 
   } catch (e) {

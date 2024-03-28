@@ -139,6 +139,8 @@
   </div>
 </template>
 <script setup>
+import { useI18n } from "vue-i18n";
+
 const route = useRoute();
 const token = route.query.token;
 const snackbar = useSnackbar();
@@ -148,6 +150,8 @@ const loading2 = ref(false);
 const password_show = ref(false);
 const password_show2 = ref(false);
 const form2 = ref(null);
+const { t } = useI18n();
+
 const rules = {
   required: (v) => !!v || "Required",
   password_min: (v) =>
@@ -182,12 +186,12 @@ const reminder = async () => {
     pageState.value = 3;
     snackbar.add({
       type: "success",
-      text: "A password reset email has been sent.",
+      text: t('reminder.password_sent'),
     });
   } catch (error) {
     snackbar.add({
       type: "error",
-      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+      text: t('reminder.invalid_email'),
     });
   }
   loading1.value = false;
@@ -212,7 +216,7 @@ const set_password = async () => {
 
     snackbar.add({
       type: "success",
-      text: "Password has been reset. Please login.",
+      text: t('reminder.already_updated'),
     });
 
     useRouter().push("/");
