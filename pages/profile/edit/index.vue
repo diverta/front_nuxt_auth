@@ -22,11 +22,14 @@
 </template>
 
 <script setup>
+import { useI18n } from "vue-i18n";
+
 const router = useRouter()
 const snackbar = useSnackbar();
 const { authUser } = useAuth();
 const profile = ref({});
 const loading = ref(false);
+const { t } = useI18n();
 
 const hasProfile = computed(() => Object.keys(profile.value).length > 0);
 
@@ -85,7 +88,7 @@ const handleSubmit = async (formValues) => {
 
     snackbar.add({
       type: 'success',
-      text: 'Profile updated successfully',
+      text: t('mypage.profile_changed'),
     });
   } catch (e) {
     snackbar.add({
