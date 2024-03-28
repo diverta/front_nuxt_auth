@@ -78,6 +78,9 @@
   </section>
 </template>
 <script setup>
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const snackbar = useSnackbar();
 const { login } = useAuth();
 const sitekey = ref(apiDomain.sitekey);
@@ -104,7 +107,7 @@ const handleLogin = async () => {
     error.value = e?.data?.errors || [];
     snackbar.add({
       type: "error",
-      text: e?.response?._data?.errors?.[0]?.message || "An error occurred",
+      text: t('slackbar.login_fail'),
     });
   }
   loading.value = false;

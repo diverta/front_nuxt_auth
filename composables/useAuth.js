@@ -37,7 +37,6 @@ export const useAuth = () => {
       server: false,
     });
 
-    console.log("Herer bhaii")
     if(res.errors.length > 0){
       snackbar.add({
         type: "error",
