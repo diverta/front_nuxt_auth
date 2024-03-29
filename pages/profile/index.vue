@@ -77,8 +77,11 @@
   </ClientOnly>
 </template>
 <script setup>
+import { useI18n } from "vue-i18n";
+
 const snackbar = useSnackbar();
 const { authUser } = useAuth();
+const { t } = useI18n();
 // @TODO: Replace with the actual profile image URL
 // const defaultImage = ref("assets/images/avatar-placeholder.png");
 // const placeholder = require('assets/images/avatar-placeholder.png');
@@ -134,7 +137,7 @@ const fetchProfile = async () => {
   } catch (error) {
     snackbar.add({
       type: "error",
-      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+      text: error?.response?._data?.errors?.[0]?.message || t("common.error"),
     });
   }
 };

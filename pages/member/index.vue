@@ -48,6 +48,8 @@
   </ClientOnly>
 </template>
 <script setup>
+import { useI18n } from "vue-i18n";
+
 const { authUser } = useAuth();
 const userList = ref([]);
 const currName = ref("");
@@ -58,6 +60,7 @@ const perpage = ref(10);
 const page = ref(1);
 const pageCount = ref(0);
 const snackbar = useSnackbar();
+const { t } = useI18n();
 
 const headers = [
   { title: "Name", value: "name", sortable: false },
@@ -101,11 +104,10 @@ onMounted(async () => {
       phone: item.tel,
       id: item.member_id,
     }));
-    console.log(userList.value);
   } catch (error) {
     snackbar.add({
       type: "error",
-      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+      text: error?.response?._data?.errors?.[0]?.message || t("common.error"),
     });
     if (error?.response?.status) {
       isDisallowed = true;

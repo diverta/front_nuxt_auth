@@ -223,7 +223,7 @@ const set_password = async () => {
   } catch (error) {
     snackbar.add({
       type: "error",
-      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+      text: error?.response?._data?.errors?.[0]?.message || t("common.error"),
     });
   }
   loading2.value = false;

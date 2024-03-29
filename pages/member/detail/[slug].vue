@@ -94,10 +94,14 @@
   </ClientOnly>
 </template>
 <script setup>
+import { useI18n } from 'vue-i18n';
+
 const { authUser } = useAuth();
 const snackbar = useSnackbar();
 const route = useRoute();
 const member_id = ref(null);
+const { t } = useI18n();
+
 const detail = ref({
   name: "",
   department: "",
@@ -155,11 +159,10 @@ const fetchProfile = async () => {
         Notes: detailsObj?.notes || "N/A",
       },
     };
-    console.log(detail.value);
   } catch (error) {
     snackbar.add({
       type: "error",
-      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+      text: error?.response?._data?.errors?.[0]?.message || t("common.error"),
     });
   }
 };

@@ -30,6 +30,8 @@
   </ClientOnly>
 </template>
 <script setup>
+import { useI18n } from "vue-i18n";
+
 const { authUser } = useAuth();
 const topics = ref([]);
 const text = ref("0");
@@ -39,6 +41,7 @@ const totalCnt = ref(0);
 const categories = ref([]);
 const category_key = ref(null);
 const snackbar = useSnackbar();
+const { t } = useI18n();
 
 const changeCategoryAll = () => {
   category_key.value = null;
@@ -73,7 +76,7 @@ const updateTopics = async () => {
   } catch (error) {
     snackbar.add({
       type: "error",
-      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+      text: error?.response?._data?.errors?.[0]?.message || t("common.error"),
     });
   }
 };
@@ -95,7 +98,7 @@ onMounted(async () => {
   } catch (error) {
     snackbar.add({
       type: "error",
-      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+      text: error?.response?._data?.errors?.[0]?.message || t("common.error"),
     });
   }
   updateTopics();

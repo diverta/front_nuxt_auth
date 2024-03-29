@@ -103,6 +103,10 @@ const handleLogin = async () => {
     loading.value = true;
     setSitekey(sitekey.value);
     await login({ ...formData });
+    snackbar.add({
+      type: "success",
+      text: t('slackbar.logged_in'),
+    });
   } catch (e) {
     error.value = e?.data?.errors || [];
     snackbar.add({

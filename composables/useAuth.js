@@ -28,9 +28,6 @@ export const useAuth = () => {
 
   /** register user's information */
   const register = async (formData) => {
-    console.log("bamboo")
-    console.log(formData)
-    console.log(formData.email)
     const res = await $fetch(`${apiDomain.baseURL}/rcms-api/1/member/register`, {
       method: 'POST',
       body: formData,
@@ -40,7 +37,7 @@ export const useAuth = () => {
     if(res.errors.length > 0){
       snackbar.add({
         type: "error",
-        text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+        text: error?.response?._data?.errors?.[0]?.message,
       });
     }
     else{

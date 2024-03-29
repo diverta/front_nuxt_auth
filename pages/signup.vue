@@ -35,10 +35,13 @@
   </ClientOnly>
 </template>
 <script setup>
+// import { useI18n } from "vue-i18n";
+
 const snackbar = useSnackbar();
 const { register } = useAuth();
 const loading = ref(false);
 const sitekey = ref(apiDomain.sitekey);
+const { t } = useI18n();
 
 const handleSubmit = async (formValues) => {
   loading.value = true;
@@ -50,10 +53,14 @@ const handleSubmit = async (formValues) => {
       sitekey: undefined,
       term: undefined,
     });
+    snackbar.add({
+      type: 'success',
+      text: t('signup.success'),
+    });
   } catch (error) {
     snackbar.add({
       type: 'error',
-      text: error?.response?._data?.errors?.[0]?.message || 'An error occurred',
+      text: error?.response?._data?.errors?.[0]?.message || t('common.error'),
     });
   } finally {
     loading.value = false;

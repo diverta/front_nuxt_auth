@@ -16,12 +16,15 @@
   </ClientOnly>
 </template>
 <script setup>
+import { useI18n } from "vue-i18n";
+
 const { authUser } = useAuth();
 const snackbar = useSnackbar();
 const topics = ref([]);
 const page = ref(1);
 const perPage = ref(20);
 const totalCnt = ref(0);
+const { t } = useI18n();
 
 onMounted(() => {
   updateTopics();
@@ -64,7 +67,7 @@ const updateTopics = async () => {
   } catch (error) {
     snackbar.add({
       type: "error",
-      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+      text: error?.response?._data?.errors?.[0]?.message || t("common.error"),
     });
   }
 };

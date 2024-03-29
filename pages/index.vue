@@ -55,12 +55,15 @@
   </ClientOnly>
 </template>
 <script setup>
+import { useI18n } from "vue-i18n";
+
 const { authUser, profile, logout } = useAuth();
 const topicsList = ref([]);
 const favouriteList = ref([]);
 const perPage = ref(5);
 const active = ref(0);
 const snackbar = useSnackbar();
+const { t } = useI18n();
 
 const sliderImages = computed(() => {
   return topicsList.value
@@ -82,7 +85,7 @@ const updateTopics = async () => {
   } catch (error) {
     snackbar.add({
       type: "error",
-      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+      text: error?.response?._data?.errors?.[0]?.message || t("common.error"),
     });
   }
 };
@@ -122,7 +125,7 @@ const updateFavourite = async () => {
   } catch (error) {
     snackbar.add({
       type: "error",
-      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+      text: error?.response?._data?.errors?.[0]?.message || t("common.error"),
     });
   }
 };

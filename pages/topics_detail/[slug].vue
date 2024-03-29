@@ -80,6 +80,8 @@
   </div>
 </template>
 <script setup>
+import { useI18n } from 'vue-i18n';
+
 const { authUser, profile, logout } = useAuth();
 const route = useRoute();
 const topicsDetail = ref(null);
@@ -87,6 +89,7 @@ const loading = ref(true);
 const favoriteResponse = ref(null);
 const favoriteColor = ref('grey');
 const snackbar = useSnackbar();
+const { t } = useI18n();
 
 const items = computed(() => {
   if (!topicsDetail) {
@@ -136,7 +139,7 @@ const onClickToggleFavorite = async () => {
   } catch (error) {
     snackbar.add({
       type: 'error',
-      text: error?.response?._data?.errors?.[0]?.message || 'An error occurred',
+      text: error?.response?._data?.errors?.[0]?.message || t('common.error'),
     });
   }
 };
@@ -181,7 +184,7 @@ try {
 } catch (error) {
   snackbar.add({
     type: 'error',
-    text: error?.response?._data?.errors?.[0]?.message || 'An error occurred',
+    text: error?.response?._data?.errors?.[0]?.message || t('common.error'),
   });
 }
 </script>

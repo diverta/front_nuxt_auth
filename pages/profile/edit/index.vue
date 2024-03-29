@@ -58,7 +58,7 @@ onMounted(async () => {
   } catch (error) {
     snackbar.add({
       type: 'error',
-      text: error?.response?._data?.errors?.[0]?.message || 'An error occurred',
+      text: error?.response?._data?.errors?.[0]?.message || t('common.error'),
     });
     router.push('/profile');
   } finally {
@@ -93,7 +93,7 @@ const handleSubmit = async (formValues) => {
   } catch (e) {
     snackbar.add({
       type: 'error',
-      text: e?.response?._data?.errors?.[0]?.message || 'An error occurred',
+      text: e?.response?._data?.errors?.[0]?.message || t('common.error'),
     });
   } finally {
     loading.value = false;
