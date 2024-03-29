@@ -10,7 +10,7 @@
                 >
                 <v-card
                 class="c-article"
-                :to="`/topics_detail/${topic.topics_id}`"
+                :to="localePath(`/topics_detail/${topic.topics_id}`)"
                 >
                 <div class="c-article_thumb">
                             <v-img v-if="topic.ext_8" :src="topic.ext_8.url" height="200" />
@@ -29,6 +29,7 @@
     </section>
 </template>
 <script setup>
+const localePath = useLocalePath();
 const props = defineProps({
   topics: {
     type: Array,

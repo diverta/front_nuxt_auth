@@ -25,12 +25,10 @@ export function updateApiDomainFromLocalStorage() {
 export const useAuth = () => {
   const userRef = useUser();
   const snackbar = useSnackbar();
+  const localePath = useLocalePath();
 
   /** register user's information */
   const register = async (formData) => {
-    console.log("bamboo")
-    console.log(formData)
-    console.log(formData.email)
     const res = await $fetch(`${apiDomain.baseURL}/rcms-api/1/member/register`, {
       method: 'POST',
       body: formData,
@@ -62,7 +60,7 @@ export const useAuth = () => {
       credentials: 'include'
     });
     await profile();
-    useRouter().push("/");
+    useRouter().push(localePath("/"));
   };
 
   /** logout and clear user's information */

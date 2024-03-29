@@ -67,7 +67,7 @@
         <button
           type="submit"
           class="c-btn c-btn_dark c-btn_icon"
-          @click="$router.push('/profile/edit')"
+          @click="$router.push(localePath('/profile/edit'))"
         >
           {{ $t("common.edit") }}
           <v-icon class="icon c-text_white pl-2"> mdi-pencil </v-icon>
@@ -78,6 +78,7 @@
 </template>
 <script setup>
 const snackbar = useSnackbar();
+const localePath = useLocalePath();
 const { authUser } = useAuth();
 // @TODO: Replace with the actual profile image URL
 // const defaultImage = ref("assets/images/avatar-placeholder.png");

@@ -25,7 +25,7 @@
           x-large
           color="success"
           class="c-btn c-btn_main c-btn_md c-btn_icon"
-          @click="() => $router.push('/topics_list/')"
+          @click="() => $router.push(localePath('/topics_list/'))"
         >
           {{ $t("top.more_articles") }}
           <v-icon dark right class="icon"> mdi-arrow-right-drop-circle </v-icon>
@@ -45,7 +45,7 @@
           x-large
           color="success"
           class="c-btn c-btn_main c-btn_md c-btn_icon"
-          @click="() => $router.push('/favourite/')"
+          @click="() => $router.push(localePath('/favourite/'))"
         >
           {{ $t("top.more_starred") }}
           <v-icon dark right class="icon"> mdi-arrow-right-drop-circle </v-icon>
@@ -61,6 +61,7 @@ const favouriteList = ref([]);
 const perPage = ref(5);
 const active = ref(0);
 const snackbar = useSnackbar();
+const localePath = useLocalePath();
 
 const sliderImages = computed(() => {
   return topicsList.value

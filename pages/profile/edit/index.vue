@@ -27,6 +27,7 @@ const snackbar = useSnackbar();
 const { authUser } = useAuth();
 const profile = ref({});
 const loading = ref(false);
+const localePath = useLocalePath();
 
 const hasProfile = computed(() => Object.keys(profile.value).length > 0);
 
@@ -57,7 +58,7 @@ onMounted(async () => {
       type: 'error',
       text: error?.response?._data?.errors?.[0]?.message || 'An error occurred',
     });
-    router.push('/profile');
+    router.push(localePath('/profile'));
   } finally {
     loading.value = false;
   }
@@ -94,7 +95,7 @@ const handleSubmit = async (formValues) => {
     });
   } finally {
     loading.value = false;
-    router.push('/profile');
+    router.push(localePath('/profile'));
   }
 };
 </script>

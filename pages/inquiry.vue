@@ -79,6 +79,7 @@ const router = useRouter();
 const snackbar = useSnackbar();
 const loading = ref(true);
 const formFields = ref({});
+const localePath = useLocalePath();
 
 const transformAdapter = (field) => {
   if (Array.isArray(field.options)) {
@@ -136,7 +137,7 @@ onMounted(async () => {
       type: 'error',
       text: e?.response?._data?.errors?.[0]?.message || 'An error occurred',
     });
-    router.push('/');
+    router.push(localePath('/'));
   } finally {
     loading.value = false;
   }
