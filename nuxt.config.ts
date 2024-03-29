@@ -21,9 +21,22 @@ export default defineNuxtConfig({
       })
     },
     '@formkit/nuxt',
-    'nuxt-snackbar'
+    'nuxt-snackbar',
+    '@nuxtjs/i18n',
     //...
   ],
+  i18n: {
+    locales: [
+        { code: 'en', iso: 'en-US', file: 'en.json', name: 'English' },
+        { code: 'ja', iso: 'ja-JP', file: 'ja.json', name: '日本語' }
+    ],
+    defaultLocale: 'en',
+    strategy: 'prefix_except_default',
+    langDir: 'locales',
+    compilation: {
+      strictMessage: false, // To allow html tags in locales
+    },
+},
   formkit: {
     // Experimental support for auto loading (see note):
     autoImport: true
