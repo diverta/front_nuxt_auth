@@ -80,6 +80,7 @@ const snackbar = useSnackbar();
 const loading = ref(true);
 const formFields = ref({});
 const localePath = useLocalePath();
+const { t } = useI18n();
 
 const transformAdapter = (field) => {
   if (Array.isArray(field.options)) {
@@ -215,7 +216,7 @@ const handleSubmit = async (formValues) => {
     reset('inquiry-form');
     snackbar.add({
       type: 'success',
-      text: 'Inquiry posted successfully',
+      text: t('inquiry.thanks'),
     });
 
   } catch (e) {
