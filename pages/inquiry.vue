@@ -74,6 +74,19 @@ const snackbar = useSnackbar();
 const loading = ref(true);
 const formFields = ref({});
 
+const transformAdapter = (field) => {
+    if (Array.isArray(field.options)) {
+        const options = {};
+        field.options.forEach(({ key, value }) => {
+            if (key !== undefined && value !== undefined) {
+                options[key] = value;
+            }
+        });
+        return options;
+    }
+    return field.options;
+};
+
 onMounted(async () => {
     const getFieldType = (type) => {
         switch (type) {
@@ -104,7 +117,8 @@ onMounted(async () => {
             .map((d) => ({
                 ...d,
                 type: getFieldType(d.type),
-                required: d.required === 2
+                required: d.required === 2,
+                options: transformAdapter(d)
             }))
             // convert array to object
             .reduce((acc, curr) => {

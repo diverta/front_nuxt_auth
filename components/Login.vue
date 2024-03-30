@@ -41,7 +41,7 @@
                                             @click:append="() => (showsPassword = !showsPassword)"
                                         />
                                         <p class="pb-3">
-                                            <NuxtLink :to="/reminder/">
+                                            <NuxtLink :to="'/reminder/'">
                                                 {{ $t('login.forget_password') }}
                                             </NuxtLink>
                                         </p>
@@ -77,8 +77,7 @@ const showsPassword = ref(false);
 const handleLogin = async () => {
     try {
         loading.value = true;
-        apiDomain.sitekey = sitekey.value;
-        apiDomain.baseURL = apiDomain.sitekey === 'dev-nuxt-auth' ? 'https://dev-nuxt-auth.a.kuroco.app' : `https://${apiDomain.sitekey}.g.kuroco.app`;
+        setSitekey(sitekey.value);
         await login({ ...formData });
     } catch (e) {
         error.value = e?.data?.errors || [];
@@ -88,5 +87,9 @@ const handleLogin = async () => {
         });
     }
     loading.value = false;
+};
+
+const clearErrorMessages = () => {
+    errorMessage.value = '';
 };
 </script>

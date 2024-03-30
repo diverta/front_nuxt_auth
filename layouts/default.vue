@@ -29,16 +29,7 @@
                 </div>
 
                 <template v-if="authUser.member_id">
-                    <v-btn
-                        icon
-                        class="l-header_logout"
-                        @click="
-                            () => {
-                                logout();
-                                useRouter().push('/');
-                            }
-                        "
-                    >
+                    <v-btn icon class="l-header_logout" @click="handleLogout">
                         <v-icon>mdi-exit-to-app</v-icon>
                     </v-btn>
                 </template>
@@ -92,6 +83,11 @@ const { authUser, isLoggedIn, logout } = useAuth();
 
 const drawer = ref(false);
 const clipped = ref(false);
+
+const handleLogout = async () => {
+    await logout();
+    useRouter().push('/');
+};
 const subtitle = computed(() => {
     if (authUser.value.member_id) {
         return 'Hi, ' + authUser.value.name1;
