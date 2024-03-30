@@ -9,12 +9,19 @@
             "source.fixAll.stylelint": "always"
         }
     },
-    "prettier.configPath": "./.prettierrc.mjs",
-    "prettier.useEditorConfig": false,
     "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.stylelint": "always"
+        }
     },
     "[vue]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.stylelint": "always"
+        }
+    },
+    "prettier.configPath": "./.prettierrc.json",
+    "prettier.useEditorConfig": false,
+    "eslint.experimental.useFlatConfig": true
 }

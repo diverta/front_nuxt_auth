@@ -20,8 +20,8 @@ export default defineNuxtConfig({
             });
         },
         '@formkit/nuxt',
-        'nuxt-snackbar'
-        //...
+        'nuxt-snackbar',
+        '@nuxt/eslint',
     ],
     formkit: {
         // Experimental support for auto loading (see note):
