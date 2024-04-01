@@ -151,13 +151,7 @@ const handleLogout = async () => {
   await logout();
   useRouter().push(localePath("/"));
 };
-const subtitle = computed(() => {
-  if (authUser.value.member_id) {
-    return "Hi, " + authUser.value.name1;
-    // return i18n.t("common.hi") + ", " + authUser.value.name1;
-  }
-  return "";
-});
+
 const langOptions = [
   { text: "English", value: "en" },
   { text: "日本語", value: "ja" },

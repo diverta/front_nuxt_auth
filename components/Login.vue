@@ -111,7 +111,4 @@ const handleLogin = async () => {
   loading.value = false;
 };
 
-const clearErrorMessages = () => {
-  errorMessage.value = "";
-};
 </script>

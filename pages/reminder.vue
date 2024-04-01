@@ -152,10 +152,10 @@ const { t } = useI18n();
 const localePath = useLocalePath();
 
 const rules = {
-  required: (v) => !!v || "Required",
+  required: (v) => !!v || t('reminder.required'),
   password_min: (v) =>
-    v.length >= 8 || "Password must be at least 8 characters",
-  password2: (v) => v === formData.password || "Password does not match",
+    v.length >= 8 || t('reminder.word_count'),
+  password2: (v) => v === formData.password || t('reminder.conf_error'),
 };
 
 const formData = reactive({
@@ -222,7 +222,7 @@ const set_password = async () => {
   } catch (error) {
     snackbar.add({
       type: "error",
-      text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+      text: error?.response?._data?.errors?.[0]?.message || t('common.error'),
     });
   }
   loading2.value = false;

@@ -81,6 +81,7 @@
 </template>
 <script setup>
 const { authUser, profile, logout } = useAuth();
+const { t } = useI18n();
 const route = useRoute();
 const topicsDetail = ref(null);
 const loading = ref(true);
@@ -137,7 +138,7 @@ const onClickToggleFavorite = async () => {
   } catch (error) {
     snackbar.add({
       type: 'error',
-      text: error?.response?._data?.errors?.[0]?.message || 'An error occurred',
+      text: error?.response?._data?.errors?.[0]?.message || t('common.error'),
     });
   }
 };
@@ -182,7 +183,7 @@ try {
 } catch (error) {
   snackbar.add({
     type: 'error',
-    text: error?.response?._data?.errors?.[0]?.message || 'An error occurred',
+    text: error?.response?._data?.errors?.[0]?.message || t('common.error'),
   });
 }
 </script>

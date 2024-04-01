@@ -23,6 +23,7 @@ export function updateApiDomainFromLocalStorage() {
 }
 
 export const useAuth = () => {
+  const { t } = useI18n();
   const userRef = useUser();
   const snackbar = useSnackbar();
   const localePath = useLocalePath();
@@ -35,11 +36,10 @@ export const useAuth = () => {
       server: false,
     });
 
-    console.log("Herer bhaii")
     if(res.errors.length > 0){
       snackbar.add({
         type: "error",
-        text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
+        text: error?.response?._data?.errors?.[0]?.message || t('common.error'),
       });
     }
     else{
