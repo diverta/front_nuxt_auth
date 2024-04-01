@@ -17,7 +17,8 @@
         </div>
       </v-col>
       <v-col class="pa-0 col-sm-6 col-12">
-        <v-card v-if="pageState == 1" class="p-login_form" outlined>
+        <v-card v-if="pageState == 1" outlined>
+          <div class="p-login_form">
           <v-form @submit.prevent="reminder">
             <v-card-title>
               <h2 align="left" class="pb-4 c-text_blue">
@@ -50,8 +51,10 @@
               </v-row>
             </v-container>
           </v-form>
+          </div>
         </v-card>
         <v-card v-else-if="pageState == 2">
+          <div class="p-login_form">
           <v-form ref="form2" lazy-validation @submit.prevent="set_password">
             <v-card-title>
               <h2 align="center" class="pb-4 c-text_blue">
@@ -122,8 +125,10 @@
               </v-row>
             </v-container>
           </v-form>
+          </div>
         </v-card>
         <v-card v-else-if="pageState == 3">
+          <div class="p-login_form">
           <v-form>
             <v-container fluid>
               <v-row class="p-login_content-inner">
@@ -133,6 +138,7 @@
               </v-row>
             </v-container>
           </v-form>
+          </div>
         </v-card>
       </v-col>
     </v-row>

@@ -11,7 +11,7 @@
         left
         fixed
         dark
-        temporary
+        permanent
       >
         <div class="text-center py-4">
           <a href="/">
@@ -28,6 +28,7 @@
             :to="item.to"
             router
             exact
+            class="l-mainmenu_item"
           >
             <v-list-item-action>
               <v-icon>{{ item.icon }}</v-icon>

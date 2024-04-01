@@ -31,11 +31,16 @@ header {
         padding: 10px 30px;
     }
     &_user {
+        text-align: right;
         font-size: 0.9em;
         padding-right: 20px;
         margin-right: 20px;
         color: #fff;
         border-right: 1px solid rgba(0, 0, 0, 0.3);
+
+        @include md {
+            font-size: 1rem !important;
+        }
     }
     &_lang {
         display: inline-block;

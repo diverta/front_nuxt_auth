@@ -24,7 +24,7 @@
           <form @submit.prevent="handleLogin">
             <div class="login-screen lgn-left">
               <v-card-title>
-                <h2 align="center" class="pb-4 c-text_blue">
+                <h2 class="pb-4 c-text_blue">
                   {{ $t("common.sign_in") }}
                 </h2>
               </v-card-title>
