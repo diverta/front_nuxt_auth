@@ -91,7 +91,7 @@ export const useAuth = () => {
 
             const router = useRouter();
             await router.isReady();
-            if (router.currentRoute.value.path === '/' || router.currentRoute.value.path === '/signup/' || router.currentRoute.value.path === '/reminder/') {
+            if (router.currentRoute.value.path === '/' || router.currentRoute.value.path === '/ja' || router.currentRoute.value.path === '/signup' || router.currentRoute.value.path === '/ja/signup' || router.currentRoute.value.path === '/reminder' || router.currentRoute.value.path === '/ja/reminder') {
                 return;
             }
             await router.push('/');
