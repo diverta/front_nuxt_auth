@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "front_nuxt_auth",
   "private": true,
   "type": "module",
   "scripts": {
@@ -7,21 +7,36 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "**/*.{js,vue}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "assets/**/*.{css,scss}": "prettier --write"
   },
   "devDependencies": {
-    "nuxt": "^3.9.3",
-    "sass": "^1.70.0",
-    "vite-plugin-vuetify": "^2.0.1",
-    "vue": "^3.4.14",
-    "vue-i18n": "^9.9.0",
-    "vue-router": "^4.2.5",
-    "vuetify": "^3.5.1"
-  },
-  "dependencies": {
-    "@formkit/nuxt": "^1.5.9",
-    "@formkit/themes": "^1.5.9",
+    "@nuxt/eslint": "^0.3.0-beta.7",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-unused-imports": "^3.1.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "nuxt": "^3.11.1",
+    "prettier": "^3.2.5",
+    "sass": "^1.72.0",
+    "vite-plugin-vuetify": "^2.0.3",
+    "vue": "^3.4.21",
+    "vue-i18n": "^9.10.2",
+    "vue-router": "^4.3.0",
+    "vuetify": "^3.5.13",
+    "vite-plugin-eslint2": "^4.4.0",
+    "@formkit/nuxt": "^1.6.1",
+    "@formkit/themes": "^1.6.1",
     "@mdi/font": "^7.4.47",
-    "nuxt-snackbar": "^1.0.4"
+    "nuxt-snackbar": "^1.0.4",
+    "unocss": "^0.31.0"
   }
 }

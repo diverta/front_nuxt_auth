@@ -1,14 +1,15 @@
-
 .c-btn {
     font-weight: bold;
     font-size: 1.2em;
-    transition: background-color .3s,color .3s;
+    transition:
+        background-color 0.3s,
+        color 0.3s;
     padding: 15px 40px;
     border-radius: 24px;
     color: #fff;
     cursor: pointer;
 
-    &[disabled="disabled"] {
+    &[disabled='disabled'] {
         background: #ccc;
         cursor: not-allowed;
         &:hover {
@@ -68,5 +69,4 @@
         padding-right: 10px;
         padding-left: 20px;
     }
-
 }
