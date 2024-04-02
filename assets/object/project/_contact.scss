@@ -1,7 +1,5 @@
 .p-contact {
-    
     &_form {
-
         &-wrap {
             background: #fff;
             border-radius: 15px;
@@ -13,12 +11,14 @@
         & .v-input--radio-group {
             width: 100%;
         }
-        & .v-form, & .v-input--radio-group__input {
+        & .v-form,
+        & .v-input--radio-group__input {
             display: flex;
             flex-wrap: wrap;
             flex-direction: row;
         }
-        & .v-input--checkbox, & .v-radio {
+        & .v-input--checkbox,
+        & .v-radio {
             flex: 1 1 30%;
         }
     }

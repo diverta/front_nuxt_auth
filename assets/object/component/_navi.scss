@@ -1,7 +1,6 @@
 #c-navi {
-
     &_side {
-        background: linear-gradient(to bottom, #152E4D, #051324) !important;
+        background: linear-gradient(to bottom, #152e4d, #051324) !important;
         max-width: 256px;
 
         & a {
@@ -14,11 +13,9 @@
             }
         }
     }
-
 }
 
 .c-navi {
-
     &_side {
         &-logo {
             max-width: 150px;

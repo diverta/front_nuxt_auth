@@ -23,7 +23,7 @@
         flex-wrap: wrap;
         flex-direction: row;
     }
-    .v-input--checkbox, 
+    .v-input--checkbox,
     .v-radio {
         margin: 0 25px 0 0 !important;
     }
@@ -47,8 +47,8 @@
     &_tnc {
         .v-input__slot {
             justify-content: center;
-            margin-bottom: 15px;    
-        } 
+            margin-bottom: 15px;
+        }
         & .v-input--selection-controls__input {
             flex: 0 0 auto !important;
         }
@@ -74,7 +74,7 @@
             width: 100%;
         }
     }
-    
+
     &_formulate {
         &-wrapper {
             min-width: 100%;
