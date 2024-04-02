@@ -7,7 +7,7 @@
             <v-col>
                 <v-row>
                     <v-col>
-                        <v-img fluid class="mx-auto mr-sm-5" :lazy-src="detail.url" :aspect-ration="16 / 9" src="@/assets/images/avatar-placeholder.png" max-height="180" max-width="180" />
+                        <v-img fluid class="mx-auto mr-sm-5" :lazy-src="detail.url" :aspect-ration="16 / 9" :src="detail.url" max-height="180" max-width="180" />
                     </v-col>
                     <v-col class="mx-auto">
                         <v-container fluid>
@@ -76,7 +76,7 @@ const detail = ref({
     profile: {}
 });
 const placeholder = computed(() => {
-    return new URL('../assets/images/avatar-placeholder.png', import.meta.url).href;
+    return new URL('@/assets/images/avatar-placeholder.png', import.meta.url).href;
 });
 
 onMounted(() => {
@@ -94,7 +94,6 @@ const fetchProfile = async () => {
             }
         });
         const detailsObj = res.list[0];
-        console.log(detailsObj);
         detail.value = {
             name: `${detailsObj.name1} ${detailsObj.name2}`,
             zip: detailsObj.zip_code,
@@ -117,7 +116,6 @@ const fetchProfile = async () => {
                 Notes: detailsObj?.notes || 'N/A'
             }
         };
-        console.log(detail.value);
     } catch (error) {
         snackbar.add({
             type: 'error',
