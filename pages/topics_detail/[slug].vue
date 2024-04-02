@@ -29,8 +29,8 @@
                 <!-- Wysiwyg contents -->
                 <v-row v-if="topicsDetail && topicsDetail.contents" class="p-article_content">
                     <v-container fluid>
-                        <v-card class="mx-auto" max-width="7000">
-                            <v-card-title class="c-heading_h2" v-text="subtitle" />
+                        <v-card v-for="(subtitle, index) in topicsDetail.subtitles" :key="index" class="mx-auto" max-width="7000">
+                            <v-card-title class="c-heading_h2">{{ subtitle }}</v-card-title>
                             <v-card-text>
                                 <div class="text--primary" v-html="topicsDetail.contents"></div>
                             </v-card-text>
