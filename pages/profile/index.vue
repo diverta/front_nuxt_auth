@@ -9,7 +9,7 @@
               class="mx-auto mr-sm-5"
               :lazy-src="detail.url"
               :aspect-ration="16 / 9"
-              src="@/assets/images/avatar-placeholder.png"
+              :src="detail.profileImageUrl"
               max-height="180"
               max-width="180"
             />
@@ -79,11 +79,8 @@
 <script setup>
 const snackbar = useSnackbar();
 const { authUser } = useAuth();
-// @TODO: Replace with the actual profile image URL
-// const defaultImage = ref("assets/images/avatar-placeholder.png");
-// const placeholder = require('assets/images/avatar-placeholder.png');
 const placeholder = computed(() => {
-  return new URL("../assets/images/avatar-placeholder.png", import.meta.url)
+  return new URL("@/assets/images/avatar-placeholder.png", import.meta.url)
     .href;
 });
 const detail = ref({
