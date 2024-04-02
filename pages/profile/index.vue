@@ -4,7 +4,7 @@
             <v-col>
                 <v-row>
                     <v-col>
-                        <v-img fluid class="mx-auto mr-sm-5" :lazy-src="detail.url" :aspect-ration="16 / 9" src="@/assets/images/avatar-placeholder.png" max-height="180" max-width="180" />
+                        <v-img fluid class="mx-auto mr-sm-5" :lazy-src="detail.url" :aspect-ration="16 / 9" :src="detail.profileImageUrl" max-height="180" max-width="180" />
                     </v-col>
                     <v-col class="mx-auto">
                         <v-container fluid>
@@ -59,11 +59,9 @@
 </template>
 <script setup>
 const snackbar = useSnackbar();
-// @TODO: Replace with the actual profile image URL
-// const defaultImage = ref("assets/images/avatar-placeholder.png");
-// const placeholder = require('assets/images/avatar-placeholder.png');
+const { authUser } = useAuth();
 const placeholder = computed(() => {
-    return new URL('../assets/images/avatar-placeholder.png', import.meta.url).href;
+    return new URL('@/assets/images/avatar-placeholder.png', import.meta.url).href;
 });
 const detail = ref({
     name: '',
