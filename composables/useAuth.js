@@ -2,92 +2,87 @@
 const useUser = () => useState('user', () => null);
 
 export const apiDomain = reactive({
-  sitekey: 'dev-nuxt-auth',
-  baseURL: 'https://dev-nuxt-auth.a.kuroco.app'
+    sitekey: 'dev-nuxt-auth',
+    baseURL: 'https://dev-nuxt-auth.a.kuroco.app'
 });
 
 export function setSitekey(sitekey) {
-  apiDomain.sitekey = sitekey;
-  localStorage.setItem('sitekey', apiDomain.sitekey);
-  updateApiDomainFromLocalStorage();  
+    apiDomain.sitekey = sitekey;
+    localStorage.setItem('sitekey', apiDomain.sitekey);
+    updateApiDomainFromLocalStorage();
 }
 
 export function updateApiDomainFromLocalStorage() {
-  if (typeof window !== 'undefined' && localStorage.getItem('sitekey')) {
-    apiDomain.sitekey = localStorage.getItem('sitekey');
-    apiDomain.baseURL =
-      apiDomain.sitekey === "dev-nuxt-auth"
-        ? "https://dev-nuxt-auth.a.kuroco.app"
-        : `https://${apiDomain.sitekey}.g.kuroco.app`;
-  }
+    if (typeof window !== 'undefined' && localStorage.getItem('sitekey')) {
+        apiDomain.sitekey = localStorage.getItem('sitekey');
+        apiDomain.baseURL = apiDomain.sitekey === 'dev-nuxt-auth' ? 'https://dev-nuxt-auth.a.kuroco.app' : `https://${apiDomain.sitekey}.g.kuroco.app`;
+    }
 }
 
 export const useAuth = () => {
-  const userRef = useUser();
-  const snackbar = useSnackbar();
+    const userRef = useUser();
+    const snackbar = useSnackbar();
 
-  /** register user's information */
-  const register = async (formData) => {
-    console.log("bamboo")
-    console.log(formData)
-    console.log(formData.email)
-    const res = await $fetch(`${apiDomain.baseURL}/rcms-api/1/member/register`, {
-      method: 'POST',
-      body: formData,
-      server: false,
-    });
+    /** register user's information */
+    const register = async (formData) => {
+        console.log('bamboo');
+        console.log(formData);
+        console.log(formData.email);
+        const res = await $fetch(`${apiDomain.baseURL}/rcms-api/1/member/register`, {
+            method: 'POST',
+            body: formData,
+            server: false
+        });
 
-    console.log("Herer bhaii")
-    if(res.errors.length > 0){
-      snackbar.add({
-        type: "error",
-        text: error?.response?._data?.errors?.[0]?.message || "An error occurred",
-      });
-    }
-    else{
-      const loginDetails = { email: formData.email, password: formData.login_pwd };
-      await login({...loginDetails});
-    }
-  };
-  
-  /** login and set user's information */
-  const login = async ({ email, password }) => {
-    await $fetch(`${apiDomain.baseURL}/rcms-api/1/login`, {
-      method: 'POST',
-      body: {
-        email,
-        password,
-      },
-      server: false,
-      credentials: 'include'
-    });
-    await profile();
-    useRouter().push("/");
-  };
+        console.log('Herer bhaii');
+        if (res.errors.length > 0) {
+            snackbar.add({
+                type: 'error',
+                text: res.errors.join('\n') || 'An error occurred'
+            });
+        } else {
+            const loginDetails = { email: formData.email, password: formData.login_pwd };
+            await login({ ...loginDetails });
+        }
+    };
 
-  /** logout and clear user's information */
-  const logout = async () => {
-    await $fetch(`${apiDomain.baseURL}/rcms-api/1/logout`, {
-      method: 'POST',
-      server: false,
-      credentials: 'include'
-    }).catch(() => {
-      /** NP, to run following process */
-    });
-    userRef.value = null
-    localStorage.removeItem('sitekey');
-  };
+    /** login and set user's information */
+    const login = async ({ email, password }) => {
+        await $fetch(`${apiDomain.baseURL}/rcms-api/1/login`, {
+            method: 'POST',
+            body: {
+                email,
+                password
+            },
+            server: false,
+            credentials: 'include'
+        });
+        await profile();
+        useRouter().push('/');
+    };
 
-  /** process restore user's login state with requesting /profile, only in client side */
+    /** logout and clear user's information */
+    const logout = async () => {
+        await $fetch(`${apiDomain.baseURL}/rcms-api/1/logout`, {
+            method: 'POST',
+            server: false,
+            credentials: 'include'
+        }).catch(() => {
+            /** NP, to run following process */
+        });
+        userRef.value = null;
+        localStorage.removeItem('sitekey');
+    };
+
+    /** process restore user's login state with requesting /profile, only in client side */
     const profile = async () => {
         try {
-            userRef.value = await $fetch(
-                `${apiDomain.baseURL}/rcms-api/1/profile`, {
+            userRef.value = await $fetch(`${apiDomain.baseURL}/rcms-api/1/profile`, {
                 server: false,
                 credentials: 'include'
-            })
+            });
         } catch {
-            if (process.server) {
+            if (import.meta.server) {
                 return;
             }
 
@@ -98,31 +93,26 @@ export const useAuth = () => {
             }
             await router.push('/');
             userRef.value = null;
-        };
-  }
-
-  /** get user's information */
-  const authUser = computed(() => {
-    const u = userRef.value;
-    const groupIds = Object.keys(u?.group_ids || {});
-    // const isPremiumUser = groupIds.includes('105');
-    // const isRegularUser = groupIds.includes('104');
-    return {
-      ...u,
-    //   isPremiumUser,
-    //   isRegularUser,
+        }
     };
-  });
 
-  /** get either user is logged in */
-  const isLoggedIn = computed(() => Boolean(userRef.value?.member_id));
+    /** get user's information */
+    const authUser = computed(() => {
+        const u = userRef.value;
+        return {
+            ...u
+        };
+    });
 
-  return {
-    authUser,
-    isLoggedIn,
-    register,
-    login,
-    logout,
-    profile,
-  };
+    /** get either user is logged in */
+    const isLoggedIn = computed(() => Boolean(userRef.value?.member_id));
+
+    return {
+        authUser,
+        isLoggedIn,
+        register,
+        login,
+        logout,
+        profile
+    };
 };
