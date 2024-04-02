@@ -26,6 +26,10 @@
                 type="text"
                 :classes="{ outer: 'signup-form_elm-sitekey' }"
                 validation="required|length:0,100"
+                  :validation-messages="{
+                    required: $t('verify.required_field'),
+                    length: $t('verify.text_maximum'),
+                  }"
               />
             </template>
           </ProfileForm>
