@@ -16,6 +16,7 @@
           <FormKit
             id="inquiry-form"
             type="form"
+            :incomplete-message="$t('verify.fille_property')"
             @submit="handleSubmit"
             :submit-label="$t('common.submit')"
             :submit-attrs="{
@@ -37,6 +38,9 @@
                   :name="field.key"
                   :label="field.title"
                   :validation="field.required ? 'required' : ''"
+                  :validation-messages="{
+                    required: $t('verify.required_field'),
+                  }"
                   @input="(event) => handleFileUpload({ key: field.key, event })"
                   :classes="{
                     outer: `inquiry-form_elm-${field.type}`,
@@ -48,6 +52,9 @@
                   :name="field.key"
                   :label="field.title"
                   :validation="field.required ? 'required' : ''"
+                  :validation-messages="{
+                    required: $t('verify.required_field'),
+                  }"
                   :options="field.options"
                   :classes="{
                     outer: `inquiry-form_elm-${field.type}`,
@@ -60,6 +67,9 @@
               :label="$t('common.agree')"
               name="term"
               validation="accepted"
+              :validation-messages="{
+                accepted: $t('verify.terms_of_use'),
+              }"
               :classes="{
                 outer: 'inquiry-form_elm-terms',
                 wrapper: 'inquiry-form_elm-terms_wrapper',
