@@ -2,6 +2,7 @@
   <FormKit
     type="form"
     v-model="formValues"
+    :incomplete-message="$t('verify.fille_property')"
     @submit="(formValues) => emit('submit', formValues)"
     :submit-label="$t('common.submit')"
     :submit-attrs="{
@@ -25,6 +26,10 @@
             label: $t('label.first_name'),
             $formkit: 'text',
             validation: 'required|length:0,100',
+            'validation-messages': {
+              required: $t('verify.required_field'),
+              length: $t('verify.text_maximum'),
+            },
             classes: {
               outer: 'signup-form_elm-name1',
             },
@@ -34,6 +39,10 @@
             label: $t('label.last_name'),
             $formkit: 'text',
             validation: 'required|length:0,100',
+            'validation-messages': {
+              required: $t('verify.required_field'),
+              length: $t('verify.text_maximum'),
+            },
             classes: {
               outer: 'signup-form_elm-name2',
             },
@@ -43,6 +52,9 @@
             label: $t('label.hire_date'),
             $formkit: 'date',
             validation: 'required',
+            'validation-messages': {
+              required: $t('verify.required_field'),
+            },
             classes: {
               outer: 'signup-form_elm-hire_date',
             },
@@ -52,6 +64,9 @@
             label: $t('label.department'),
             $formkit: 'text',
             validation: 'length:0,100',
+            'validation-messages': {
+              length: $t('verify.text_maximum'),
+            },
             classes: {
               outer: 'signup-form_elm-department',
             },
@@ -61,6 +76,9 @@
             label: $t('label.position'),
             $formkit: 'text',
             validation: 'length:0,100',
+            'validation-messages': {
+              length: $t('verify.text_maximum'),
+            },
             classes: {
               outer: 'signup-form_elm-position',
             },
@@ -70,6 +88,10 @@
             label: $t('label.phone'),
             $formkit: 'text',
             validation: 'required|length:0,100',
+            'validation-messages': {
+              required: $t('verify.required_field'),
+              length: $t('verify.text_maximum'),
+            },
             classes: {
               outer: 'signup-form_elm-tel',
             },
@@ -79,6 +101,11 @@
             label: $t('label.email'),
             $formkit: 'email',
             validation: 'required|email|length:0,100',
+            'validation-messages': {
+              required: $t('verify.required_field'),
+              email: $t('verify.text_format_email'),
+              length: $t('verify.text_maximum'),
+            },
             classes: {
               outer: 'signup-form_elm-email',
             },
@@ -88,6 +115,10 @@
             label: $t('label.password'),
             $formkit: 'password',
             validation: 'required|length:8,100',
+            'validation-messages': {
+              required: $t('verify.required_field'),
+              length: $t('verify.password_format'),
+            },
             placeholder: 'Password',
             classes: {
               outer: 'signup-form_elm-login_pwd',
@@ -133,6 +164,9 @@
             label: $t('label.notes'),
             $formkit: 'textarea',
             validation: 'length:0,1000',
+            'validation-messages': {
+              length: $t('verify.text_maximum'),
+            },
             classes: {
               outer: 'signup-form_elm-notes',
             },
@@ -145,6 +179,9 @@
       :label="$t('common.agree')"
       name="term"
       validation="accepted"
+      :validation-messages="{
+        accepted: $t('verify.terms_of_use'),
+      }"
       :classes="{
         outer: 'signup-form_elm-terms',
         wrapper: 'signup-form_elm-terms_wrapper',
@@ -154,7 +191,7 @@
 </template>
 
 <script setup>
-import { FormKitSchema } from '@formkit/vue';
+import { FormKitSchema } from "@formkit/vue";
 const formValues = ref({});
 
 const props = defineProps({
@@ -165,11 +202,11 @@ const props = defineProps({
 });
 formValues.value = { ...props.formValues };
 
-const emit = defineEmits(['submit']);
+const emit = defineEmits(["submit"]);
 </script>
 
 <style lang="scss">
-@import 'assets/partials/_mixin';
+@import "assets/partials/_mixin";
 
 .signup-form {
   &_container {
