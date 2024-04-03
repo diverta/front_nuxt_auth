@@ -119,7 +119,8 @@
         "multiple_required":"At least one item should be selected",
         "fille_property":"Please fill the fields properly.",
         "required_file":"need to upload file",
-        "required_checkbox":"need to check"
+        "required_checkbox":"need to check",
+        "terms_of_use":"Please agree to the terms of use."
     },
     "label": {
         "date_picker":"Date picker.",

@@ -119,7 +119,8 @@
         "multiple_required":"一つ選択してください。",
         "fille_property":"項目に入力してください。",
         "required_file":"ファイルをアップロードしてください。",
-        "required_checkbox":"チェックしてください。"
+        "required_checkbox":"チェックしてください。",
+        "terms_of_use":"利用規約に同意してください。"
     },
     "label": {
         "date_picker":"日付選択",
