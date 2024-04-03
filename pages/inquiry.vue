@@ -106,10 +106,15 @@ const transformAdapter = (field) => {
 };
 
 onMounted(async () => {
-  const getFieldType = (type) => {
-    switch (type) {
+  const getFieldType = (field) => {
+    switch (field.type) {
       case 1:
-        return 'text';
+        if (field.title === 'email') {
+          return 'email';
+        }
+        else {
+          return 'text';
+        }
       case 2:
         return 'textarea';
       case 3:
@@ -134,7 +139,7 @@ onMounted(async () => {
     formFields.value = Object.values(response.details.cols)
       .map((d) => ({
         ...d,
-        type: getFieldType(d.type),
+        type: getFieldType(d),
         required: d.required === 2,
         options: transformAdapter(d),
       }))
