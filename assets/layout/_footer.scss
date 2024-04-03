@@ -1,6 +1,6 @@
 footer {
     background-color: inherit !important;
-    border-top: 1px solid rgba(255,255,255, 0.1) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
     margin-top: 20px;
 
     @at-root .p-dashboard & {
@@ -15,7 +15,6 @@ footer {
 }
 
 .l-footer {
-    
     &_copyright {
         color: #fff;
     }
