@@ -56,7 +56,10 @@
         <v-app-bar-nav-icon
           v-if="authUser.member_id"
           @click.stop="drawer = !drawer"
+          class="c-navi_side-trigger"
         />
+          <i v-if="drawer" class="c-navi_side-trigger_icon mdi-menu mdi v-icon v-icon--size-default" aria-hidden="true"></i>
+          <i v-else class="c-navi_side-trigger_icon mdi-format-indent-decrease mdi v-icon v-icon--size-default" aria-hidden="true"></i>
         <v-spacer />
 
         <v-toolbar-title height="30" class="l-header_user" v-text="subtitle" />

@@ -62,3 +62,45 @@
         }
     }
 }
+
+//Sidebar Main Menu Alter
+
+@media only screen and (min-width: 1264px) {
+
+.v-navigation-drawer {
+    transform: translateX(0%) !important;
+
+    &.v-navigation-drawer--active {
+        transform: translateX(-110%) !important;
+    }
+}
+.v-toolbar.l-header_toolbar {
+    left: 256px!important;
+    width: calc(100% - 256px)!important;
+
+    @at-root .v-navigation-drawer--active + & {
+        left: 0px!important;
+        width: calc(100% + 0px)!important;
+    }
+}
+.p-dashboard .v-main {
+    padding-left: 256px!important;
+
+    @at-root .p-dashboard .v-navigation-drawer--active + .l-header_toolbar + .v-main {
+        padding-left: 0!important;
+    }
+}
+
+}
+
+.c-navi_side-trigger {
+    z-index: 9;
+
+    & .mdi-menu {
+        display: none;
+    }
+    &_icon {
+        position: relative;
+        left: -36px;
+    }
+}
