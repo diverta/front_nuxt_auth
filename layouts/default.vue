@@ -34,17 +34,21 @@
                     </v-btn>
                 </template>
                 <template v-else>
-                    <!-- <div v-if="$route.name === 'signup'" class="white--text">
-            <span>Already have an account?</span>
-            <button
-              class="c-btn c-btn_sm c-btn_dark ml-2"
-              nuxt
-              @click="() => $router.push(localePath('/'))"
-            >
-              {{ $t("common.sign_in") }}
-            </button>
-          </div> -->
-                    <div class="white--text">
+                    <div v-if="$route.name === 'signup'" class="white--text">
+                        <span>Already have an account?</span>
+                        <button
+                            class="c-btn c-btn_sm c-btn_dark ml-2"
+                            nuxt
+                            @click="
+                                () => {
+                                    useRouter().push('/');
+                                }
+                            "
+                        >
+                            {{ $t('common.sign_in') }}
+                        </button>
+                    </div>
+                    <div v-else class="white--text">
                         <span class="d-none d-sm-inline">New to Muzica?</span>
                         <button
                             class="c-btn c-btn_sm c-btn_dark ml-2"
