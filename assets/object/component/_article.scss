@@ -13,7 +13,7 @@
         position: relative;
 
         &::before {
-            content: "No image";
+            content: 'No image';
             position: absolute;
             z-index: -1px;
             text-align: center;
@@ -27,5 +27,4 @@
     &_title {
         word-break: break-word;
     }
-
 }

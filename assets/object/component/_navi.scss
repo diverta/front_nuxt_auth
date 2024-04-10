@@ -1,7 +1,6 @@
 #c-navi {
-
     &_side {
-        background: linear-gradient(to bottom, #152E4D, #051324) !important;
+        background: linear-gradient(to bottom, #152e4d, #051324) !important;
         max-width: 256px;
 
         & a {
@@ -14,11 +13,9 @@
             }
         }
     }
-
 }
 
 .c-navi {
-
     &_side {
         &-logo {
             max-width: 150px;
@@ -66,31 +63,29 @@
 //Sidebar Main Menu Alter
 
 @media only screen and (min-width: 1264px) {
+    .v-navigation-drawer {
+        transform: translateX(0%) !important;
 
-.v-navigation-drawer {
-    transform: translateX(0%) !important;
-
-    &.v-navigation-drawer--active {
-        transform: translateX(-110%) !important;
+        &.v-navigation-drawer--active {
+            transform: translateX(-110%) !important;
+        }
     }
-}
-.v-toolbar.l-header_toolbar {
-    left: 256px!important;
-    width: calc(100% - 256px)!important;
+    .v-toolbar.l-header_toolbar {
+        left: 256px !important;
+        width: calc(100% - 256px) !important;
 
-    @at-root .v-navigation-drawer--active + & {
-        left: 0px!important;
-        width: calc(100% + 0px)!important;
+        @at-root .v-navigation-drawer--active + & {
+            left: 0px !important;
+            width: calc(100% + 0px) !important;
+        }
     }
-}
-.p-dashboard .v-main {
-    padding-left: 256px!important;
+    .p-dashboard .v-main {
+        padding-left: 256px !important;
 
-    @at-root .p-dashboard .v-navigation-drawer--active + .l-header_toolbar + .v-main {
-        padding-left: 0!important;
+        @at-root .p-dashboard .v-navigation-drawer--active + .l-header_toolbar + .v-main {
+            padding-left: 0 !important;
+        }
     }
-}
-
 }
 
 .c-navi_side-trigger {
