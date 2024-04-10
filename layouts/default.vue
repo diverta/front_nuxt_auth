@@ -1,7 +1,7 @@
 <template>
     <ClientOnly>
         <v-app class="l-content_wrap" :class="{ 'p-dashboard': isLoggedIn, 'p-login': !isLoggedIn }">
-            <v-navigation-drawer v-if="authUser.member_id" id="c-navi_side" v-model="drawer" left fixed dark temporary>
+            <v-navigation-drawer v-if="authUser.member_id" id="c-navi_side" v-model="drawer" left fixed dark permanent>
                 <div class="text-center py-4">
                     <a href="/">
                         <img src="~/assets/images/logo.png?width=150" class="c-navi_side-logo" />
@@ -19,7 +19,9 @@
             </v-navigation-drawer>
 
             <v-app-bar :clipped-left="clipped" color="#1414A0" dense dark app class="l-header_toolbar">
-                <v-app-bar-nav-icon v-if="authUser.member_id" @click.stop="drawer = !drawer" />
+                <v-app-bar-nav-icon v-if="authUser.member_id" class="c-navi_side-trigger" @click.stop="drawer = !drawer" />
+                <i v-if="drawer" class="c-navi_side-trigger_icon mdi-menu mdi v-icon v-icon--size-default" aria-hidden="true"></i>
+                <i v-else class="c-navi_side-trigger_icon mdi-format-indent-decrease mdi v-icon v-icon--size-default" aria-hidden="true"></i>
                 <v-spacer />
 
                 <v-toolbar-title height="30" class="l-header_user" v-text="subtitle" />
