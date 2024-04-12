@@ -10,6 +10,7 @@
                     <FormKit
                         id="inquiry-form"
                         type="form"
+                        :incomplete-message="$t('verify.fille_property')"
                         :submit-label="$t('common.submit')"
                         :submit-attrs="{
                             wrapperClass: 'inquiry-form_elm-submit'
@@ -31,6 +32,9 @@
                                     :name="field.key"
                                     :label="field.title"
                                     :validation="field.required ? 'required' : ''"
+                                    :validation-messages="{
+                                        required: $t('verify.required_field')
+                                    }"
                                     :classes="{
                                         outer: `inquiry-form_elm-${field.type}`
                                     }"
@@ -42,6 +46,9 @@
                                     :name="field.key"
                                     :label="field.title"
                                     :validation="field.required ? 'required' : ''"
+                                    :validation-messages="{
+                                        required: $t('verify.required_field')
+                                    }"
                                     :options="field.options"
                                     :classes="{
                                         outer: `inquiry-form_elm-${field.type}`
@@ -54,6 +61,9 @@
                             :label="$t('common.agree')"
                             name="term"
                             validation="accepted"
+                            :validation-messages="{
+                                accepted: $t('verify.terms_of_use')
+                            }"
                             :classes="{
                                 outer: 'inquiry-form_elm-terms',
                                 wrapper: 'inquiry-form_elm-terms_wrapper'
@@ -73,6 +83,8 @@ const router = useRouter();
 const snackbar = useSnackbar();
 const loading = ref(true);
 const formFields = ref({});
+const localePath = useLocalePath();
+const { t } = useI18n();
 
 const transformAdapter = (field) => {
     if (Array.isArray(field.options)) {
@@ -88,10 +100,14 @@ const transformAdapter = (field) => {
 };
 
 onMounted(async () => {
-    const getFieldType = (type) => {
-        switch (type) {
+    const getFieldType = (field) => {
+        switch (field.type) {
             case 1:
-                return 'text';
+                if (field.title === 'email') {
+                    return 'email';
+                } else {
+                    return 'text';
+                }
             case 2:
                 return 'textarea';
             case 3:
@@ -116,7 +132,7 @@ onMounted(async () => {
         formFields.value = Object.values(response.details.cols)
             .map((d) => ({
                 ...d,
-                type: getFieldType(d.type),
+                type: getFieldType(d),
                 required: d.required === 2,
                 options: transformAdapter(d)
             }))
@@ -128,9 +144,9 @@ onMounted(async () => {
     } catch (e) {
         snackbar.add({
             type: 'error',
-            text: e?.response?._data?.errors?.[0]?.message || 'An error occurred'
+            text: e?.response?._data?.errors?.[0]?.message || t('common.error')
         });
-        router.push('/');
+        router.push(localePath('/'));
     } finally {
         loading.value = false;
     }
@@ -173,7 +189,7 @@ const handleFileUpload = async ({ key, event }) => {
     } catch (error) {
         snackbar.add({
             type: 'error',
-            text: error?.response?._data?.errors?.[0]?.message || 'An error occurred'
+            text: error?.response?._data?.errors?.[0]?.message || t('common.error')
         });
         formFields.value[key].fileObject = undefined;
     } finally {
@@ -206,12 +222,12 @@ const handleSubmit = async (formValues) => {
         reset('inquiry-form');
         snackbar.add({
             type: 'success',
-            text: 'Inquiry posted successfully'
+            text: t('inquiry.thanks')
         });
     } catch (e) {
         snackbar.add({
             type: 'error',
-            text: e?.response?._data?.errors?.[0]?.message || 'An error occurred'
+            text: e?.response?._data?.errors?.[0]?.message || t('common.error')
         });
     } finally {
         loading.value = false;

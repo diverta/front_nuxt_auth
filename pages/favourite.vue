@@ -10,6 +10,7 @@
     </ClientOnly>
 </template>
 <script setup>
+const { t } = useI18n();
 const { authUser } = useAuth();
 const snackbar = useSnackbar();
 const topics = ref([]);
@@ -52,7 +53,7 @@ const updateTopics = async () => {
     } catch (error) {
         snackbar.add({
             type: 'error',
-            text: error?.response?._data?.errors?.[0]?.message || 'An error occurred'
+            text: error?.response?._data?.errors?.[0]?.message || t('common.error')
         });
     }
 };

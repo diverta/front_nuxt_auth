@@ -65,6 +65,8 @@
     </ClientOnly>
 </template>
 <script setup>
+const { authUser } = useAuth();
+const { t } = useI18n();
 const snackbar = useSnackbar();
 const route = useRoute();
 const member_id = ref(null);
@@ -119,7 +121,7 @@ const fetchProfile = async () => {
     } catch (error) {
         snackbar.add({
             type: 'error',
-            text: error?.response?._data?.errors?.[0]?.message || 'An error occurred'
+            text: error?.response?._data?.errors?.[0]?.message || t('common.error')
         });
     }
 };

@@ -16,6 +16,8 @@ const router = useRouter();
 const snackbar = useSnackbar();
 const profile = ref({});
 const loading = ref(false);
+const localePath = useLocalePath();
+const { t } = useI18n();
 
 const hasProfile = computed(() => Object.keys(profile.value).length > 0);
 
@@ -44,9 +46,9 @@ onMounted(async () => {
     } catch (error) {
         snackbar.add({
             type: 'error',
-            text: error?.response?._data?.errors?.[0]?.message || 'An error occurred'
+            text: error?.response?._data?.errors?.[0]?.message || t('common.error')
         });
-        router.push('/profile');
+        router.push(localePath('/profile'));
     } finally {
         loading.value = false;
     }
@@ -71,16 +73,16 @@ const handleSubmit = async (formValues) => {
 
         snackbar.add({
             type: 'success',
-            text: 'Profile updated successfully'
+            text: t('mypage.profile_changed')
         });
     } catch (e) {
         snackbar.add({
             type: 'error',
-            text: e?.response?._data?.errors?.[0]?.message || 'An error occurred'
+            text: e?.response?._data?.errors?.[0]?.message || t('common.error')
         });
     } finally {
         loading.value = false;
-        router.push('/profile');
+        router.push(localePath('/profile'));
     }
 };
 </script>

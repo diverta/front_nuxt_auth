@@ -47,7 +47,7 @@
 
             <!-- </v-row> -->
             <div class="text-center col mt-5">
-                <button type="submit" class="c-btn c-btn_dark c-btn_icon" @click="() => $router.push('/topics_list')">
+                <button type="submit" class="c-btn c-btn_dark c-btn_icon" @click="() => $router.push(localePath('/topics_list'))">
                     {{ $t('common.back_to_listing') }}
                     <v-icon class="icon pr-2"> mdi-undo-variant </v-icon>
                 </button>
@@ -57,12 +57,14 @@
 </template>
 <script setup>
 const { authUser } = useAuth();
+const { t } = useI18n();
 const route = useRoute();
 const topicsDetail = ref(null);
 const loading = ref(true);
 const favoriteResponse = ref(null);
 const favoriteColor = ref('grey');
 const snackbar = useSnackbar();
+const localePath = useLocalePath();
 
 const items = computed(() => {
     if (!topicsDetail.value) {
@@ -112,7 +114,7 @@ const onClickToggleFavorite = async () => {
     } catch (error) {
         snackbar.add({
             type: 'error',
-            text: error?.response?._data?.errors?.[0]?.message || 'An error occurred'
+            text: error?.response?._data?.errors?.[0]?.message || t('common.error')
         });
     }
 };
@@ -153,7 +155,7 @@ try {
 } catch (error) {
     snackbar.add({
         type: 'error',
-        text: error?.response?._data?.errors?.[0]?.message || 'An error occurred'
+        text: error?.response?._data?.errors?.[0]?.message || t('common.error')
     });
 }
 </script>

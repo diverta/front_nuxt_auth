@@ -104,13 +104,13 @@
     },
     "verify": {
         "required_field": "required field",
-        "password_format": "Please enter 8 or more single-byte alphanumerical characters.If you want to use the symbol, you can use -_&=+%#@$*.!:.",
+        "password_format": "Please enter 8 or more single-byte alphanumerical characters.If you want to use the symbol, you can use -_&=+%#{'@'}$*.!:.",
         "password_format_char_count": "Please enter 8 or more single-byte alphanumerical characters.",
-        "password_format_char_type": "Please enter alphanumerical characters and you can use -_&=+%#@$*.!:.",
+        "password_format_char_type": "Please enter alphanumerical characters and you can use -_&=+%#{'@'}$*.!:.",
         "text_minimum": "minimum ",
         "text_maximum": "maximum ",
         "text_character": " characters",
-        "text_format_email": "Wrong email format. Example ******@example.jp",
+        "text_format_email": "Wrong email format. Example ******{'@'}example.jp",
         "text_format_telephone":"Wrong telephone format. Example 0312345678",
         "text_format_zip":"Wrong zip format for Japan. Example 0212141",
         "text_format_numeric":"Wrong numeric format.",
@@ -119,7 +119,8 @@
         "multiple_required":"At least one item should be selected",
         "fille_property":"Please fill the fields properly.",
         "required_file":"need to upload file",
-        "required_checkbox":"need to check"
+        "required_checkbox":"need to check",
+        "terms_of_use":"Please agree to the terms of use."
     },
     "label": {
         "date_picker":"Date picker.",

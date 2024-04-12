@@ -41,7 +41,7 @@
                                             @click:append="() => (showsPassword = !showsPassword)"
                                         />
                                         <p class="pb-3">
-                                            <NuxtLink :to="'/reminder/'">
+                                            <NuxtLink :to="localePath('/reminder/')">
                                                 {{ $t('login.forget_password') }}
                                             </NuxtLink>
                                         </p>
@@ -62,6 +62,7 @@
     </section>
 </template>
 <script setup>
+const { t } = useI18n();
 const snackbar = useSnackbar();
 const { login } = useAuth();
 const sitekey = ref(apiDomain.sitekey);
@@ -83,7 +84,7 @@ const handleLogin = async () => {
         error.value = e?.data?.errors || [];
         snackbar.add({
             type: 'error',
-            text: e?.response?._data?.errors?.[0]?.message || 'An error occurred'
+            text: e?.response?._data?.errors?.[0]?.message || t('slackbar.login_fail')
         });
     }
     loading.value = false;

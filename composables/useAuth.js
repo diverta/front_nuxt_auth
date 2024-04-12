@@ -20,25 +20,23 @@ export function updateApiDomainFromLocalStorage() {
 }
 
 export const useAuth = () => {
+    const { t } = useI18n();
     const userRef = useUser();
     const snackbar = useSnackbar();
+    const localePath = useLocalePath();
 
     /** register user's information */
     const register = async (formData) => {
-        console.log('bamboo');
-        console.log(formData);
-        console.log(formData.email);
         const res = await $fetch(`${apiDomain.baseURL}/rcms-api/1/member/register`, {
             method: 'POST',
             body: formData,
             server: false
         });
 
-        console.log('Herer bhaii');
         if (res.errors.length > 0) {
             snackbar.add({
                 type: 'error',
-                text: res.errors.join('\n') || 'An error occurred'
+                text: res.errors.join('\n') || t('common.error')
             });
         } else {
             const loginDetails = { email: formData.email, password: formData.login_pwd };
@@ -58,7 +56,7 @@ export const useAuth = () => {
             credentials: 'include'
         });
         await profile();
-        useRouter().push('/');
+        useRouter().push(localePath('/'));
     };
 
     /** logout and clear user's information */
@@ -88,7 +86,14 @@ export const useAuth = () => {
 
             const router = useRouter();
             await router.isReady();
-            if (router.currentRoute.value.path === '/' || router.currentRoute.value.path === '/signup/' || router.currentRoute.value.path === '/reminder/') {
+            if (
+                router.currentRoute.value.path === '/' ||
+                router.currentRoute.value.path === '/ja' ||
+                router.currentRoute.value.path === '/signup' ||
+                router.currentRoute.value.path === '/ja/signup' ||
+                router.currentRoute.value.path === '/reminder' ||
+                router.currentRoute.value.path === '/ja/reminder'
+            ) {
                 return;
             }
             await router.push('/');

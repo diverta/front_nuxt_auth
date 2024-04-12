@@ -22,7 +22,7 @@
                             >
                             <v-col
                                 ><div class="col-sm-2 col-auto c-table_col">
-                                    <NuxtLink :to="`/topics_detail/${item.topics_id}`" no-prefetch>{{ item.subject }}</NuxtLink>
+                                    <NuxtLink :to="localePath(`/topics_detail/${item.topics_id}`)" no-prefetch>{{ item.subject }}</NuxtLink>
                                 </div></v-col
                             >
                         </v-row>
@@ -37,7 +37,7 @@
 </template>
 
 <script setup>
-// eslint-disable-next-line unused-imports/no-unused-vars
+const localePath = useLocalePath();
 const props = defineProps({
     topics: {
         type: Array,

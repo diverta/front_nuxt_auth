@@ -8,7 +8,7 @@
                     </a>
                 </div>
                 <v-list>
-                    <v-list-item v-for="(item, i) in items" :key="i" :to="item.to" router exact class="l-mainmenu_item">
+                    <v-list-item v-for="(item, i) in items" :key="i" :to="localePath(item.to)" router exact class="l-mainmenu_item">
                         <v-list-item-action>
                             <v-icon>{{ item.icon }}</v-icon>
                         </v-list-item-action>
@@ -24,10 +24,10 @@
                 <i v-else class="c-navi_side-trigger_icon mdi-format-indent-decrease mdi v-icon v-icon--size-default" aria-hidden="true"></i>
                 <v-spacer />
 
-                <v-toolbar-title height="30" class="l-header_user" v-text="subtitle" />
+                <v-toolbar-title v-if="authUser.member_id" height="30" class="l-header_user" v-text="$t('common.hi') + authUser.name1" />
 
                 <div class="l-header_lang">
-                    <v-select v-model="$i18n.locale" :items="langOptions" item-title="text" item-value="value" />
+                    <v-select v-model="language" :items="langOptions" item-title="text" item-value="value" />
                 </div>
 
                 <template v-if="authUser.member_id">
@@ -53,7 +53,7 @@
                             nuxt
                             @click="
                                 () => {
-                                    useRouter().push('/signup/');
+                                    useRouter().push(localePath('/signup/'));
                                 }
                             "
                         >
@@ -82,21 +82,24 @@
 
 <script setup>
 const { authUser, isLoggedIn, logout } = useAuth();
+const { locale, setLocale } = useI18n();
+const localePath = useLocalePath();
 
 const drawer = ref(false);
 const clipped = ref(false);
 
+const language = computed({
+    get: () => locale.value,
+    set: (val) => {
+        setLocale(val);
+    }
+});
+
 const handleLogout = async () => {
     await logout();
-    useRouter().push('/');
+    useRouter().push(localePath('/'));
 };
-const subtitle = computed(() => {
-    if (authUser.value.member_id) {
-        return 'Hi, ' + authUser.value.name1;
-        // return i18n.t("common.hi") + ", " + authUser.value.name1;
-    }
-    return '';
-});
+
 const langOptions = [
     { text: 'English', value: 'en' },
     { text: '日本語', value: 'ja' }

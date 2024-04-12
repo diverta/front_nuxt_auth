@@ -32,6 +32,7 @@
     </ClientOnly>
 </template>
 <script setup>
+const { t } = useI18n();
 const userList = ref([]);
 const currName = ref('');
 const currDepartment = ref('');
@@ -73,11 +74,10 @@ onMounted(async () => {
             phone: item.tel,
             id: item.member_id
         }));
-        console.log(userList.value);
     } catch (error) {
         snackbar.add({
             type: 'error',
-            text: error?.response?._data?.errors?.[0]?.message || 'An error occurred'
+            text: error?.response?._data?.errors?.[0]?.message || t('common.error')
         });
         if (error?.response?.status) {
             isDisallowed.value = true;

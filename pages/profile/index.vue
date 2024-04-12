@@ -49,7 +49,7 @@
                 </v-row>
             </v-col>
             <div class="text-center col text-white">
-                <button type="submit" class="c-btn c-btn_dark c-btn_icon" @click="$router.push('/profile/edit')">
+                <button type="submit" class="c-btn c-btn_dark c-btn_icon" @click="$router.push(localePath('/profile/edit'))">
                     {{ $t('common.edit') }}
                     <v-icon class="icon c-text_white pl-2"> mdi-pencil </v-icon>
                 </button>
@@ -58,7 +58,9 @@
     </ClientOnly>
 </template>
 <script setup>
+const { t } = useI18n();
 const snackbar = useSnackbar();
+const localePath = useLocalePath();
 const { authUser } = useAuth();
 const placeholder = computed(() => {
     return new URL('@/assets/images/avatar-placeholder.png', import.meta.url).href;
@@ -104,7 +106,7 @@ const fetchProfile = async () => {
     } catch (error) {
         snackbar.add({
             type: 'error',
-            text: error?.response?._data?.errors?.[0]?.message || 'An error occurred'
+            text: error?.response?._data?.errors?.[0]?.message || t('common.error')
         });
     }
 };

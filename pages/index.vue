@@ -13,7 +13,7 @@
             <TopicsGrid :topics="topicsList" />
 
             <div class="text-center py-5 mt-4 text-white">
-                <a type="submit" block x-large color="success" class="c-btn c-btn_main c-btn_md c-btn_icon" @click="() => $router.push('/topics_list/')">
+                <a type="submit" block x-large color="success" class="c-btn c-btn_main c-btn_md c-btn_icon" @click="() => $router.push(localePath('/topics_list/'))">
                     {{ $t('top.more_articles') }}
                     <v-icon dark right class="icon"> mdi-arrow-right-drop-circle </v-icon>
                 </a>
@@ -26,7 +26,7 @@
             <TopicsList :topics="favouriteList" />
 
             <div class="text-center py-5 text-white">
-                <a type="submit" block x-large color="success" class="c-btn c-btn_main c-btn_md c-btn_icon" @click="() => $router.push('/favourite/')">
+                <a type="submit" block x-large color="success" class="c-btn c-btn_main c-btn_md c-btn_icon" @click="() => $router.push(localePath('/favourite/'))">
                     {{ $t('top.more_starred') }}
                     <v-icon dark right class="icon"> mdi-arrow-right-drop-circle </v-icon>
                 </a>
@@ -35,12 +35,14 @@
     </ClientOnly>
 </template>
 <script setup>
+const { t } = useI18n();
 const { authUser } = useAuth();
 const topicsList = ref([]);
 const favouriteList = ref([]);
 const perPage = ref(5);
 const active = ref(0);
 const snackbar = useSnackbar();
+const localePath = useLocalePath();
 
 const sliderImages = computed(() => {
     return topicsList.value.map((topic) => topic?.ext_8?.url).filter((sliderImage) => sliderImage);
@@ -57,7 +59,7 @@ const updateTopics = async () => {
     } catch (error) {
         snackbar.add({
             type: 'error',
-            text: error?.response?._data?.errors?.[0]?.message || 'An error occurred'
+            text: error?.response?._data?.errors?.[0]?.message || t('common.error')
         });
     }
 };
@@ -91,7 +93,7 @@ const updateFavourite = async () => {
     } catch (error) {
         snackbar.add({
             type: 'error',
-            text: error?.response?._data?.errors?.[0]?.message || 'An error occurred'
+            text: error?.response?._data?.errors?.[0]?.message || t('common.error')
         });
     }
 };

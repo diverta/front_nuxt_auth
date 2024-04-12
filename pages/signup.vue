@@ -13,7 +13,18 @@
 
                     <ProfileForm @submit="handleSubmit">
                         <template #headInput>
-                            <FormKit v-model="sitekey" name="sitekey" :label="$t('login.site_key')" type="text" :classes="{ outer: 'signup-form_elm-sitekey' }" validation="required|length:0,100" />
+                            <FormKit
+                                v-model="sitekey"
+                                name="sitekey"
+                                :label="$t('login.site_key')"
+                                type="text"
+                                :classes="{ outer: 'signup-form_elm-sitekey' }"
+                                validation="required|length:0,100"
+                                :validation-messages="{
+                                    required: $t('verify.required_field'),
+                                    length: $t('verify.text_maximum')
+                                }"
+                            />
                         </template>
                     </ProfileForm>
                 </v-container>
@@ -22,6 +33,7 @@
     </ClientOnly>
 </template>
 <script setup>
+const { t } = useI18n();
 const snackbar = useSnackbar();
 const { register } = useAuth();
 const loading = ref(false);
@@ -40,7 +52,7 @@ const handleSubmit = async (formValues) => {
     } catch (error) {
         snackbar.add({
             type: 'error',
-            text: error?.response?._data?.errors?.[0]?.message || 'An error occurred'
+            text: error?.response?._data?.errors?.[0]?.message || t('common.error')
         });
     } finally {
         loading.value = false;

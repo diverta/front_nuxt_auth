@@ -19,6 +19,7 @@
     </ClientOnly>
 </template>
 <script setup>
+const { t } = useI18n();
 const topics = ref([]);
 const text = ref('0');
 const page = ref(1);
@@ -57,7 +58,7 @@ const updateTopics = async () => {
     } catch (error) {
         snackbar.add({
             type: 'error',
-            text: error?.response?._data?.errors?.[0]?.message || 'An error occurred'
+            text: error?.response?._data?.errors?.[0]?.message || t('common.error')
         });
     }
 };
@@ -76,7 +77,7 @@ onMounted(async () => {
     } catch (error) {
         snackbar.add({
             type: 'error',
-            text: error?.response?._data?.errors?.[0]?.message || 'An error occurred'
+            text: error?.response?._data?.errors?.[0]?.message || t('common.error')
         });
     }
     updateTopics();
