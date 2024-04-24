@@ -16,7 +16,7 @@ jobs:
   # for Pull Request (exclude merged)
   pullreq_build:
     name: Build(pullreq)
-    if: (github.repository == 'VortexExpansion/front_nuxt_auth' && github.event_name == 'issue_comment' && startsWith(github.event.comment.body, '/kuroco stage') && github.event.issue.pull_request != null)
+    if: (github.repository == 'diverta/front_nuxt_auth' && github.event_name == 'issue_comment' && startsWith(github.event.comment.body, '/kuroco stage') && github.event.issue.pull_request != null)
     runs-on: ubuntu-latest
     steps:
       - name: "Get branch name and sha"
@@ -67,7 +67,7 @@ jobs:
   #for Push
   pushed_build:
     name: Build(pushed)
-    if: (github.repository == 'VortexExpansion/front_nuxt_auth' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch'))
+    if: (github.repository == 'diverta/front_nuxt_auth' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch'))
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
