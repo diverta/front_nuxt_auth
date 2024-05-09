@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - nuxt3
   issue_comment:
     types: [created, edited]
   workflow_dispatch:
