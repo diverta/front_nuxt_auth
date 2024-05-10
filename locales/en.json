@@ -1,0 +1,150 @@
+{
+    "hello": "Hello, {name}!",
+  "language": "Language",
+    "common": {
+        "sign_in": "Sign In",
+        "password" : "Password",
+        "sitekey": "SiteKey",
+        "id": "ID",
+        "close": "CLOSE",
+        "hi": "Hi,",
+        "back_to_listing": "Back to listing",
+        "back" : "Back",
+        "submit" : "SUBMIT",
+        "edit": "Edit",
+        "save": "Save",
+        "agree": "I agree to the terms of Use.",
+        "executed": "A process has executed.",
+        "error": "An error has occurred."
+    },
+    "slackbar": {
+        "logged_in" : "Logged in.",
+        "login_fail": "Login failed.",
+        "logged_out": "Logged Out."
+    },
+    "login" : {
+        "welcomeback": "Welcome Back to <br> Muzica!",
+        "message" : "Sign in to continue your portal",
+        "demoaccount": "Demo account",
+        "site_key": "Your sitekey",
+        "email": "Email address",
+        "forget_password" : "Forgot Password?",
+        "note": "※This site does't work on iOS because of ITP. <br>But you can build this with your domain, it will work fine.<br>This site is just for demonstration."
+    },
+    "top" : {
+        "latest_articles": "Latest articles",
+        "starred": "Starred",
+        "more_articles": "More articles",
+        "more_starred": "More starred post"
+    },
+    "detail" : {
+        "files" : "Files:",
+        "view": "View",
+        "download" : "Download",
+        "links": "Links:",
+        "thanks": "Thanks! Your topic is updated."
+    },
+    "member" : {
+        "search" : "Seach",
+        "search_member": "Search member",
+        "department" : "Deparment",
+        "detail_title" : "Member details",
+        "disallowed": "You don't have permission to perform this action."
+    },
+    "mypage" : {
+        "title": "My page",
+        "my_page": "My page",
+        "favoire_list": "Favorite List",
+        "profile_edit": "Profile Edit",
+        "posted_list": "Posted list",
+        "profile_editing" : "Profile editing",
+        "my_topics": "My topics",
+        "all": "ALL",
+        "profile_changed":"Your profile is changed.",
+        "select_type": "Select type of the Topic #",
+        "tab_file":"File document",
+        "tab_url":"Url link",
+        "tab_detal":"Detail page",
+        "file_type":"File type",
+        "link_url":"Link URL",
+        "text_display":"Text to display",
+        "choose_file":"Choose file type/ upload file."
+    },
+    "signup": {
+        "title": "Sign up",
+        "text": "Please complete the form below to sign up",
+        "success":"Your registration is successful."
+    },
+    "inquiry": {
+        "message": "Please provide us your information, we will be in touch with you shortly. ",
+        "thanks":"Thanks! Your inquiry submitted."
+    },
+    "reminder": {
+        "back_to_login": "Back to <a href='/'>login</a>",
+        "sign_up": "Don't have an account? <a href='/signup/'>Sign up here</a>",
+        "password_reset" : "Password reset",
+        "send_email" : "A password reset URL will be sent to the email address you provided.",
+        "send_emailed": "A password reset URL has been sent to <br>the email address you provided.",
+        "reset" : "Reset my password",
+        "set_password": "Set New Password",
+        "temp_password": "Temporary password",
+        "new_password" : "New password",
+        "conf_password": "Confirmation password",
+        "submit" : "Submit",
+        "update_ok" : "Your password has been updated",
+        "login": "Login",
+        "rule" : "Please set a mixture of alphanumeric characters and at least 8 characters.",
+        "required": "This field is required.",
+        "word_count": "Please input at least 8 characters.",
+        "conf_error": "The confirmation password is incorrect.",
+        "not_entered": "Please input a new password.",
+        "password_sent": "A password reset email has been sent. Please set a new password from the link in the email.",
+        "invalid_email": "Invalid email address.",
+        "already_updated": "Your password has been updated."
+    },
+    "verify": {
+        "required_field": "required field",
+        "password_format": "Please enter 8 or more single-byte alphanumerical characters.If you want to use the symbol, you can use -_&=+%#{'@'}$*.!:.",
+        "password_format_char_count": "Please enter 8 or more single-byte alphanumerical characters.",
+        "password_format_char_type": "Please enter alphanumerical characters and you can use -_&=+%#{'@'}$*.!:.",
+        "text_minimum": "minimum ",
+        "text_maximum": "maximum ",
+        "text_character": " characters",
+        "text_format_email": "Wrong email format. Example ******{'@'}example.jp",
+        "text_format_telephone":"Wrong telephone format. Example 0312345678",
+        "text_format_zip":"Wrong zip format for Japan. Example 0212141",
+        "text_format_numeric":"Wrong numeric format.",
+        "text_format_url":"Wrong url format.",
+        "text_format_regex":"Wrong regex format. ",
+        "multiple_required":"At least one item should be selected",
+        "fille_property":"Please fill the fields properly.",
+        "required_file":"need to upload file",
+        "required_checkbox":"need to check",
+        "terms_of_use":"Please agree to the terms of use."
+    },
+    "label": {
+        "date_picker":"Date picker.",
+        "time_picker":"Time picker.",
+        "first_name":"First Name",
+        "last_name":"Last Name",
+        "department":"Department",
+        "position":"Position",
+        "phone":"Phone",
+        "email":"Email address",
+        "password":"Password",
+        "address":"Address",
+        "avatar":"Avatar",
+        "pull_down":"Pull-down",
+        "radio":"Radio button",
+        "multiple":"Multiple",
+        "notes":"Notes",
+        "gender":"Gender",
+        "sex":"Sex",
+        "hire_date":"Hire Date",
+        "birthday":"Birthday",
+        "office":"Office",
+        "hobby":"Hobby"
+    }
+
+
+}

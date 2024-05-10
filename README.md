@@ -1,29 +1,23 @@
-# nuxt_auth
+# Setup
 
-## Build Setup
+## Nodeバージョン
+Nodeバージョンは `.nvmrc` 記載のバージョンに指定してください。  
+`nvm`を使用している場合は、`nvm use`で指定バージョンに切り替えができます。
 
+## ローカルサーバー起動
 ```bash
-# install dependencies
-$ npm install
+npm install
+npm run dev
+```
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+## generate
+```bash
+npm run generate
+```
 
-# build for development and launch server
-$ npm run build
-$ npm run start
+## Locally preview production build:
+```bash
+npm run preview
+```
 
-# generate static project for development
-$ npm run generate
-
-# build for production and launch server
-$ npm run build-prod
-
-# generate static project for production
-$ npm run generate-prod
-
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
-
-# License
-The source code is licensed MIT.
+[Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction)

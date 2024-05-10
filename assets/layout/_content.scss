@@ -1,0 +1,46 @@
+.l-content {
+    &_wrap {
+        background: inherit !important;
+    }
+    &_maxWidth {
+        &-sm {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+    }
+    &_inner {
+        height: 100%;
+        max-width: 1410px;
+
+        & > div {
+            height: 100%;
+        }
+    }
+    &_heading {
+        text-align: center;
+        margin-bottom: 50px;
+
+        & .slogan {
+            font-weight: normal;
+        }
+    }
+}
+
+.l-mainmenu {
+    &_item {
+        & .v-list-item__content {
+            display: flex;
+        }
+        & .v-list-item-action {
+            padding-right: 20px;
+        }
+    }
+}
+
+.v-main__wrap {
+    padding-top: 50px;
+
+    @at-root .p-home & {
+        padding-top: 25px;
+    }
+}
