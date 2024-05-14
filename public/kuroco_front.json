@@ -7,5 +7,19 @@
         "source": ".*",
         "destination": "/index.html"
       }
-    ]
+    ],
+    "inject_data": {
+      "/reminder/": [
+        [
+          "og_title",
+          "content",
+          "Reminder"
+        ],
+        [
+          "og_description",
+          "content",
+          "Reminder page"
+        ]
+      ]
+    }
   }
