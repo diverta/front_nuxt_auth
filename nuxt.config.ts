@@ -20,7 +20,7 @@ export default defineNuxtConfig({
             });
         },
         '@formkit/nuxt',
-        'nuxt-snackbar',,
+        'nuxt-snackbar',
         '@nuxtjs/i18n',
         '@nuxt/eslint',
     ],
