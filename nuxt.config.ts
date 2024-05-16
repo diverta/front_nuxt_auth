@@ -15,20 +15,18 @@ export default defineNuxtConfig({
             meta: [
                 { charset: 'utf-8' },
                 { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-                { hid: 'description', name: 'description', content: '' },
+                { name: 'description', content: '' },
                 {
-                    hid: 'og:title',
-                    'data-kuroco-replace': 'og_title',
+                    name: 'og_title',
                     property: 'og:title',
                     content: 'Kuroco sample'
                 },
                 {
-                    hid: 'og:description',
-                    'data-kuroco-replace': 'og_description',
+                    name: 'og_description',
                     property: 'og:description',
                     content: 'Kuroco sample page'
                 },
-                { hid: 'robots', name: 'robots', content: 'index' }
+                { name: 'robots', content: 'index' }
             ],
             link: [
                 { rel: 'icon', type: 'image/svg+xml', href: '/icon_kuroco.svg' },
