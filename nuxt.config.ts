@@ -6,6 +6,34 @@ export default defineNuxtConfig({
         }
     },
 
+    app: {
+        head: {
+            title: 'Nuxt Auth',
+            htmlAttrs: {
+                lang: 'ja'
+            },
+            meta: [
+                { charset: 'utf-8' },
+                { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+                { name: 'description', content: '' },
+                {
+                    name: 'og_title',
+                    property: 'og:title',
+                    content: 'Kuroco sample'
+                },
+                {
+                    name: 'og_description',
+                    property: 'og:description',
+                    content: 'Kuroco sample page'
+                },
+                { name: 'robots', content: 'index' }
+            ],
+            link: [
+                { rel: 'icon', type: 'image/svg+xml', href: '/icon_kuroco.svg' },
+            ]
+        }
+    },
+
     devtools: { enabled: true },
     css: ['@/assets/style.scss'],
 
@@ -20,9 +48,9 @@ export default defineNuxtConfig({
             });
         },
         '@formkit/nuxt',
-        'nuxt-snackbar',,
+        'nuxt-snackbar',
         '@nuxtjs/i18n',
-        '@nuxt/eslint',
+        '@nuxt/eslint'
     ],
     i18n: {
         locales: [
@@ -33,8 +61,8 @@ export default defineNuxtConfig({
         strategy: 'prefix_except_default',
         langDir: 'locales',
         compilation: {
-            strictMessage: false, // To allow html tags in locales
-        },
+            strictMessage: false // To allow html tags in locales
+        }
     },
     formkit: {
         // Experimental support for auto loading (see note):

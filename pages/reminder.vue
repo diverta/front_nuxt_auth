@@ -1,5 +1,9 @@
 <template>
     <div class="p-login_content elevation-7">
+        <Head>
+            <Meta name="og_title" content="Reminder" />
+            <Meta name="og_description" content="Reminder page" />
+        </Head>
         <v-row>
             <v-col class="pa-0 col-sm-6 col-12">
                 <div class="p-login_intro">
