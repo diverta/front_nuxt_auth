@@ -36,7 +36,7 @@
                     </v-btn>
                 </template>
                 <template v-else>
-                    <div v-if="$route.name === 'signup'" class="white--text">
+                    <div v-if="router.currentRoute.value.path == '/signup' || router.currentRoute.value.path == '/ja/signup'" class="white--text">
                         <span>Already have an account?</span>
                         <button
                             class="c-btn c-btn_sm c-btn_dark ml-2"
@@ -61,7 +61,7 @@
                                 }
                             "
                         >
-                            Sign Up
+                            {{ $t('signup.title') }}
                         </button>
                     </div>
                 </template>
@@ -88,6 +88,7 @@
 const { authUser, isLoggedIn, logout } = useAuth();
 const { locale, setLocale } = useI18n();
 const localePath = useLocalePath();
+const router = useRouter();
 
 const drawer = ref(false);
 const clipped = ref(false);
