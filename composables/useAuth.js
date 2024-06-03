@@ -92,7 +92,9 @@ export const useAuth = () => {
                 router.currentRoute.value.path === '/signup' ||
                 router.currentRoute.value.path === '/ja/signup' ||
                 router.currentRoute.value.path === '/reminder' ||
-                router.currentRoute.value.path === '/ja/reminder'
+                router.currentRoute.value.path === '/ja/reminder' ||
+                router.currentRoute.value.path === '/preview/topics_detail' ||
+                router.currentRoute.value.path === 'ja/preview/topics_detail'
             ) {
                 return;
             }
