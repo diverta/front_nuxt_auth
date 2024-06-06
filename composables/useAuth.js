@@ -123,3 +123,40 @@ export const useAuth = () => {
         profile
     };
 };
+
+export const useNavDrawerItems = () => {
+    const items = [
+        {
+            icon: 'mdi-home',
+            title: 'Home',
+            titleLoggedIn: 'Home',
+            to: '/'
+        },
+        {
+            icon: 'mdi-newspaper-variant',
+            title: 'Articles',
+            to: '/topics_list'
+        },
+        {
+            icon: 'mdi-star',
+            title: 'Starred',
+            to: '/favourite'
+        },
+        {
+            icon: 'mdi-account-tie',
+            title: 'Member',
+            to: '/member'
+        },
+        {
+            icon: 'mdi-account-box',
+            title: 'My Profile',
+            to: '/profile'
+        },
+        {
+            icon: 'mdi-send',
+            title: 'Feedback',
+            to: '/inquiry'
+        }
+    ];
+    return items;
+};

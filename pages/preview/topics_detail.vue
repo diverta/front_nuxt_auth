@@ -41,6 +41,10 @@
     </div>
 </template>
 <script setup>
+definePageMeta({
+    layout: 'preview'
+});
+
 const { t } = useI18n();
 const route = useRoute();
 const preview_token = route.query.preview_token;
