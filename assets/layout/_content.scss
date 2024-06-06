@@ -34,6 +34,12 @@
         & .v-list-item-action {
             padding-right: 20px;
         }
+
+        &.disabled {
+            color: #fff !important;
+            pointer-events: none;
+            opacity: 0.7;
+        }
     }
 }
 

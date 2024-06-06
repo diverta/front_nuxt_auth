@@ -8,7 +8,7 @@
                     </a>
                 </div>
                 <v-list>
-                    <v-list-item v-for="(item, i) in items" :key="i" :to="preview_token ? null : localePath(item.to)" router exact class="l-mainmenu_item">
+                    <v-list-item v-for="(item, i) in items" :key="i" :to="preview_token ? null : localePath(item.to)" router exact class="l-mainmenu_item" :class="{ disabled: !!preview_token }">
                         <v-list-item-action>
                             <v-icon>{{ item.icon }}</v-icon>
                         </v-list-item-action>
