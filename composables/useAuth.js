@@ -92,7 +92,9 @@ export const useAuth = () => {
                 router.currentRoute.value.path === '/signup' ||
                 router.currentRoute.value.path === '/ja/signup' ||
                 router.currentRoute.value.path === '/reminder' ||
-                router.currentRoute.value.path === '/ja/reminder'
+                router.currentRoute.value.path === '/ja/reminder' ||
+                router.currentRoute.value.path === '/preview/topics_detail' ||
+                router.currentRoute.value.path === 'ja/preview/topics_detail'
             ) {
                 return;
             }
@@ -120,4 +122,41 @@ export const useAuth = () => {
         logout,
         profile
     };
+};
+
+export const useNavDrawerItems = () => {
+    const items = [
+        {
+            icon: 'mdi-home',
+            title: 'Home',
+            titleLoggedIn: 'Home',
+            to: '/'
+        },
+        {
+            icon: 'mdi-newspaper-variant',
+            title: 'Articles',
+            to: '/topics_list'
+        },
+        {
+            icon: 'mdi-star',
+            title: 'Starred',
+            to: '/favourite'
+        },
+        {
+            icon: 'mdi-account-tie',
+            title: 'Member',
+            to: '/member'
+        },
+        {
+            icon: 'mdi-account-box',
+            title: 'My Profile',
+            to: '/profile'
+        },
+        {
+            icon: 'mdi-send',
+            title: 'Feedback',
+            to: '/inquiry'
+        }
+    ];
+    return items;
 };

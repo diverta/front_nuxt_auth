@@ -72,14 +72,7 @@
                     <slot />
                 </v-container>
             </v-main>
-
-            <v-footer color="#1414A0" padless>
-                <v-row justify="center" no-gutters class="pt-3">
-                    <a href="https://github.com/diverta/front_nuxt_auth"><small class="my-4 pt-3 l-footer_copyright">Github repository</small></a>
-                    <a href="https://kuroco.app/"><img src="~/assets/images/logo-kuroco.svg" width="120" class="pl-4 l-footer_logo" /></a>
-                    <v-col class="#1414A0 text-center white--text" cols="12" />
-                </v-row>
-            </v-footer>
+            <AppFooter />
         </v-app>
     </ClientOnly>
 </template>
@@ -89,7 +82,6 @@ const { authUser, isLoggedIn, logout } = useAuth();
 const { locale, setLocale } = useI18n();
 const localePath = useLocalePath();
 const router = useRouter();
-
 const drawer = ref(false);
 const clipped = ref(false);
 
@@ -109,37 +101,5 @@ const langOptions = [
     { text: 'English', value: 'en' },
     { text: '日本語', value: 'ja' }
 ];
-const items = [
-    {
-        icon: 'mdi-home',
-        title: 'Home',
-        titleLoggedIn: 'Home',
-        to: '/'
-    },
-    {
-        icon: 'mdi-newspaper-variant',
-        title: 'Articles',
-        to: '/topics_list'
-    },
-    {
-        icon: 'mdi-star',
-        title: 'Starred',
-        to: '/favourite'
-    },
-    {
-        icon: 'mdi-account-tie',
-        title: 'Member',
-        to: '/member'
-    },
-    {
-        icon: 'mdi-account-box',
-        title: 'My Profile',
-        to: '/profile'
-    },
-    {
-        icon: 'mdi-send',
-        title: 'Feedback',
-        to: '/inquiry'
-    }
-];
+const items = useNavDrawerItems();
 </script>
