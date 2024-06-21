@@ -1,7 +1,7 @@
 <template>
     <ClientOnly>
-        <v-app class="l-content_wrap">
-            <v-navigation-drawer id="c-navi_side" left fixed dark permanent>
+        <v-app class="l-content_wrap p-dashboard">
+            <v-navigation-drawer id="c-navi_side" v-model="drawer" left fixed dark permanent>
                 <div class="text-center py-4">
                     <a href="/">
                         <img src="~/assets/images/logo.png?width=150" class="c-navi_side-logo" />
@@ -29,5 +29,6 @@
 </template>
 
 <script setup>
+const drawer = ref(false);
 const items = useNavDrawerItems();
 </script>
