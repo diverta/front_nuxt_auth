@@ -1,8 +1,35 @@
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
-export default defineNuxtConfig({
+import { ofetch } from 'ofetch';
+
+const getDynamicRoutes = async () => {
+    const response = await ofetch('https://dev-nuxt-auth.a.kuroco.app/rcms-api/1/member/list');
+    return response.list.flatMap((user) => [`/member/detail/${user.member_id}`, `/ja/member/detail/${user.member_id}`]);
+};
+
+const getDynamicContent = async () => {
+    const response = await ofetch('https://dev-nuxt-auth.a.kuroco.app/rcms-api/1/content/list');
+    return response.list.flatMap((user) => [`/topics_detail/${user.topics_id}`, `/ja/topics_detail/${user.topics_id}`]);
+};
+
+export default {
     runtimeConfig: {
         public: {
             kurocoApiDomain: 'https://dev-nuxt-auth.a.kuroco.app'
+        }
+    },
+
+    // generate: {
+    //     routes: ['/member/detail/1', '/member/detail/2', '/member/detail/3']
+    // },
+
+    hooks: {
+        async 'nitro:config'(nitroConfig) {
+            if (nitroConfig.dev) {
+                return;
+            }
+            const dynamicRoutes = await getDynamicRoutes();
+            const dynamicContent = await getDynamicContent();
+            nitroConfig.prerender.routes.push(...dynamicRoutes, ...dynamicContent);
         }
     },
 
@@ -28,9 +55,7 @@ export default defineNuxtConfig({
                 },
                 { name: 'robots', content: 'index' }
             ],
-            link: [
-                { rel: 'icon', type: 'image/svg+xml', href: '/icon_kuroco.svg' },
-            ]
+            link: [{ rel: 'icon', type: 'image/svg+xml', href: '/icon_kuroco.svg' }]
         }
     },
 
@@ -90,4 +115,4 @@ export default defineNuxtConfig({
             }
         }
     }
-});
+};
