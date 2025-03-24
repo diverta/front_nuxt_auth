@@ -17,6 +17,13 @@
                             </v-col>
                         </v-row>
                     </div>
+                    <!-- For favorite -->
+                    <div class="text-right mt-2">
+                        <div>{{ topicsDetail.inst_ymdhi.slice(0, 10) }}</div>
+                        <v-btn icon variant="text" :color="favoriteColor">
+                            <v-icon size="x-large" left> mdi-star </v-icon>
+                        </v-btn>
+                    </div>
                 </div>
 
                 <!-- Wysiwyg contents -->
@@ -51,6 +58,7 @@ const preview_token = route.query.preview_token;
 const topicsDetail = ref(null);
 const loading = ref(true);
 const snackbar = useSnackbar();
+const favoriteColor = ref('grey');
 
 const items = computed(() => {
     if (!topicsDetail.value) {
@@ -75,6 +83,7 @@ try {
         server: false
     });
     const d = response.details;
+    favoriteColor.value = d.my_favorite_flg === true ? 'red' : 'grey';
     topicsDetail.value = {
         ...d,
         fileType: d?.ext_1?.key,
