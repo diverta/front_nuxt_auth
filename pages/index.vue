@@ -31,6 +31,10 @@
                     <v-icon dark right class="icon"> mdi-arrow-right-drop-circle </v-icon>
                 </a>
             </div>
+
+            <div class="text-center py-4">
+                Diverta Inc.
+            </div>
         </div>
     </ClientOnly>
 </template>
