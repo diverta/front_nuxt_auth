@@ -25,15 +25,15 @@ jobs:
           echo "branch=$(echo $PR | jq -r '.ref')" >> $GITHUB_OUTPUT
           echo "sha=$(echo $PR | jq -r '.sha')" >> $GITHUB_OUTPUT
       - name: Checkout Repo
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           ref: ${{ steps.get_branch.outputs.branch }}
       - name: Use Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: '26.x'
       - name: CI Cache
-        uses: actions/cache@v6
+        uses: actions/cache@v6.1.0
         id: node_modules_cache_id
         env:
           cache-name: cache-node-modules
@@ -49,7 +49,7 @@ jobs:
       - name: Zip artifact for upload
         run: cd ./.output/public && zip ../../dist.zip . -r
       - name: Archive Production Artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: ${{ steps.get_branch.outputs.sha }}-${{ github.run_id }}
           path: dist.zip
@@ -57,10 +57,10 @@ jobs:
       - name: Wait for Artifact download
         run: sleep 15
       - name: Webhook
-        uses: diverta/workflow-webhook@v3
+        uses: diverta/workflow-webhook@v3.0.7
         env:
           webhook_url: "https://dev-nuxt-auth.a.kuroco.app/direct/menu/github/"
-          webhook_secret: "79a0dac07eb8af664820afa615e28575"
+          webhook_secret: ${{ secrets.KUROCO_WEBHOOK_SECRET }}
           data: '{"single_zip":"1","domain":"dev-nuxt-auth.g.kuroco-front.app","pr":"${{ github.event.issue.pull_request.url }}",  "repository":"${{ github.repository }}", "run_id":"${{ github.run_id }}", "hash":"${{ steps.get_branch.outputs.sha }}"}'
           
   #for Push
@@ -70,13 +70,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
       - name: Use Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: '26.x'
       - name: CI Cache
-        uses: actions/cache@v6
+        uses: actions/cache@v6.1.0
         id: node_modules_cache_id
         env:
           cache-name: cache-node-modules
@@ -92,14 +92,14 @@ jobs:
       - name: Zip artifact for upload
         run: cd ./.output/public && zip ../../dist.zip . -r
       - name: Archive Production Artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: ${{ github.sha }}-${{ github.run_id }}
           path: dist.zip
           retention-days: 7
       - name: Webhook
-        uses: diverta/workflow-webhook@v3
+        uses: diverta/workflow-webhook@v3.0.7
         env:
           webhook_url: "https://dev-nuxt-auth.a.kuroco.app/direct/menu/github/"
-          webhook_secret: "79a0dac07eb8af664820afa615e28575"
+          webhook_secret: ${{ secrets.KUROCO_WEBHOOK_SECRET }}
           data: '{"single_zip":"1","domain":"dev-nuxt-auth.g.kuroco-front.app", "repository":"${{ github.repository }}", "run_id":"${{ github.run_id }}", "hash":"${{ github.sha }}"}'
