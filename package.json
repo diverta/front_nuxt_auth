@@ -18,27 +18,27 @@
     "assets/**/*.{css,scss}": "prettier --write"
   },
   "devDependencies": {
+    "@formkit/nuxt": "^1.6.1",
+    "@formkit/themes": "^1.6.1",
     "@intlify/unplugin-vue-i18n": "^4.0.0",
-    "@nuxtjs/i18n": "^8.2.0",
+    "@mdi/font": "^7.4.47",
     "@nuxt/eslint": "^0.3.0-beta.7",
+    "@nuxtjs/i18n": "^8.2.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-unused-imports": "^3.1.0",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
-    "nuxt": "^3.11.1",
+    "nuxt": "^4.6.4",
+    "nuxt-snackbar": "^1.0.4",
     "prettier": "^3.2.5",
     "sass": "^1.72.0",
+    "unocss": "^0.31.0",
+    "vite-plugin-eslint2": "^4.4.0",
     "vite-plugin-vuetify": "^2.0.3",
     "vue": "^3.4.21",
     "vue-i18n": "^9.10.2",
     "vue-router": "^4.3.0",
-    "vuetify": "^3.5.13",
-    "vite-plugin-eslint2": "^4.4.0",
-    "@formkit/nuxt": "^1.6.1",
-    "@formkit/themes": "^1.6.1",
-    "@mdi/font": "^7.4.47",
-    "nuxt-snackbar": "^1.0.4",
-    "unocss": "^0.31.0"
+    "vuetify": "^3.5.13"
   }
 }
