@@ -49,10 +49,10 @@
                 </v-row>
             </v-col>
             <div class="text-center col text-white">
-                <button type="submit" class="c-btn c-btn_dark c-btn_icon" @click="$router.push(localePath('/profile/edit'))">
+                <NuxtLinkLocale to="/profile/edit" class="c-btn c-btn_dark c-btn_icon">
                     {{ $t('common.edit') }}
                     <v-icon class="icon c-text_white pl-2"> mdi-pencil </v-icon>
-                </button>
+                </NuxtLinkLocale>
             </div>
         </section>
     </ClientOnly>
@@ -60,7 +60,6 @@
 <script setup>
 const { t } = useI18n();
 const snackbar = useSnackbar();
-const localePath = useLocalePath();
 const { authUser } = useAuth();
 const placeholder = computed(() => {
     return new URL('@/assets/images/avatar-placeholder.png', import.meta.url).href;

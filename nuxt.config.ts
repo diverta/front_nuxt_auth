@@ -1,5 +1,6 @@
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
 export default defineNuxtConfig({
+    compatibilityDate: '2026-11-18',
     runtimeConfig: {
         public: {
             kurocoApiDomain: 'https://dev-nuxt-auth.a.kuroco.app'
@@ -17,12 +18,10 @@ export default defineNuxtConfig({
                 { name: 'viewport', content: 'width=device-width, initial-scale=1' },
                 { name: 'description', content: '' },
                 {
-                    name: 'og_title',
                     property: 'og:title',
                     content: 'Kuroco sample'
                 },
                 {
-                    name: 'og_description',
                     property: 'og:description',
                     content: 'Kuroco sample page'
                 },
@@ -35,7 +34,7 @@ export default defineNuxtConfig({
     },
 
     devtools: { enabled: true },
-    css: ['@/assets/style.scss'],
+    css: ['@formkit/themes/genesis', '@/assets/style.scss'],
 
     build: {
         transpile: ['vuetify']
@@ -54,8 +53,8 @@ export default defineNuxtConfig({
     ],
     i18n: {
         locales: [
-            { code: 'en', iso: 'en-US', file: 'en.json', name: 'English' },
-            { code: 'ja', iso: 'ja-JP', file: 'ja.json', name: '日本語' }
+            { code: 'en', language: 'en-US', file: 'en.json', name: 'English' },
+            { code: 'ja', language: 'ja-JP', file: 'ja.json', name: '日本語' }
         ],
         defaultLocale: 'en',
         strategy: 'prefix_except_default',
@@ -72,21 +71,18 @@ export default defineNuxtConfig({
         top: true,
         duration: 5000
     },
-    module: ['@nuxtjs/eslint-module'],
-    eslint: {
-        cache: false,
-        eslintPath: './eslintrc.mjs'
-    },
     vite: {
+        optimizeDeps: {
+            include: ['@formkit/core', '@formkit/i18n', '@vue/devtools-core']
+        },
         vue: {
             template: {
                 transformAssetUrls
-            },
-            // @ts-ignore-next-line
-            server: {
-                watch: {
-                    usePolling: true
-                }
+            }
+        },
+        server: {
+            watch: {
+                usePolling: true
             }
         }
     }

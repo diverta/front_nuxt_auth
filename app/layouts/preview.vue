@@ -1,11 +1,11 @@
 <template>
     <ClientOnly>
         <v-app class="l-content_wrap p-dashboard">
-            <v-navigation-drawer id="c-navi_side" v-model="drawer" left fixed dark permanent>
+            <v-navigation-drawer id="c-navi_side" theme="dark">
                 <div class="text-center py-4">
-                    <a href="/">
+                    <NuxtLinkLocale to="/">
                         <img src="~/assets/images/logo.png?width=150" class="c-navi_side-logo" />
-                    </a>
+                    </NuxtLinkLocale>
                 </div>
                 <v-list>
                     <v-list-item v-for="(item, i) in items" :key="i" router exact class="l-mainmenu_item disabled">
@@ -29,6 +29,5 @@
 </template>
 
 <script setup>
-const drawer = ref(false);
 const items = useNavDrawerItems();
 </script>

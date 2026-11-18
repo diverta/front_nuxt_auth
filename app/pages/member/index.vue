@@ -19,9 +19,9 @@
                 </v-row>
                 <v-data-table :headers="headers" :items="filteredItems" class="elevation-1 mt-5 c-table">
                     <template #item.name="{ item, value }">
-                        <NuxtLink :to="`/member/detail/${item.id}`" no-prefetch>
+                        <NuxtLinkLocale :to="`/member/detail/${item.id}`" no-prefetch>
                             {{ value }}
-                        </NuxtLink>
+                        </NuxtLinkLocale>
                     </template>
                     <template #item.phone="{ value }">
                         <a :href="`tel:${value}`">{{ value }}</a>

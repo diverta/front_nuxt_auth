@@ -1,11 +1,11 @@
 <template>
     <ClientOnly>
         <v-app class="l-content_wrap" :class="{ 'p-dashboard': isLoggedIn, 'p-login': !isLoggedIn }">
-            <v-navigation-drawer v-if="authUser.member_id" id="c-navi_side" v-model="drawer" left fixed dark permanent>
+            <v-navigation-drawer v-if="authUser.member_id" id="c-navi_side" v-model="drawer" theme="dark">
                 <div class="text-center py-4">
-                    <a href="/">
+                    <NuxtLinkLocale to="/">
                         <img src="~/assets/images/logo.png?width=150" class="c-navi_side-logo" />
-                    </a>
+                    </NuxtLinkLocale>
                 </div>
                 <v-list>
                     <v-list-item v-for="(item, i) in items" :key="i" :to="localePath(item.to)" router exact class="l-mainmenu_item">
@@ -38,31 +38,15 @@
                 <template v-else>
                     <div v-if="router.currentRoute.value.path == '/signup' || router.currentRoute.value.path == '/ja/signup'" class="white--text">
                         <span>Already have an account?</span>
-                        <button
-                            class="c-btn c-btn_sm c-btn_dark ml-2"
-                            nuxt
-                            @click="
-                                () => {
-                                    useRouter().push('/');
-                                }
-                            "
-                        >
+                        <NuxtLinkLocale to="/" class="c-btn c-btn_sm c-btn_dark ml-2">
                             {{ $t('common.sign_in') }}
-                        </button>
+                        </NuxtLinkLocale>
                     </div>
                     <div v-else class="white--text">
                         <span class="d-none d-sm-inline">New to Muzica?</span>
-                        <button
-                            class="c-btn c-btn_sm c-btn_dark ml-2"
-                            nuxt
-                            @click="
-                                () => {
-                                    useRouter().push(localePath('/signup/'));
-                                }
-                            "
-                        >
+                        <NuxtLinkLocale to="/signup/" class="c-btn c-btn_sm c-btn_dark ml-2">
                             {{ $t('signup.title') }}
-                        </button>
+                        </NuxtLinkLocale>
                     </div>
                 </template>
             </v-app-bar>
@@ -82,7 +66,7 @@ const { authUser, isLoggedIn, logout } = useAuth();
 const { locale, setLocale } = useI18n();
 const localePath = useLocalePath();
 const router = useRouter();
-const drawer = ref(false);
+const drawer = ref(null);
 const clipped = ref(false);
 
 const language = computed({
@@ -94,7 +78,7 @@ const language = computed({
 
 const handleLogout = async () => {
     await logout();
-    useRouter().push(localePath('/'));
+    router.push(localePath('/'));
 };
 
 const langOptions = [

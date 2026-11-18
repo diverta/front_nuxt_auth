@@ -1,8 +1,8 @@
 <template>
     <div class="p-login_content elevation-7">
         <Head>
-            <Meta name="og_title" content="Reminder" />
-            <Meta name="og_description" content="Reminder page" />
+            <Meta property="og:title" content="Reminder" />
+            <Meta property="og:description" content="Reminder page" />
         </Head>
         <v-row>
             <v-col class="pa-0 col-sm-6 col-12">
@@ -121,6 +121,7 @@
 </template>
 <script setup>
 const route = useRoute();
+const router = useRouter();
 const token = route.query.token;
 const snackbar = useSnackbar();
 const pageState = ref(1);
@@ -198,7 +199,7 @@ const set_password = async () => {
             text: t('reminder.already_updated')
         });
 
-        useRouter().push(localePath('/'));
+        router.push(localePath('/'));
     } catch (error) {
         snackbar.add({
             type: 'error',
