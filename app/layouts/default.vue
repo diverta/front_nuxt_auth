@@ -1,7 +1,7 @@
 <template>
     <ClientOnly>
         <v-app class="l-content_wrap" :class="{ 'p-dashboard': isLoggedIn, 'p-login': !isLoggedIn }">
-            <v-navigation-drawer v-if="authUser.member_id" id="c-navi_side" v-model="drawer" left fixed dark permanent>
+            <v-navigation-drawer v-if="authUser.member_id" id="c-navi_side" v-model="drawer" theme="dark">
                 <div class="text-center py-4">
                     <NuxtLinkLocale to="/">
                         <img src="~/assets/images/logo.png?width=150" class="c-navi_side-logo" />
@@ -66,7 +66,7 @@ const { authUser, isLoggedIn, logout } = useAuth();
 const { locale, setLocale } = useI18n();
 const localePath = useLocalePath();
 const router = useRouter();
-const drawer = ref(false);
+const drawer = ref(null);
 const clipped = ref(false);
 
 const language = computed({
