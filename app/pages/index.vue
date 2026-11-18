@@ -13,10 +13,10 @@
             <TopicsGrid :topics="topicsList" />
 
             <div class="text-center py-5 mt-4 text-white">
-                <a type="submit" block x-large color="success" class="c-btn c-btn_main c-btn_md c-btn_icon" @click="() => $router.push(localePath('/topics_list/'))">
+                <NuxtLinkLocale to="/topics_list/" class="c-btn c-btn_main c-btn_md c-btn_icon">
                     {{ $t('top.more_articles') }}
                     <v-icon dark right class="icon"> mdi-arrow-right-drop-circle </v-icon>
-                </a>
+                </NuxtLinkLocale>
             </div>
 
             <h1 class="text-left mt-5 pt-4">
@@ -26,10 +26,10 @@
             <TopicsList :topics="favouriteList" />
 
             <div class="text-center py-5 text-white">
-                <a type="submit" block x-large color="success" class="c-btn c-btn_main c-btn_md c-btn_icon" @click="() => $router.push(localePath('/favourite/'))">
+                <NuxtLinkLocale to="/favourite/" class="c-btn c-btn_main c-btn_md c-btn_icon">
                     {{ $t('top.more_starred') }}
                     <v-icon dark right class="icon"> mdi-arrow-right-drop-circle </v-icon>
-                </a>
+                </NuxtLinkLocale>
             </div>
         </div>
     </ClientOnly>
@@ -42,7 +42,6 @@ const favouriteList = ref([]);
 const perPage = ref(5);
 const active = ref(0);
 const snackbar = useSnackbar();
-const localePath = useLocalePath();
 
 const sliderImages = computed(() => {
     return topicsList.value.map((topic) => topic?.ext_8?.url).filter((sliderImage) => sliderImage);

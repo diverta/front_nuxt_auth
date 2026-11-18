@@ -41,9 +41,9 @@
                                             @click:append="() => (showsPassword = !showsPassword)"
                                         />
                                         <p class="pb-3">
-                                            <NuxtLink :to="localePath('/reminder/')">
+                                            <NuxtLinkLocale to="/reminder/">
                                                 {{ $t('login.forget_password') }}
-                                            </NuxtLink>
+                                            </NuxtLinkLocale>
                                         </p>
                                         <div class="text-center">
                                             <button type="submit" block x-large :loading="loading" class="c-btn_dark c-btn submit-btn text-white">
@@ -74,7 +74,6 @@ const error = ref(null);
 
 const loading = ref(false);
 const showsPassword = ref(false);
-const localePath = useLocalePath();
 
 const handleLogin = async () => {
     try {
