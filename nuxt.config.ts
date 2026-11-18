@@ -1,5 +1,6 @@
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
 export default defineNuxtConfig({
+    compatibilityDate: '2026-11-18',
     runtimeConfig: {
         public: {
             kurocoApiDomain: 'https://dev-nuxt-auth.a.kuroco.app'
@@ -17,12 +18,10 @@ export default defineNuxtConfig({
                 { name: 'viewport', content: 'width=device-width, initial-scale=1' },
                 { name: 'description', content: '' },
                 {
-                    name: 'og_title',
                     property: 'og:title',
                     content: 'Kuroco sample'
                 },
                 {
-                    name: 'og_description',
                     property: 'og:description',
                     content: 'Kuroco sample page'
                 },
@@ -72,12 +71,10 @@ export default defineNuxtConfig({
         top: true,
         duration: 5000
     },
-    module: ['@nuxtjs/eslint-module'],
-    eslint: {
-        cache: false,
-        eslintPath: './eslintrc.mjs'
-    },
     vite: {
+        optimizeDeps: {
+            include: ['@formkit/core', '@formkit/i18n', '@vue/devtools-core']
+        },
         vue: {
             template: {
                 transformAssetUrls
