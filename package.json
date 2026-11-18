@@ -15,7 +15,7 @@
       "prettier --write",
       "eslint --fix"
     ],
-    "assets/**/*.{css,scss}": "prettier --write"
+    "app/assets/**/*.{css,scss}": "prettier --write"
   },
   "devDependencies": {
     "@formkit/nuxt": "^1.7.2",

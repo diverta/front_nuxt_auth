@@ -78,12 +78,11 @@ export default defineNuxtConfig({
         vue: {
             template: {
                 transformAssetUrls
-            },
-            // @ts-ignore-next-line
-            server: {
-                watch: {
-                    usePolling: true
-                }
+            }
+        },
+        server: {
+            watch: {
+                usePolling: true
             }
         }
     }
