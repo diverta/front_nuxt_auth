@@ -34,7 +34,7 @@ export default defineNuxtConfig({
     },
 
     devtools: { enabled: true },
-    css: ['@/assets/style.scss'],
+    css: ['@formkit/themes/genesis', '@/assets/style.scss'],
 
     build: {
         transpile: ['vuetify']
