@@ -78,7 +78,7 @@ const language = computed({
 
 const handleLogout = async () => {
     await logout();
-    useRouter().push(localePath('/'));
+    router.push(localePath('/'));
 };
 
 const langOptions = [

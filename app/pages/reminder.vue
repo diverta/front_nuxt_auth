@@ -121,6 +121,7 @@
 </template>
 <script setup>
 const route = useRoute();
+const router = useRouter();
 const token = route.query.token;
 const snackbar = useSnackbar();
 const pageState = ref(1);
@@ -198,7 +199,7 @@ const set_password = async () => {
             text: t('reminder.already_updated')
         });
 
-        useRouter().push(localePath('/'));
+        router.push(localePath('/'));
     } catch (error) {
         snackbar.add({
             type: 'error',

@@ -24,6 +24,7 @@ export const useAuth = () => {
     const userRef = useUser();
     const snackbar = useSnackbar();
     const localePath = useLocalePath();
+    const router = useRouter();
 
     /** register user's information */
     const register = async (formData) => {
@@ -56,7 +57,7 @@ export const useAuth = () => {
             credentials: 'include'
         });
         await profile();
-        useRouter().push(localePath('/'));
+        router.push(localePath('/'));
     };
 
     /** logout and clear user's information */
@@ -84,7 +85,6 @@ export const useAuth = () => {
                 return;
             }
 
-            const router = useRouter();
             await router.isReady();
             if (
                 router.currentRoute.value.path === '/' ||
