@@ -47,10 +47,10 @@
 
             <!-- </v-row> -->
             <div class="text-center col mt-5">
-                <button type="submit" class="c-btn c-btn_dark c-btn_icon" @click="() => $router.push(localePath('/topics_list'))">
+                <NuxtLinkLocale to="/topics_list" class="c-btn c-btn_dark c-btn_icon">
                     {{ $t('common.back_to_listing') }}
                     <v-icon class="icon pr-2"> mdi-undo-variant </v-icon>
-                </button>
+                </NuxtLinkLocale>
             </div>
         </template>
     </div>
@@ -64,7 +64,6 @@ const loading = ref(true);
 const favoriteResponse = ref(null);
 const favoriteColor = ref('grey');
 const snackbar = useSnackbar();
-const localePath = useLocalePath();
 
 const items = computed(() => {
     if (!topicsDetail.value) {
