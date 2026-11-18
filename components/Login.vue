@@ -74,6 +74,7 @@ const error = ref(null);
 
 const loading = ref(false);
 const showsPassword = ref(false);
+const localePath = useLocalePath();
 
 const handleLogin = async () => {
     try {
