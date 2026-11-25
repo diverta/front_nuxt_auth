@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <v-progress-linear :active="loading" :indeterminate="loading" absolute top color="orange white-4" />
+    <PageLoading :loading="loading">
         <template v-if="topicsDetail">
             <!-- <v-row> -->
             <v-col>
@@ -53,7 +52,7 @@
                 </NuxtLinkLocale>
             </div>
         </template>
-    </div>
+    </PageLoading>
 </template>
 <script setup>
 const { authUser } = useAuth();
@@ -118,43 +117,46 @@ const onClickToggleFavorite = async () => {
     }
 };
 
-try {
-    const response = await $fetch(`${apiDomain.baseURL}/rcms-api/1/content/details/${route.params.slug}`, {
-        credentials: 'include',
-        server: false
-    });
-    const d = response.details;
-    topicsDetail.value = {
-        ...d,
-        fileType: d?.ext_1?.key,
-        fileUrl: d?.ext_2?.url,
-        fileDownload: d?.ext_2?.dl_link,
-        linkUrl: d?.ext_3?.url,
-        linkTitle: d?.ext_3?.title,
+onMounted(async () => {
+    try {
+        const response = await $fetch(`${apiDomain.baseURL}/rcms-api/1/content/details/${route.params.slug}`, {
+            credentials: 'include',
+            server: false
+        });
+        const d = response.details;
+        topicsDetail.value = {
+            ...d,
+            fileType: d?.ext_1?.key,
+            fileUrl: d?.ext_2?.url,
+            fileDownload: d?.ext_2?.dl_link,
+            linkUrl: d?.ext_3?.url,
+            linkTitle: d?.ext_3?.title,
 
-        // for TopicsDetail
-        positionPatterns: d?.ext_4,
-        texts: d?.ext_7,
-        imageUrls: d?.ext_5,
-        subtitles: d?.ext_9
-    };
+            // for TopicsDetail
+            positionPatterns: d?.ext_4,
+            texts: d?.ext_7,
+            imageUrls: d?.ext_5,
+            subtitles: d?.ext_9
+        };
 
-    const fav = await $fetch(`${apiDomain.baseURL}/rcms-api/1/favorite/list`, {
-        credentials: 'include',
-        server: false,
-        params: {
-            member_id: parseInt(authUser.value.member_id),
-            module_id: parseInt(route.params.slug),
-            module_type: 'topics'
-        }
-    });
-    favoriteResponse.value = fav;
-    favoriteColor.value = favoriteResponse.value?.pageInfo?.totalCnt > 0 ? 'red' : 'grey';
-    loading.value = false;
-} catch (error) {
-    snackbar.add({
-        type: 'error',
-        text: error?.response?._data?.errors?.[0]?.message || t('common.error')
-    });
-}
+        const fav = await $fetch(`${apiDomain.baseURL}/rcms-api/1/favorite/list`, {
+            credentials: 'include',
+            server: false,
+            params: {
+                member_id: parseInt(authUser.value.member_id),
+                module_id: parseInt(route.params.slug),
+                module_type: 'topics'
+            }
+        });
+        favoriteResponse.value = fav;
+        favoriteColor.value = favoriteResponse.value?.pageInfo?.totalCnt > 0 ? 'red' : 'grey';
+    } catch (error) {
+        snackbar.add({
+            type: 'error',
+            text: error?.response?._data?.errors?.[0]?.message || t('common.error')
+        });
+    } finally {
+        loading.value = false;
+    }
+});
 </script>

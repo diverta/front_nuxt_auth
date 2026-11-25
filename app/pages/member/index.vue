@@ -1,34 +1,36 @@
 <template>
     <ClientOnly>
-        <div v-if="done">
-            <template v-if="isDisallowed">
-                <v-card>
-                    <v-card-text class="text-center">
-                        {{ $t('member.disallowed') }}
-                    </v-card-text>
-                </v-card>
-            </template>
-            <template v-else>
-                <v-row>
-                    <v-col class="col-sm-6 col-12 py-0">
-                        <v-autocomplete v-model="currName" :items="names" dense filled :label="$t('member.search_member')" />
-                    </v-col>
-                    <v-col class="col-sm-6 col-12 py-0">
-                        <v-autocomplete v-model="currDepartment" :items="departments" dense filled :label="$t('member.department')" />
-                    </v-col>
-                </v-row>
-                <v-data-table :headers="headers" :items="filteredItems" class="elevation-1 mt-5 c-table">
-                    <template #item.name="{ item, value }">
-                        <NuxtLinkLocale :to="`/member/detail/${item.id}`" no-prefetch>
-                            {{ value }}
-                        </NuxtLinkLocale>
-                    </template>
-                    <template #item.phone="{ value }">
-                        <a :href="`tel:${value}`">{{ value }}</a>
-                    </template>
-                </v-data-table>
-            </template>
-        </div>
+        <PageLoading :loading="!done">
+            <div v-if="done">
+                <template v-if="isDisallowed">
+                    <v-card>
+                        <v-card-text class="text-center">
+                            {{ $t('member.disallowed') }}
+                        </v-card-text>
+                    </v-card>
+                </template>
+                <template v-else>
+                    <v-row>
+                        <v-col class="col-sm-6 col-12 py-0">
+                            <v-autocomplete v-model="currName" :items="names" dense filled :label="$t('member.search_member')" />
+                        </v-col>
+                        <v-col class="col-sm-6 col-12 py-0">
+                            <v-autocomplete v-model="currDepartment" :items="departments" dense filled :label="$t('member.department')" />
+                        </v-col>
+                    </v-row>
+                    <v-data-table :headers="headers" :items="filteredItems" class="elevation-1 mt-5 c-table">
+                        <template #item.name="{ item, value }">
+                            <NuxtLinkLocale :to="`/member/detail/${item.id}`" no-prefetch>
+                                {{ value }}
+                            </NuxtLinkLocale>
+                        </template>
+                        <template #item.phone="{ value }">
+                            <a :href="`tel:${value}`">{{ value }}</a>
+                        </template>
+                    </v-data-table>
+                </template>
+            </div>
+        </PageLoading>
     </ClientOnly>
 </template>
 <script setup>

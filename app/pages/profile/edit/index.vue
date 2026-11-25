@@ -1,13 +1,14 @@
 <template>
     <ClientOnly>
-        <div>
-            <v-progress-linear :active="loading" :indeterminate="loading" absolute top color="orange white-4" />
-            <div class="v-stepper c-form_wrap">
-                <v-container fluid>
-                    <ProfileForm v-if="hasProfile" :form-values="profile" @submit="handleSubmit" />
-                </v-container>
+        <PageLoading :loading="loading">
+            <div>
+                <div class="v-stepper c-form_wrap">
+                    <v-container fluid>
+                        <ProfileForm v-if="hasProfile" :form-values="profile" @submit="handleSubmit" />
+                    </v-container>
+                </div>
             </div>
-        </div>
+        </PageLoading>
     </ClientOnly>
 </template>
 
@@ -15,7 +16,7 @@
 const router = useRouter();
 const snackbar = useSnackbar();
 const profile = ref({});
-const loading = ref(false);
+const loading = ref(true);
 const localePath = useLocalePath();
 const { t } = useI18n();
 

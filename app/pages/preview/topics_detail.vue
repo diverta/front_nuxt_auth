@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <v-progress-linear :active="loading" :indeterminate="loading" absolute top color="orange white-4" />
+    <PageLoading :loading="loading">
         <template v-if="topicsDetail">
             <!-- <v-row> -->
             <v-col>
@@ -45,7 +44,7 @@
             </v-col>
             <v-col></v-col>
         </template>
-    </div>
+    </PageLoading>
 </template>
 <script setup>
 definePageMeta({
@@ -74,35 +73,38 @@ const items = computed(() => {
     }));
 });
 
-try {
-    const response = await $fetch(`${apiDomain.baseURL}/rcms-api/1/content/preview`, {
-        credentials: 'include',
-        params: {
-            preview_token
-        },
-        server: false
-    });
-    const d = response.details;
-    favoriteColor.value = d.my_favorite_flg === true ? 'red' : 'grey';
-    topicsDetail.value = {
-        ...d,
-        fileType: d?.ext_1?.key,
-        fileUrl: d?.ext_2?.url,
-        fileDownload: d?.ext_2?.dl_link,
-        linkUrl: d?.ext_3?.url,
-        linkTitle: d?.ext_3?.title,
+onMounted(async () => {
+    try {
+        const response = await $fetch(`${apiDomain.baseURL}/rcms-api/1/content/preview`, {
+            credentials: 'include',
+            params: {
+                preview_token
+            },
+            server: false
+        });
+        const d = response.details;
+        favoriteColor.value = d.my_favorite_flg === true ? 'red' : 'grey';
+        topicsDetail.value = {
+            ...d,
+            fileType: d?.ext_1?.key,
+            fileUrl: d?.ext_2?.url,
+            fileDownload: d?.ext_2?.dl_link,
+            linkUrl: d?.ext_3?.url,
+            linkTitle: d?.ext_3?.title,
 
-        // for TopicsDetail
-        positionPatterns: d?.ext_4,
-        texts: d?.ext_7,
-        imageUrls: d?.ext_5,
-        subtitles: d?.ext_9
-    };
-    loading.value = false;
-} catch (error) {
-    snackbar.add({
-        type: 'error',
-        text: error?.response?._data?.errors?.[0]?.message || t('common.error')
-    });
-}
+            // for TopicsDetail
+            positionPatterns: d?.ext_4,
+            texts: d?.ext_7,
+            imageUrls: d?.ext_5,
+            subtitles: d?.ext_9
+        };
+    } catch (error) {
+        snackbar.add({
+            type: 'error',
+            text: error?.response?._data?.errors?.[0]?.message || t('common.error')
+        });
+    } finally {
+        loading.value = false;
+    }
+});
 </script>
