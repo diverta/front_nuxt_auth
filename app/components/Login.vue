@@ -1,7 +1,7 @@
 <template>
     <section class="p-login_content elevation-7">
         <v-row>
-            <v-col class="pa-0 col-sm-6 col-12">
+            <v-col cols="12" sm="6" class="pa-0">
                 <div class="p-login_intro">
                     <img src="~/assets/images/logo.png?width=150" class="p-login_logo" />
                     <div class="p-login_intro-text">
@@ -18,7 +18,7 @@
                     </div>
                 </div>
             </v-col>
-            <v-col class="pa-0 col-sm-6 col-12">
+            <v-col cols="12" sm="6" class="pa-0">
                 <v-card outlined>
                     <div class="p-login_form">
                         <form @submit.prevent="handleLogin">

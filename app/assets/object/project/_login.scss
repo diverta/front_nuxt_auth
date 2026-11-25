@@ -1,3 +1,12 @@
+.v-main:has(.p-login_content) {
+    display: flex;
+    align-items: center;
+
+    .l-content_inner {
+        height: auto;
+    }
+}
+
 .p-login {
     //background: linear-gradient(to bottom, #0f1015, #07080a) !important;
     background: linear-gradient(to bottom, #43a8ff, #1777ca) !important;
@@ -16,8 +25,6 @@
         }
     }
     &_content {
-        top: 50%;
-        transform: translateY(-50%);
         position: relative;
         max-width: 900px;
         margin: 0 auto;
