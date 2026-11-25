@@ -1,40 +1,43 @@
 <template>
     <ClientOnly>
-        <Login v-if="!authUser.member_id" />
-        <div v-else class="mypage">
-            <v-carousel v-model="active" class="p-dashboard_banner">
-                <v-carousel-item v-for="(url, i) in sliderImages" :key="i" :src="`${url}?height=500px`" reverse-transition="fade-transition" transition="fade-transition" />
-            </v-carousel>
+        <PageLoading :loading="loading">
+            <Login v-if="!authUser.member_id" />
+            <div v-else class="mypage">
+                <v-carousel v-model="active" class="p-dashboard_banner">
+                    <v-carousel-item v-for="(url, i) in sliderImages" :key="i" :src="`${url}?height=500px`" reverse-transition="fade-transition" transition="fade-transition" />
+                </v-carousel>
 
-            <h1 class="text-left mt-5 pt-4">
-                {{ $t('top.latest_articles') }}
-            </h1>
+                <h1 class="text-left mt-5 pt-4">
+                    {{ $t('top.latest_articles') }}
+                </h1>
 
-            <TopicsGrid :topics="topicsList" />
+                <TopicsGrid :topics="topicsList" />
 
-            <div class="text-center py-5 mt-4 text-white">
-                <NuxtLinkLocale to="/topics_list/" class="c-btn c-btn_main c-btn_md c-btn_icon">
-                    {{ $t('top.more_articles') }}
-                    <v-icon dark right class="icon"> mdi-arrow-right-drop-circle </v-icon>
-                </NuxtLinkLocale>
+                <div class="text-center py-5 mt-4 text-white">
+                    <NuxtLinkLocale to="/topics_list/" class="c-btn c-btn_main c-btn_md c-btn_icon">
+                        {{ $t('top.more_articles') }}
+                        <v-icon dark right class="icon"> mdi-arrow-right-drop-circle </v-icon>
+                    </NuxtLinkLocale>
+                </div>
+
+                <h1 class="text-left mt-5 pt-4">
+                    {{ $t('top.starred') }}
+                </h1>
+
+                <TopicsList :topics="favouriteList" />
+
+                <div class="text-center py-5 text-white">
+                    <NuxtLinkLocale to="/favourite/" class="c-btn c-btn_main c-btn_md c-btn_icon">
+                        {{ $t('top.more_starred') }}
+                        <v-icon dark right class="icon"> mdi-arrow-right-drop-circle </v-icon>
+                    </NuxtLinkLocale>
+                </div>
             </div>
-
-            <h1 class="text-left mt-5 pt-4">
-                {{ $t('top.starred') }}
-            </h1>
-
-            <TopicsList :topics="favouriteList" />
-
-            <div class="text-center py-5 text-white">
-                <NuxtLinkLocale to="/favourite/" class="c-btn c-btn_main c-btn_md c-btn_icon">
-                    {{ $t('top.more_starred') }}
-                    <v-icon dark right class="icon"> mdi-arrow-right-drop-circle </v-icon>
-                </NuxtLinkLocale>
-            </div>
-        </div>
+        </PageLoading>
     </ClientOnly>
 </template>
 <script setup>
+const loading = ref(true);
 const { t } = useI18n();
 const { authUser } = useAuth();
 const topicsList = ref([]);
@@ -101,10 +104,16 @@ watch(
     () => authUser.value,
     async () => {
         if (!authUser.value.member_id) {
+            loading.value = false;
             return [];
         }
-        await updateTopics();
-        await updateFavourite();
+        loading.value = true;
+        try {
+            await updateTopics();
+            await updateFavourite();
+        } finally {
+            loading.value = false;
+        }
     },
     {
         deep: true,

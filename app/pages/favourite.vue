@@ -1,15 +1,18 @@
 <template>
     <ClientOnly>
-        <div fluid>
-            <TopicsList :topics="topics" />
-            <br />
-            <div class="text-center mt-5 pt-5">
-                <v-pagination v-if="Math.ceil(totalCnt / perPage) > 1" v-model="page" :length="Math.ceil(totalCnt / perPage)" class="c-navi_pagination" @input="() => updateTopics()" />
+        <PageLoading :loading="loading">
+            <div fluid>
+                <TopicsList :topics="topics" />
+                <br />
+                <div class="text-center mt-5 pt-5">
+                    <v-pagination v-if="Math.ceil(totalCnt / perPage) > 1" v-model="page" :length="Math.ceil(totalCnt / perPage)" class="c-navi_pagination" @input="() => updateTopics()" />
+                </div>
             </div>
-        </div>
+        </PageLoading>
     </ClientOnly>
 </template>
 <script setup>
+const loading = ref(true);
 const { t } = useI18n();
 const { authUser } = useAuth();
 const snackbar = useSnackbar();
@@ -23,6 +26,7 @@ onMounted(() => {
 });
 
 const updateTopics = async () => {
+    loading.value = true;
     try {
         const favouriteRes = await $fetch(`${apiDomain.baseURL}/rcms-api/1/favorite/list`, {
             credentials: 'include',
@@ -55,6 +59,8 @@ const updateTopics = async () => {
             type: 'error',
             text: error?.response?._data?.errors?.[0]?.message || t('common.error')
         });
+    } finally {
+        loading.value = false;
     }
 };
 </script>

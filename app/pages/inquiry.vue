@@ -1,78 +1,80 @@
 <template>
     <ClientOnly>
-        <div>
-            <v-progress-linear :active="loading" :indeterminate="loading" absolute top color="orange white-4" />
-            <div class="l-content_heading">
-                <h3 class="slogan text-left">{{ $t('inquiry.message') }}<br /></h3>
-            </div>
-            <div class="v-stepper mt-5 c-form_wrap">
-                <v-container fluid>
-                    <FormKit
-                        id="inquiry-form"
-                        type="form"
-                        :incomplete-message="$t('verify.fille_property')"
-                        :submit-label="$t('common.submit')"
-                        :submit-attrs="{
-                            wrapperClass: 'inquiry-form_elm-submit'
-                        }"
-                        :config="{
-                            classes: {
-                                outer: 'inquiry-form_outer',
-                                wrapper: 'c-form_formulate-wrapper',
-                                fieldset: 'c-form_formulate-fieldset'
-                            }
-                        }"
-                        @submit="handleSubmit"
-                    >
-                        <div class="inquiry-form_container">
-                            <template v-for="field in formFields" :key="field.key">
-                                <FormKit
-                                    v-if="field.type === 'file'"
-                                    :type="field.type"
-                                    :name="field.key"
-                                    :label="field.title"
-                                    :validation="field.required ? 'required' : ''"
-                                    :validation-messages="{
-                                        required: $t('verify.required_field')
-                                    }"
-                                    :classes="{
-                                        outer: `inquiry-form_elm-${field.type}`
-                                    }"
-                                    @input="(event) => handleFileUpload({ key: field.key, event })"
-                                />
-                                <FormKit
-                                    v-else
-                                    :type="field.type"
-                                    :name="field.key"
-                                    :label="field.title"
-                                    :validation="field.required ? 'required' : ''"
-                                    :validation-messages="{
-                                        required: $t('verify.required_field')
-                                    }"
-                                    :options="field.options"
-                                    :classes="{
-                                        outer: `inquiry-form_elm-${field.type}`
-                                    }"
-                                />
-                            </template>
-                        </div>
+        <PageLoading :loading="pageLoading">
+            <div>
+                <v-progress-linear :active="loading" :indeterminate="loading" absolute top color="orange white-4" />
+                <div class="l-content_heading">
+                    <h3 class="slogan text-left">{{ $t('inquiry.message') }}<br /></h3>
+                </div>
+                <div class="v-stepper mt-5 c-form_wrap">
+                    <v-container fluid>
                         <FormKit
-                            type="checkbox"
-                            :label="$t('common.agree')"
-                            name="term"
-                            validation="accepted"
-                            :validation-messages="{
-                                accepted: $t('verify.terms_of_use')
+                            id="inquiry-form"
+                            type="form"
+                            :incomplete-message="$t('verify.fille_property')"
+                            :submit-label="$t('common.submit')"
+                            :submit-attrs="{
+                                wrapperClass: 'inquiry-form_elm-submit'
                             }"
-                            :classes="{
-                                outer: 'inquiry-form_elm-terms',
-                                wrapper: 'inquiry-form_elm-terms_wrapper'
+                            :config="{
+                                classes: {
+                                    outer: 'inquiry-form_outer',
+                                    wrapper: 'c-form_formulate-wrapper',
+                                    fieldset: 'c-form_formulate-fieldset'
+                                }
                             }"
-                        />
-                    </FormKit>
-                </v-container>
+                            @submit="handleSubmit"
+                        >
+                            <div class="inquiry-form_container">
+                                <template v-for="field in formFields" :key="field.key">
+                                    <FormKit
+                                        v-if="field.type === 'file'"
+                                        :type="field.type"
+                                        :name="field.key"
+                                        :label="field.title"
+                                        :validation="field.required ? 'required' : ''"
+                                        :validation-messages="{
+                                            required: $t('verify.required_field')
+                                        }"
+                                        :classes="{
+                                            outer: `inquiry-form_elm-${field.type}`
+                                        }"
+                                        @input="(event) => handleFileUpload({ key: field.key, event })"
+                                    />
+                                    <FormKit
+                                        v-else
+                                        :type="field.type"
+                                        :name="field.key"
+                                        :label="field.title"
+                                        :validation="field.required ? 'required' : ''"
+                                        :validation-messages="{
+                                            required: $t('verify.required_field')
+                                        }"
+                                        :options="field.options"
+                                        :classes="{
+                                            outer: `inquiry-form_elm-${field.type}`
+                                        }"
+                                    />
+                                </template>
+                            </div>
+                            <FormKit
+                                type="checkbox"
+                                :label="$t('common.agree')"
+                                name="term"
+                                validation="accepted"
+                                :validation-messages="{
+                                    accepted: $t('verify.terms_of_use')
+                                }"
+                                :classes="{
+                                    outer: 'inquiry-form_elm-terms',
+                                    wrapper: 'inquiry-form_elm-terms_wrapper'
+                                }"
+                            />
+                        </FormKit>
+                    </v-container>
+                </div>
             </div>
-        </div>
+        </PageLoading>
     </ClientOnly>
 </template>
 
@@ -82,6 +84,7 @@ import { reset } from '@formkit/core';
 const router = useRouter();
 const snackbar = useSnackbar();
 const loading = ref(true);
+const pageLoading = ref(true);
 const formFields = ref({});
 const localePath = useLocalePath();
 const { t } = useI18n();
@@ -149,6 +152,7 @@ onMounted(async () => {
         router.push(localePath('/'));
     } finally {
         loading.value = false;
+        pageLoading.value = false;
     }
 });
 

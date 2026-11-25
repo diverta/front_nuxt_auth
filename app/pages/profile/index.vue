@@ -1,63 +1,66 @@
 <template>
     <ClientOnly>
-        <section>
-            <v-col>
-                <v-row>
-                    <v-col>
-                        <v-img fluid class="mx-auto mr-sm-5" :lazy-src="detail.url" :aspect-ration="16 / 9" :src="detail.profileImageUrl" max-height="180" max-width="180" />
-                    </v-col>
-                    <v-col class="mx-auto">
-                        <v-container fluid>
-                            <v-row class="headline mb-3">
-                                <br />
-                                {{ detail.name }}
-                            </v-row>
-                            <v-row v-if="detail.department" class="mb-3">
-                                <v-icon class="icon c-text_blue pr-2"> mdi-office-building </v-icon>
-                                {{ detail.department }}
-                            </v-row>
-                            <v-row v-if="detail.position">
-                                <v-icon class="icon c-text_blue pr-2"> mdi-briefcase-account </v-icon>
-                                {{ detail.position }}
-                            </v-row>
-                        </v-container>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <v-table class="elevation-1 mt-5 c-table_responsive">
-                            <template #default>
-                                <tbody>
-                                    <tr v-for="[keyName, value] in Object.entries(detail.profile)" :key="keyName">
-                                        <td width="200">
-                                            {{ keyName }}
-                                        </td>
-                                        <td v-if="keyName == 'Phone'" width="1000">
-                                            <a :href="`tel:${value}`">{{ value }}</a>
-                                        </td>
-                                        <td v-else-if="keyName == 'Email'" width="1000">
-                                            <a :href="`mailto:${value}`">{{ value }}</a>
-                                        </td>
-                                        <td v-else width="1000" class="py-sm-3">
-                                            {{ value }}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </template>
-                        </v-table>
-                    </v-col>
-                </v-row>
-            </v-col>
-            <div class="text-center col text-white">
-                <NuxtLinkLocale to="/profile/edit" class="c-btn c-btn_dark c-btn_icon">
-                    {{ $t('common.edit') }}
-                    <v-icon class="icon c-text_white pl-2"> mdi-pencil </v-icon>
-                </NuxtLinkLocale>
-            </div>
-        </section>
+        <PageLoading :loading="loading">
+            <section>
+                <v-col>
+                    <v-row>
+                        <v-col>
+                            <v-img fluid class="mx-auto mr-sm-5" :lazy-src="detail.url" :aspect-ration="16 / 9" :src="detail.profileImageUrl" max-height="180" max-width="180" />
+                        </v-col>
+                        <v-col class="mx-auto">
+                            <v-container fluid>
+                                <v-row class="headline mb-3">
+                                    <br />
+                                    {{ detail.name }}
+                                </v-row>
+                                <v-row v-if="detail.department" class="mb-3">
+                                    <v-icon class="icon c-text_blue pr-2"> mdi-office-building </v-icon>
+                                    {{ detail.department }}
+                                </v-row>
+                                <v-row v-if="detail.position">
+                                    <v-icon class="icon c-text_blue pr-2"> mdi-briefcase-account </v-icon>
+                                    {{ detail.position }}
+                                </v-row>
+                            </v-container>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <v-table class="elevation-1 mt-5 c-table_responsive">
+                                <template #default>
+                                    <tbody>
+                                        <tr v-for="[keyName, value] in Object.entries(detail.profile)" :key="keyName">
+                                            <td width="200">
+                                                {{ keyName }}
+                                            </td>
+                                            <td v-if="keyName == 'Phone'" width="1000">
+                                                <a :href="`tel:${value}`">{{ value }}</a>
+                                            </td>
+                                            <td v-else-if="keyName == 'Email'" width="1000">
+                                                <a :href="`mailto:${value}`">{{ value }}</a>
+                                            </td>
+                                            <td v-else width="1000" class="py-sm-3">
+                                                {{ value }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </template>
+                            </v-table>
+                        </v-col>
+                    </v-row>
+                </v-col>
+                <div class="d-flex justify-center mt-6 mb-4">
+                    <NuxtLinkLocale to="/profile/edit" class="c-btn c-btn_dark d-inline-flex align-center ga-2 px-6 py-3">
+                        <span>{{ $t('common.edit') }}</span>
+                        <v-icon class="icon c-text_white" size="20">mdi-pencil</v-icon>
+                    </NuxtLinkLocale>
+                </div>
+            </section>
+        </PageLoading>
     </ClientOnly>
 </template>
 <script setup>
+const loading = ref(true);
 const { t } = useI18n();
 const snackbar = useSnackbar();
 const { authUser } = useAuth();
@@ -77,6 +80,7 @@ onMounted(() => {
 });
 
 const fetchProfile = async () => {
+    loading.value = true;
     try {
         const res = await $fetch(`${apiDomain.baseURL}/rcms-api/1/member/me`, {
             credentials: 'include',
@@ -107,6 +111,8 @@ const fetchProfile = async () => {
             type: 'error',
             text: error?.response?._data?.errors?.[0]?.message || t('common.error')
         });
+    } finally {
+        loading.value = false;
     }
 };
 </script>
