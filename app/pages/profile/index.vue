@@ -49,10 +49,10 @@
                         </v-col>
                     </v-row>
                 </v-col>
-                <div class="text-center col text-white">
-                    <NuxtLinkLocale to="/profile/edit" class="c-btn c-btn_dark c-btn_icon">
-                        {{ $t('common.edit') }}
-                        <v-icon class="icon c-text_white pl-2"> mdi-pencil </v-icon>
+                <div class="d-flex justify-center mt-6 mb-4">
+                    <NuxtLinkLocale to="/profile/edit" class="c-btn c-btn_dark d-inline-flex align-center ga-2 px-6 py-3">
+                        <span>{{ $t('common.edit') }}</span>
+                        <v-icon class="icon c-text_white" size="20">mdi-pencil</v-icon>
                     </NuxtLinkLocale>
                 </div>
             </section>
