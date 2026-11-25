@@ -2,6 +2,7 @@
     "hello": "Hello, {name}!",
   "language": "Language",
     "common": {
+        "loading": "Loading…",
         "sign_in": "Sign In",
         "password" : "Password",
         "sitekey": "SiteKey",
