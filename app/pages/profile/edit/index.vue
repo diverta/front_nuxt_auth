@@ -42,6 +42,7 @@ onMounted(async () => {
             email: d?.email,
             notes: d?.notes,
             hire_date: d?.hire_date,
+            pull_down: d?.pull_down?.key != null ? String(d.pull_down.key) : '',
             multiple_check: d?.multiple_check?.map(({ key }) => `${key}`) || ''
         };
     } catch (error) {

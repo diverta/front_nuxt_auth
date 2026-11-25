@@ -78,7 +78,7 @@
     },
     "inquiry": {
         "message": "Please provide us your information, we will be in touch with you shortly. ",
-        "thanks":"Thanks! Your inquiry submitted."
+        "thanks":"Thanks! Your inquiry has been submitted."
     },
     "reminder": {
         "back_to_login": "Back to <a href='/'>login</a>",

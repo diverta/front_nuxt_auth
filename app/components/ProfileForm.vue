@@ -1,6 +1,6 @@
 <template>
     <FormKit
-        v-model="localValues"
+        :value="formValues"
         type="form"
         :incomplete-message="$t('verify.fille_property')"
         :submit-label="$t('common.submit')"
@@ -193,15 +193,12 @@
 <script setup>
 import { FormKitSchema } from '@formkit/vue';
 
-const props = defineProps({
+defineProps({
     formValues: {
         type: Object,
         default: () => ({})
     }
 });
-
-// Wait for the initialization to complete using computed.
-const localValues = computed(() => props.formValues);
 
 const emit = defineEmits(['submit']);
 </script>
