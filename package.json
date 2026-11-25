@@ -18,8 +18,11 @@
     "app/assets/**/*.{css,scss}": "prettier --write"
   },
   "devDependencies": {
-    "@formkit/nuxt": "^1.7.2",
-    "@formkit/themes": "^1.7.2",
+    "@formkit/core": "^2.10.0",
+    "@formkit/i18n": "^2.10.0",
+    "@formkit/nuxt": "^2.10.0",
+    "@formkit/themes": "^2.10.0",
+    "@formkit/vue": "^2.10.0",
     "@intlify/unplugin-vue-i18n": "^4.0.0",
     "@mdi/font": "^7.4.47",
     "@nuxt/eslint": "^0.3.0-beta.7",
